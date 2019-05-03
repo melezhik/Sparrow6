@@ -1,0 +1,162 @@
+Roadmap
+=======
+
+The Roadmap of Sparrow6 project development.
+
+Done
+====
++ Perl/Bash tasks
++ test.pl6 - embedded test support ( aka m10 - METEN minimalistic embedded test engine )
++ multiroot story support ( ability to run multi root stories  )
++ ignore_story_err implementation
++ set_stdout implementation
++ ignore_error() instead of ignore_story_err()
++ implement cwd attribute
++ implement purge-cache
++ Add self!set-sparrow-root(); to Sparrow6::SparrowHub::API constructor
++ s6 - install/search/list plugin
++ freeze SparrowHub index for Sparrow/Perl5, disable upload action
++ read config support (set-conf/conf/SP6_CONF)
++ sudo support
++ Implement os() function
++ Rewrite resources/sparrow6common.pm to Perl6
++ Port Sparrowdo::DSL to Sparrow6::DSL
++ Sparrowdo - support for config
++ Sparrow6::Task::Runner::Api story => task renaming
++ Sparrowdo [copy local files](https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md#copy-local-files)
++ Regexp interpolation
++ Sequences, Ranges, Withins
++ Streams for Sequences, Ranges and Withins
++ Handle comments inside code/generators correctly
++ Port Otthentic::DSL tests to Sparrow6
++ Don't allow  nested contexts
++ Task states ( ability to exchange data between tasks - implimented for Perl )
++ Ruby support
++ Python support
++ Document Sparrow6::Task::Check
++ `s6 --repo-init` command
++ Document task states
++ Ruby plugins, bundle install test
++ Rename sparrow.index to index
++ module_run added
++ Powershell support
++ Renaming: suite.yaml => config.yaml
+Urgent
+======
+
+- Perl6 support ( after renaming )
+- Write tests for Ruby common libraries - $task-dir/common.rb $root-dir/common.rb
+- Write tests for Powershell streams support
+- Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
+
+- Sparrowdo
+  - Sparrow6::DSL::Assert - workaround for `input_param` method
+  - support for target_host
+  - var=name=value command line support
+  - task-run / module-run command line support
+  - cwd cli support ( do we need it? )
+  - convert outthentic tests to regular tests ( almost done )
+  - vagrant support ( do we need it ? )
+  - git ( sparrlet support, do we need it ? )
+  - port existed Sparrowdo:: Modules to use Sparrow6
+
+New syntax / renaming
+===================
+===================
+
+  - story* => task*
+  - story => task
+  - modules => subtask
+  - story_var => param
+  - ignore_story_err() => ignore_error()
+  - target_os() => os() # implemented but should be documented
+  - story.check => task.check
+  - meta.txt => task.txt
+  - support `$SP6_REPO_USER` and `$SP6_REPO_TOKEN`
+  - sparrow.json => sparrow6.json (?)
+
+
+
+New features
+=============
+- task states ( ability to exchange data between tasks )
+- config.pl6 support
+- m10
+- `streams` # streams presented as a Hash ( need to document )
+- `streams_arrays` # streams presented as an Array ( need to document )
+- `dump_streams` ( implemeted for Perl, need to document )
+- `note:` expressions ( done, need to document )
+
+- m10 ( need to add more helpers )
+
+- Low priority
+  - Document Sparrow6::Task::Runner Class
+  - Document m10 feature ( METEN - Minimalistic Embedded Testing Engine )
+  - `s6 --install` install plugin without plugin name ( read data from sparrow.json in CWD )
+
+Documentation
+=============
+=============
+
+- hook set_stdout gets merged with task stdout in ( implimented, need to document )
+- task check is not triggered if there is no task  ( implimented, need to document ) - breaking changes
+
+Questionable
+============
+- Deprecate set_stdout (???), hook stdout should contribute to task stdout (???)
+- don't allow generators/codes if check failures (???)
+- handle code failures in task checks (???)
+- impliment cwd parameter for Sparrow6 tasks
+- use api/v2 instead of api/v1
+- meta.txt
+- supporting outthentic messages
+- color/nocolor output
+- suite.json config support
+- dry run support
+
+
+Low priority
+============
+- task descriptions (task.txt)
+- dump_streams() implimentation for Ruby, Python, Powershell
+- Port Sparrowdo::DSL:: modules to Sparrow6::DSL::
+- Free style parameters (args_cli)
+- Windows support ( run stories, run hooks )
+- Catch stderr for hooks/stories (?)
+- Don't strip comments from one-line code and generator expressions
+
+
+Other Languages Support
+=======================
+- Powershell
+
+
+Other tools support
+===================
+
+- Rewrite Sparrow client to s6 ( Sparrow::S6 ). What features should we keep? What features should we drop?
+
+- Switch Tomtit to Updated Sparrowdo version.
+
+- Port existed Sparrowdo:: Modules to Sparrow6 - Sparrowdo::Core::DSL:: ==> Sparrow6:DSL::
+
+- Switch Sparky to Updated Sparrowdo version
+
+- Switch Sparrowform to Updated Sparrowdo version
+
+- Make Sparrowhub plugins compatible with Sparrow6
+
+- Update information on SparrowHub
+
+
+Breaking changes
+================
+- truncating to the `match_l` is removed, we reports check results as is, even for really long matched strings (examples/match-length.pl6)
+- `:blank` is deprecated, you should use regexp: `^^ \s* $$`  instead
+- `suite.ini`, `suite.json` are not supported
+- `story.pm` files are not supported
+-  task recursive execution is not supported
+- `outthentic_die`, `outthentic_exit` functions are not supported
+- old reports formats ("production, default, concise") are not supported
+- private plugins supports dropped in favor of private repositories
+

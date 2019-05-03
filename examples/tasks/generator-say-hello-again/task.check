@@ -1,0 +1,7 @@
+generator: <<CODE
+  !bash
+    echo Say
+    echo Hello
+    echo 'regexp: Hello || Again'
+CODE
+

@@ -1,0 +1,141 @@
+#!perl6
+
+unit module Sparrow6::Task::Runner::Helpers::Powershell;
+use JSON::Tiny;
+
+role Role {
+
+
+  method !make-sparrow6-powershell-lib ($path) {
+
+      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib.ps1', :w;
+      $fh.say(slurp %?RESOURCES<sparrow6lib.ps1>.Str);
+      $fh.close;
+
+      self!log("powershell lib deployed","{$.cache-root-dir}$path/sparrow6lib.ps1");
+
+  }
+
+  method !deploy-powershell-helpers ($path) {
+
+      self!log("deploy powershell helpers","start");
+
+      self!make-sparrow6-common-lib($path);
+
+      self!make-powershell-glue($path);
+
+      self!make-sparrow6-powershell-lib($path);
+
+  }
+
+  method !deploy-powershell-run-cmd ($path) {
+
+      my $cmd = "pwsh -c \". " ~ $.cache-root-dir ~ $path ~ "/glue.ps1; . " ~ $.cache-root-dir ~ $path ~ "/sparrow6lib.ps1; . $path\"";
+
+      self!log("powershell run cmd", $cmd);
+
+      my $fh = open $.cache-root-dir ~ $path ~ '/cmd.bash', :w;
+      $fh.say("set -e");
+      $fh.say($cmd);
+      $fh.close;
+
+      return $.cache-root-dir ~ $path ~ '/cmd.bash'
+  }
+
+
+  method !make-powershell-glue ($path) {
+
+      my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+
+      if $stdout-file.IO ~~ :e {
+        unlink $stdout-file;
+        self!log("remove stdout file", $stdout-file);
+      }
+
+      my $fh = open $.cache-root-dir ~ $path ~ '/glue.ps1', :w;
+      $fh.say('function root_dir {', "\n\t'", $.root.IO.absolute,"'\n}" );
+      $fh.say('function os {', "\n\t'" , $.os , "'\n}" );
+      $fh.say("# project_root_directory is deprecated");
+      $fh.say('function project_root_dir {', "\n\t'" , $.root.IO.absolute , "'\n}" );
+      $fh.say('function task_dir {', "\n\t'" , $path.IO.dirname.IO.absolute , "'\n}" );
+      $fh.say('function cache_root_dir {', "\n\t'" , $.cache-root-dir , "'\n}" );
+      $fh.say("# test_root_dir is deprecated");
+      $fh.say('function test_root_dir {', "\n\t'" , $.cache-root-dir , "'\n}" );
+      $fh.say('function cache_dir {', "\n\t'" , $.cache-root-dir , $path , "'\n}" );
+      $fh.say('function stdout_file {', "\n\t'" , $stdout-file , "'\n}" );
+      $fh.close;
+
+      self!log("powershell glue deployed", "{$.cache-root-dir}$path/glue.ps1");
+
+  }
+
+  method !run-powershell-task ($path) {
+
+      self!log("run powershell task", $path);
+
+      self!deploy-powershell-helpers($path);
+
+      my $cmd = self!deploy-powershell-run-cmd($path);
+
+      self!log("powershell task cmd deployed", $cmd);
+
+      my $bash-cmd = self!bash-command($cmd);
+
+      self!capture-cmd-output($bash-cmd);
+
+      self!handle-task-status($bash-cmd);
+
+  }
+
+  method !run-powershell-hook ($path) {
+
+    self!log("run powershell hook", $path);
+
+    self!deploy-powershell-helpers($path);
+
+    my $cmd-path = self!deploy-powershell-run-cmd($path);
+
+    self!log("powershell hook cmd deployed", $cmd-path );
+
+    my $bash-cmd = self!bash-command($cmd-path);
+
+    my $task-vars;
+
+    for $bash-cmd.out.lines -> $line {
+      self!log("stdout",$line);
+
+      if $line ~~ / 'ignore_task_err:' / {
+        $.ignore-task-error = True;
+        self!log("ingnore task errors","enabled");
+      }
+
+      if $line ~~ / 'ignore_error:' / {
+        $.ignore-task-error = True;
+        self!log("ingnore task errors","enabled");
+      }
+
+      if $line ~~ /'task_var_json_begin' .* / ff $line ~~ /'task_var_json_end' .*/ {
+        $task-vars ~= $line;
+        next;
+      }
+
+      if $line ~~ /task":" \s+ (\S+)/ {
+        my $s = $0;
+        $task-vars ~~ s/'task_var_json_begin'//;
+        $task-vars ~~ s/'task_var_json_end'//;
+        self.task-vars = from-json($task-vars||'{}');
+        self!run-task("{$.root}/modules/$s");
+        $task-vars = '';
+      }
+
+    }
+
+    self!handle-hook-status($bash-cmd);
+
+    self!process-stdout-from-hook($path);
+
+  }
+
+}
+
+

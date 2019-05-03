@@ -1,0 +1,48 @@
+between: {foo} {bar}
+
+  regexp: (A)(A)(A)
+  regexp: \d
+  regexp: (\d)(\d)(\d)
+  regexp: (\d)
+  
+  code: <<CODE
+  
+    print "foo .. bar start\n";
+    print "apply regexp: (A)(A)(A)\n";
+    print "apply regexp: \\d\n";
+    print "apply regexp: (\\d)(\\d)(\\d)\n";
+    print "apply regexp: (\\d)\n";
+  
+    dump_streams();
+  
+  CODE
+  
+  generator: <<CODE
+
+    print "note: start stream check ...\n";
+
+    my @streams = keys %{streams()};
+  
+    print "assert: ", ( scalar @streams == 2 ? 1 : 0 ), " 2 streams found (as hash)\n";
+  
+    @streams =  @{streams_array()};
+  
+    print "assert: ", ( scalar @streams == 2 ? 1 : 0 ), " 2 streams found (as array)\n";
+  
+    my $i = $streams[0][0][0];
+  
+    print "assert: ", $i eq 'A' ? 1 : 0 , " stream[1,0,0] == $i \n";
+  
+    $i = $streams[0][1][0];
+  
+    print "assert: ", $i eq '0' ? 1 : 0 , " stream[1,1,0] == $i \n";
+  
+    $i = $streams[0][2][0];
+  
+    print "assert: ", $i eq '1' ? 1 : 0 , " stream[1,2,0] == $i \n";
+
+    print "note: start stream end ...\n";
+  
+  CODE
+  
+end:

@@ -1,0 +1,9 @@
+begin:
+
+  hello
+  regexp: .*orld
+  jan
+
+  code: dump_streams();
+
+end:

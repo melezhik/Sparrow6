@@ -1,0 +1,6 @@
+.cache
+.precomp
+local/
+cpanfile.snapshot
+tasks.tar
+log.txt

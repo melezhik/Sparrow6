@@ -1,0 +1,26 @@
+regexp: (\d+) \s+ '-' \s+ for \s+ (\w+)
+
+code: <<CODE
+
+use Data::Dumper; 
+
+print Dumper(captures());
+
+CODE
+
+generator: <<CODE
+
+print "assert: ", captures()->[0]->[0] == 1 ? 1 : 0, " captures0,0 == 1\n";
+print "assert: ", captures()->[0]->[1] eq 'one' ? 1 : 0, " captures0,1 == one\n";
+
+print "assert: ", captures()->[1]->[0] == 2 ? 1 : 0, " captures1,0 == 2\n";
+print "assert: ", captures()->[1]->[1] eq 'two' ? 1 : 0, " captures1,1 == two\n";
+
+print "assert: ", captures()->[2]->[0] == 3 ? 1 : 0, " captures2,0 == 3\n";
+print "assert: ", captures()->[2]->[1] eq 'three' ? 1 : 0, " captures2,1 == three\n";
+
+print "assert: ", capture()->[0] == 1 ? 1 : 0, " capture0 == 1\n";
+print "assert: ", capture()->[1] eq 'one' ? 1 : 0, " capture1 == one\n";
+
+
+CODE

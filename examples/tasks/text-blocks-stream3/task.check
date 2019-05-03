@@ -1,0 +1,44 @@
+begin:
+
+    foo
+    regexp: \S+
+    regexp: \S+
+    regexp: \S+
+    bar
+
+    code: dump_streams()
+
+end:
+
+begin:
+
+    foo
+
+        regexp: (\S+)
+
+        generator: print 'assert: ', ( join ' ', map {$_->[0]} @{captures()} ) eq 'a 1 0 .' ? 1 : 0 , " captures == 'a 1 0 .' \n";
+
+        regexp: (\S+)
+
+        #code: use Data::Dumper; print Dumper(captures());
+
+        generator: print 'assert: ', ( join ' ', map {$_->[0]} @{captures()} ) eq 'b 2 00 ..' ? 1 : 0 , " captures == 'b 2 00 ..' \n";
+
+        regexp: (\S+)
+        generator: print 'assert: ', ( join ' ', map {$_->[0]} @{captures()} ) eq 'c 3 000 ...' ? 1 : 0 , " captures == 'c 3 000 ...' \n";
+
+    bar
+
+
+    generator: <<CODE
+    my @streams = @{streams_array()};
+    print "note: stream3,1,1: $streams[2]->[0]->[0]\n";
+    print "assert: ",( $streams[2]->[0]->[0] =~ m/^\s*foo\s*$/ ? 1 : 0 ), " stream3,1,1 == foo\n";
+    print "note: stream3,2,1: $streams[2]->[1]->[0]\n";
+    print "assert: ",( $streams[2]->[1]->[0] == 0 ? 1 : 0 ), " stream3,2,1 == 0\n";
+    print "note: stream3,3,1: $streams[2]->[2]->[0]\n";
+    print "assert: ",( $streams[2]->[2]->[0] eq '00' ? 1 : 0 ), " stream3,3,1 == 00\n";
+    CODE
+    
+end:
+

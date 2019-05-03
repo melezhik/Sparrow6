@@ -1,0 +1,4 @@
+generator: <<GENE
+!python
+print 'PYTHON SIMPLE STORY'
+GENE

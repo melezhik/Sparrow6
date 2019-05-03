@@ -1,0 +1,4 @@
+generator: <<CODE
+!ruby
+puts "main.foo: #{config['main']['foo']}"
+CODE

@@ -1,0 +1,8 @@
+generator: <<CODE
+
+  my %d = ( 'foo' => 'foo value', 'bar' => 'bar value' );
+
+  print join "\n", map { ( "# $_ ", $d{$_} ) } keys %d;
+  
+CODE
+

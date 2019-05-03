@@ -1,0 +1,3 @@
+echo $(config main.foo)
+
+

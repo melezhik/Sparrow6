@@ -1,0 +1,19 @@
+hello
+
+regexp: ((h) (e))
+
+generator: <<CODE
+!perl
+use Data::Dumper;
+print config()->{main}->{foo};
+CODE
+
+regexp: (h) (e)
+
+code: <<CODE
+!perl
+use Data::Dumper;
+print "OK\n";
+print Dumper(captures());
+print "OK\n";
+CODE

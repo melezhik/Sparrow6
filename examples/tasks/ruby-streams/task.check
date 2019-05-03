@@ -1,0 +1,11 @@
+between: {'foo'} {'foo'}
+regexp: (\S+)
+end:
+
+generator: <<CODE
+!ruby
+  #puts streams_array().inspect
+  puts "assert: #{streams_array()[0][0][0].eql? "1"} streams_array()[0][0][0] == 1"
+  puts "assert: #{streams_array()[1][1][0].eql? "b"} streams_array()[1][1][0] == b"
+  puts "assert: #{streams_array()[2][2][0].eql? "cc"} streams_array()[2][2][0] == cc"
+CODE

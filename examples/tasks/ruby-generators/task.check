@@ -1,0 +1,6 @@
+regexp: (\d+)
+
+generator: <<CODE
+!ruby
+  my_generator
+CODE

@@ -1,0 +1,8 @@
+between: {foo} {bar}
+    regexp: (1)
+    code: print capture()->[0], "\n"
+    regexp: (2)
+    code: print capture()->[0], "\n"
+    regexp: (3)
+    code: print capture()->[0], "\n"
+end:

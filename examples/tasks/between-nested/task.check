@@ -1,0 +1,39 @@
+between: {Foo} {Bar}
+
+  # here will be everything
+  # between foo and bar lines
+  
+  regexp: (\d+)
+  
+  code: <<CODE
+  
+    print "Foo .. Bar start\n";
+    print "apply regexp: (\\d+)\n";
+  
+    dump_streams();
+  
+    print "Foo .. Bar end\n";
+  
+  CODE
+
+end:
+
+between: {fooo} {baaar}
+
+  # here will be everything
+  # between fooo and baaar lines
+  # NOT necessarily inside foo bar block 
+
+  regexp: (\d+)
+
+  code: <<CODE
+
+    print "fooo .. baaar start\n";
+    print "apply regexp: (\\d+)\n";
+
+    dump_streams();
+
+    print "fooo .. baaar end\n";
+
+  CODE
+

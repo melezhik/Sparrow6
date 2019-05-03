@@ -1,0 +1,31 @@
+generator: <<CODE
+!python
+print "regexp: (\d+)\w"
+CODE
+
+generator: <<CODE
+!python
+from sparrow6lib import *
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+print capture()[0]
+
+#if (capture()[0] == '1'):
+#  print "assert: 1 first capture is 1"
+#else:
+#  print "assert: 0 first capture is 1"
+
+#if (captures()[1][0] == '2'):
+#  print "assert: 1 second capture is 2"
+#else:
+#  print "assert: 0 second capture is 2"
+
+#if (captures()[2][0] == '3'):
+#  print "assert: 1 third capture is 3"
+#else:
+#  print "assert: 0 third capture is 3"
+
+
+
+CODE
+

@@ -1,0 +1,7 @@
+main.foo: 1
+
+generator: <<CODE
+!python
+from sparrow6lib import *
+print 'main.foo: ' + config()['main']['foo']
+CODE

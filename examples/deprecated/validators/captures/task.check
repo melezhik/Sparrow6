@@ -1,0 +1,10 @@
+within: red
+regexp: (\d+)
+
+validator: [(capture()->[0] == 1), 'red should be first']
+
+
+within: green
+regexp: (\d+)
+
+validator: [(capture()->[0] > 1), 'green should be after red']

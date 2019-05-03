@@ -1,0 +1,10 @@
+begin:
+  foo
+  regexp: \S+
+  regexp: \S+
+  regexp: \S+
+bar
+
+code: dump_streams();
+
+end:

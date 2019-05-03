@@ -1,0 +1,165 @@
+#!perl6
+
+unit module Sparrow6::Task::Runner::Helpers::Common;
+
+use JSON::Tiny;
+
+role Role {
+
+  method !test-log ($header, $message) {
+
+    say "[$header] >>> [$message]";
+
+  };
+
+  method !check-log ($header, $message) {
+
+    say "[$header] $message";
+
+  };
+
+  method !make-sparrow6-common-lib ($path) {
+
+    my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6common.pm6', :w;
+    $fh.say(slurp %?RESOURCES<sparrow6common.pm6>.Str);
+    $fh.close;
+
+    self!log("common lib deployed", "{$.cache-root-dir}$path/sparrow6common.pm6");
+
+  }
+
+  method !save-task-vars ($path) {
+
+      my $vars = self.task-vars;
+
+      my $fh = open "$path/variables.json", :w;
+      $fh.say(to-json($vars));
+      $fh.close;
+
+      self!log("deploy task vars",$vars.perl);
+
+      self!log("task vars deployed as json","$path/variables.json");
+
+      $fh = open "$path/variables.bash", :w;
+
+      for $vars.keys -> $name {
+        $fh.say("$name=\"{$vars{$name}}\"");
+      }
+      $fh.close;
+
+      self!log("task vars deployed as bash", "$path/variables.bash");
+
+  }
+
+
+  method !process-stdout-from-hook ($path) {
+
+    # read hook's stdout if any
+    # see set-stdout function
+
+    my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+
+    if "$stdout-file".IO ~~ :e {
+
+      self!log("read stdout from", $stdout-file);
+
+      for $stdout-file.IO.lines -> $line {
+        self!log("set stdout",$line);
+        push self.stdout-data, $line;
+        self.console($line);
+      }
+
+    }
+  }
+
+  method !erase-stdout-data () {
+    self.stdout-data = Array.new;
+    self.stderr-data = Array.new;
+  }
+
+
+  method !bash-command ($cmd) {
+
+    self!log("effective command", "bash $cmd");
+    return run 'bash', $cmd, :out, :err;
+  
+  }
+
+
+  method !handle-task-status ($cmd) {
+  
+    my $st = $cmd.status;
+
+    $cmd.out.close().^name; # we don't want to sink here
+
+    if $st != 0 and ! $.ignore-task-error {
+      self.console("task exit status: $st");
+      self.console("task {self.name} FAILED");
+      exit(100);
+    }
+
+    # reset ignore-task-error
+    self.ignore-task-error = False;
+
+  }
+
+  method !handle-hook-status ($cmd) {
+  
+    my $st = $cmd.status;
+
+    if $st != 0 {
+      self.console("hook exit status: $st");
+      self.console("hook {self.name} FAILED");
+      for $cmd.err.lines -> $line {
+        self.console("stderr: $line");
+      }
+      for $cmd.out.lines -> $line {
+        self.console("stdout: $line");
+      }
+      $cmd.out.close().^name; # we don't want to sink here
+      exit(101);
+    } else {
+      $cmd.out.close();
+    }
+
+  }
+
+
+  method !capture-cmd-output ($cmd) {
+
+    for $cmd.err.lines -> $line {
+      push self.stderr-data, $line;
+      self.console("stderr: $line") unless self.silent;
+    }
+
+    my $stdout-lines = 0;
+
+    for $cmd.out.lines -> $line {
+      self.console($line) unless self.silent;
+      push self.stdout-data, $line;
+      $stdout-lines++;
+    }
+
+    unless self.silent {
+      self.console("<empty stdout>") if $stdout-lines == 0;
+    }
+
+  }
+
+
+  method !get-state {
+
+    my %data = Hash.new;
+
+    if "{$.cache-root-dir}/state.json".IO ~~ :e {
+        self!log("state returned", "{$.cache-root-dir}/state.json");
+        %data = from-json(slurp "{$.cache-root-dir}/state.json")
+    } else {
+        self!log("no state returned", "{$.cache-root-dir}/state.json");
+    }
+
+    return %data;
+  }
+
+}
+

@@ -1,0 +1,77 @@
+#!perl6
+
+use Sparrow6::Task::Repository;
+use Sparrow6::S6;
+
+sub MAIN (
+  $thing?, 
+  Bool :$debug            = False, 
+  Bool :$clean            = False, 
+  Bool :$help             = False, 
+  Bool :$index-update     = False, 
+  Bool :$list             = False, 
+  Bool :$search           = False, 
+  Bool :$upload           = False, 
+  Bool :$repo-init        = False, 
+  Bool :$install          = False, 
+  Bool :$force            = False, 
+)
+
+{
+
+  if ($help) {
+    s6-help();
+    exit;
+  } 
+
+  my $repo-api = Sparrow6::Task::Repository::Api.new(
+    debug   => $debug
+  );
+
+  if $repo-init {
+
+    $repo-api.console("repo initialization");
+    $repo-api.repo-init($thing);
+
+  } elsif $upload {
+
+    $repo-api.console("upload plugin");
+    $repo-api.plugin-upload();
+
+  } elsif $install && $thing {
+    $repo-api.console("install plugin $thing");
+    $repo-api.plugin-install($thing, %( force => $force ));
+
+  } elsif $index-update {
+
+    $repo-api.console("update local index");
+    $repo-api.index-update();
+
+  } elsif $list {
+
+    $repo-api.console("installed plugins");
+    for $repo-api.installed-plugins() -> $i {
+      say "{$i[0]} ... $i[1] ... $i[2]"
+    }
+
+  } elsif $search {
+
+    $repo-api.console("search plugins");
+    for $repo-api.search-plugins($thing) -> $i {
+      if $i[1].defined {
+        say "{$i[0]} ... {$i[1]} ... {$i[2]}"
+      } else {
+        say "{$i[0]} ... Nil ... {$i[2]}"
+      }
+    }
+  } else {
+
+    s6-help();
+
+    exit(10);
+
+  }
+
+}
+
+

@@ -1,0 +1,18 @@
+regexp: (\d+)
+
+
+code: <<CODE
+!ruby
+
+  captures.each do |c|
+    puts "# #{c.first}"
+  end
+
+CODE
+
+code: <<CODE
+!ruby
+
+  foo
+
+CODE

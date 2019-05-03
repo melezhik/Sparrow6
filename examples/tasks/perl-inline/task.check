@@ -1,0 +1,10 @@
+code: <<CODE
+!perl
+print 'hello world!!!';
+CODE
+
+
+generator: <<CODE
+!perl
+print 'OK' ;
+CODE

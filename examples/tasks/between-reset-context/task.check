@@ -1,0 +1,18 @@
+between: {foo} {bar}
+
+# all check expressions here
+# will be applied to the range
+# between /foo/ ^fff^ /bar/
+
+hello # should match 1 time
+
+generator: print "assert: ", ( scalar @{matched()} == 1 ? 1 : 0 ), " 1 hello within foo ... bar\n";
+
+# reset context, end of the range context:
+
+end:
+
+hello # should match three times
+
+generator: print "assert: ", ( scalar @{matched()} == 3 ? 1 : 0 ), " 3 hello within all document\n";
+

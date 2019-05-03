@@ -1,0 +1,16 @@
+within: 'Colors:' \s red
+  red
+end:
+
+within: 'Digits:'
+
+  one-
+  regexp: \d\d
+  regexp: 1+
+
+end:
+
+within: Colors:
+  blue
+end:
+

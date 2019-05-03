@@ -1,0 +1,6 @@
+generator: <<HERE
+!bash
+echo '{' $USER '}'
+HERE
+
+

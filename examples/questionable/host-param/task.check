@@ -1,0 +1,2 @@
+regexp: host:(.*)
+code: [print(capture()->[0])]

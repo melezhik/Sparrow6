@@ -1,0 +1,6 @@
+
+generator: <<CODE
+my $foo = task_var('foo');
+print "assert: ", defined($foo), " foo varibale is defined\n"; 
+print "foo: ".task_var("foo"), "\n";
+CODE

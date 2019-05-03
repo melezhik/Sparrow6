@@ -1,0 +1,61 @@
+alex
+hello
+world
+julia
+alex
+
+
+begin:
+
+  hello
+  world
+
+  code: dump_streams();
+
+  generator: <<CODE
+
+    print "assert: ",  scalar(@{streams_array()}) == 2, " 2 streams found so far\n";
+    print "assert: ",  streams_array()->[0]->[0]->[0] eq 'hello', " stream0,0,0 == hello\n"; 
+    print "assert: ",  streams_array()->[1]->[0]->[0] eq 'hello', " stream1,0,0 == hello\n";
+
+  CODE
+
+  jan
+
+  generator: print "assert: ",  scalar(@{streams_array()}) == 1 ? 1 : 0, " 1 stream found so far\n";
+
+  code: dump_streams();
+
+  julia
+  alex
+
+  generator: <<CODE
+
+    print "assert: ",  scalar(@{streams_array()}) == 1 ? 1 : 0, " 2 streams found so far\n";
+    print "assert: ",  streams_array()->[0]->[0]->[0] eq 'hello' ? 1 : 0, ' stream0,0.0', "\n"; 
+    print "assert: ",  streams_array()->[0]->[1]->[0] eq 'world' ? 1 : 0, ' stream0,1,0', "\n"; 
+
+  CODE
+
+end:
+
+begin:
+
+  regexp: (a(\d+))
+
+  code: use Data::Dumper; print Dumper(capture());
+
+  generator: print "assert: ", capture->[0] eq 'a1' ? 1 : 0, " capture0 eq a1\n"; 
+
+  regexp: (b(\d+))
+
+end:
+
+
+begin:
+
+  regexp: hel.*
+  regexp: wor.*
+  regexp: jan
+
+end:

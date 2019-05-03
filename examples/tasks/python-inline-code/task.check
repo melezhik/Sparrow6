@@ -1,0 +1,6 @@
+code: <<GENE
+!python
+print "OK"
+import sys
+sys.stdout.write('PYTHON DEBUG MESSAGE')
+GENE

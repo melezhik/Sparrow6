@@ -1,0 +1,19 @@
+regexp: \d
+
+code: <<CODE
+
+use Data::Dumper;
+
+print Dumper(matched());
+
+CODE
+
+generator: <<CODE
+  my @matched = @{matched()};
+  print "note: $matched[0]\n";
+  print "assert: ", $matched[0] eq "1 one" ? 1 : 0, " matched0 eq '1 one'\n";
+  print "note: $matched[1]\n";
+  print "assert: ", $matched[1] eq "2 two" ? 1 : 0, " matched1 eq '2 two'\n";
+  print "note: $matched[2]\n";
+  print "assert: ", $matched[2] eq "3 three" ? 1 : 0, " matched2 eq '3 three'\n";
+CODE

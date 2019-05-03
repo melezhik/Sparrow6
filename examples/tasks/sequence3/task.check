@@ -1,0 +1,11 @@
+begin:
+    # plain strings
+    this string followed by
+    that string followed by
+    another one
+    # regexp patterns:
+    regexp: with \s+  ( this || that )
+    # and the last one in a block
+    at the very end
+end:
+

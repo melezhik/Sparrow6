@@ -1,0 +1,12 @@
+# date should be in format
+within: \d\d\d\d '-' \d\d '-' \d\d
+
+  # should be 2000 year
+  regexp: ^^ '2000-'
+
+  # should be 04 month
+  regexp: '-04'
+
+  01
+
+end:

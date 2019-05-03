@@ -1,0 +1,3 @@
+generator: <<CODE
+print join "\n", ( 'H', 'E', 'L', 'O' );
+CODE

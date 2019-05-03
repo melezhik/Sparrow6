@@ -1,0 +1,5 @@
+ruby rocks!
+generator: <<CODE
+!ruby
+puts ruby_rocks()
+CODE

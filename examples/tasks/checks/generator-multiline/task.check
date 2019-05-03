@@ -1,0 +1,6 @@
+generator: <<CODE
+!bash
+echo OK1
+echo OK2
+echo OK3
+CODE

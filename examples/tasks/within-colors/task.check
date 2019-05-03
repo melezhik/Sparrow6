@@ -1,0 +1,3 @@
+within: 'color:' \s+  red || green || blue 
+  RE2
+end:

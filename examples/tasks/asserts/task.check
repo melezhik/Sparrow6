@@ -1,0 +1,6 @@
+assert: 1 'this is ever true one'
+assert: 1  this is ever true two
+generator: print "assert: 1 'this is ever true three'" 
+generator: print "assert: 1 this is ever true four" 
+generator: print "assert: 1 'this is ever true five'"
+generator: print "assert: 1 this is ever true six"

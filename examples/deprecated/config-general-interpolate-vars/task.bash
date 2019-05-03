@@ -1,0 +1,3 @@
+echo $(config base.logdir)
+
+

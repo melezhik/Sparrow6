@@ -1,0 +1,5 @@
+task status: 1
+task path: 01
+task vars: hello world
+check0 status: 1
+check0 message: text has 'foo: hello world'

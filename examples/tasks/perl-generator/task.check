@@ -1,0 +1,26 @@
+# this one generator is multiline
+generator: <<CODE
+
+    print join "\n", 
+    qw(               
+        id              
+        title           
+        body            
+        userId          
+     )                  
+CODE
+
+# this one generator is multiline
+generator: <<CODE
+
+    print join "\n", 
+    qw(
+        'regexp: id',              
+        'regexp: title',           
+        'regexp: body',            
+        'regexp: userId',          
+                        
+    );                             
+
+
+

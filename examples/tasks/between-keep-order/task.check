@@ -1,0 +1,26 @@
+between: {foo} {bar}
+
+  regexp: (1)(1)
+  
+  code: <<CODE
+  
+    print "foo .. bar start\n";
+    print "apply regexp: (1)(1)\n";
+  
+    dump_streams();
+  
+  CODE
+  
+  regexp: (2+)
+  
+  code: <<CODE
+  
+    print "apply regexp: (2+)\n";
+  
+    dump_streams();
+  
+    print "foo .. bar end\n";
+  
+  CODE
+  
+end:

@@ -1,0 +1,4 @@
+between: {foo} {bar}
+  regexp: (foo \d+)
+  code: use Data::Dumper; print Dumper(captures());
+end:

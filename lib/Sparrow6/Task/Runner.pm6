@@ -1,0 +1,325 @@
+#!perl6
+
+use v6;
+
+unit module Sparrow6::Task::Runner;
+
+use File::Directory::Tree;
+use Hash::Merge;
+
+use YAMLish;
+use JSON::Tiny;
+
+use Sparrow6::Common::Helpers;
+use Sparrow6::Common::Config;
+use Sparrow6::Task::Runner::Helpers::Common;
+use Sparrow6::Task::Runner::Helpers::Perl;
+use Sparrow6::Task::Runner::Helpers::Bash;
+use Sparrow6::Task::Runner::Helpers::Ruby;
+use Sparrow6::Task::Runner::Helpers::Python;
+use Sparrow6::Task::Runner::Helpers::Powershell;
+use Sparrow6::Task::Runner::Helpers::Test;
+use Sparrow6::Task::Runner::Helpers::Check;
+
+class Api
+
+  does Sparrow6::Common::Helpers::Role
+  does Sparrow6::Task::Runner::Helpers::Common::Role 
+  does Sparrow6::Task::Runner::Helpers::Perl::Role 
+  does Sparrow6::Task::Runner::Helpers::Bash::Role 
+  does Sparrow6::Task::Runner::Helpers::Ruby::Role 
+  does Sparrow6::Task::Runner::Helpers::Python::Role 
+  does Sparrow6::Task::Runner::Helpers::Powershell::Role 
+  does Sparrow6::Task::Runner::Helpers::Test::Role 
+  does Sparrow6::Task::Runner::Helpers::Check::Role 
+
+  {
+
+  has Str   $.root is required is rw;
+  has Str   $.task is rw; # this is deprecated, we should use $.task now
+  has Str   $.sparrow-root;
+  has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False; 
+  has Str   $.os = os();
+  has Hash  $.parameters;
+  has Str   $.config      is rw;
+  has Hash  $.task-config is rw;
+  has Str   $.cache-root-dir is rw;
+  has Str   $.name is required is rw;
+  has Str   @.stdout-data is rw;
+  has Str   @.stderr-data is rw;
+  has Hash  $.task-vars is rw;
+  has Bool  $.test-pass is rw;
+  has Bool  $.check-pass is rw;
+  has Bool  $.keep-cache is rw; 
+  has Bool  $.do-test;
+  has Bool  $.show-test-result;
+  has Bool  $.ignore-task-error is rw;
+  has Str   $.cwd = "{$*CWD}";
+  has Bool  $.silent is rw;
+
+
+  method TWEAK() {
+
+    $.root = "$.root".IO.absolute;
+
+    unless $.config {
+      $.config = "{$.root}/config.yaml";
+    }
+
+    $.cache-root-dir = $.sparrow-root                               ??
+    $.sparrow-root ~ "/tmp/" ~ $*PID ~ 22.rand.Int.Str              !! 
+    %*ENV<HOME> ~ "/.sparrow6/tmp/" ~ $*PID   ~ 22.rand.Int.Str     ;
+
+    if $.cache-root-dir.IO ~~ :e {
+      empty-directory $.cache-root-dir;
+      self!log("cache root dir erased", "$.cache-root-dir");
+    }
+
+    mkdir $.cache-root-dir;
+
+    self!log("cache root dir created", "$.cache-root-dir");
+
+    if $.config.IO ~~ :e {
+
+      self!log("load plugin configuration file",$.config);
+      my $plugin-config = load-yaml(slurp $.config);
+      self!log("parse plugin configuration file",$plugin-config.perl);
+      self!log("input parameters",$.parameters.perl);
+      self.task-config = merge-hash $plugin-config, $.parameters;
+      self!log("merged task config",$.task-config.perl);
+
+      my $fh = open "{$.cache-root-dir}/config.json", :w;
+      $fh.say(to-json(self.task-config));
+      $fh.close;
+      self!log("task configuration json saved", "{$.cache-root-dir}/config.json");
+
+    } else { # handle case when task config does not exist
+
+      self!log("plugin has no configuration file","hope it's ok");
+      self!log("input parameters",$.parameters.perl);
+      self.task-config = merge-hash %(), $.parameters;
+      self!log("merged task config",$.task-config.perl);
+
+      my $fh = open "{$.cache-root-dir}/config.json", :w;
+      $fh.say(to-json(self.task-config));
+      $fh.close;
+      self!log("task configuration json saved", "{$.cache-root-dir}/config.json");
+
+    }
+
+
+  }
+
+  method task-run() {
+
+    $.test-pass = True;
+    $.check-pass = True;
+
+    $.ignore-task-error = False;
+
+    self!log("run task, root:", $.root);
+    self!log("run task, cwd:", $.cwd);
+
+    chdir $.cwd;
+
+    self!erase-stdout-data;
+    
+    die "directory $.root does not exist" unless "$.root".IO ~~ :e;
+    die "$.root is not a directory" unless "$.root".IO ~~ :d;
+
+
+    if $.task {
+
+      if $.task.IO ~~ :d {
+        self!run-task($.task);
+      } elsif "{$.root}/{$.task}".IO ~~ :d  {
+        self!run-task("{$.root}/{$.task}");
+      } else {
+        die "neither {$.root}/{$.task}, nor {$.task} directory exists,\nwhat are you trying to do?"; 
+      }
+
+    } else {
+      self!run-task($.root);
+    }
+
+    my $status = 0;
+
+    if $.check-pass == False {
+      say("=================\nTASK CHECK FAIL");
+      $status = 2;
+    }
+
+    if $.do-test && $.test-pass == False {
+      say("=================\nTEST FAIL");
+      $status = 3;
+    }
+
+    exit($status) if $status != 0;
+    
+    my %state = self!get-state;
+
+    unless %*ENV<SP6_KEEP_CACHE> or $.keep-cache {
+      if $.cache-root-dir.IO ~~ :e {
+        empty-directory $.cache-root-dir;
+        self!log("cache root dir erased", "$.cache-root-dir");
+        rmdir $.cache-root-dir;
+        self!log("cache root dir removed", "$.cache-root-dir");
+      }
+    }
+
+    return %state;
+
+  }
+
+  method !run-task ($root) {
+
+    self!log("runs task", $root);
+
+    self!erase-stdout-data unless self.keep-cache;
+
+    # try to run hooks first 
+
+    if "$root/hook.pl".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/hook.pl";
+
+      self!log("task cache dir create", $.cache-root-dir ~ "$root/hook.pl");
+
+      self!save-task-vars($.cache-root-dir ~ "$root/hook.pl");
+
+      self!run-perl-hook("$root/hook.pl");
+
+    } elsif "$root/hook.bash".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/hook.bash";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/hook.bash");
+
+      self!run-bash-hook("$root/hook.bash");
+
+    } elsif "$root/hook.rb".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/hook.rb";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/hook.rb");
+
+      self!run-ruby-hook("$root/hook.rb");
+
+    } elsif "$root/hook.py".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/hook.py";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/hook.py");
+
+      self!run-python-hook("$root/hook.py");
+
+    } elsif "$root/hook.ps1".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/hook.ps1";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/hook.ps1");
+
+      self!run-powershell-hook("$root/hook.ps1");
+
+    }
+
+    if "$root/task.pl".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/task.pl";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/task.pl");
+
+      self!run-perl-task("$root/task.pl");
+
+      self!run-task-check($root);
+
+      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.pl6");
+
+        EVALFILE "$root/test.pl6";
+
+      }
+
+
+    } elsif "$root/task.bash".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/task.bash";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/task.bash");
+
+      self!run-bash-task("$root/task.bash");
+
+      self!run-task-check($root);
+
+      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.pl6");
+
+        EVALFILE "$root/test.pl6";
+
+      }
+
+
+    } elsif "$root/task.rb".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/task.rb";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/task.rb");
+
+      self!run-ruby-task("$root/task.rb");
+
+      self!run-task-check($root);
+
+      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.pl6");
+
+        EVALFILE "$root/test.pl6";
+
+      }
+
+
+    } elsif "$root/task.py".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/task.py";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/task.py");
+
+      self!run-python-task("$root/task.py");
+
+      self!run-task-check($root);
+
+      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.pl6");
+
+        EVALFILE "$root/test.pl6";
+
+      }
+
+    } elsif "$root/task.ps1".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/task.ps1";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/task.ps1");
+
+      self!run-powershell-task("$root/task.ps1");
+
+      self!run-task-check($root);
+
+      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.pl6");
+
+        EVALFILE "$root/test.pl6";
+
+      }
+
+    } 
+
+  }
+
+}
+
+

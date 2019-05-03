@@ -1,0 +1,36 @@
+begin:
+
+    regexp: (f) (oo)
+
+    code: print "layer: 1 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+
+    regexp: (\S+)
+
+    code: print "layer: 2 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+
+    regexp: (\S+)
+
+    code: print "layer: 3 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+
+    regexp: (\S+)
+
+    code: print "layer: 4 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+
+    regexp: (bar)
+
+    code: print "layer: 5 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+
+    code:  <<CODE
+
+      for my $s (@{streams_array()}) {
+          my $i=1;
+          for my $l (@{$s}){
+            print "layer: ", $i++, " ", (join "", map {"{$_}"} @{$l}), "\n";
+          }
+        print "\n";
+      }
+
+    CODE
+
+end:
+

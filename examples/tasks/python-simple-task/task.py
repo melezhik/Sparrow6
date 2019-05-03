@@ -1,0 +1,1 @@
+print "PYTHON SIMPLE STORY"

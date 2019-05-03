@@ -1,0 +1,5 @@
+generator: <<CODE
+
+print "assert: ", defined(config()->{main}->{foo}), " config.main.foo defined\n";
+print  "main.foo = [", config()->{main}->{foo}, "]";
+CODE

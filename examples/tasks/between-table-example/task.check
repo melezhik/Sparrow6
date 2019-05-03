@@ -1,0 +1,9 @@
+# between expression:
+between: { '<table' .* '>' } { '</table>' }
+regexp: '<td>' (\S+) '</td>'
+end:
+
+# or even so
+between: { '<tr' .* '>' } { '</tr>' }
+regexp: '<td>' (\S+) '</td>'
+end:

@@ -1,0 +1,2 @@
+puts config['main']['foo']
+

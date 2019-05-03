@@ -1,0 +1,5 @@
+generator: print 'hello world'
+assert: 1 1 is true
+generator: print  "assert: True True is <true>"
+generator: print "assert: true true is true"
+code: print "just a line\n"

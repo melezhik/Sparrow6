@@ -1,0 +1,7 @@
+OK
+
+generator: our @foo; [ "assert: ".($foo[1] eq  'foo was here' ? 1 : 0 ). ' foo was here'];
+generator: our @foo; [ "assert: ".($foo[2] eq  'bar was here' ? 1 : 0 ). ' bar was here'];
+
+
+

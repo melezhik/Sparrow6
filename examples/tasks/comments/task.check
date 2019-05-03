@@ -1,0 +1,5 @@
+regexp: hello # this is the comment
+hello # this is the comment 
+# this is the comment
+ h #
+regexp: '/hello/'

@@ -1,0 +1,13 @@
+generator: <<CODE
+!bash
+set_Foo;
+echo $FOO
+CODE
+
+
+code: <<CODE
+!bash
+set_Foo;
+echo "{$FOO}"
+echo OK
+CODE

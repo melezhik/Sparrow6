@@ -1,0 +1,4 @@
+code: <<CODE
+  !perl
+  print "hello world!\n";
+CODE

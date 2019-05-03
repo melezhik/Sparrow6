@@ -1,0 +1,28 @@
+between: {foo} {bar}
+
+  regexp: \d+
+
+  code: <<CODE
+
+    print "start {foo} {bar} range\n";
+
+    print "apply regexp: \\d+\n";
+
+    dump_streams();
+
+  CODE
+
+  generator: <<CODE
+
+
+    print "assert: ", streams_array()->[0][0][0] == 0 ? 1 : 0 ," streams_array()->[0][0][0] == 0 \n";
+
+    print "assert: ", streams_array()->[1][2][0] == 6 ? 1 : 0 ," streams_array()->[1][2][0] == 6 \n";
+
+    print "assert: ", streams_array()->[2][1][0] == 3 ? 1 : 0 ," streams_array()->[2][1][0] == 3 \n";
+
+    print "note: end {foo} {bar} range\n";
+
+  CODE
+
+end:
