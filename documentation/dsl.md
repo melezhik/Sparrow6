@@ -426,21 +426,13 @@ Examples:
     # the same but add description for command:
     ssh 'uptime', %( host => '192.168.0.1' , description => "how old are you?" );
 
-    # you also may set a user:
-    ssh 'uptime', %(
-      host  => '192.168.0.1',
-      user  => 'old_dog'
-    );
+    # use sshpass to pass a password
+    ssh 'uptime', %( host => '192.168.0.1', password => 'qwerty', user => 'admin');
 
-    # and ssh_key
-    ssh 'uptime', %(
-      host    => '192.168.0.1',
-      user    => 'old-dog',
-      ssh-key => 'keys/id_rsa'
-    );
+    # authentication by private key
+    ssh 'uptime', %( host => '192.168.0.1', ssh-key => '~/.ssh/key.pem'   );
 
-
-    # an example for multiline command
+    # an example of multiline command
     ssh q:to/CMD/, %( host => '192.168.0.1', user => 'old_dog');
       set -e
       apt-get update

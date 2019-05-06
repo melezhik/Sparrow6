@@ -26,8 +26,18 @@ multi sub ssh ( $command, %args ) is export {
 
   my $ssh-host-term = %args<user>:exists ?? %args<user> ~ '@' ~ %args<host> !! %args<host>;
 
+  my $ssh-run-cmd;
 
-  my $ssh-run-cmd  =  'ssh -o ConnectionAttempts=1  -o ConnectTimeout=10';
+  if %args<password> {
+
+    $ssh-run-cmd  =  "sshpass -p {%args<password>} ssh";
+
+  } else {
+
+    $ssh-run-cmd  = "ssh";
+  }
+
+  $ssh-run-cmd ~=  ' -o ConnectionAttempts=1  -o ConnectTimeout=10';
 
   $ssh-run-cmd ~= ' -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -tt';
 
@@ -37,6 +47,7 @@ multi sub ssh ( $command, %args ) is export {
 
   $ssh-run-cmd ~= " $ssh-host-term '$command'";
 
+
   my $bash-cmd;
 
   if %args<create>:exists {
@@ -44,6 +55,7 @@ multi sub ssh ( $command, %args ) is export {
   } else {
     $bash-cmd = "set -x; $ssh-run-cmd"
   }
+
 
   bash $bash-cmd, %(
     description => %args<description> ||  "remote command on $ssh-host-term",
@@ -69,8 +81,18 @@ sub scp ( %args ) is export {
     );
   }
 
+  my $scp-run-cmd;
 
-  my $scp-run-cmd  =  'scp -o ConnectionAttempts=1  -o ConnectTimeout=10';
+  if %args<password> {
+
+    $scp-run-cmd  =  "sshpass -p {%args<password>} scp";
+
+  } else {
+
+    $scp-run-cmd  = "scp";
+  }
+
+  $scp-run-cmd ~=  ' -o ConnectionAttempts=1  -o ConnectTimeout=10';
 
   $scp-run-cmd ~= ' -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no';
 
