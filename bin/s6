@@ -1,7 +1,7 @@
 #!perl6
 
 use Sparrow6::Task::Repository;
-use Sparrow6::S6;
+use Sparrow6::Task;
 
 sub MAIN (
   $thing?, 
@@ -14,19 +14,24 @@ sub MAIN (
   Bool :$upload           = False, 
   Bool :$repo-init        = False, 
   Bool :$install          = False, 
+  Bool :$run              = False, 
   Bool :$force            = False, 
 )
 
 {
 
-  if ($help) {
-    s6-help();
-    exit;
-  } 
-
   my $repo-api = Sparrow6::Task::Repository::Api.new(
     debug   => $debug
   );
+
+  my $task-cli = Sparrow6::Task::Cli.new(
+    debug   => $debug
+  );
+
+  if ($help) {
+    $task-cli.help;
+    exit;
+  } 
 
   if $repo-init {
 
@@ -39,8 +44,13 @@ sub MAIN (
     $repo-api.plugin-upload();
 
   } elsif $install && $thing {
+
     $repo-api.console("install plugin $thing");
     $repo-api.plugin-install($thing, %( force => $force ));
+
+  } elsif $run && $thing {
+
+    $task-cli.console("run $thing");
 
   } elsif $index-update {
 
@@ -66,7 +76,7 @@ sub MAIN (
     }
   } else {
 
-    s6-help();
+    $task-cli.help();
 
     exit(10);
 

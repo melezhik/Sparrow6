@@ -34,7 +34,7 @@
     "Sparrow6::Task::Check" : "lib/Sparrow6/Task/Check.pm6",
     "Sparrow6::Task::Check::Context" : "lib/Sparrow6/Task/Check/Context.pm6",
     "Sparrow6::Task::Check::Context::Common" : "lib/Sparrow6/Task/Check/Context/Common.pm6",
-    "Sparrow6::S6" : "lib/Sparrow6/S6.pm6",
+    "Sparrow6::Task" : "lib/Sparrow6/Task.pm6",
     "Sparrow6::DSL" : "lib/Sparrow6/DSL.pm6",
     "Sparrow6::DSL::Common"     : "lib/Sparrow6/DSL/Common.pm6",
     "Sparrow6::DSL::Assert"     : "lib/Sparrow6/DSL/Assert.pm6",
