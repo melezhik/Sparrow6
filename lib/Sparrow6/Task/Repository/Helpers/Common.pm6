@@ -2,61 +2,6 @@ unit module Sparrow6::Task::Repository::Helpers::Common;
 
 role Role {
 
-  method !set-sparrow-root () {
-
-    my $root;
-
-    if $.sparrow-root {
-  
-      $root = %*ENV<SP6_PREFIX> ?? "{$.sparrow-root}/{%*ENV<SP6_PREFIX>}".IO.absolute  !! $.sparrow-root.IO.absolute;
-
-      unless $root.IO ~~ :e { 
-
-        mkdir $root; 
-
-        self!log("sparrow root directory created", $root);
-
-      }
-
-      self!log("sparrow root directory choosen", $root);
-
-    } else {
-
-      if %*ENV<HOME> {
-
-        $root = %*ENV<SP6_PREFIX> ?? "{%*ENV<HOME>}/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !! "{%*ENV<HOME>}/sparrow6".IO.absolute;
-
-        unless $root.IO ~~ :e {
-          mkdir $root;
-          self!log("sparrow root directory created", $root);
-        }
-
-        self!log("sparrow root directory choosen", $root);
-
-      } else {
-
-        $root = %*ENV<SP6_PREFIX> ?? "/var/data/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !!  "/var/data/sparrow6".IO.absolute;
-
-        unless $root.IO ~~ :e {
-          mkdir $root;
-          self!log("sparrow root directory created", $root);
-        }
-
-        self!log("sparrow root directory choosen", $root);
-
-      }
-
-    }
-
-    # cache directory as internal storage
-
-    mkdir "{$root}/.cache";
-
-    self.sparrow-root = $root;
-
-  }
-
-
   method get-resource ($resource, $target) {
 
 

@@ -20,4 +20,62 @@ role Role {
 
   };
 
+
+  method !set-sparrow-root () {
+
+    my $root;
+
+    if $.sparrow-root {
+  
+      $root = %*ENV<SP6_PREFIX> ?? "{$.sparrow-root}/{%*ENV<SP6_PREFIX>}".IO.absolute  !! $.sparrow-root.IO.absolute;
+
+      unless $root.IO ~~ :e { 
+
+        mkdir $root; 
+
+        self!log("sparrow root directory created", $root);
+
+      }
+
+      self!log("sparrow root directory choosen", $root);
+
+    } else {
+
+      if %*ENV<HOME> {
+
+        $root = %*ENV<SP6_PREFIX> ?? "{%*ENV<HOME>}/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !! "{%*ENV<HOME>}/sparrow6".IO.absolute;
+
+        unless $root.IO ~~ :e {
+          mkdir $root;
+          self!log("sparrow root directory created", $root);
+        }
+
+        self!log("sparrow root directory choosen", $root);
+
+      } else {
+
+        $root = %*ENV<SP6_PREFIX> ?? "/var/data/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !!  "/var/data/sparrow6".IO.absolute;
+
+        unless $root.IO ~~ :e {
+          mkdir $root;
+          self!log("sparrow root directory created", $root);
+        }
+
+        self!log("sparrow root directory choosen", $root);
+
+      }
+
+    }
+
+    # cache directory as an internal storage
+
+    mkdir "{$root}/.cache";
+
+    # directory with cli tasks
+
+    mkdir "{$root}/tasks";
+
+    self.sparrow-root = $root;
+
+  }
 }

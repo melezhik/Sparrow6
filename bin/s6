@@ -14,18 +14,26 @@ sub MAIN (
   Bool :$upload           = False, 
   Bool :$repo-init        = False, 
   Bool :$install          = False, 
-  Bool :$run              = False, 
+  Bool :$task-add         = False, 
+  Bool :$task-run         = False, 
+  Bool :$task-set         = False, 
+  Bool :$task-list        = False, 
+  Bool :$task-del         = False, 
+  Bool :$module-run       = False, 
   Bool :$force            = False, 
+  Str  :$prefix, 
 )
 
 {
 
   my $repo-api = Sparrow6::Task::Repository::Api.new(
-    debug   => $debug
+    debug   => $debug,
+    prefix  => $prefix
   );
 
   my $task-cli = Sparrow6::Task::Cli.new(
-    debug   => $debug
+    debug   => $debug,
+    prefix  => $prefix
   );
 
   if ($help) {
@@ -48,9 +56,29 @@ sub MAIN (
     $repo-api.console("install plugin $thing");
     $repo-api.plugin-install($thing, %( force => $force ));
 
-  } elsif $run && $thing {
+  } elsif $task-run && $thing {
 
-    $task-cli.console("run $thing");
+    $task-cli.console("run task $thing");
+
+  } elsif $module-run && $thing {
+
+    $task-cli.console("run module $thing");
+
+  } elsif $task-add && $thing {
+
+    $task-cli.console("add task $thing");
+
+  } elsif $task-del && $thing {
+
+    $task-cli.console("delete task $thing");
+
+  } elsif $task-set && $thing {
+
+    $task-cli.console("set task $thing");
+
+  } elsif $task-list {
+
+    $task-cli.console("list tasks");
 
   } elsif $index-update {
 
