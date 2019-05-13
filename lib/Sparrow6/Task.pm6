@@ -5,7 +5,6 @@ use v6;
 unit module Sparrow6::Task;
 
 use Sparrow6::Common::Helpers;
-use JSON::Tiny;
 use File::Directory::Tree;
 
 class Cli
@@ -45,17 +44,17 @@ class Cli
       s6 --install $plugin
       s6 --install --force $plugin # reinstall, even though if higher version is here
 
-    run task:
-      s6 --task-run plg-name@param1=value2,@param2=value2
+    run plugin:
+      s6 --plg-run plg-name@param1=value2,@param2=value2
 
-    create task:
-      s6 --task-add plg-name@task/path
+    create/update task:
+      s6 --task-set task/path
+
+    run task:
+      s6 --task-run task/path
 
     delete task:
       s6 --task-del task/path
-
-    configure task:
-      s6 --task-set task/path
 
     list tasks:
       s6 --task-list
@@ -68,35 +67,35 @@ DOC
   }
   
 
-  method task-add ($thing)  {
+  method task-set ($path)  {
  
-    if $thing ~~ /^^ \s* (\S+) '@'  (\S+) \s* ^^ / {
+    my $task-path = self!task-path($path);
 
-      my $plugin = "$0"; 
+    mkdir $task-path;
 
-      my $task-path = self!task-path("$1");
+    self!log("create task dir", $task-path);
 
-      mkdir $task-path;
+    if "{$task-path}/task.pl6".IO ~~ e {
 
-      self!log("create task dir", $task-path);
+      self.console("{$task-path}/task.pl6 exists, update task");
 
-      if "{$task-path}/task.json".IO ~~ e {
+      die "EDITOR env is not set" unless %*ENV<EDITOR>;
 
-        self.console("{$task-path}/task.json exists, update plugin information")
+      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
 
-      } 
+    }  else {
 
-      self!log("task json","{$task-path}/task.json");
+      self!log("task file","{$task-path}/task.pl6");
 
-      my $fh = open "{$task-path}/task.json", :w;
+      my $fh = open "{$task-path}/task.pl6", :w;
 
-      $fh.say( to-json( %( plugin => $plugin ) ) );
+      $fh.say("task-run \"task-name\", \"plugin-name\", \%(\n);");
 
       $fh.close;
 
-    } else {
+      die "EDITOR env is not set" unless %*ENV<EDITOR>;
 
-      die "usage: task-add plugin\@task/path"
+      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
 
     }
 
@@ -112,18 +111,15 @@ DOC
 
   }
 
-  method task-set ($path)  {
-  
-  }
 
   method task-run ($path) {
   
   }
 
   method task-list () {
-  
+
     shell("find {self.sparrow-root}/tasks -name task.json -execdir pwd \\;| sed -n 's|^{self.sparrow-root}/tasks/||p'")
-  
+
   }
 
   method !task-path ($path) {
