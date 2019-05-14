@@ -14,9 +14,9 @@ sub MAIN (
   Bool :$upload           = False, 
   Bool :$repo-init        = False, 
   Bool :$install          = False, 
-  Bool :$task-add         = False, 
   Bool :$task-run         = False, 
   Bool :$task-set         = False, 
+  Bool :$task-show        = False, 
   Bool :$task-list        = False, 
   Bool :$task-del         = False, 
   Bool :$module-run       = False, 
@@ -60,25 +60,35 @@ sub MAIN (
 
     $task-cli.console("run task $thing");
 
+    $task-cli.task-run($thing);
+
   } elsif $module-run && $thing {
 
     $task-cli.console("run module $thing");
-
-  } elsif $task-add && $thing {
-
-    $task-cli.console("add task $thing");
-
-  } elsif $task-del && $thing {
-
-    $task-cli.console("delete task $thing");
 
   } elsif $task-set && $thing {
 
     $task-cli.console("set task $thing");
 
+    $task-cli.task-set($thing);
+
+  } elsif $task-show && $thing {
+
+    $task-cli.console("show task $thing");
+
+    $task-cli.task-show($thing);
+
+  } elsif $task-del && $thing {
+
+    $task-cli.console("delete task $thing");
+
+    $task-cli.task-del($thing);
+
   } elsif $task-list {
 
     $task-cli.console("list tasks");
+
+    $task-cli.task-list;
 
   } elsif $index-update {
 
@@ -88,6 +98,7 @@ sub MAIN (
   } elsif $list {
 
     $repo-api.console("installed plugins");
+
     for $repo-api.installed-plugins() -> $i {
       say "{$i[0]} ... $i[1] ... $i[2]"
     }

@@ -6,6 +6,7 @@ unit module Sparrow6::Task;
 
 use Sparrow6::Common::Helpers;
 use File::Directory::Tree;
+use Sparrow6::DSL;
 
 class Cli
 
@@ -50,6 +51,9 @@ class Cli
     create/update task:
       s6 --task-set task/path
 
+    show task:
+      s6 --task-show task/path
+
     run task:
       s6 --task-run task/path
 
@@ -75,7 +79,7 @@ DOC
 
     self!log("create task dir", $task-path);
 
-    if "{$task-path}/task.pl6".IO ~~ e {
+    if "{$task-path}/task.pl6".IO ~~ :e {
 
       self.console("{$task-path}/task.pl6 exists, update task");
 
@@ -89,7 +93,7 @@ DOC
 
       my $fh = open "{$task-path}/task.pl6", :w;
 
-      $fh.say("task-run \"task-name\", \"plugin-name\", \%(\n);");
+      $fh.say("task-run \"{$path}\", \"plugin-name\", \%(\n);");
 
       $fh.close;
 
@@ -109,16 +113,36 @@ DOC
 
     self!log("task dir erased", "$task-path");
 
+    if "{$task-path}".IO ~~ :d {
+
+      rmdir $task-path;
+
+      self!log("task dir removesd", "$task-path");
+
+    }
+
   }
 
 
   method task-run ($path) {
-  
+
+    my $task-path = self!task-path($path);
+
+    EVALFILE "{$task-path}/task.pl6";
+
+  }
+
+  method task-show ($path) {
+
+    my $task-path = self!task-path($path);
+
+    say slurp "{$task-path}/task.pl6";
+
   }
 
   method task-list () {
 
-    shell("find {self.sparrow-root}/tasks -name task.json -execdir pwd \\;| sed -n 's|^{self.sparrow-root}/tasks/||p'")
+    shell("find {self.sparrow-root}/tasks -name task.pl6 -execdir pwd \\;| sed -n 's|^{self.sparrow-root}/tasks/||p'")
 
   }
 
