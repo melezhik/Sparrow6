@@ -41,12 +41,33 @@ Done
 + module_run added
 + Powershell support
 + Renaming: suite.yaml => config.yaml
++ Renaming: story* => task*
++ Renaming: story  => task
++ Rewrite Sparrow client to s6 ( Sparrow::S6 )
++ Switch Tomtit to Updated Sparrowdo version ( github master branch )
++ Switch Sparrowdo to Updated Sparrowdo version ( github master branch )
+
 Urgent
 ======
 
+- Create information on SparrowHub retirement - reddit, remove SparrowHub reference from docs
+
+- Consider lightweight SparrowHub alternative ( Azure free host, domain )
+
+- Git repository of Sparrow6 plugins
+
+- s6 cli
+  - module_run
+  - save / restore tasks
+
+- sparrowdo - module_run, task_run cli options
+
 - Perl6 support ( after renaming )
+
 - Write tests for Ruby common libraries - $task-dir/common.rb $root-dir/common.rb
+
 - Write tests for Powershell streams support
+
 - Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
 
 - Sparrowdo
@@ -64,9 +85,7 @@ New syntax / renaming
 ===================
 ===================
 
-  - story* => task*
-  - story => task
-  - modules => subtask
+  - modules => subtask (???)
   - story_var => param
   - ignore_story_err() => ignore_error()
   - target_os() => os() # implemented but should be documented
@@ -126,31 +145,21 @@ Low priority
 - Don't strip comments from one-line code and generator expressions
 
 
-Other Languages Support
-=======================
-- Powershell
-
-
 Other tools support
 ===================
 
-- Rewrite Sparrow client to s6 ( Sparrow::S6 ). What features should we keep? What features should we drop?
-
-- Switch Tomtit to Updated Sparrowdo version.
-
 - Port existed Sparrowdo:: Modules to Sparrow6 - Sparrowdo::Core::DSL:: ==> Sparrow6:DSL::
 
-- Switch Sparky to Updated Sparrowdo version
+- Switch Sparky to Updated Sparrowdo version ( done partly, need to check )
 
 - Switch Sparrowform to Updated Sparrowdo version
 
-- Make Sparrowhub plugins compatible with Sparrow6
-
-- Update information on SparrowHub
+- Make Old Sparrowhub plugins compatible with Sparrow6
 
 
 Breaking changes
 ================
+- SparrowHub is removed
 - truncating to the `match_l` is removed, we reports check results as is, even for really long matched strings (examples/match-length.pl6)
 - `:blank` is deprecated, you should use regexp: `^^ \s* $$`  instead
 - `suite.ini`, `suite.json` are not supported
