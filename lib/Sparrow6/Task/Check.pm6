@@ -194,7 +194,7 @@ class Api
 
     $!last-check-status = $status;
 
-    self.current-context.change-context(@new-context);
+    self.current-context.change-context(@new-context) if @new-context;
 
     if $.debug {
         say "CAPTURES:", @captures.perl;
