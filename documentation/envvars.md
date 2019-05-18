@@ -10,7 +10,7 @@ For example:
 
     SP6_REPO=file:///var/sparrow-local-repo
 
-    SP6_REPO=https://sparrowhub.org
+    SP6_REPO=http://192.168.0.1
 
 - SP6_DEBUG
 

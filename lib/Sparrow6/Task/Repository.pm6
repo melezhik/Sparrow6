@@ -24,7 +24,7 @@ class Api
 
 {
 
-  has Str   $.url = %*ENV<SP6_REPO> || "https://sparrowhub.org";
+  has Str   $.url = %*ENV<SP6_REPO> || "{%*ENV<HOME>}/repo";
   has Str   $.sparrow-root is rw;
   has Str   $.prefix;
   has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False ;

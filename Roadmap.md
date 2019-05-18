@@ -43,14 +43,16 @@ Done
 + Renaming: suite.yaml => config.yaml
 + Renaming: story* => task*
 + Renaming: story  => task
++ Renaming: story.check  => task.check
 + Rewrite Sparrow client to s6 ( Sparrow::S6 )
 + Switch Tomtit to Updated Sparrowdo version ( github master branch )
 + Switch Sparrowdo to Updated Sparrowdo version ( github master branch )
++ SparrowHub reference removed from docs
 
 Urgent
 ======
 
-- Create information on SparrowHub retirement - reddit, remove SparrowHub reference from docs
+- Create information on SparrowHub retirement - reddit
 
 - Consider lightweight SparrowHub alternative ( Azure free host, domain )
 
@@ -82,14 +84,13 @@ Urgent
   - port existed Sparrowdo:: Modules to use Sparrow6
 
 New syntax / renaming
-===================
-===================
+=====================
+=====================
 
   - modules => subtask (???)
-  - story_var => param
+  - task_var => param (???)
   - ignore_story_err() => ignore_error()
   - target_os() => os() # implemented but should be documented
-  - story.check => task.check
   - meta.txt => task.txt
   - support `$SP6_REPO_USER` and `$SP6_REPO_TOKEN`
   - sparrow.json => sparrow6.json (?)

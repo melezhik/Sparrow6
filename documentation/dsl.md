@@ -25,9 +25,9 @@ Sparrow6 DSL functions spec.
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| user-create | create user | `user-create($name)`| [user](https://sparrowhub.org/info/user) | 
-| user-delete | delete user | `user-delete($name)`| [user](https://sparrowhub.org/info/user) |
-| user        | create/delete user | `user($name,[%args])`| [user](https://sparrowhub.org/info/user) |
+| user-create | create user | `user-create($name)`| [user](https://github.com/melezhik/sparrow-plugins/tree/master/user) | 
+| user-delete | delete user | `user-delete($name)`| [user](https://github.com/melezhik/sparrow-plugins/tree/master/user) |
+| user        | create/delete user | `user($name,[%args])`| [user](https://github.com/melezhik/sparrow-plugins/tree/master/user) |
 
 Examples:
 
@@ -42,9 +42,9 @@ Examples:
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| group-create | create group | `group-create($name)`| [group](https://sparrowhub.org/info/group) | 
-| group-delete | delete group | `group-delete($name)`| [group](https://sparrowhub.org/info/group) |
-| group        | create/delete group | `group($name,[%args])`| [group](https://sparrowhub.org/info/group) |
+| group-create | create group | `group-create($name)`| [group](https://github.com/melezhik/sparrow-plugins/tree/master/group) | 
+| group-delete | delete group | `group-delete($name)`| [group](https://github.com/melezhik/sparrow-plugins/tree/master/group) |
+| group        | create/delete group | `group($name,[%args])`| [group](https://github.com/melezhik/sparrow-plugins/tree/master/group) |
 
 Examples:
 
@@ -59,8 +59,8 @@ Examples:
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| package-install | install software package | `package-install(@list\|$list)` | [package-generic](https://sparrowhub.org/info/package-generic) |
-| cpan-package-install | install CPAN package | `cpan-package-install(@list\|$list,%opts)` | [cpan-package](https://sparrowhub.org/info/cpan-package) | 
+| package-install | install software package | `package-install(@list\|$list)` | [package-generic](https://github.com/melezhik/sparrow-plugins/tree/master/package-generic) |
+| cpan-package-install | install CPAN package | `cpan-package-install(@list\|$list,%opts)` | [cpan-package](https://github.com/melezhik/sparrow-plugins/tree/master/cpan-package) | 
 | cpan-package         | alias for cpan-install function | * | *  |
 
 Examples:
@@ -129,12 +129,12 @@ Examples:
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| service-start | start service | `service-start($name)`| [service](https://sparrowhub.org/info/service) | 
-| service-restart | restart service | `service-restart($name)`| [service](https://sparrowhub.org/info/service) | 
-| service-stop | stop service | `service-stop($name)`| [service](https://sparrowhub.org/info/service) | 
-| service-enable | enable service | `service-enable($name)`| [service](https://sparrowhub.org/info/service) | 
-| service-disable | disable service | `service-disable($name)`| [service](https://sparrowhub.org/info/service) | 
-| service       | start/stop/restart/enable/disable service | `service($name, %args)`| [service](https://sparrowhub.org/info/service) |
+| service-start | start service | `service-start($name)`| [service](https://github.com/melezhik/sparrow-plugins/tree/master/service) | 
+| service-restart | restart service | `service-restart($name)`| [service](https://github.com/melezhik/sparrow-plugins/tree/master/service) | 
+| service-stop | stop service | `service-stop($name)`| [service](https://github.com/melezhik/sparrow-plugins/tree/master/service) | 
+| service-enable | enable service | `service-enable($name)`| [service](https://github.com/melezhik/sparrow-plugins/tree/master/service) | 
+| service-disable | disable service | `service-disable($name)`| [service](https://github.com/melezhik/sparrow-plugins/tree/master/service) | 
+| service       | start/stop/restart/enable/disable service | `service($name, %args)`| [service](https://github.com/melezhik/sparrow-plugins/tree/master/service) |
 
 Examples:
 
@@ -182,9 +182,9 @@ All the parameters are required.
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| directory-create | create directory | `directory-create($path,%args)`| [directory](https://sparrowhub.org/info/directory) | 
-| directory-delete | delete directory | `directory-delete($path)`| [directory](https://sparrowhub.org/info/directory) |
-| directory        | create/delete directory | `directory($path,[%args])`| [directory](https://sparrowhub.org/info/directory) |
+| directory-create | create directory | `directory-create($path,%args)`| [directory](https://github.com/melezhik/sparrow-plugins/tree/master/directory) | 
+| directory-delete | delete directory | `directory-delete($path)`| [directory](https://github.com/melezhik/sparrow-plugins/tree/master/directory) |
+| directory        | create/delete directory | `directory($path,[%args])`| [directory](https://github.com/melezhik/sparrow-plugins/tree/master/directory) |
 
 Examples:
 
@@ -212,9 +212,9 @@ Examples:
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| file-create | create file | `file-create($path,%args)`| [file](https://sparrowhub.org/info/file) | 
-| file-delete | delete file | `file-delete($path)`| [file](https://sparrowhub.org/info/file) |
-| file        | create/delete file | `file($path,[%args])`| [file](https://sparrowhub.org/info/file) |
+| file-create | create file | `file-create($path,%args)`| [file](https://github.com/melezhik/sparrow-plugins/tree/master/file) | 
+| file-delete | delete file | `file-delete($path)`| [file](https://github.com/melezhik/sparrow-plugins/tree/master/file) |
+| file        | create/delete file | `file($path,[%args])`| [file](https://github.com/melezhik/sparrow-plugins/tree/master/file) |
 
 Examples:
 
@@ -282,7 +282,7 @@ Templates are files gets populated from templates sources in [Template-Toolkit](
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| template-create | create template | `template-create($path,%args)`| [templater](https://sparrowhub.org/info/templater) | 
+| template-create | create template | `template-create($path,%args)`| [templater](https://github.com/melezhik/sparrow-plugins/tree/master/templater) | 
 | template        | alias for template-create | * | * |
 
 Examples:
@@ -323,9 +323,9 @@ This function executes bash code.
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| bash | execute bash, default user | `bash($command)`| [bash](https://sparrowhub.org/info/bash) | 
-| bash | execute bash, for user | `bash($command,$user)`| [bash](https://sparrowhub.org/info/bash) |
-| bash | execute bash, generic form | `bash($command,%args)`| [bash](https://sparrowhub.org/info/bash) |
+| bash | execute bash, default user | `bash($command)`| [bash](https://github.com/melezhik/sparrow-plugins/tree/master/bash) | 
+| bash | execute bash, for user | `bash($command,$user)`| [bash](https://github.com/melezhik/sparrow-plugins/tree/master/bash) |
+| bash | execute bash, generic form | `bash($command,%args)`| [bash](https://github.com/melezhik/sparrow-plugins/tree/master/bash) |
 
 Examples:
 
@@ -511,7 +511,7 @@ Asserts are functions to audit your server state. Here are some examples
 
 It's just simple check by `curl's GET` with follow redirect enabled.
 
-    http-ok 'http://sparrowhub.org';
+    http-ok 'http://perl6.org';
 
 Ignore http proxy when making request:
 
@@ -527,7 +527,7 @@ The same as above but with `port` and `path`:
 
 Checks that web page has content:
 
-    http-ok 'http://sparrowhub.org', %( has-content => 'SparrowHub' );
+    http-ok 'http://perl6.org', %( has-content => "'Perl 6'" );
  
 
 ## Helper functions
@@ -569,5 +569,5 @@ respected Sparrow6 plugins can support different operation system selectively
 
 # See also
 
-[Sparrowdo](https://github.com/melezhik/sparrowdo/tree/Sparrow6) - configuration management tool based on Sparrow6.
+[Sparrowdo](https://github.com/melezhik/sparrowdo/tree/sparrowdo) - configuration management tool based on Sparrow6.
 

@@ -76,7 +76,7 @@ Plugin install
     use Sparrow6::Task::Repository;
 
     Sparrow6::Task::Repository::Api.new(
-      url     => "https://sparrowhub.org",
+      url     => "http://192.168.0.1",
       debug   => True,
     ).plugin-install("foo-test");
 

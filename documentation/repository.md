@@ -2,36 +2,54 @@
 
 Sparrow6 repositories store distributable Sparrow6 tasks packaged as plugins.
 
+## Repositories types
+
 There are two types of repositories:
 
-- Public - [SparrowHub](https://sparrowhub.org)
+- Remote
 
-SparrowHub is public repository of community Sparrow6 plugins.
+Http / Ftp / Rsync based repositories
 
 - Local
 
-Local files system based repositories, you can host and maintain them through simple Web service (Ninx/Apache):
+Local files system based repositories
 
-Init local repository
+## Create repository
 
-    repo_root=/var/data/local-repo
+One need to create repository root directory:
+
+    repo_root=/var/repo
+    mkdir $repo_root
+
+And then initialize the directory using Sparrow6 cli:
 
     s6 --repo-init $repo_root
 
-Checkout plugins source code from git repository
+Then just checkout plugins source code from scm and upload to the repository:
 
     git clone https://github.com/melezhik/sparrow-plugins
-
-Upload plugins to local repository
 
     export SP6_REPO=file://$repo_root
 
     cd sparrow-plugins
 
-    find -maxdepth 2 -mindepth 2 -name sparrow.json -execdir s6 --upload --debug \;
+    find -maxdepth 2 -mindepth 2 -name sparrow.json -execdir s6 --upload \;
 
-Serve local repository through httpd/nginx
 
+The process of creation of remote repositories follows the same logic, with only difference 
+that one need to maintain serving repository index and files through web/ftp/rsync server.
+
+For example for http based repository one can choose nginx web server with root directory equal to repository root:
+
+    listen 192.168.0.1:80;
+
+    location / {
+        root /var/repo/
+    }
+
+To use remote repository simple set `SP6_REPO` variable:
+
+    export SP6_REPO=http://192.168.0.1
 
 # See also
 

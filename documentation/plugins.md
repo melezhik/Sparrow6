@@ -2,114 +2,83 @@
 
 Sparrow6 plugins are distributable tasks. 
 
-Users can choose between public repository ( SparrowHub ) 
+Users upload plugins to [repositories](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md)
 
-and local file storage repository to distribute their tasks.
+To use plugins one need to define `SP6_REPO` environmental variable pointing to certain repository.
 
-Set `SP6_REPO` environmental variable to define repository:
+For example:
 
-    export SP6_REPO=https://sparrowhub.org # SparrowHub repository
+    export SP6_REPO=http://192.168.0.1 # http based repository
 
-    export SP6_REPO=file:///var/data/local-repository # local repository
+    export SP6_REPO=https://192.168.0.1 # https based repository
 
+    export SP6_REPO=ftp://192.168.0.1 # ftp based repository
+
+    export SP6_REPO=file:///var/repo # local repository
 
 # Upload plugin to repository
 
-Once task is [created](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) you should do 4 simple steps:
+Once task is [created](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) 
 
-* Get registered on SparrowHub and create a token ( you don't need this step if you upload to local repository )
+one need to create plugin meta file and then upload plugin to repository using Sparrow6 cli
 
-* Setup sparrowhub.json file ( you don't need this step if you upload to local repository )
+## Plugin meta file
 
-* Create a plugin meta file - sparrow.json
+`sparrow.json` is a special file containing all the information required for plugin to be uploaded 
+to repository.
 
-* Upload a plugin with the help of `s6 --upload` command
-
-## Get registered on SparrowHub
-
-* Go to [https://sparrowhub.org/sign_up](https://sparrowhub.org/sign_up) and create an account
-
-## Generate a token
-
-Login into SparrowHub, go to Profile page and hit "Regenerate Token" on  [https://sparrowhub.org/token](https://sparrowhub.org/token)  page.
-
-## Setup sparrowhub.json
-
-Once your get you token, setup a sparrowhub credentials on the machine where you are going upload plugin from:
-
-    ~/sparrowhub.json
-
-      {
-          "user"  : "melezhik",
-          "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
-      }
-
-***NOTE!*** Another way to provide SparrowHub credentials is to set `$SP6_REPO_USER` and `$SP6_REPO_TOKEN` environment variables:
-
-    export SP6_REPO_USER=melezhik
-
-    export SP6_REPO_TOKEN=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83
-
-
-## Create plugin meta file
-
-Sparrow.json file holds plugin meta information required for plugin gets uploaded to SparrowHub.
-
-Create `sparrow.json` file and place it in a plugin root directory:
+`sparrow.json` to be placed in the Sparrow6 task root directory, for example:
 
     {
-        "name": "my-plugin",
+        "name": "hello-world",
         "version": "0.1.0",
-        "description" : "the plugin to do some tasks",
-        "url" : "https://github.com/melezhik/my-plugin",
+        "description" : "my very first Sparrow6 plugin",
+        "url" : "https://github.com/melezhik/hello-world",
     }
 
-## Meta file structure
+## Plugin meta file structure
 
 * `name` - plugin name.
 
 Only symbols \`a-zA-Z1-9_-.' are allowable in plugin name. This parameter is obligatory, no default value.
 
-* `version` - Perl version string.
+* `version` - plugin version
 
-This parameter is obligatory. A detailed information concerning version syntax could be find here -
-[https://metacpan.org/pod/distribution/version/lib/version.pm](https://metacpan.org/pod/distribution/version/lib/version.pm)
-
-
-* `url` - a plugin web site http URL
-
-This parameter is optional and could be useful when you want to refer users to plugin documentation site.
+This parameter is obligatory and should be defined in format of [Perl5 version strings](https://metacpan.org/pod/distribution/version/lib/version.pm)
 
 * `description` - a short description of a plugin.
 
-This one is optional, but very appreciated.
+This parameter is optional, but recommended.
+
+* `url` - plugin web site http URL
+
+This parameter is optional and could be useful when one need to refer to plugin documentation site.
 
 * `python_version` - sets Python language version.
 
-If you install pip modules targeted for Python3 you may set python_version in sparrow.json file:
+In case plugin has pip modules dependencies, respected pip installer version will be chosen.
 
-    python_version : 3
-
-That will ensure to use `pip3` ( not `pip` ) to install dependencies in `requirements.txt` file
-
-* `sparrow6_version` - sets minimal version of Sparrow6 required by plugin.
-
-This is mostly useful for Sparrow6 plugin developers. Some plugins may rely on the latest versions of Sparrow6 and
-couldn't run correctly on the older versions, to avoid any confusion plugins developers may declare
-a minimum version so that if the target machine does have it an exception will be raised.
-
+Available values is 2 or 3.
 
 ## Upload plugin
 
-Go to directory where your plugin source code and:
+Go to directory with plugin source code and run Sparrow6 cli:
 
     s6 --upload
 
-That's it!
+That's it! Plugin is ready to use:
 
-If you want to troubleshoot upload plugin errors use `--debug` flag.
+    s6 --index-update
+    s6 --install hello-world
 
-# See also 
+Note that plugin upload operation is only available for local repositories. One can't upload
+plugins to remotely.
+
+## Troubleshooting plugin upload
+
+Adding `--debug` flag will print more low level information to console when uploading plugin
+
+# See also
 
 [Repositories](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md)
 
