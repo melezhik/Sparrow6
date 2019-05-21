@@ -14,6 +14,7 @@ sub MAIN (
   Bool :$upload           = False, 
   Bool :$repo-init        = False, 
   Bool :$install          = False, 
+  Bool :$plg-run          = False, 
   Bool :$task-run         = False, 
   Bool :$task-set         = False, 
   Bool :$task-show        = False, 
@@ -61,6 +62,12 @@ sub MAIN (
     $task-cli.console("run task $thing");
 
     $task-cli.task-run($thing);
+
+  } elsif $plg-run && $thing {
+
+    $task-cli.console("run plg $thing");
+
+    $task-cli.plg-run($thing);
 
   } elsif $module-run && $thing {
 

@@ -105,6 +105,24 @@ DOC
 
   }
 
+  method task-show ($path)  {
+
+    my $task-path = self!task-path($path);
+
+    if "{$task-path}/task.pl6".IO ~~ :f {
+
+      self!log("task show", "$task-path/task.pl6");
+
+      say slurp "{$task-path}/task.pl6".IO;
+
+    } else {
+
+      die "task $path not found";
+
+    }
+
+  }
+
   method task-del ($path)  {
 
     my $task-path = self!task-path($path);
@@ -123,7 +141,6 @@ DOC
 
   }
 
-
   method task-run ($path) {
 
     my $task-path = self!task-path($path);
@@ -132,17 +149,27 @@ DOC
 
   }
 
-  method task-show ($path) {
-
-    my $task-path = self!task-path($path);
-
-    say slurp "{$task-path}/task.pl6";
-
-  }
 
   method task-list () {
 
     shell("find {self.sparrow-root}/tasks -name task.pl6 -execdir pwd \\;| sed -n 's|^{self.sparrow-root}/tasks/||p'")
+
+  }
+
+  method plg-run ($thing is copy)  {
+
+    if $thing ~~ s/(\S+) '@' * // {
+
+      my $plg = "$0";
+
+      self.console("run plugin $plg");
+
+      if $thing  {
+        my %params = $thing.split(/\,/).split(/ '='/);
+        self.console("params",%params.perl);
+      }
+
+    }
 
   }
 
