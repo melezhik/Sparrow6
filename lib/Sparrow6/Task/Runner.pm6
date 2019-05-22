@@ -85,7 +85,7 @@ class Api
       my $plugin-config = load-yaml(slurp $.config);
       self!log("parse plugin configuration file",$plugin-config.perl);
       self!log("input parameters",$.parameters.perl);
-      self.task-config = merge-hash $plugin-config, $.parameters;
+      self.task-config = merge-hash $plugin-config, $.parameters, :no-append-array;
       self!log("merged task config",$.task-config.perl);
 
       my $fh = open "{$.cache-root-dir}/config.json", :w;
