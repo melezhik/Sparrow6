@@ -70,6 +70,7 @@ That's it! Plugin is ready to use:
 
     s6 --index-update
     s6 --install hello-world
+    s6 --plg-run hello-world
 
 Note that plugin upload operation is only available for local repositories. One can't upload
 plugins to remotely.
