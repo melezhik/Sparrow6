@@ -39,6 +39,18 @@ role Role {
   }
 
 
+  method plugin-man ( $pid ) {
+
+    die "unknown plugin $pid" unless self.plugin-directory($pid).IO ~~ :d;
+
+    if "{self.plugin-directory($pid)}/README.md".IO ~~ :f {
+      say slurp("{self.plugin-directory($pid)}/README.md");
+    } else {
+      say "no manual found"
+    }
+
+  }
+
   method plugin-install ( $pid, %args? ) {
 
     # copied from Perl5 Sparrow
@@ -110,7 +122,7 @@ role Role {
 
     } else {
 
-      die "unknown plugin";
+      die "unknown plugin $pid";
 
     }
 

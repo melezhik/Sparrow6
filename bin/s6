@@ -15,9 +15,10 @@ sub MAIN (
   Bool :$repo-init        = False, 
   Bool :$install          = False, 
   Bool :$plg-run          = False, 
+  Bool :$plg-man          = False, 
   Bool :$task-run         = False, 
   Bool :$task-set         = False, 
-  Bool :$task-show        = False, 
+  Bool :$task-cat         = False, 
   Bool :$task-list        = False, 
   Bool :$task-del         = False, 
   Bool :$module-run       = False, 
@@ -55,6 +56,7 @@ sub MAIN (
   } elsif $install && $thing {
 
     $repo-api.console("install plugin $thing");
+
     $repo-api.plugin-install($thing, %( force => $force ));
 
   } elsif $task-run && $thing {
@@ -69,6 +71,12 @@ sub MAIN (
 
     $task-cli.plg-run($thing);
 
+  } elsif $plg-man && $thing {
+
+    $repo-api.console("man plg $thing");
+
+    $repo-api.plugin-man($thing);
+
   } elsif $module-run && $thing {
 
     $task-cli.console("run module $thing");
@@ -79,11 +87,11 @@ sub MAIN (
 
     $task-cli.task-set($thing);
 
-  } elsif $task-show && $thing {
+  } elsif $task-cat && $thing {
 
     $task-cli.console("show task $thing");
 
-    $task-cli.task-show($thing);
+    $task-cli.task-cat($thing);
 
   } elsif $task-del && $thing {
 

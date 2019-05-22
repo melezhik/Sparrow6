@@ -14,7 +14,7 @@ class Cli
 
 {
 
-  has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False ;
+  has Bool  $.debug;
   has Str   $.name = "task-cli";
   has Str   $.sparrow-root is rw;
   has Str   $.prefix;
@@ -48,11 +48,14 @@ class Cli
     run plugin:
       s6 --plg-run plg-name@param1=value2,@param2=value2
 
+    man plugin:
+      s6 --plg-man plg-name
+
     create/update task:
       s6 --task-set task/path
 
     show task:
-      s6 --task-show task/path
+      s6 --task-cat task/path
 
     run task:
       s6 --task-run task/path
@@ -105,7 +108,7 @@ DOC
 
   }
 
-  method task-show ($path)  {
+  method task-cat ($path)  {
 
     my $task-path = self!task-path($path);
 
@@ -158,16 +161,27 @@ DOC
 
   method plg-run ($thing is copy)  {
 
-    if $thing ~~ s/(\S+) '@' * // {
+    if $thing ~~ /\S+/ && $thing ~~ /^^ (<- [ @ ] > ** 1..*) / {
 
       my $plg = "$0";
 
+      my %params = Hash.new;
+
       self.console("run plugin $plg");
 
-      if $thing  {
-        my %params = $thing.split(/\,/).split(/ '='/);
-        self.console("params",%params.perl);
+      if $thing ~~ /'@' ( \S+ )  $$/ {
+
+        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
+
+        self!log("plg params",%params.perl);
+
       }
+
+      task-run $plg, $plg, %params;
+
+    } else {
+
+      die "bad thing - $thing";
 
     }
 
