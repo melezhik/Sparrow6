@@ -50,6 +50,8 @@ Done
 + SparrowHub reference removed from docs
 + modules/ => tasks/ renaming
 + ignore_task_err => ignore_task_error renaming
++ story_run => task_run renaming
++ story_var => task_var renaming
 
 Urgent
 ======
@@ -89,12 +91,9 @@ New syntax / renaming
 =====================
 =====================
 
-  - task_var => param (???)
   - target_os() => os() # implemented but should be documented
   - meta.txt => task.txt (???)
   - sparrow.json => sparrow6.json (?)
-
-
 
 New features
 =============

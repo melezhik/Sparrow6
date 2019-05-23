@@ -120,66 +120,66 @@ You can also pass `root` parameter to set task root directory:
     ).task-run;
 
 
-# Sub tasks
+# Subtasks
 
-Sub tasks are tasks that get called by other tasks. You can think sub tasks as functions:
+Subtasks are tasks that get called by other tasks. You can think sub tasks as functions:
 
 
     hook.pl6
 
-      sub_task "execute", %( command => "uptime" )
+      task_run "execute", %( command => "uptime" )
 
-    subtask/execute/task.bash
+    tasks/execute/task.bash
 
-      $(param command) 
+      $(task_var command)
 
-* One define sub tasks at _reserved_ folder named `subtask`. 
+* One define sub tasks at _reserved_ folder named `tasks`.
 * To call subtask from other task one defines _hook_ file.
-* `subtask function` accepts relative task folder ( without `subtask/` chunk )
-* Subtask handles input parameters through `param` function
+* `subtask function` accepts relative task folder ( without `tasks/` chunk )
+* Subtask handles input parameters through `task_var` function
 
-`sub_task` function signatures for Sparrow6 supported languages:
+`task_run` function signatures for Sparrow6 supported languages:
 
     +------------+----------------------------------------------+
     | Language   | Signature                                    |
     +------------+----------------------------------------------+
-    | Perl6      | sub_task(String,HASH)                        |
-    | Perl       | sub_task(SCALAR,HASHREF)                     |
-    | Bash       | sub_task TASK_NANE NAME VAL NAME2 VAL2       | 
-    | Python(*)  | sub_task(STRING,DICT)                        | 
-    | Ruby       | sub_task(STRING,HASH)                        | 
-    | Powershell | sub_task(STRING,HASH)                        | 
+    | Perl6      | task_run(String,HASH)                        |
+    | Perl       | task_run(SCALAR,HASHREF)                     |
+    | Bash       | task_run TASK_NANE NAME VAL NAME2 VAL2       |
+    | Python(*)  | task_run(STRING,DICT)                        |
+    | Ruby       | task_run(STRING,HASH)                        |
+    | Powershell | task_run(STRING,HASH)                        |
     +------------+----------------------------------------------+
 
 (*) You need to use `from sparrow6lib import *` to import `set_stdout` function.
 
-`param` function signatures for Sparrow6 supported languages:
+`task_var` function signatures for Sparrow6 supported languages:
 
-    +------------------+---------------------------------------------+
-    | Language         | Signature                                   |
-    +------------------+---------------------------------------------+
-    | Perl6            | param(STRING)                               |
-    | Perl             | param(SCALAR)                               |
-    | Python(*)        | param(STRING)                               | 
-    | Ruby             | param(STRING)                               | 
-    | Bash (1-st way)  | $foo $bar ...                               |
-    | Bash (2-nd way)  | $(param foo.bar)                            |
-    | Powershell       | param(STRING)                               | 
-    +------------------+---------------------------------------------+
+    +------------------+------------------------------------------------+
+    | Language         | Signature                                      |
+    +------------------+------------------------------------------------+
+    | Perl6            | task_var(STRING)                               |
+    | Perl             | task_var(SCALAR)                               |
+    | Python(*)        | task_var(STRING)                               |
+    | Ruby             | task_var(STRING)                               |
+    | Bash (1-st way)  | $foo                                           |
+    | Bash (2-nd way)  | $(task_var foo)                                |
+    | Powershell       | task_var(STRING)                               |
+    +------------------+------------------------------------------------+
 
-(*) You need to use  `from sparrow6lib import *` to import `param` function.
+(*) You need to use  `from sparrow6lib import *` to import `task_var` function.
 
 In Bash you can use alternative notation to access sub task parameters:
 
-    subtask/hello-world/task.bash
+    tasks/hello-world/task.bash
 
       echo $he say $hello world
 
 Compare with:
 
-    subtask/hello-world/task.bash
+    tasks/hello-world/task.bash
 
-      echo $(param he) say $(param hello) world
+      echo $(task_var he) say $(task_var hello) world
 
 One can call subtask from other sub task and so on.
 
