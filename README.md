@@ -210,7 +210,7 @@ See [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/document
 
 Configuration management tool. 
 
-Visit [Sparrowdo](https://github.com/melezhik/sparrowdo/tree/Sparrow6) GH project for details.
+Visit [Sparrowdo](https://github.com/melezhik/sparrowdo) GH project for details.
 
 # Tomtit
 
