@@ -9,8 +9,8 @@ function set_stdout {
 # this syntax is deprecated
 # use `ignore_error` instead
 
-function ignore_task_err {
-  echo ignore_task_err:
+function ignore_task_error {
+  echo ignore_task_error:
 }
 
 function ignore_error {

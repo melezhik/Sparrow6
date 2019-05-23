@@ -1,1 +1,1 @@
-ignore_task_err 1
+ignore_task_error 1

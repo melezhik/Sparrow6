@@ -34,17 +34,17 @@ function run_task {
 # this syntax is deprecated
 # use `ignore_error` instead
 
-function ignore_task_err {
+function ignore_task_error {
 
   Param($val)
 
-  Write-Host "ignore_task_err: $val"
+  Write-Host "ignore_task_error: $val"
 
 }
 
-function ignore_task_err {
+function ignore_task_error {
 
-  Write-Host "ignore_task_err:"
+  Write-Host "ignore_task_error:"
 
 }
 

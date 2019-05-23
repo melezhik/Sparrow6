@@ -1,0 +1,8 @@
+generator: <<CODE
+!bash
+name=$(task_var name)
+echo hello: $name 
+echo
+bash_generator $name
+CODE
+

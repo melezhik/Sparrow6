@@ -1,0 +1,9 @@
+generator: <<CODE
+!bash
+if test -z "$FOO_THING"; then
+  echo assert: 0 FOO_THING variable is defined
+else
+  echo assert: 1 FOO_THING variable is defined
+fi
+echo FOO: $FOO_THING
+CODE

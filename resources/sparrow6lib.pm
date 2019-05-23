@@ -49,8 +49,8 @@ sub run_task {
 # this syntax is deprecated
 # use `ignore_error` instead
 
-sub ignore_task_err {
-  print "ignore_task_err:\n";
+sub ignore_task_error {
+  print "ignore_task_error:\n";
 }
 
 sub ignore_error {

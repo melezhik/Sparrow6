@@ -38,11 +38,11 @@ def run_task( path, params = [] ):
 # this syntax is deprecated
 # use `ignore_error` instead
 
-def ignore_task_err(val):
-  print "ignore_task_err: " + str(val)
+def ignore_task_error(val):
+  print "ignore_task_error: " + str(val)
 
 def ignore_error():
-  print "ignore_task_err: "
+  print "ignore_task_error: "
 
 def task_variables():
 

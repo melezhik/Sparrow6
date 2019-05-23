@@ -116,7 +116,7 @@ role Role {
     for $bash-cmd.out.lines -> $line {
       self!log("stdout",$line);
 
-      if $line ~~ / 'ignore_task_err:' / {
+      if $line ~~ / 'ignore_task_error:' / {
         $.ignore-task-error = True;
         self!log("ingnore task errors","enabled");
       }

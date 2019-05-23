@@ -33,8 +33,8 @@ end
 # this syntax is deprecated
 # use `ignore_error` instead
 
-def ignore_task_err val = nil
-  puts "ignore_task_err:"
+def ignore_task_error val = nil
+  puts "ignore_task_error:"
 end
 
 def ignore_error val = nil

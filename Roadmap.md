@@ -49,6 +49,7 @@ Done
 + Switch Sparrowdo to Updated Sparrowdo version ( github master branch )
 + SparrowHub reference removed from docs
 + modules/ => tasks/ renaming
++ ignore_task_err => ignore_task_error renaming
 
 Urgent
 ======
@@ -89,7 +90,6 @@ New syntax / renaming
 =====================
 
   - task_var => param (???)
-  - ignore_story_err() => ignore_error() ( now is ignore_task_err )
   - target_os() => os() # implemented but should be documented
   - meta.txt => task.txt (???)
   - sparrow.json => sparrow6.json (?)
