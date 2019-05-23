@@ -229,7 +229,7 @@ If hook has output, the _related_ task is executed and task output get merged wi
 
       Sparrow6::Task::Runner::Api.new(
         name  => "make an order",
-        parameters => %( price => 30 )        
+        parameters => %( mood => "sleepy" )        
       ).task-run;
 
     output
