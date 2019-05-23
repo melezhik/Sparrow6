@@ -136,7 +136,7 @@ role Role {
         $task-vars ~~ s/'task_var_json_begin'//;
         $task-vars ~~ s/'task_var_json_end'//;
         self.task-vars = from-json($task-vars||'{}');  
-        self!run-task("{$.root}/modules/$s");
+        self!run-task("{$.root}/tasks/$s");
         $task-vars = '';
       }
 

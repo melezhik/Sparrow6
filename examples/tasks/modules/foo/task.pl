@@ -1,3 +1,0 @@
-print "foo done\n";
-
-

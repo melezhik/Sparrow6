@@ -1,6 +1,0 @@
-generator:<<CODE
-!perl
-print "assert: ", defined(task_var("name")) ? 1 : 0, " variable name is defined \n";
-print "assert: ", defined(task_var("message")) ? 1 : 0, " variable message is defined \n";
-print task_var("name"), " say ", task_var("message"), "\n";
-CODE

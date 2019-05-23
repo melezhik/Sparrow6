@@ -1,7 +1,0 @@
-bar done
-hello bar!
-
-code: <<CODE
-our @foo;
-$foo[2]="bar was here";
-CODE

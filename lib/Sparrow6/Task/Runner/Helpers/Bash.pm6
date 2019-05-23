@@ -121,7 +121,7 @@ role Role {
 
       if $line ~~ /task":" \s+ (\S+)/ {
         self.task-vars = %task-vars;
-        self!run-task("{$.root}/modules/$0");
+        self!run-task("{$.root}/tasks/$0");
         %task-vars = %();
       }
     }

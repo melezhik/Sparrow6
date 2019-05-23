@@ -48,6 +48,7 @@ Done
 + Switch Tomtit to Updated Sparrowdo version ( github master branch )
 + Switch Sparrowdo to Updated Sparrowdo version ( github master branch )
 + SparrowHub reference removed from docs
++ modules/ => tasks/ renaming
 
 Urgent
 ======
@@ -87,12 +88,10 @@ New syntax / renaming
 =====================
 =====================
 
-  - modules => subtask (???)
   - task_var => param (???)
-  - ignore_story_err() => ignore_error()
+  - ignore_story_err() => ignore_error() ( now is ignore_task_err )
   - target_os() => os() # implemented but should be documented
-  - meta.txt => task.txt
-  - support `$SP6_REPO_USER` and `$SP6_REPO_TOKEN`
+  - meta.txt => task.txt (???)
   - sparrow.json => sparrow6.json (?)
 
 
