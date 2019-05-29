@@ -127,7 +127,7 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
 
     hook.pl6
 
-      task_run "execute", %( command => "uptime" )
+      run_task "execute", %( command => "uptime" )
 
     tasks/execute/task.bash
 
@@ -138,17 +138,17 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
 * `subtask function` accepts relative task folder ( without `tasks/` chunk )
 * Subtask handles input parameters through `task_var` function
 
-`task_run` function signatures for Sparrow6 supported languages:
+`run_task` function signatures for Sparrow6 supported languages:
 
     +------------+----------------------------------------------+
     | Language   | Signature                                    |
     +------------+----------------------------------------------+
-    | Perl6      | task_run(String,HASH)                        |
-    | Perl       | task_run(SCALAR,HASHREF)                     |
-    | Bash       | task_run TASK_NANE NAME VAL NAME2 VAL2       |
-    | Python(*)  | task_run(STRING,DICT)                        |
-    | Ruby       | task_run(STRING,HASH)                        |
-    | Powershell | task_run(STRING,HASH)                        |
+    | Perl6      | run_task(String,HASH)                        |
+    | Perl       | run_task(SCALAR,HASHREF)                     |
+    | Bash       | run_task TASK_NANE NAME VAL NAME2 VAL2       |
+    | Python(*)  | run_task(STRING,DICT)                        |
+    | Ruby       | run_task(STRING,HASH)                        |
+    | Powershell | run_task(STRING,HASH)                        |
     +------------+----------------------------------------------+
 
 (*) You need to use `from sparrow6lib import *` to import `set_stdout` function.
