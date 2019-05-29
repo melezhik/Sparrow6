@@ -1,6 +1,6 @@
 # Sparrow6
 
-Sparrow6 - Perl6 Automation Framework.
+Sparrow6 - Language Agnostic Automation Framework.
 
 # Install
 
