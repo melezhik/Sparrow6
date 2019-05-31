@@ -52,13 +52,15 @@ Done
 + ignore_task_err => ignore_task_error renaming
 + story_run => task_run renaming
 + story_var => task_var renaming
++ Consider lightweight SparrowHub alternative ( Azure free host, domain ) - http://repo.southcentralus.cloudapp.azure.com
++ Create information on SparrowHub retirement - reddit
 
 Urgent
 ======
 
-- Create information on SparrowHub retirement - reddit
+- Announce/document (?) repo.southcentralus.cloudapp.azure.com
 
-- Consider lightweight SparrowHub alternative ( Azure free host, domain )
+- Plugins - fix Perl5 generators as Array refs
 
 - Git repository of Sparrow6 plugins
 
@@ -66,7 +68,7 @@ Urgent
   - module_run
   - save / restore tasks
 
-- sparrowdo - module_run, task_run cli options
+- Sparrowdo - module_run, task_run cli options
 
 - Perl6 support ( after renaming )
 
@@ -84,8 +86,7 @@ Urgent
   - cwd cli support ( do we need it? )
   - convert outthentic tests to regular tests ( almost done )
   - vagrant support ( do we need it ? )
-  - git ( sparrlet support, do we need it ? )
-  - port existed Sparrowdo:: Modules to use Sparrow6
+  - git ( Sparrlets support, do we need it ? )
 
 New syntax / renaming
 =====================
@@ -97,6 +98,9 @@ New syntax / renaming
 
 New features
 =============
+
+These features are almost done, just list them here
+
 - task states ( ability to exchange data between tasks )
 - config.pl6 support
 - m10
@@ -129,15 +133,19 @@ Questionable
 - meta.txt
 - supporting outthentic messages
 - color/nocolor output
+- Dry run support (??? is it possible with Sparrow6? I doubt )
 - suite.json config support
-- dry run support
+
+Medium priority
+===============
+- Port existed Sparrowdo:: Modules to Sparrow6
+- Adjust existing Sparrow plugins ( documentation fixes, compatibility with Sparrow6 core )
 
 
 Low priority
 ============
-- task descriptions (task.txt)
+- Task descriptions (task.txt)
 - dump_streams() implimentation for Ruby, Python, Powershell
-- Port Sparrowdo::DSL:: modules to Sparrow6::DSL::
 - Free style parameters (args_cli)
 - Windows support ( run stories, run hooks )
 - Catch stderr for hooks/stories (?)
@@ -147,11 +155,9 @@ Low priority
 Other tools support
 ===================
 
-- Port existed Sparrowdo:: Modules to Sparrow6 - Sparrowdo::Core::DSL:: ==> Sparrow6:DSL::
-
 - Switch Sparky to Updated Sparrowdo version ( done partly, need to check )
 
-- Switch Sparrowform to Updated Sparrowdo version
+- Port Sparrowform to Sparrow6
 
 - Make Old Sparrowhub plugins compatible with Sparrow6
 
