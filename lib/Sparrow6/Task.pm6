@@ -159,31 +159,11 @@ DOC
 
   }
 
-  method plg-run ($thing is copy)  {
+  method plg-run ($thing)  {
 
-    if $thing ~~ /\S+/ && $thing ~~ /^^ (<- [ @ ] > ** 1..*) / {
+    my ($plg, %params) = self!parse-run-params($thing);
 
-      my $plg = "$0";
-
-      my %params = Hash.new;
-
-      self.console("run plugin $plg");
-
-      if $thing ~~ /'@' ( \S+ )  $$/ {
-
-        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
-
-        self!log("plg params",%params.perl);
-
-      }
-
-      task-run $plg, $plg, %params;
-
-    } else {
-
-      die "bad thing - $thing";
-
-    }
+    task-run $plg, $plg, %params;
 
   }
 
@@ -192,4 +172,35 @@ DOC
     return "{self.sparrow-root}/tasks/$path";
 
   }
+
+
+  method !parse-run-params ( $thing is copy ) {
+
+    my $what;
+    my %params = Hash.new();
+
+    if $thing ~~ /\S+/ && $thing ~~ /^^ (<- [ @ ] > ** 1..*) / {
+
+      $what = "$0";
+
+      self.console("run thing $what");
+
+      if $thing ~~ /'@' ( .* )  $$/ {
+
+        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
+
+        self!log("$what params",%params.perl);
+
+      }
+
+    } else {
+
+      die "bad thing - $thing";
+
+    }
+
+    return $what, %params;
+
+  }
+
 }
