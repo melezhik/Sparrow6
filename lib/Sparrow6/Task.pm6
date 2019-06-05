@@ -46,7 +46,10 @@ class Cli
       s6 --install --force $plugin # reinstall, even though if higher version is here
 
     run plugin:
-      s6 --plg-run plg-name@param1=value2,@param2=value2
+      s6 --plg-run $plugin@param1=value2,@param2=value2
+
+    run module:
+      s6 --module-run $module@param1=value1,param2=value2
 
     man plugin:
       s6 --plg-man plg-name
@@ -159,31 +162,19 @@ DOC
 
   }
 
-  method plg-run ($thing is copy)  {
+  method plg-run ($thing)  {
 
-    if $thing ~~ /\S+/ && $thing ~~ /^^ (<- [ @ ] > ** 1..*) / {
+    my ($plg, %params) = self!parse-run-params($thing);
 
-      my $plg = "$0";
+    task-run $plg, $plg, %params;
 
-      my %params = Hash.new;
+  }
 
-      self.console("run plugin $plg");
+  method module-run ($thing)  {
 
-      if $thing ~~ /'@' ( \S+ )  $$/ {
+    my ($mod, %params) = self!parse-run-params($thing);
 
-        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
-
-        self!log("plg params",%params.perl);
-
-      }
-
-      task-run $plg, $plg, %params;
-
-    } else {
-
-      die "bad thing - $thing";
-
-    }
+    module-run $mod, %params;
 
   }
 
@@ -192,4 +183,35 @@ DOC
     return "{self.sparrow-root}/tasks/$path";
 
   }
+
+
+  method !parse-run-params ( $thing is copy ) {
+
+    my $what;
+    my %params = Hash.new();
+
+    if $thing ~~ /\S+/ && $thing ~~ /^^ (<- [ @ ] > ** 1..*) / {
+
+      $what = "$0";
+
+      self.console("run thing $what");
+
+      if $thing ~~ /'@' ( .* )  $$/ {
+
+        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
+
+        self!log("$what params",%params.perl);
+
+      }
+
+    } else {
+
+      die "bad thing - $thing";
+
+    }
+
+    return $what, %params;
+
+  }
+
 }
