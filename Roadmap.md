@@ -54,6 +54,7 @@ Done
 + story_var => task_var renaming
 + Consider lightweight SparrowHub alternative ( Azure free host, domain ) - http://repo.southcentralus.cloudapp.azure.com
 + Create information on SparrowHub retirement - reddit
++ s6 cli module-run added
 
 Urgent
 ======
@@ -65,7 +66,6 @@ Urgent
 - Git repository of Sparrow6 plugins
 
 - s6 cli
-  - module_run
   - save / restore tasks
 
 - Sparrowdo - module_run, task_run cli options

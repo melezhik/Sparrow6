@@ -46,7 +46,10 @@ class Cli
       s6 --install --force $plugin # reinstall, even though if higher version is here
 
     run plugin:
-      s6 --plg-run plg-name@param1=value2,@param2=value2
+      s6 --plg-run $plugin@param1=value2,@param2=value2
+
+    run module:
+      s6 --module-run $module@param1=value1,param2=value2
 
     man plugin:
       s6 --plg-man plg-name
@@ -164,6 +167,14 @@ DOC
     my ($plg, %params) = self!parse-run-params($thing);
 
     task-run $plg, $plg, %params;
+
+  }
+
+  method module-run ($thing)  {
+
+    my ($mod, %params) = self!parse-run-params($thing);
+
+    module-run $mod, %params;
 
   }
 
