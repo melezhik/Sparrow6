@@ -65,6 +65,12 @@ sub MAIN (
 
     $task-cli.task-run($thing);
 
+  } elsif $module-run && $thing {
+
+    $task-cli.console("run module $thing");
+
+    $task-cli.module-run($thing);
+
   } elsif $plg-run && $thing {
 
     $task-cli.console("run plg $thing");
