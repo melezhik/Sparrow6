@@ -10,7 +10,8 @@ before_install:
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 379CE192D401AB61
   - echo "deb https://dl.bintray.com/nxadm/rakudo-pkg-debs `lsb_release -cs` main" | sudo tee -a /etc/apt/sources.list.d/rakudo-pkg.list 
   - sudo apt-get update && sudo apt-get install rakudo-pkg
-  - cpanm -q --notest Carton Template
+  #- cpanm -q --notest Carton Template
+  - sudo apt-get install libtemplate-perl carton
 
 install:
   - zef install --/test .
