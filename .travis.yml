@@ -4,6 +4,7 @@ env:
   global:
     - PATH=/usr/local/bin:/opt/rakudo-pkg/bin/:/home/travis/.perl6/bin:$PATH
     - SP6_REPO=file:///tmp/repo
+    - SKIP_POWERSHELL=1
 
 before_install:
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 379CE192D401AB61
