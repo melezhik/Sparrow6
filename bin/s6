@@ -75,7 +75,9 @@ sub MAIN (
 
     $task-cli.console("run plg $thing");
 
-    $task-cli.plg-run($thing);
+    for $thing.split(/ "+" /) -> $i {
+      $task-cli.plg-run($i);
+    }
 
   } elsif $plg-man && $thing {
 
