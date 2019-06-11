@@ -55,6 +55,7 @@
   },
   "resources" : [
     "sparrow6lib.bash",
+    "sparrow6lib.pm6",
     "sparrow6lib.pm",
     "sparrow6lib.rb",
     "sparrow6lib.py",
