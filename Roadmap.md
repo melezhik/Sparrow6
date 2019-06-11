@@ -1,10 +1,9 @@
-Roadmap
-=======
+# Roadmap
 
 The Roadmap of Sparrow6 project development.
 
-Done
-====
+# Done
+
 + Perl/Bash tasks
 + test.pl6 - embedded test support ( aka m10 - METEN minimalistic embedded test engine )
 + multiroot story support ( ability to run multi root stories  )
@@ -21,6 +20,7 @@ Done
 + Implement os() function
 + Rewrite resources/sparrow6common.pm to Perl6
 + Port Sparrowdo::DSL to Sparrow6::DSL
++ Sparrowdo - convert outthentic tests to regular tests
 + Sparrowdo - support for config
 + Sparrow6::Task::Runner::Api story => task renaming
 + Sparrowdo [copy local files](https://github.com/melezhik/sparrowdo/blob/master/core-dsl.md#copy-local-files)
@@ -34,7 +34,7 @@ Done
 + Ruby support
 + Python support
 + Document Sparrow6::Task::Check
-+ `s6 --repo-init` command
++ S6 - `--repo-init` command
 + Document task states
 + Ruby plugins, bundle install test
 + Rename sparrow.index to index
@@ -56,94 +56,72 @@ Done
 + Create information on SparrowHub retirement - reddit
 + s6 cli module-run added
 
-Urgent
-======
-
-- Announce/document (?) repo.southcentralus.cloudapp.azure.com
-
-- Plugins - fix Perl5 generators as Array refs
-
-- Git repository of Sparrow6 plugins
-
-- s6 cli
-  - save / restore tasks
-
-- Sparrowdo - module_run, task_run cli options
+# Urgent
 
 - Perl6 support ( after renaming )
-
+- Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
+- Announce/document (?) repo.southcentralus.cloudapp.azure.com
+- Plugins - fix Perl5 generators as Array refs
+- s6 cli - save / restore tasks
 - Write tests for Ruby common libraries - $task-dir/common.rb $root-dir/common.rb
-
 - Write tests for Powershell streams support
 
-- Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
 
-- Sparrowdo
-  - Sparrow6::DSL::Assert - workaround for `input_param` method
-  - support for target_host
-  - var=name=value command line support
-  - task-run / module-run command line support
-  - cwd cli support ( do we need it? )
-  - convert outthentic tests to regular tests ( almost done )
-  - vagrant support ( do we need it ? )
-  - git ( Sparrlets support, do we need it ? )
+# New syntax / renaming
 
-New syntax / renaming
-=====================
-=====================
+- target_os() => os() # implemented but should be documented
+- meta.txt => task.txt (???)
+- sparrow.json => sparrow6.json (?)
 
-  - target_os() => os() # implemented but should be documented
-  - meta.txt => task.txt (???)
-  - sparrow.json => sparrow6.json (?)
-
-New features
-=============
+# New features
 
 These features are almost done, just list them here
 
-- task states ( ability to exchange data between tasks )
-- config.pl6 support
+- Task states ( ability to exchange data between tasks )
+- config.pl6 support (???)
 - m10
 - `streams` # streams presented as a Hash ( need to document )
 - `streams_arrays` # streams presented as an Array ( need to document )
 - `dump_streams` ( implemeted for Perl, need to document )
 - `note:` expressions ( done, need to document )
-
 - m10 ( need to add more helpers )
+- Low priority - document Sparrow6::Task::Runner Class
+- Low priority - document m10 feature ( METEN - Minimalistic Embedded Testing Engine )
+- Low priority - `s6 --install` install plugin without plugin name ( read data from sparrow.json in CWD )
 
-- Low priority
-  - Document Sparrow6::Task::Runner Class
-  - Document m10 feature ( METEN - Minimalistic Embedded Testing Engine )
-  - `s6 --install` install plugin without plugin name ( read data from sparrow.json in CWD )
-
-Documentation
-=============
-=============
+# Documentation
 
 - hook set_stdout gets merged with task stdout in ( implimented, need to document )
 - task check is not triggered if there is no task  ( implimented, need to document ) - breaking changes
 
-Questionable
-============
+# Questionable
+
+- Sparrowdo - Sparrow6::DSL::Assert - workaround for `input_param` method
+- Sparrowdo - support for target_host
+- Sparrowdo - cwd cli support ( do we need it? )
+- Sparrowdo - vagrant support ( do we need it ? )
+- Sparrowdo - git ( Sparrlets support, do we need it ? )
+- Sparrowdo - `var=name=value` command line support
+- Sparrowdo - `module_run`, `task_run` cli options support
 - Deprecate set_stdout (???), hook stdout should contribute to task stdout (???)
-- don't allow generators/codes if check failures (???)
-- handle code failures in task checks (???)
-- impliment cwd parameter for Sparrow6 tasks
-- use api/v2 instead of api/v1
-- meta.txt
-- supporting outthentic messages
-- color/nocolor output
-- Dry run support (??? is it possible with Sparrow6? I doubt )
+- Don't allow generators/codes if check failures (???)
+- Handle code failures in task checks (???)
+- Impliment cwd parameter for Sparrow6 tasks
+- Use api/v2 instead of api/v1
+- meta.txt support
+- Supporting outthentic messages
+- Color/nocolor output
+- Dry run support (??? is it possible with Sparrow6? I doubt)
 - suite.json config support
 
-Medium priority
-===============
+# Medium priority
+
 - Port existed Sparrowdo:: Modules to Sparrow6
 - Adjust existing Sparrow plugins ( documentation fixes, compatibility with Sparrow6 core )
 
 
-Low priority
-============
+# Low priority
+
 - Task descriptions (task.txt)
 - dump_streams() implimentation for Ruby, Python, Powershell
 - Free style parameters (args_cli)
@@ -152,18 +130,15 @@ Low priority
 - Don't strip comments from one-line code and generator expressions
 
 
-Other tools support
-===================
+# Other tools support
 
 - Switch Sparky to Updated Sparrowdo version ( done partly, need to check )
-
 - Port Sparrowform to Sparrow6
-
 - Make Old Sparrowhub plugins compatible with Sparrow6
 
 
-Breaking changes
-================
+# Breaking changes
+
 - SparrowHub is removed
 - truncating to the `match_l` is removed, we reports check results as is, even for really long matched strings (examples/match-length.pl6)
 - `:blank` is deprecated, you should use regexp: `^^ \s* $$`  instead
