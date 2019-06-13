@@ -10,3 +10,10 @@ generator: <<CODE
   say "hello world from [{config<language>}]";
 CODE
 
+
+generator: <<CODE
+!perl6
+  say "assert: ", task_var('amount').defined, ' task_var("amount").defined';
+  say "you passed me [{task_var('amount')}] USD";
+CODE
+
