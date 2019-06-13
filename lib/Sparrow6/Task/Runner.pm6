@@ -13,6 +13,7 @@ use JSON::Tiny;
 use Sparrow6::Common::Helpers;
 use Sparrow6::Common::Config;
 use Sparrow6::Task::Runner::Helpers::Common;
+use Sparrow6::Task::Runner::Helpers::Perl6;
 use Sparrow6::Task::Runner::Helpers::Perl;
 use Sparrow6::Task::Runner::Helpers::Bash;
 use Sparrow6::Task::Runner::Helpers::Ruby;
@@ -25,6 +26,7 @@ class Api
 
   does Sparrow6::Common::Helpers::Role
   does Sparrow6::Task::Runner::Helpers::Common::Role 
+  does Sparrow6::Task::Runner::Helpers::Perl6::Role 
   does Sparrow6::Task::Runner::Helpers::Perl::Role 
   does Sparrow6::Task::Runner::Helpers::Bash::Role 
   does Sparrow6::Task::Runner::Helpers::Ruby::Role 
@@ -179,7 +181,17 @@ class Api
 
     # try to run hooks first 
 
-    if "$root/hook.pl".IO ~~ :e {
+    if "$root/hook.pl6".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/hook.pl6";
+
+      self!log("task cache dir create", $.cache-root-dir ~ "$root/hook.pl6");
+
+      self!save-task-vars($.cache-root-dir ~ "$root/hook.pl6");
+
+      self!run-perl6-hook("$root/hook.pl6");
+
+    } elsif "$root/hook.pl".IO ~~ :e {
 
       mkdir $.cache-root-dir ~ "$root/hook.pl";
 
@@ -223,7 +235,26 @@ class Api
 
     }
 
-    if "$root/task.pl".IO ~~ :e {
+    if "$root/task.pl6".IO ~~ :e {
+
+      mkdir $.cache-root-dir ~ "$root/task.pl6";
+
+      self!save-task-vars($.cache-root-dir ~ "$root/task.pl6");
+
+      self!run-perl6-task("$root/task.pl6");
+
+      self!run-task-check($root);
+
+      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.pl6");
+
+        EVALFILE "$root/test.pl6";
+
+      }
+
+
+    } elsif "$root/task.pl".IO ~~ :e {
 
       mkdir $.cache-root-dir ~ "$root/task.pl";
 

@@ -19,6 +19,7 @@
     "Sparrow6::Common::Config" : "lib/Sparrow6/Common/Config.pm6", 
     "Sparrow6::Common::Helpers" : "lib/Sparrow6/Common/Helpers.pm6", 
     "Sparrow6::Task::Runner::Helpers::Common" : "lib/Sparrow6/Task/Runner/Helpers/Common.pm6",
+    "Sparrow6::Task::Runner::Helpers::Perl6" : "lib/Sparrow6/Task/Runner/Helpers/Perl6.pm6",
     "Sparrow6::Task::Runner::Helpers::Perl" : "lib/Sparrow6/Task/Runner/Helpers/Perl.pm6",
     "Sparrow6::Task::Runner::Helpers::Bash" : "lib/Sparrow6/Task/Runner/Helpers/Bash.pm6",
     "Sparrow6::Task::Runner::Helpers::Ruby" : "lib/Sparrow6/Task/Runner/Helpers/Ruby.pm6",

@@ -15,15 +15,15 @@ my $streams;
 my $streams_array;
 my $matched;
 
-sub set_stdout ($line) {
+sub set_stdout ($line) is export {
 
-  my $fh = open(stdout_file()), :a;
+  my $fh = open stdout_file(), :a;
 
   $fh.print("$line\n");
 
 }
 
-sub run_task ( $task, %vars? ) {
+sub run_task ( $task, %vars? ) is export {
 
   say "task_var_json_begin";
 
@@ -41,15 +41,15 @@ sub run_task ( $task, %vars? ) {
 # this syntax is deprecated
 # use `ignore_error` instead
 
-sub ignore_task_error {
+sub ignore_task_error () is export {
   say "ignore_task_error:";
 }
 
-sub ignore_error {
+sub ignore_error () is export {
   say "ignore_error:";
 }
 
-sub config {
+sub config () is export {
 
   return $config if $config.defined;
 
@@ -59,7 +59,7 @@ sub config {
 
 }
 
-sub variables {
+sub variables () is export {
 
   return $variables if $variables.defined;
 
@@ -69,11 +69,11 @@ sub variables {
 
 }
 
-sub task_var ($var) {
+sub task_var ($var) is export {
   variables(){$var};
 }
 
-sub matched {
+sub matched () is export {
 
   return $matched if $matched.defined;
 
@@ -83,7 +83,7 @@ sub matched {
 
 }
 
-sub captures {
+sub captures () is export {
 
   return $captures if $captures.defined;
 
@@ -96,11 +96,11 @@ sub captures {
 }
 
 
-sub capture {
+sub capture () is export {
   captures()[0];
 }
 
-sub streams {
+sub streams () is export {
 
   return $streams if $streams.defined;
 
@@ -110,7 +110,7 @@ sub streams {
 
 }
 
-sub streams_array {
+sub streams_array () is export {
 
   return $streams_array if $streams_array.defined;
 
@@ -120,7 +120,7 @@ sub streams_array {
 
 }
 
-sub dump_streams {
+sub dump_streams () is export {
 
   my @streams = streams_array();
 
@@ -139,15 +139,15 @@ sub dump_streams {
 
 }
 
-sub get_state {
+sub get_state () is export {
 
-  my $state = from-json slurp "{cache_dir_root()}/state.json";
+  my $state = from-json slurp "{cache_root_dir()}/state.json";
 
   return $state;
 
 }
 
-sub update_state (%state) {
+sub update_state (%state) is export {
 
   spurt "{cache_root_dir()}/state.json", to-json(%state);
 
@@ -155,5 +155,4 @@ sub update_state (%state) {
 
 }
 
-1;
 
