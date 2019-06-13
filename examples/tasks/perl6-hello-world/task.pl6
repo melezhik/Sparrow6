@@ -1,1 +1,1 @@
-say "hello world from Perl6";
+say "hello world from [{config<language>}]";

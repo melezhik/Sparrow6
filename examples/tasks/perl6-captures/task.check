@@ -1,0 +1,19 @@
+regexp: (\d+)
+
+code: <<CODE
+!perl6
+
+say  captures.perl
+
+CODE
+
+generator: <<CODE
+!perl6
+
+  say "assert: ", capture[0] == 1, " capture[0] == 1";
+  say "assert: ", captures[0][0] == 1, " captures[0][0] == 1";
+  say "assert: ", captures[1][0] == 2, " captures[1][0] == 2";
+  say "assert: ", captures[2][0] == 3, " captures[2][0] == 3";
+
+CODE
+

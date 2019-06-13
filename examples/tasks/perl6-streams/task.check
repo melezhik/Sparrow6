@@ -1,0 +1,16 @@
+between: {'foo'} {'foo'}
+  regexp: (\S+)
+end:
+
+generator: <<CODE
+!perl6
+  say "assert: {streams_array()[0][0][0] eq "1"}  streams_array()[0][0][0] == 1";
+  say "assert: {streams_array()[1][1][0] eq  "b"} streams_array()[1][1][0] == b";
+  say "assert: {streams_array()[2][2][0] eq "cc"} streams_array()[2][2][0] == cc";
+CODE
+
+code: <<CODE
+!perl6
+  say streams_array().perl;
+  dump_streams();
+CODE

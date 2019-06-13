@@ -1,0 +1,19 @@
+generator: <<CODE
+!perl6
+  say "assert: ", config<main><foo>.defined, ' config<main><foo>.defined';
+  say "[{config<main><foo>}]";
+CODE
+
+generator: <<CODE
+!perl6
+  say "assert: ", config<language>.defined, ' config<language>.defined';
+  say "hello world from [{config<language>}]";
+CODE
+
+
+generator: <<CODE
+!perl6
+  say "assert: ", task_var('amount').defined, ' task_var("amount").defined';
+  say "you passed me [{task_var('amount')}] USD";
+CODE
+

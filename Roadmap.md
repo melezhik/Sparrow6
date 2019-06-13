@@ -55,17 +55,11 @@ The Roadmap of Sparrow6 project development.
 + Consider lightweight SparrowHub alternative ( Azure free host, domain ) - http://repo.southcentralus.cloudapp.azure.com
 + Create information on SparrowHub retirement - reddit
 + s6 cli module-run added
++ Documenting repo.southcentralus.cloudapp.azure.com
 
 # Urgent
-
 - Perl6 support ( after renaming )
 - Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
-- Announce/document (?) repo.southcentralus.cloudapp.azure.com
-- Plugins - fix Perl5 generators as Array refs
-- s6 cli - save / restore tasks
-- Write tests for Ruby common libraries - $task-dir/common.rb $root-dir/common.rb
-- Write tests for Powershell streams support
-
 
 # New syntax / renaming
 
@@ -118,10 +112,13 @@ These features are almost done, just list them here
 
 - Port existed Sparrowdo:: Modules to Sparrow6
 - Adjust existing Sparrow plugins ( documentation fixes, compatibility with Sparrow6 core )
-
+- Plugins - fix Perl5 generators as Array refs
+- Write tests for Ruby common libraries - $task-dir/common.rb $root-dir/common.rb
+- Write tests for Powershell streams support
 
 # Low priority
 
+- s6 cli - save / restore tasks
 - Task descriptions (task.txt)
 - dump_streams() implimentation for Ruby, Python, Powershell
 - Free style parameters (args_cli)

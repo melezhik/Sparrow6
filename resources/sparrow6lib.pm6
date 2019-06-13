@@ -87,9 +87,9 @@ sub captures () is export {
 
   return $captures if $captures.defined;
 
-  my @json = from-json slurp "{cache_root_dir()}/captures.json";
+  my $json = from-json slurp "{cache_root_dir()}/captures.json";
 
-  $captures = @json.map({ $_<data> });
+  $captures = $json.map({ $_<data> });
 
   return $captures;
 
