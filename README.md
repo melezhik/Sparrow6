@@ -1,6 +1,12 @@
 # Sparrow6
 
-Sparrow6 - Language Agnostic Automation Framework.
+> Sparrow6 - Perl6 Automation Framework
+
+# Comparison with other tools
+
+* Are you familiar with configuration management tools, and/or automation frameworks like Ansible/Chef/Salt? Sparrow6 is written to solve pretty much the same tasks but with different approach.
+
+* As well as there is task runners like Grunt/Gulp - Sparrow6 could be used as a replacement for them.
 
 # Install
 
