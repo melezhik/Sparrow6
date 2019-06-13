@@ -1,0 +1,6 @@
+generator: <<CODE
+!perl6
+  say "assert: ", config<main><foo>.defined, ' config<main><foo>.defined';
+  say "[{config<main><foo>}]";
+CODE
+
