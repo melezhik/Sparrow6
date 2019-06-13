@@ -52,10 +52,11 @@ class Api
   method !run-code (Str $code is copy) { 
 
     my %lang-to-extension = %(
-      perl => 'pl',
-      bash => 'bash',
+      perl6 => "pl6",
+      perl => "pl",
+      bash => "bash",
       ruby => "rb",
-      python => "py"
+      python => "py",
     );
 
     my $language = "perl"; # default language
