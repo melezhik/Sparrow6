@@ -4,3 +4,9 @@ generator: <<CODE
   say "[{config<main><foo>}]";
 CODE
 
+generator: <<CODE
+!perl6
+  say "assert: ", config<language>.defined, ' config<language>.defined';
+  say "hello world from [{config<language>}]";
+CODE
+

@@ -7,6 +7,9 @@ Sparrow6::Task::Runner::Api.new(
   root  => "examples/tasks",
   task => "perl6-call-subtask",
   do-test => True,
-  show-test-result => True,  
+  show-test-result => True, 
+  parameters => %(
+    language => "Perl6"
+  )
 ).task-run;
 
