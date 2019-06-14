@@ -6,7 +6,7 @@ use File::Directory::Tree;
 
 role Role {
 
-  method !install-plugin-deps ($plg-src) {
+  method install-plugin-deps ($plg-src) {
 
       self!log("install deps for $plg-src",$plg-src);
 
@@ -53,20 +53,6 @@ role Role {
 
   method plugin-install ( $pid, %args? ) {
 
-    # copied from Perl5 Sparrow
-    # keep it here for awhile 
-    # till I decide
-    # whether to port these
-    # options
-    #my $args_st = GetOptionsFromArray(
-    #    \@args,
-    #    "local"             => \$local_install,
-    #    "force"             => \$force,
-    #    "install-deps"      => \$install_deps,
-    #    "recursive"         => \$recursive,
-    #    "version=s"         => \$version,
-    #);
-
     my $ptype;
 
     my %list = self!read-plugin-list();
@@ -98,7 +84,7 @@ role Role {
           self!log("$pid is uptodate", "version $inst-v");
 
           # fixme:  don't install dependencies for python requirements.txt
-          self!install-plugin-deps("{self.plugin-directory($pid)}");
+          self.install-plugin-deps("{self.plugin-directory($pid)}");
 
      }
 
@@ -181,7 +167,7 @@ role Role {
   
     self!log("unpack {self.plugin-directory($pid)}/$distro to", self.plugin-directory($pid));
 
-    self!install-plugin-deps(self.plugin-directory($pid));
+    self.install-plugin-deps(self.plugin-directory($pid));
 
   }
 

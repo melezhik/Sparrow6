@@ -24,6 +24,24 @@ multi sub task-run($desc, $plugin, %parameters = %()) is export(:DEFAULT) {
 
 }
 
+multi sub task-run($path, %parameters = %()) is export(:DEFAULT) {
+
+    my $sph-api = Sparrow6::Task::Repository::Api.new();
+
+    $sph-api.install-plugin-deps($path);
+
+    my $runner = Sparrow6::Task::Runner::Api.new(
+      name  => $path,
+      root  => $path,
+      do-test => False,
+      show-test-result => True,
+      parameters => %parameters
+    );
+
+    $runner.task-run;
+
+}
+
 sub module-run($name, %args = %()) is export(:DEFAULT) {
 
   if ( $name ~~ /(\S+)\@(.*)/ ) {
