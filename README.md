@@ -97,7 +97,14 @@ better use this one. This DSL is also exposed through various of clients (Tomtit
 
     use Sparrow6::DSL;
 
+    # Run task as plugin
     task-run "my task", "plugin", %(
+      foo => "BAR",
+      bar => 100
+    );
+
+    # Run local task, located at path/to/task directory
+    task-run "path/to/task", %(
       foo => "BAR",
       bar => 100
     );
