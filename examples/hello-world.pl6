@@ -1,12 +1,6 @@
-#!perl6 
+#!perl6
 
-use Sparrow6::Task::Runner;
+use Sparrow6::DSL;
 
-Sparrow6::Task::Runner::Api.new(
-  name  => "hello/world",
-  root  => "examples/tasks",
-  task => "hello/world",
-  do-test => True,
-  show-test-result => True,  
-).task-run;
+task-run "examples/tasks/hello/world";
 
