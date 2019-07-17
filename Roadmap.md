@@ -56,9 +56,9 @@ The Roadmap of Sparrow6 project development.
 + Create information on SparrowHub retirement - reddit
 + s6 cli module-run added
 + Documenting repo.southcentralus.cloudapp.azure.com
++ Perl6 support ( after renaming )
 
 # Urgent
-- Perl6 support ( after renaming )
 - Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
 
 # New syntax / renaming

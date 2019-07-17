@@ -9,7 +9,7 @@
     "YAMLish",
     "JSON::Tiny"
   ],
-  "description" : "Sparrow6 - Language Agnostic Automation Framework",
+  "description" : "Sparrow6 - Perl6 Automation Framework",
   "license" : "Artistic-2.0",
   "name" : "Sparrow6",
   "perl" : "6.*",
