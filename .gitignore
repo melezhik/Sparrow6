@@ -1,6 +1,7 @@
-.cache
+lib/.precomp/
 .precomp
-local/
-cpanfile.snapshot
-tasks.tar
+*.tar.gz
+Sparrow6-*
+.cache
 log.txt
+
