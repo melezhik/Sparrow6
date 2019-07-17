@@ -29,7 +29,7 @@ role Role {
 
   method !deploy-perl6-run-cmd ($path) {
 
-      my $cmd = "perl6 -I {$.cache-root-dir}/{$path} -I {$.root}/lib -Msparrow6lib $path";
+      my $cmd = "perl6 -I {$.root}/lib -I {$.cache-root-dir}/{$path} -I {$.root}/lib -Msparrow6lib $path";
 
       self!log("perl6 run cmd", $cmd);
 
