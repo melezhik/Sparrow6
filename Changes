@@ -2,6 +2,9 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Args stringification implemented
+    - Documentation refinement
+
 0.0.2  2019-07-16T21:07:12-05:00
 
     - Restore original Readme

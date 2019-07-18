@@ -112,13 +112,22 @@ class Api
           push @args, $i;
         } elsif $i.isa("Hash") {
           for $i.keys -> $k {
-            if $k ~~ /^ '~'/ {
-              push @args, "-{$k} {$i{$k}}";
+            if $k ~~ /^ '-'/ {
+              push @args, "{$k} {$i{$k}}";
             } else {
               push @args, "--{$k} {$i{$k}}"
             }
           }
-        } else {
+        } elsif $i.isa("Array") {
+          for $i -> $k {
+            if $k ~~ /^ '-'/ {
+              push @args, $k;
+            } else {
+              push @args, "--{$k}"
+            }
+          }
+        }
+        else {
           die "args, element $j, unsupported type: {$i.^name}"
         }
       }
