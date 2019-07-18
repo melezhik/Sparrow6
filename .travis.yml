@@ -3,8 +3,8 @@ language: perl
 env:
   global:
     - PATH=/usr/local/bin:/opt/rakudo-pkg/bin/:/home/travis/.perl6/bin:$PATH
-    #- SP6_REPO=file:///tmp/repo
-    - SP6_REPO=http://repo.southcentralus.cloudapp.azure.com
+    - SP6_REPO=file:///tmp/repo
+    #- SP6_REPO=http://repo.southcentralus.cloudapp.azure.com
     - SKIP_POWERSHELL=1
 
 before_install:
@@ -16,14 +16,14 @@ before_install:
 
 install:
   - zef install --/test .
-  #- git clone https://github.com/melezhik/sparrow-plugins && s6 --repo-init /tmp/repo
-  #- cd sparrow-plugins && git checkout master && git pull origin master
-  #- find -maxdepth 2 -mindepth 2 -name sparrow.json -execdir s6 --upload \;
-  #- wget -q https://packages.microsoft.com/config/ubuntu/14.04/packages-microsoft-prod.deb
-  #- sudo dpkg -i packages-microsoft-prod.deb
-  #- sudo apt-get update
-  #- sudo apt-get install -y powershell
-  #- cd ../
+  - git clone https://github.com/melezhik/sparrow-plugins && s6 --repo-init /tmp/repo
+  - cd sparrow-plugins && git checkout master && git pull origin master
+  - find -maxdepth 2 -mindepth 2 -name sparrow.json -execdir s6 --upload \;
+  - wget -q https://packages.microsoft.com/config/ubuntu/14.04/packages-microsoft-prod.deb
+  - sudo dpkg -i packages-microsoft-prod.deb
+  - sudo apt-get update
+  - sudo apt-get install -y powershell
+  - cd ../
   - perl6 -MSparrow6::Task::Repository -e "Sparrow6::Task::Repository::Api.new.index-update"
 
 script:
