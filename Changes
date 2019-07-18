@@ -2,8 +2,9 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
-    - Args stringification implemented
+    - Travis tests fixed
     - Documentation refinement
+    - Args stringification implemented
 
 0.0.2  2019-07-16T21:07:12-05:00
 
