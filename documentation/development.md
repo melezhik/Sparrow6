@@ -564,7 +564,7 @@ One mimic such a parameters through `args` syntax
 
     task.bash
   
-      script $(args_cli)
+      script $(args)
 
 This ensure to run `script` with following command line arguments:
 

@@ -90,11 +90,6 @@ class Api
       self.task-config = merge-hash $plugin-config, $.parameters, :no-append-array;
       self!log("merged task config",$.task-config.perl);
 
-      my $fh = open "{$.cache-root-dir}/config.json", :w;
-      $fh.say(to-json(self.task-config));
-      $fh.close;
-      self!log("task configuration json saved", "{$.cache-root-dir}/config.json");
-
     } else { # handle case when task config does not exist
 
       self!log("plugin has no configuration file","hope it's ok");
@@ -102,13 +97,38 @@ class Api
       self.task-config = merge-hash %(), $.parameters;
       self!log("merged task config",$.task-config.perl);
 
-      my $fh = open "{$.cache-root-dir}/config.json", :w;
-      $fh.say(to-json(self.task-config));
-      $fh.close;
-      self!log("task configuration json saved", "{$.cache-root-dir}/config.json");
-
     }
 
+    # stringify <args>
+    if self.task-config<args>:exists {
+      self!log("stringify args start",self.task-config<args>.perl);
+      self!log("args has elements",self.task-config<args>.elems);
+      die "args should be Array, but it is {self.task-config<args>.^name}" unless self.task-config<args>.isa("Array");
+      my @args; my $j = 0;
+      for self.task-config<args><> -> $i {
+        $j++;
+        self!log("args, handle element {$j}, type", $i.^name);
+        if $i.isa("Int") or $i.isa("Str") {
+          push @args, $i;
+        } elsif $i.isa("Hash") {
+          for $i.keys -> $k {
+            if $k ~~ /^ '~'/ {
+              push @args, "-{$k} {$i{$k}}";
+            } else {
+              push @args, "--{$k} {$i{$k}}"
+            }
+          }
+        } else {
+          die "args, element $j, unsupported type: {$i.^name}"
+        }
+      }
+      self!log("stringified args",@args.join(' '));
+    }
+
+    my $fh = open "{$.cache-root-dir}/config.json", :w;
+    $fh.say(to-json(self.task-config));
+    $fh.close;
+    self!log("task configuration json saved", "{$.cache-root-dir}/config.json");
 
   }
 
