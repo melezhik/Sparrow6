@@ -567,7 +567,7 @@ Inside Bash task `args` argument is represented as a _string_:
 
     task.bash
 
-      script $(args)
+      script $(config args)
 
 So that `script` run with the following command line arguments:
 
