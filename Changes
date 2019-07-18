@@ -5,6 +5,9 @@ Revision history for Sparrowdo
     - Travis tests fixed
     - Documentation refinement
     - Args stringification implemented
+    - Removed /home/melezhik/projects/sparrow6/examples/tasks/lib/, 
+      because it's caused weird failures in my tests,
+      I should raise this issue with Perl6 community
 
 0.0.2  2019-07-16T21:07:12-05:00
 
