@@ -72,7 +72,6 @@ This table describes `file name -> language` mapping:
     | Ruby       | task.rb      |
     | Powershell | task.ps1     |
     +------------+--------------+
-  
 
 # Task folders structure
 
@@ -151,7 +150,7 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
     | Powershell | run_task(STRING,HASH)                        |
     +------------+----------------------------------------------+
 
-(*) You need to use `from sparrow6lib import *` to import `set_stdout` function.
+(*) You need to use `from sparrow6lib import *` to import `run_task` function.
 
 `task_var` function signatures for Sparrow6 supported languages:
 
@@ -221,7 +220,7 @@ If hook has output, the _related_ task is executed and task output get merged wi
         set_stdout("Black Coffee")
       }
 
-    task.pl6   
+    task.pl6
 
       say "Sandwich"
 
@@ -229,13 +228,13 @@ If hook has output, the _related_ task is executed and task output get merged wi
 
       Sparrow6::Task::Runner::Api.new(
         name  => "make an order",
-        parameters => %( mood => "sleepy" )        
+        parameters => %( mood => "sleepy" )
       ).task-run;
 
     output
-      
+
       BlackCoffee
-      Sandwich      
+      Sandwich
 
 `set_stdout` function signatures for Sparrow6 supported languages:
 
@@ -269,7 +268,7 @@ Here is the list of function one can use _inside tasks and hooks_:
 
 * `config()` - task configuration object.
 
-* `os()` - mnemonic name of underlying operation system. 
+* `os()` - mnemonic name of underlying operation system.
 
 - You need to use `from sparrow6lib import *` in Python to import helpers functions.
 
@@ -526,14 +525,14 @@ One can override default configuration through constructor:
 
 # Mimic "command line arguments"
 
-Consider a simple example. 
+Consider a simple example.
 
 We want to create a wrapper for some external `script`
 which accepts the following command line arguments:
 
-    script {flags} {named parameters} {value} 
+    script {flags} {named parameters} {value}
 
-Where 
+Where
 
 Flags are:
 
@@ -559,8 +558,8 @@ One mimic such a parameters through `args` syntax
       args:
         - foo: foo-value
         -
-          - debug 
-          - verbose 
+          - debug
+          - verbose
         - the-value
 
     task.bash
@@ -576,13 +575,13 @@ One override `args` configuration through constructor.
 
     Sparrow6::Task::Runner::Api.new(
       name  => "my task",
-      parameters => %( 
+      parameters => %(
         args => (
           '~foo' => 'foo-value'
           '~debug',
           '~verbose'
         )
-      )  
+      )
     ).task-run;
 
 ## `args` semantic
@@ -603,24 +602,24 @@ If you need single dashes, start parameter with `~` :
       config.yaml
 
         ---
-      
+
         args:
           - '~foo': foo-value
           -
-            - ~debug 
-            - ~verbose 
+            - ~debug
+            - ~verbose
 
 Or through constructor:
 
     Sparrow6::Task::Runner::Api.new(
       name  => "my task",
-      parameters => %( 
+      parameters => %(
         args => (
           '~foo' => 'foo-value'
           '~debug',
           '~verbose'
         )
-      )  
+      )
     ).task-run;
 
 # See also
