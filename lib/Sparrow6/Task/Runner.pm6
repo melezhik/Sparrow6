@@ -119,7 +119,7 @@ class Api
             }
           }
         } elsif $i.isa("Array") {
-          for $i -> $k {
+          for $i<> -> $k {
             if $k ~~ /^ '-'/ {
               push @args, $k;
             } else {
@@ -132,6 +132,7 @@ class Api
         }
       }
       self!log("stringified args",@args.join(' '));
+      self.task-config<args> = @args.join(' ');
     }
 
     my $fh = open "{$.cache-root-dir}/config.json", :w;
