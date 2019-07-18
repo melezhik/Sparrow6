@@ -523,12 +523,13 @@ One can override default configuration through constructor:
     ).task-run;
 
 
-# Mimic "command line arguments"
+# Args stringification
+
+`Arg stringification` the process of coercing `args` array into command line parameters.
 
 Consider a simple example.
 
-We want to create a wrapper for some external `script`
-which accepts the following command line arguments:
+We want to create a wrapper for some external `script` which accepts the following command line arguments:
 
     script {flags} {named parameters} {value}
 
@@ -541,86 +542,65 @@ Flags are:
 
 Named parameters are:
 
-    --foo foo-value
-    --var bar-value
+    --foo foo-_value
+    --var bar_value
 
 And value is just a string:
 
-    foo-value
+    parameter
 
-One mimic such a parameters through `args` syntax
-
-
-    config.yaml
-
-      ---
-    
-      args:
-        - foo: foo-value
-        -
-          - debug
-          - verbose
-        - the-value
-
-    task.bash
-  
-      script $(args)
-
-This ensure to run `script` with following command line arguments:
-
-    --foo foo-value --debug --verbose the-value
-
-One override `args` configuration through constructor.
-
+The above scenario implemented by passing `args` array into `Sparrow6::Task::Runner::Api`
+constructor:
 
     Sparrow6::Task::Runner::Api.new(
       name  => "my task",
       parameters => %(
-        args => (
-          '~foo' => 'foo-value'
-          '~debug',
-          '~verbose'
-        )
+        args => [
+          [ 'debug', 'verbose' ],
+          %( 'foo' => 'foo_value', 'bar' => 'bar_value' ),
+          'parameter'
+        ]
       )
     ).task-run;
+
+Inside Bash task `args` argument is represented as a _string_:
+
+    task.bash
+
+      script $(args)
+
+So that `script` run with the following command line arguments:
+
+    --debug --verbose --foo foo_value --bar bar_value  parameter
 
 ## `args` semantic
 
 * `args` should be an array which elements are processed in order
 * for every elements rules are applied depending on element's type
-* Scalars are turned into scalars: `the-value ---> the-value`
+* Scalars are turned into scalars: `parameter ---> parameter`
 * Arrays are turned into scalars started with double dashes: `(debug, verbose) ---> --debug --verbose`.
-* Hashes are turned into named parameters: `foo: foo-value ---> --foo foo-value`
+* Hashes are turned into named parameters: `%( foo => foo_value, bar => bar_value )  ---> --foo foo_value --bar => bar_value`
 
 ## Single or double dashes
 
-Double dashes is default behavior of how named parameters and flags are generated.
+Double dashes is default behavior when coercing `args` array into string.
 
-If you need single dashes, start parameter with `~` :
-
-
-      config.yaml
-
-        ---
-
-        args:
-          - '~foo': foo-value
-          -
-            - ~debug
-            - ~verbose
-
-Or through constructor:
+If you need single dashes use _explicit_ notation:
 
     Sparrow6::Task::Runner::Api.new(
       name  => "my task",
       parameters => %(
-        args => (
-          '~foo' => 'foo-value'
-          '~debug',
-          '~verbose'
-        )
+        args => [
+          [ '-debug', '-verbose' ],
+          %( '--foo' => 'foo_value', '-bar' => 'bar_value' ),
+          'parameter'
+        ]
       )
     ).task-run;
+
+Results in args stringified as:
+
+    -debug -verbose --foo foo_value --bar bar_value  parameter
 
 # See also
 
