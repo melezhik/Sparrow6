@@ -57,6 +57,7 @@ The Roadmap of Sparrow6 project development.
 + s6 cli module-run added
 + Documenting repo.southcentralus.cloudapp.azure.com
 + Perl6 support ( after renaming )
++ Args stringification
 
 # Urgent
 - Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
@@ -121,7 +122,6 @@ These features are almost done, just list them here
 - s6 cli - save / restore tasks
 - Task descriptions (task.txt)
 - dump_streams() implimentation for Ruby, Python, Powershell
-- Free style parameters (args_cli)
 - Windows support ( run stories, run hooks )
 - Catch stderr for hooks/stories (?)
 - Don't strip comments from one-line code and generator expressions
