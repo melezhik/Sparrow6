@@ -5,7 +5,7 @@ unit module Sparrow6::DSL::Common;
 use Sparrow6::Task::Repository;
 use Sparrow6::Task::Runner;
 
-multi sub task-run($desc, $plugin, %parameters = %()) is export(:DEFAULT) {
+multi sub task-run(Str $desc, Str $plugin, %parameters = %()) is export(:DEFAULT) {
 
     my $sph-api = Sparrow6::Task::Repository::Api.new();
 
@@ -24,7 +24,7 @@ multi sub task-run($desc, $plugin, %parameters = %()) is export(:DEFAULT) {
 
 }
 
-multi sub task-run($path, %parameters = %()) is export(:DEFAULT) {
+multi sub task-run(Str $path, %parameters = %()) is export(:DEFAULT) {
 
     my $sph-api = Sparrow6::Task::Repository::Api.new();
 
