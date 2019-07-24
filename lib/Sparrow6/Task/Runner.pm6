@@ -110,7 +110,7 @@ class Api
         self!log("args, handle element {$j}, type", $i.^name);
         if $i.isa("Int") or $i.isa("Str") {
           push @args, $i;
-        } elsif $i.isa("Hash") {
+        } elsif $i.isa("Hash") or $i.isa("Pair") {
           for $i.keys -> $k {
             if $k ~~ /^ '-'/ {
               push @args, "{$k} {$i{$k}}";

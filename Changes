@@ -2,6 +2,10 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Bugfix: task-run multi methods now have signatures and work correctly
+    - BugFix: args stringification now allows Pair in the args list
+
+
 0.0.4  2019-07-18T12:41:59-05:00
 
     - Fix for {$.root}/lib/.precomp being messed with Perl6 tasks run
