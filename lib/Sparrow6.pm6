@@ -2,7 +2,7 @@
 
 use v6;
 
-unit module Sparrow6:ver<0.0.4>;
+unit module Sparrow6:ver<0.0.5>;
 
 
 
