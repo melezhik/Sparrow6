@@ -125,7 +125,7 @@ role Role {
   }
 
 
-  method !capture-cmd-output ($cmd, %args=()) {
+  method !capture-cmd-output ($cmd, %args?) {
 
     unless %args<ignore-stderr> {
       for $cmd.err.lines -> $line {
