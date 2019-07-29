@@ -2,6 +2,7 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - New feature - reference to task within root through `root@task` notation
     - Fixing powershell weird behavior. Sparrow6 hangs when try to read stderr.
       Workaround: Now stderr redirected to stdout and stderr never captured.
 
