@@ -125,11 +125,13 @@ role Role {
   }
 
 
-  method !capture-cmd-output ($cmd) {
+  method !capture-cmd-output ($cmd, %args=()) {
 
-    for $cmd.err.lines -> $line {
-      push self.stderr-data, $line;
-      self.console("stderr: $line") unless self.silent;
+    unless %args<ignore-stderr> {
+      for $cmd.err.lines -> $line {
+        push self.stderr-data, $line;
+        self.console("stderr: $line") unless self.silent;
+      }
     }
 
     my $stdout-lines = 0;

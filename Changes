@@ -2,6 +2,9 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Fixing powershell weird behavior. Sparrow6 hangs when try to read stderr.
+      Workaround: Now stderr redirected to stdout and stderr never captured.
+
 0.0.5  2019-07-26T21:12:36-05:00
 
     - Bugfix: task-run multi methods now have signatures and work correctly
