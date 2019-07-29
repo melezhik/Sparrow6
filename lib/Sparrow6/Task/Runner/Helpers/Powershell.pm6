@@ -30,7 +30,7 @@ role Role {
 
   method !deploy-powershell-run-cmd ($path) {
 
-      my $cmd = "pwsh -c \". " ~ $.cache-root-dir ~ $path ~ "/glue.ps1; . " ~ $.cache-root-dir ~ $path ~ "/sparrow6lib.ps1; . $path\"";
+      my $cmd = "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c \". " ~ $.cache-root-dir ~ $path ~ "/glue.ps1; . " ~ $.cache-root-dir ~ $path ~ "/sparrow6lib.ps1; . $path\" 2>&1";
 
       self!log("powershell run cmd", $cmd);
 
@@ -81,7 +81,7 @@ role Role {
 
       my $bash-cmd = self!bash-command($cmd);
 
-      self!capture-cmd-output($bash-cmd);
+      self!capture-cmd-output($bash-cmd, %( ignore-stderr => True ));
 
       self!handle-task-status($bash-cmd);
 
