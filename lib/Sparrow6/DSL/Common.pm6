@@ -28,17 +28,36 @@ multi sub task-run(Str $path, %parameters = %()) is export(:DEFAULT) {
 
     my $sph-api = Sparrow6::Task::Repository::Api.new();
 
+    my ($root, $task) = $path.split(/'@'/);
+
     $sph-api.install-plugin-deps($path);
 
-    my $runner = Sparrow6::Task::Runner::Api.new(
-      name  => $path,
-      root  => $path,
-      do-test => False,
-      show-test-result => True,
-      parameters => %parameters
-    );
+    if $task {
 
-    $runner.task-run;
+      my $runner = Sparrow6::Task::Runner::Api.new(
+        name  => $path,
+        root  => $root,
+        task => $task,
+        do-test => False,
+        show-test-result => True,
+        parameters => %parameters
+      );
+
+      $runner.task-run;
+
+    } else {
+
+      my $runner = Sparrow6::Task::Runner::Api.new(
+        name  => $path,
+        root  => $path,
+        do-test => False,
+        show-test-result => True,
+        parameters => %parameters
+      );
+  
+      $runner.task-run;
+
+    }
 
 }
 
