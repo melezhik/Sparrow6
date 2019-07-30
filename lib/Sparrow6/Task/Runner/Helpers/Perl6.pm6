@@ -31,7 +31,7 @@ role Role {
 
       unlink "{$.root}/lib/.precomp" if "{$.root}/lib/.precomp".IO ~~ :d;
 
-      my $cmd = "perl6 -I {$.cache-root-dir}/{$path} -I {$.root}/lib -Msparrow6lib $path";
+      my $cmd = "perl6 -I {$.cache-root-dir}/{$path} -I {$.root}/lib -Mglue -Msparrow6lib $path";
 
       self!log("perl6 run cmd", $cmd);
 

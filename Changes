@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Bugfix: use module `glue` in Perl6 tasks
+
 0.0.6  2019-07-29T21:04:41-05:00
 
     - Documenting Task Runner
