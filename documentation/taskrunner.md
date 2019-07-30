@@ -22,7 +22,7 @@ Use this method to run local tasks:
 
     # Run default task located at the root directory utilities/animals
 
-    task-run "utilities/animals", %( hello => 'Sparrow ');
+    task-run "utilities/animals", %( hello => 'Cow ');
 
 You can run a certain task located at the root directory, by using `$root-dir@task-path` notation:
 
@@ -32,8 +32,7 @@ You can run a certain task located at the root directory, by using `$root-dir@ta
 
 3. Low level API
 
-You probably don't need to use that explicitly, 
-it's used by the first two methods _internally_
+You probably don't need to use that explicitly, it's used by the first two methods _internally_, but here is an example of API:
 
     use Sparrow6::Task::Runner;
 
