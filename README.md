@@ -36,10 +36,10 @@ Check [documentation/development](https://github.com/melezhik/Sparrow6/blob/mast
 
 Sparrow6 Runner is an internal runner for Sparrow6 tasks:
 
-  task_run "run my build", "vsts-build", %(
-    definition => "JavaApp"
-  );
-
+    task_run "run my build", "vsts-build", %(
+      definition => "JavaApp"
+    );
+  
 Read more about task runner at [documentation/taskrunner](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskrunner.md).
 
 # Sparrow6::Task::Repository API
