@@ -34,29 +34,13 @@ Check [documentation/development](https://github.com/melezhik/Sparrow6/blob/mast
 
 # Sparrow6 Task Runner API
 
-Sparrow6 Runner is an internal runner for Sparrow6 tasks, you probably don't need to
-get into it's guts, but if you do, here is briefly outlined API.
+Sparrow6 Runner is an internal runner for Sparrow6 tasks:
 
-Run task
+  task_run "run my build", "vsts-build", %(
+    definition => "JavaApp"
+  );
 
-    #!perl6
-
-    use Sparrow6::Task::Runner;
-
-    Sparrow6::Task::Runner::Api.new(
-      name  => "bash",
-      root  => "examples/plugins/bash",
-      do-test => True,
-      show-test-result => True,
-      debug => %*ENV<SP6_DEBUG> ?? True !! False,
-      parameters => %(
-        command => 'echo $foo',
-        debug   => 1,
-        envvars => %(
-          foo => "BAR"
-        )
-      )
-    ).task-run;
+Read more about task runner at [documentation/taskrunner](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskrunner.md).
 
 # Sparrow6::Task::Repository API
 
@@ -185,7 +169,7 @@ Here are some examples:
 
     CODE
 
-Read more about task checks in [documentation/taskchecks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md).
+Read more about task checks at [documentation/taskchecks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md).
 
 # M10 
 
