@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.6  2019-07-29T21:04:41-05:00
+
     - Documenting Task Runner
     - New feature - reference to task within root through `root@task` notation
     - Fixing powershell weird behavior. Sparrow6 hangs when try to read stderr.
