@@ -2,6 +2,15 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Revert powershell related changes made in 0.0.6 release,
+      because it's not a blame of Sparrow6 that it hangs when executing _some_ Powershell requests
+      that block console stdout, for example Invoke-WebRequest
+      use $global:progressPreference = 'silentlyContinue' as a workaround
+      see https://stackoverflow.com/questions/18770723/hide-progress-of-invoke-webrequest
+
+    - Use modules for Powershell harness ( glue.psm1 and sparrowlib.psm1 ) rathe then scripts
+
+
 0.0.7  2019-07-30T17:43:43Z
 
     - Bugfix: use module `glue` in Perl6 tasks

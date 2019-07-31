@@ -8,11 +8,13 @@ role Role {
 
   method !make-sparrow6-powershell-lib ($path) {
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib.ps1', :w;
+      mkdir $.cache-root-dir ~ $path ~ '/sparrow6lib';
+
+      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib/sparrow6lib.psm1', :w;
       $fh.say(slurp %?RESOURCES<sparrow6lib.ps1>.Str);
       $fh.close;
 
-      self!log("powershell lib deployed","{$.cache-root-dir}$path/sparrow6lib.ps1");
+      self!log("powershell lib deployed","{$.cache-root-dir}$path/sparrow6lib/sparrow6lib.psm1");
 
   }
 
@@ -30,12 +32,13 @@ role Role {
 
   method !deploy-powershell-run-cmd ($path) {
 
-      my $cmd = "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c \". " ~ $.cache-root-dir ~ $path ~ "/glue.ps1; . " ~ $.cache-root-dir ~ $path ~ "/sparrow6lib.ps1; . $path\" 2>&1";
+      my $cmd =~ "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c \"Import-Module glue; Import-Module sparrow6lib; . $path\"";
 
       self!log("powershell run cmd", $cmd);
 
       my $fh = open $.cache-root-dir ~ $path ~ '/cmd.bash', :w;
       $fh.say("set -e");
+      $fh.say("export PSModulePath={$.cache-root-dir}{$path}:\$PSModulePath");
       $fh.say($cmd);
       $fh.close;
 
@@ -52,7 +55,10 @@ role Role {
         self!log("remove stdout file", $stdout-file);
       }
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/glue.ps1', :w;
+      mkdir $.cache-root-dir ~ $path ~ '/glue/';
+
+      my $fh = open $.cache-root-dir ~ $path ~ '/glue/glue.psm1', :w;
+
       $fh.say('function root_dir {', "\n\t'", $.root.IO.absolute,"'\n}" );
       $fh.say('function os {', "\n\t'" , $.os , "'\n}" );
       $fh.say("# project_root_directory is deprecated");
@@ -65,7 +71,7 @@ role Role {
       $fh.say('function stdout_file {', "\n\t'" , $stdout-file , "'\n}" );
       $fh.close;
 
-      self!log("powershell glue deployed", "{$.cache-root-dir}$path/glue.ps1");
+      self!log("powershell glue deployed", "{$.cache-root-dir}$path/glue/glue.psm1");
 
   }
 
@@ -81,7 +87,7 @@ role Role {
 
       my $bash-cmd = self!bash-command($cmd);
 
-      self!capture-cmd-output($bash-cmd, %( ignore-stderr => True ));
+      self!capture-cmd-output($bash-cmd);
 
       self!handle-task-status($bash-cmd);
 
