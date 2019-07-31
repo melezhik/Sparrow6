@@ -3,7 +3,8 @@ Revision history for Sparrowdo
 {{$NEXT}}
 
     - Revert powershell related changes made in 0.0.6 release,
-      because it's not a blame of Sparrow6 that it hangs when executing _some_ Powershell requests
+      because it's not a blame of Sparrow6 that it hangs 
+      when executing _some_ Powershell commands
       that block console stdout, for example Invoke-WebRequest
       use $global:progressPreference = 'silentlyContinue' as a workaround
       see https://stackoverflow.com/questions/18770723/hide-progress-of-invoke-webrequest
