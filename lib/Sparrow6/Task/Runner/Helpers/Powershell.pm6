@@ -32,7 +32,7 @@ role Role {
 
   method !deploy-powershell-run-cmd ($path) {
 
-      my $cmd =~ "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c \"Import-Module glue; Import-Module sparrow6lib; . $path\"";
+      my $cmd =~ "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c '\$global:ErrorActionPreference = \"Stop\";  Import-Module glue; Import-Module sparrow6lib; . $path'";
 
       self!log("powershell run cmd", $cmd);
 
