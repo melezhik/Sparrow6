@@ -79,11 +79,7 @@ role Role {
 
     self!log("bash task cmd deployed", $cmd);
 
-    my $proc = self!bash-command-async($cmd);
-
-    #self!capture-cmd-output($bash-cmd);
-
-    #self!handle-task-status($bash-cmd);
+    self!run-bash-command-async($cmd);
 
   }
 
