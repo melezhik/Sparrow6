@@ -89,11 +89,7 @@ role Role {
 
       self!log("ruby task cmd deployed", $cmd);
 
-      my $bash-cmd = self!bash-command($cmd);
-
-      self!capture-cmd-output($bash-cmd);
-
-      self!handle-task-status($bash-cmd);
+      self!run-bash-command-async($cmd);
 
   }
 
