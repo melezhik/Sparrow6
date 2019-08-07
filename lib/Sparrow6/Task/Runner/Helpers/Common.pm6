@@ -85,7 +85,7 @@ role Role {
   
   }
 
-  method !bash-command-async ($cmd) {
+  method !run-bash-command-async ($cmd) {
 
     self!log("effective command", "bash $cmd");
 
