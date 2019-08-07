@@ -205,7 +205,7 @@ See [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/document
 
 # Sparrowdo
 
-Configuration management tool. 
+Configuration management tool.
 
 Visit [Sparrowdo](https://github.com/melezhik/sparrowdo) GH project for details.
 
