@@ -91,12 +91,11 @@ role Role {
 
     my $proc = Proc::Async.new("bash",$cmd );
 
-
     react {
 
         whenever $proc.stdout.lines { # split input on \r\n, \n, and \r 
 
-          my $line = $_;
+          my $line = chomp($_);
 
           my $stdout-lines = 0;
 
@@ -109,7 +108,7 @@ role Role {
 
         whenever $proc.stderr { # chunks 
 
-          my $line = $_;
+          my $line = chomp($_);
 
           push self.stderr-data, $line;
           self.console("stderr: $line") unless self.silent;
