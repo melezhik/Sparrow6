@@ -85,6 +85,73 @@ role Role {
   
   }
 
+  method !bash-command-async ($cmd) {
+
+    self!log("effective command", "bash $cmd");
+
+    my $proc = Proc::Async.new("bash",$cmd );
+
+
+    react {
+
+        whenever $proc.stdout.lines { # split input on \r\n, \n, and \r 
+
+          my $line = $_;
+
+          my $stdout-lines = 0;
+
+          self.console($line) unless self.silent;
+          push self.stdout-data, $line;
+
+          #say ‘line: ’, $_
+
+        }
+
+        whenever $proc.stderr { # chunks 
+
+          my $line = $_;
+
+          push self.stderr-data, $line;
+          self.console("stderr: $line") unless self.silent;
+
+          # say ‘stderr: ’, $_
+
+        }
+
+        whenever $proc.ready {
+            #say ‘PID: ’, $_ # Only in Rakudo 2018.04 and newer, otherwise Nil 
+        }
+
+        whenever $proc.start {
+
+            #say ‘Proc finished: exitcode=’, .exitcode, ‘ signal=’, .signal;
+
+            unless self.silent {
+              self.console("<empty stdout>") if self.stdout-data.elems == 0;
+            }
+  
+
+            my $exit-code = .exitcode;
+
+            if $exit-code != 0 and ! $.ignore-task-error {
+              self.console("task exit status: $exit-code");
+              self.console("task {self.name} FAILED");
+              exit($exit-code);
+            }
+
+
+            # reset ignore-task-error
+            self.ignore-task-error = False;
+
+            done # gracefully jump from the react block
+
+        }
+    }
+
+    return
+
+  }
+
 
   method !handle-task-status ($cmd) {
   
