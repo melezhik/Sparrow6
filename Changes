@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.9  2019-08-10T18:08:32-05:00
+
     - Refactoring: replace perl6 run by Proc::Async
 
 0.0.8  2019-07-30T23:09:07-05:00
