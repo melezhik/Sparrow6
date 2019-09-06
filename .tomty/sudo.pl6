@@ -1,5 +1,11 @@
 #!perl6 
 
+=begin tomty
+%(
+  tag => "sudo"
+)
+=end tomty
+
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(
