@@ -16,6 +16,7 @@ before_install:
 
 install:
   - zef install --/test .
+  - zef install --/test Tomty
   - git clone https://github.com/melezhik/sparrow-plugins && s6 --repo-init /tmp/repo
   - cd sparrow-plugins && git checkout master && git pull origin master
   - find -maxdepth 2 -mindepth 2 -name sparrow.json -execdir s6 --upload \;
@@ -27,5 +28,4 @@ install:
   - perl6 -MSparrow6::Task::Repository -e "Sparrow6::Task::Repository::Api.new.index-update"
 
 script:
-  - ./test.sh
-
+  - tomty -a -skip=sudo --show-failed
