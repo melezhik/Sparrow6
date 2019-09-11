@@ -24,7 +24,7 @@ sub os() is export {
 
     return $os if $os;
 
-    my $script = slurp %?RESOURCES<os-resolver.sh>;
+    my $script = %?RESOURCES<os-resolver.sh>.Str;
 
     my $proc = run 'sh', $script, :out;
 
