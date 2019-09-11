@@ -37,11 +37,11 @@ function run_task {
 
 
 function config {
-   perl6 -I "${cache_dir}" -Msparrow6common -e json-var "${cache_root_dir}/config.json" $1
+   perl6.bat -I "${cache_dir}" -Msparrow6common -e json-var "${cache_root_dir}/config.json" $1
 }
 
 function task_var {
-   perl6 -I "${cache_dir}" -Msparrow6common -e json-var "${cache_dir}/variables.json" $1
+   perl6.bat -I "${cache_dir}" -Msparrow6common -e json-var "${cache_dir}/variables.json" $1
 }
 
 if test -f "${task_dir}/common.bash"; then

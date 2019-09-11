@@ -62,8 +62,6 @@ class Api
 
   method TWEAK() {
 
-    $.root = "$.root".IO.absolute.subst(/^^ \w+ ":"/, "").subst("\\","/",:g);
-
     unless $.config {
       $.config = "{$.root}/config.yaml";
     }
@@ -205,7 +203,9 @@ class Api
 
   }
 
-  method !run-task ($root) {
+  method !run-task ($root is copy) {
+
+    $root = $root.IO.absolute.subst(/^^ \w+ ":"/, "").subst("\\","/",:g);
 
     self!log("run task", $root);
 
