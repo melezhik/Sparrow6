@@ -147,7 +147,7 @@ role Role {
 
   method distro-download ($distro) {
 
-    run "curl", "-s", "-f", "-L", "-k", "-o", "{$.sparrow-root}/plugins/$distro", "{$.url}/plugins/{$distro}";
+    run "curl.exe", "-s", "-f", "-L", "-k", "-o", "{$.sparrow-root}/plugins/$distro", "{$.url}/plugins/{$distro}";
 
     self!log("plugin uploaded", $distro);
 
@@ -162,8 +162,12 @@ role Role {
     mkdir(self.plugin-directory($pid));
 
     self.get-resource("plugins/$distro", "{self.plugin-directory($pid)}/$distro" );
+
+    my $plugin-dir = self.plugin-directory($pid).subst(/^^ $<drive>=(\w+) ":"/, { "/$<drive>" });
+
+    self!log("run tar", "tar.exe -zxf {$plugin-dir}/$distro -C {$plugin-dir}");
     
-    run "tar", "-xzf" , "{self.plugin-directory($pid)}/$distro", "-C", self.plugin-directory($pid);
+    run "tar.exe", "-xzf" , "{$plugin-dir}/$distro", "-C", $plugin-dir;
   
     self!log("unpack {self.plugin-directory($pid)}/$distro to", self.plugin-directory($pid));
 
@@ -204,7 +208,6 @@ role Role {
     return "{$.sparrow-root}/plugins/$pid"
 
   }
-
 
   method plugin-upload ($dir=$*CWD) {
 

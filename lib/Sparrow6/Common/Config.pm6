@@ -22,11 +22,13 @@ sub set-config(%c) is export {
 
 sub os() is export {
 
-return $os if $os;
+    return $os if $os;
 
-my $script = slurp %?RESOURCES<os-resolver.sh>.Str;
+    my $script = slurp %?RESOURCES<os-resolver.sh>;
 
-$os = qqx{$script};
+    my $proc = run 'sh', 'resources/os-resolver.sh', :out;
+
+    $os = $proc.out.slurp: :close;
 
 }
 

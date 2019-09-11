@@ -62,7 +62,7 @@ class Api
 
   method TWEAK() {
 
-    $.root = "$.root".IO.absolute;
+    $.root = "$.root".IO.absolute.subst(/^^ \w+ ":"/, "").subst("\\","/",:g);
 
     unless $.config {
       $.config = "{$.root}/config.yaml";
@@ -71,6 +71,8 @@ class Api
     $.cache-root-dir = $.sparrow-root                               ??
     $.sparrow-root ~ "/tmp/" ~ $*PID ~ 22.rand.Int.Str              !! 
     %*ENV<HOME> ~ "/.sparrow6/tmp/" ~ $*PID   ~ 22.rand.Int.Str     ;
+
+    $.cache-root-dir = "$.cache-root-dir".subst("\\","/",:g);
 
     if $.cache-root-dir.IO ~~ :e {
       empty-directory $.cache-root-dir;
@@ -205,7 +207,7 @@ class Api
 
   method !run-task ($root) {
 
-    self!log("runs task", $root);
+    self!log("run task", $root);
 
     self!erase-stdout-data unless self.keep-cache;
 

@@ -14,7 +14,7 @@ role Role {
       copy("$url/$resource".IO,$target.IO);
     } else {
       self!log("GET", "{$.url}/{$resource}");
-      my @cmd = "curl", "-s", "-f", "-L", "-k", "-o", $target, "{$.url}/{$resource}";
+      my @cmd = "curl.exe", "-s", "-f", "-L", "-k", "-o", $target, "{$.url}/{$resource}";
       self!log("run cmd:", @cmd);
       run @cmd;
     }  

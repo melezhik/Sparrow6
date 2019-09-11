@@ -38,7 +38,7 @@ role Role {
         $cmd ~= "perl -I {$.cache-root-dir}/{$path} ";
         $cmd ~= "-I {$.root}/local/lib/perl5 -I {$.root}/lib -Msparrow6lib $path";
       } else {
-        $cmd = "perl -I {$.cache-root-dir}/{$path} -I {$.root}/lib -Msparrow6lib $path";
+        $cmd = "perl -I {$.cache-root-dir}/{$path} -I {$.root}/lib -Msparrow6lib {%*ENV<HOMEDRIVE>}$path";
       }
 
       self!log("perl run cmd", $cmd);

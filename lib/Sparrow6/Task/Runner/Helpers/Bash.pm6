@@ -33,7 +33,7 @@ role Role {
     $fh.say("source " ~  $.cache-root-dir ~ $path ~ '/glue.bash');
     $fh.say("source " ~  $.cache-root-dir ~ $path ~ '/sparrow6lib.bash');
     $fh.say("source " ~  $.cache-root-dir ~ $path ~ '/variables.bash');
-    $fh.say("source $path");
+    $fh.say("source {%*ENV<HOMEDRIVE>}$path");
     $fh.close;
 
     self!log("bash run cmd", "{$.cache-root-dir}$path/cmd.bash");
