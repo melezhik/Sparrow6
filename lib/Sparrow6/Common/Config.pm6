@@ -26,7 +26,7 @@ sub os() is export {
 
     my $script = slurp %?RESOURCES<os-resolver.sh>;
 
-    my $proc = run 'sh', 'resources/os-resolver.sh', :out;
+    my $proc = run 'sh', $script, :out;
 
     $os = $proc.out.slurp: :close;
 
