@@ -7,11 +7,11 @@ role Role {
 
   method !make-sparrow6-bash-lib ($path) {
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib.bash', :w;
+      my $fh = open $.cache-dir ~ '/sparrow6lib.bash', :w;
       $fh.say(slurp %?RESOURCES<sparrow6lib.bash>.Str);
       $fh.close;
 
-      self!log("bash lib deployed","{$.cache-root-dir}$path/sparrow6lib.bash");
+      self!log("bash lib deployed","{$.cache-dir}/sparrow6lib.bash");
 
   }
 
@@ -29,30 +29,30 @@ role Role {
 
   method !deploy-bash-run-cmd ($path) {
 
-    my $fh = open $.cache-root-dir ~ $path ~ '/cmd.bash', :w;
-    $fh.say("source " ~  $.cache-root-dir ~ $path ~ '/glue.bash');
-    $fh.say("source " ~  $.cache-root-dir ~ $path ~ '/sparrow6lib.bash');
-    $fh.say("source " ~  $.cache-root-dir ~ $path ~ '/variables.bash');
+    my $fh = open $.cache-dir ~ '/cmd.bash', :w;
+    $fh.say("source " ~  $.cache-dir ~ '/glue.bash');
+    $fh.say("source " ~  $.cache-dir ~ '/sparrow6lib.bash');
+    $fh.say("source " ~  $.cache-dir ~ '/variables.bash');
     $fh.say("source $path");
     $fh.close;
 
-    self!log("bash run cmd", "{$.cache-root-dir}$path/cmd.bash");
+    self!log("bash run cmd", "{$.cache-dir}/cmd.bash");
 
-    return "{$.cache-root-dir}$path/cmd.bash";
+    return "{$.cache-dir}/cmd.bash";
 
   }
 
 
   method !make-bash-glue ($path) {
 
-      my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+      my $stdout-file = $.cache-dir ~ '/stdout';
 
       if $stdout-file.IO ~~ :e {
         unlink $stdout-file;
         self!log("remove stdout file", $stdout-file);
       }
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/glue.bash', :w;
+      my $fh = open $.cache-dir ~ '/glue.bash', :w;
       $fh.say("root_dir=", $.root.IO.absolute);
       $fh.say("os=", $.os);
       $fh.say("# project_root_directory is deprecated");
@@ -61,11 +61,11 @@ role Role {
       $fh.say("# test_root_dir is deprecated");
       $fh.say("test_root_dir=", $.cache-root-dir);
       $fh.say("cache_root_dir=", $.cache-root-dir);
-      $fh.say("cache_dir=", $.cache-root-dir ~ $path );
+      $fh.say("cache_dir=", $.cache-dir );
       $fh.say("stdout_file=", $stdout-file );
       $fh.close;
 
-      self!log("bash glue deployed", "{$.cache-root-dir}$path/glue.bash deployed");
+      self!log("bash glue deployed", "{$.cache-dir}/glue.bash deployed");
 
   }
 

@@ -8,11 +8,11 @@ role Role {
 
   method !make-sparrow6-python-lib ($path) {
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib.py', :w;
+      my $fh = open $.cache-dir ~ '/sparrow6lib.py', :w;
       $fh.say(slurp %?RESOURCES<sparrow6lib.py>.Str);
       $fh.close;
 
-      self!log("python lib deployed","{$.cache-root-dir}$path/sparrow6lib.py");
+      self!log("python lib deployed","{$.cache-dir}/sparrow6lib.py");
 
   }
 
@@ -30,29 +30,29 @@ role Role {
 
   method !deploy-python-run-cmd ($path) {
 
-      my $cmd = "export PYTHONPATH=\$PYTHONPATH:" ~ $.cache-root-dir ~ $path ~ " && python $path";
+      my $cmd = "export PYTHONPATH=\$PYTHONPATH:" ~ $.cache-dir ~ " && python $path";
 
       self!log("python run cmd", $cmd);
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/cmd.bash', :w;
+      my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
       $fh.say($cmd);
       $fh.close;
 
-      return $.cache-root-dir ~ $path ~ '/cmd.bash'
+      return $.cache-dir ~ '/cmd.bash'
   }
 
 
   method !make-python-glue ($path) {
 
-      my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+      my $stdout-file = $.cache-dir ~ '/stdout';
 
       if $stdout-file.IO ~~ :e {
         unlink $stdout-file;
         self!log("remove stdout file", $stdout-file);
       }
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/glue.py', :w;
+      my $fh = open $.cache-dir ~ '/glue.py', :w;
       $fh.say("def root_dir():\n\treturn '" ~ $.root.IO.absolute ~ "'\n" );
       $fh.say("def os():\n\treturn '" ~ $.os ~ "'\n" );
       $fh.say("# project_root_directory is deprecated");
@@ -61,11 +61,11 @@ role Role {
       $fh.say("def cache_root_dir():\n\treturn '" ~ $.cache-root-dir ~ "'\n" );
       $fh.say("# test_root_dir is deprecated");
       $fh.say("def test_root_dir():\n\treturn '" ~ $.cache-root-dir ~ "'\n" );
-      $fh.say("def cache_dir():\n\treturn '" ~ $.cache-root-dir ~ $path ~ "'\n" );
+      $fh.say("def cache_dir():\n\treturn '" ~ $.cache-dir ~ "'\n" );
       $fh.say("def stdout_file():\n\treturn '" ~ $stdout-file ~ "'\n" );
       $fh.close;
 
-      self!log("python glue deployed", "{$.cache-root-dir}$path/glue.py");
+      self!log("python glue deployed", "{$.cache-dir}/glue.py");
 
   }
 

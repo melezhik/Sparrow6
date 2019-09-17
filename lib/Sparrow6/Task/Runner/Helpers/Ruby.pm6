@@ -8,11 +8,11 @@ role Role {
 
   method !make-sparrow6-ruby-lib ($path) {
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib.rb', :w;
+      my $fh = open $.cache-dir ~ '/sparrow6lib.rb', :w;
       $fh.say(slurp %?RESOURCES<sparrow6lib.rb>.Str);
       $fh.close;
 
-      self!log("ruby lib deployed","{$.cache-root-dir}$path/sparrow6lib.rb");
+      self!log("ruby lib deployed","{$.cache-dir}/sparrow6lib.rb");
 
   }
 
@@ -35,34 +35,34 @@ role Role {
       if "{$.root}/Gemfile".IO ~~ :e {
         self!log("pick up Gemfile","{$.root}/cpanfile");
         $cmd = "cd {$.root} && bundle exec " ;
-        $cmd ~= "ruby -I {$.cache-root-dir}/{$path} ";
+        $cmd ~= "ruby -I {$.cache-dir} ";
         $cmd ~= "-I {$.root}/local/lib/ruby5 -I {$.root}/lib -r sparrow6lib $path";
       } else {
-        $cmd ~= "ruby -I {$.cache-root-dir}/{$path} ";
+        $cmd ~= "ruby -I {$.cache-dir} ";
         $cmd ~= "-I {$.root}/local/lib/ruby5 -I {$.root}/lib -r sparrow6lib $path";
       }
 
       self!log("ruby run cmd", $cmd);
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/cmd.bash', :w;
+      my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
       $fh.say($cmd);
       $fh.close;
 
-      return $.cache-root-dir ~ $path ~ '/cmd.bash'
+      return $.cache-dir ~ '/cmd.bash'
   }
 
 
   method !make-ruby-glue ($path) {
 
-      my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+      my $stdout-file = $.cache-dir ~ '/stdout';
 
       if $stdout-file.IO ~~ :e {
         unlink $stdout-file;
         self!log("remove stdout file", $stdout-file);
       }
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/glue.rb', :w;
+      my $fh = open $.cache-dir ~ '/glue.rb', :w;
       $fh.say("def root_dir\n\t%q|" ~ $.root.IO.absolute ~ "|\nend" );
       $fh.say("def os\n\t%q|" ~ $.os ~ "|\nend" );
       $fh.say("# project_root_directory is deprecated");
@@ -71,11 +71,11 @@ role Role {
       $fh.say("def cache_root_dir\n\t%q|" ~ $.cache-root-dir ~ "|\nend" );
       $fh.say("# test_root_dir is deprecated");
       $fh.say("def test_root_dir\n\t%q|" ~ $.cache-root-dir ~ "|\nend" );
-      $fh.say("def cache_dir\n\t%q|" ~ $.cache-root-dir ~ $path ~ "|\nend" );
+      $fh.say("def cache_dir\n\t%q|" ~ $.cache-dir ~ "|\nend" );
       $fh.say("def stdout_file\n\t%q|" ~ $stdout-file ~ "|\nend" );
       $fh.close;
 
-      self!log("ruby glue deployed", "{$.cache-root-dir}$path/glue.rb");
+      self!log("ruby glue deployed", "{$.cache-dir}/glue.rb");
 
   }
 

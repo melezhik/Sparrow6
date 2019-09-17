@@ -20,11 +20,11 @@ role Role {
 
   method !make-sparrow6-common-lib ($path) {
 
-    my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6common.pm6', :w;
+    my $fh = open $.cache-dir ~ '/sparrow6common.pm6', :w;
     $fh.say(slurp %?RESOURCES<sparrow6common.pm6>.Str);
     $fh.close;
 
-    self!log("common lib deployed", "{$.cache-root-dir}$path/sparrow6common.pm6");
+    self!log("common lib deployed", "{$.cache-dir}/sparrow6common.pm6");
 
   }
 
@@ -57,7 +57,7 @@ role Role {
     # read hook's stdout if any
     # see set-stdout function
 
-    my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+    my $stdout-file = $.cache-dir ~ '/stdout';
 
     if "$stdout-file".IO ~~ :e {
 
