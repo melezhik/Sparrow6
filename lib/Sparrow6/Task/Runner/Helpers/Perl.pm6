@@ -65,16 +65,16 @@ role Role {
       $fh.say("package glue;");
       $fh.say("1;");
       $fh.say("package main;");
-      $fh.say('sub root_dir { qq{' ~ $.root.IO.absolute ~ "}};" );
+      $fh.say('sub root_dir { q{' ~ $.root.IO.absolute ~ "}};" );
       $fh.say('sub os { qq{' ~ $.os ~ "}};" );
       $fh.say("# project_root_directory is deprecated");
-      $fh.say('sub project_root_dir { qq{' ~ $.root.IO.absolute ~ "}};" );
-      $fh.say('sub task_dir { qq{', $path.IO.dirname.IO.absolute, "}};");
-      $fh.say('sub cache_root_dir { qq{', $.cache-root-dir, "}};");
+      $fh.say('sub project_root_dir { q{' ~ $.root.IO.absolute ~ "}};" );
+      $fh.say('sub task_dir { q{', $path.IO.dirname.IO.absolute, "}};");
+      $fh.say('sub cache_root_dir { q{', $.cache-root-dir, "}};");
       $fh.say("# test_root_dir is deprecated");
-      $fh.say('sub test_root_dir { qq{', $.cache-root-dir, "}};");
-      $fh.say('sub cache_dir { qq{', $.cache-dir, "}};");
-      $fh.say('sub stdout_file { qq{', $stdout-file, "}};");
+      $fh.say('sub test_root_dir { q{', $.cache-root-dir, "}};");
+      $fh.say('sub cache_dir { q{', $.cache-dir, "}};");
+      $fh.say('sub stdout_file { q{', $stdout-file, "}};");
       $fh.close;
 
       self!log("perl glue deployed", "{$.cache-dir}/glue.pm");

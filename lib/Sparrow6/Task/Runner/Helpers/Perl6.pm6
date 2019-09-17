@@ -55,16 +55,16 @@ role Role {
 
       my $fh = open $.cache-dir ~ '/glue.pm6', :w;
       $fh.say("unit module glue;");
-      $fh.say('sub root_dir () is export { qq{' ~ $.root.IO.absolute ~ "} };" );
-      $fh.say('sub os () is export { qq{' ~ $.os ~ "} };" );
+      $fh.say('sub root_dir () is export { q{' ~ $.root.IO.absolute ~ "} };" );
+      $fh.say('sub os () is export { q{' ~ $.os ~ "} };" );
       $fh.say("# project_root_directory is deprecated");
-      $fh.say('sub project_root_dir () is export { qq{' ~ $.root.IO.absolute ~ "} };" );
-      $fh.say('sub task_dir () is export { qq{', $path.IO.dirname.IO.absolute, "} };");
-      $fh.say('sub cache_root_dir () is export { qq{', $.cache-root-dir, "} };");
+      $fh.say('sub project_root_dir () is export { q{' ~ $.root.IO.absolute ~ "} };" );
+      $fh.say('sub task_dir () is export { q{', $path.IO.dirname.IO.absolute, "} };");
+      $fh.say('sub cache_root_dir () is export { q{', $.cache-root-dir, "} };");
       $fh.say("# test_root_dir is deprecated");
-      $fh.say('sub test_root_dir () is export { qq{', $.cache-root-dir, "} };");
-      $fh.say('sub cache_dir () is export { qq{', $.cache-dir, "} };");
-      $fh.say('sub stdout_file () is export { qq{', $stdout-file, "} };");
+      $fh.say('sub test_root_dir () is export { q{', $.cache-root-dir, "} };");
+      $fh.say('sub cache_dir () is export { q{', $.cache-dir, "} };");
+      $fh.say('sub stdout_file () is export { q{', $stdout-file, "} };");
       $fh.close;
 
       self!log("perl6 glue deployed", "{$.cache-dir}/glue.pm");
