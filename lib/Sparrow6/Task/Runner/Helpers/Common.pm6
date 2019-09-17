@@ -90,16 +90,17 @@ role Role {
   
   }
 
-  method !run-bash-command-async ($cmd) {
+
+  method !run-bash-command-async (@cmd) {
 
     my $proc;
 
     if $*DISTRO.is-win {
-      self!log("effective command", $cmd);
-      $proc = Proc::Async.new($cmd);
+      self!log("effective command", @cmd);
+      $proc = Proc::Async.new(@cmd);
     } else {
-      self!log("effective command", "bash $cmd");
-      $proc = Proc::Async.new("bash",$cmd );
+      self!log("effective command", "bash @cmd");
+      $proc = Proc::Async.new("bash",@cmd );
     }
 
     react {
