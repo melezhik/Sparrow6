@@ -32,17 +32,38 @@ role Role {
 
   method !deploy-powershell-run-cmd ($path) {
 
-      my $cmd =~ "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c '\$global:ErrorActionPreference = \"Stop\";  Import-Module glue; Import-Module sparrow6lib; . $path'";
+      if $*DISTRO.is-win {
 
-      self!log("powershell run cmd", $cmd);
+        self!log("powershell run cmd", "{$.cache-dir}/cmd.ps1");
 
-      my $fh = open $.cache-dir ~ '/cmd.bash', :w;
-      $fh.say("set -e");
-      $fh.say("export PSModulePath={$.cache-dir}:\$PSModulePath");
-      $fh.say($cmd);
-      $fh.close;
+        my $fh = open $.cache-dir ~ '/cmd.ps1', :w;
 
-      return $.cache-dir ~ '/cmd.bash'
+        $fh.say("\$env:PSModulePath = \$env:PSModulePath + \";{$.cache-dir}\"");
+        $fh.say("\$global:ErrorActionPreference = \"Stop\"");
+        $fh.say("Import-Module glue");
+        $fh.say("Import-Module sparrow6lib");
+        $fh.say(". $path");
+        $fh.close;
+
+        return 'powershell', '-NoLogo', '-NonInteractive', '-NoProfile', $.cache-dir ~ '/cmd.ps1';
+
+      } else {
+
+        my $cmd = "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c '\$global:ErrorActionPreference = \"Stop\";  Import-Module glue; Import-Module sparrow6lib; . $path'";
+
+        self!log("powershell run cmd", $cmd);
+
+        my $fh = open $.cache-dir ~ '/cmd.bash', :w;
+
+        $fh.say("set -e");
+        $fh.say("export PSModulePath={$.cache-dir}:\$PSModulePath");
+        $fh.say($cmd);
+        $fh.close;
+
+        return $.cache-dir ~ '/cmd.bash'
+
+      }  
+
   }
 
 
