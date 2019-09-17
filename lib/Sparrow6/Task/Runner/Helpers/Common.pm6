@@ -80,27 +80,31 @@ role Role {
 
   method !bash-command ($cmd) {
 
-    self!log("effective command", "bash $cmd");
+    my @arr = $cmd.split(/\s+/);
 
     if $*DISTRO.is-win {
-      return run $cmd, :out, :err;
+      self!log("effective command", @arr);
+      return run @arr, :out, :err;
     } else {
-      return run 'bash', $cmd, :out, :err;
+      self!log("effective command", "bash @arr");
+      return run 'bash', @arr, :out, :err;
     }
   
   }
 
 
-  method !run-bash-command-async (@cmd) {
+  method !run-bash-command-async ($cmd) {
 
     my $proc;
 
+    my @arr = $cmd.split(/\s+/);
+
     if $*DISTRO.is-win {
-      self!log("effective command", @cmd);
-      $proc = Proc::Async.new(@cmd);
+      self!log("effective command", @arr);
+      $proc = Proc::Async.new(@arr);
     } else {
-      self!log("effective command", "bash @cmd");
-      $proc = Proc::Async.new("bash",@cmd );
+      self!log("effective command", "bash @arr");
+      $proc = Proc::Async.new("bash",@arr );
     }
 
     react {

@@ -1,2 +1,9 @@
-generator: print "assert: ", ( defined(config()->{main}->{foo}) ? 1 : 0 ), " config.main.foo defined"
-generator: print "value={".( config()->{main}->{foo} )."}"
+generator: <<CODE
+!perl6
+say "assert: ", ( defined(config()<main><foo>) ?? 1 !! 0 ), " config.main.foo defined"
+CODE
+
+generator: <<CODE
+!perl6
+say "value=\{{config()<main><foo>}\}"
+CODE
