@@ -8,11 +8,11 @@ role Role {
 
   method !make-sparrow6-perl-lib ($path) {
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib.pm', :w;
+      my $fh = open $.cache-dir ~ '/sparrow6lib.pm', :w;
       $fh.say(slurp %?RESOURCES<sparrow6lib.pm>.Str);
       $fh.close;
 
-      self!log("perl lib deployed","{$.cache-root-dir}$path/sparrow6lib.pm");
+      self!log("perl lib deployed","{$.cache-dir}/sparrow6lib.pm");
 
   }
 
@@ -35,33 +35,33 @@ role Role {
       if "{$.root}/cpanfile".IO ~~ :e {
         self!log("pick up cpanfile","{$.root}/cpanfile");
         $cmd = "PATH=\$PATH:{$.root}/local/bin/ &&" ;
-        $cmd ~= "perl -I {$.cache-root-dir}/{$path} ";
+        $cmd ~= "perl -I {$.cache-dir} ";
         $cmd ~= "-I {$.root}/local/lib/perl5 -I {$.root}/lib -Msparrow6lib $path";
       } else {
-        $cmd = "perl -I {$.cache-root-dir}/{$path} -I {$.root}/lib -Msparrow6lib $path";
+        $cmd = "perl -I {$.cache-dir} -I {$.root}/lib -Msparrow6lib $path";
       }
 
       self!log("perl run cmd", $cmd);
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/cmd.bash', :w;
+      my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
       $fh.say($cmd);
       $fh.close;
 
-      return $.cache-root-dir ~ $path ~ '/cmd.bash'
+      return $.cache-dir ~ '/cmd.bash'
   }
 
 
   method !make-perl-glue ($path) {
 
-      my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+      my $stdout-file = $.cache-dir ~ '/stdout';
 
       if $stdout-file.IO ~~ :e {
         unlink $stdout-file;
         self!log("remove stdout file", $stdout-file);
       }
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/glue.pm', :w;
+      my $fh = open $.cache-dir ~ '/glue.pm', :w;
       $fh.say("package glue;");
       $fh.say("1;");
       $fh.say("package main;");
@@ -73,11 +73,11 @@ role Role {
       $fh.say('sub cache_root_dir { qq{', $.cache-root-dir, "}};");
       $fh.say("# test_root_dir is deprecated");
       $fh.say('sub test_root_dir { qq{', $.cache-root-dir, "}};");
-      $fh.say('sub cache_dir { qq{', $.cache-root-dir ~ $path, "}};");
+      $fh.say('sub cache_dir { qq{', $.cache-dir, "}};");
       $fh.say('sub stdout_file { qq{', $stdout-file, "}};");
       $fh.close;
 
-      self!log("perl glue deployed", "{$.cache-root-dir}$path/glue.pm");
+      self!log("perl glue deployed", "{$.cache-dir}/glue.pm");
 
   }
 

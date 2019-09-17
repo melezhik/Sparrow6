@@ -38,13 +38,14 @@ class Api
   {
 
   has Str   $.root is required is rw;
-  has Str   $.task is rw; # this is deprecated, we should use $.task now
+  has Str   $.task is rw;
   has Str   $.sparrow-root;
   has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False; 
   has Str   $.os = os();
   has Hash  $.parameters;
   has Str   $.config      is rw;
   has Hash  $.task-config is rw;
+  has Str   $.cache-dir is rw;
   has Str   $.cache-root-dir is rw;
   has Str   $.name is required is rw;
   has Str   @.stdout-data is rw;
@@ -59,6 +60,7 @@ class Api
   has Str   $.cwd = "{$*CWD}";
   has Bool  $.silent is rw;
 
+  my $task-run = 0;
 
   method TWEAK() {
 
@@ -203,63 +205,77 @@ class Api
 
   }
 
+  method !set-cache-dir {
+
+    $task-run++;
+    self!log("task number", $task-run);
+    $.cache-dir = $.cache-root-dir ~ "/" ~ $task-run;
+    mkdir $.cache-dir;
+    self!log("task cache dir create", $.cache-dir );
+
+  }
+
+  method !reset-cache-dir {
+
+    $task-run--;
+    $.cache-dir = $.cache-root-dir ~ "/" ~ $task-run;
+    self!log("reset task cache dir", $.cache-dir);
+
+  }
+
   method !run-task ($root) {
 
     self!log("runs task", $root);
 
-    self!erase-stdout-data unless self.keep-cache;
+    self!erase-stdout-data;
 
     # try to run hooks first 
 
     if "$root/hook.pl6".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/hook.pl6";
+      self!set-cache-dir();
 
-      self!log("task cache dir create", $.cache-root-dir ~ "$root/hook.pl6");
-
-      self!save-task-vars($.cache-root-dir ~ "$root/hook.pl6");
+      self!save-task-vars($.cache-dir);
 
       self!run-perl6-hook("$root/hook.pl6");
 
     } elsif "$root/hook.pl".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/hook.pl";
+      self!set-cache-dir();
 
-      self!log("task cache dir create", $.cache-root-dir ~ "$root/hook.pl");
-
-      self!save-task-vars($.cache-root-dir ~ "$root/hook.pl");
+      self!save-task-vars($.cache-dir);
 
       self!run-perl-hook("$root/hook.pl");
 
     } elsif "$root/hook.bash".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/hook.bash";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/hook.bash");
+      self!save-task-vars($.cache-dir);
 
       self!run-bash-hook("$root/hook.bash");
 
     } elsif "$root/hook.rb".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/hook.rb";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/hook.rb");
+      self!save-task-vars($.cache-dir);
 
       self!run-ruby-hook("$root/hook.rb");
 
     } elsif "$root/hook.py".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/hook.py";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/hook.py");
+      self!save-task-vars($.cache-dir);
 
       self!run-python-hook("$root/hook.py");
 
     } elsif "$root/hook.ps1".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/hook.ps1";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/hook.ps1");
+      self!save-task-vars($.cache-dir);
 
       self!run-powershell-hook("$root/hook.ps1");
 
@@ -267,9 +283,9 @@ class Api
 
     if "$root/task.pl6".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/task.pl6";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/task.pl6");
+      self!save-task-vars($.cache-dir);
 
       self!run-perl6-task("$root/task.pl6");
 
@@ -286,9 +302,9 @@ class Api
 
     } elsif "$root/task.pl".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/task.pl";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/task.pl");
+      self!save-task-vars($.cache-dir);
 
       self!run-perl-task("$root/task.pl");
 
@@ -305,9 +321,9 @@ class Api
 
     } elsif "$root/task.bash".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/task.bash";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/task.bash");
+      self!save-task-vars($.cache-dir);
 
       self!run-bash-task("$root/task.bash");
 
@@ -324,9 +340,9 @@ class Api
 
     } elsif "$root/task.rb".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/task.rb";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/task.rb");
+      self!save-task-vars($.cache-dir);
 
       self!run-ruby-task("$root/task.rb");
 
@@ -343,9 +359,9 @@ class Api
 
     } elsif "$root/task.py".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/task.py";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/task.py");
+      self!save-task-vars($.cache-dir);
 
       self!run-python-task("$root/task.py");
 
@@ -361,9 +377,9 @@ class Api
 
     } elsif "$root/task.ps1".IO ~~ :e {
 
-      mkdir $.cache-root-dir ~ "$root/task.ps1";
+      self!set-cache-dir();
 
-      self!save-task-vars($.cache-root-dir ~ "$root/task.ps1");
+      self!save-task-vars($.cache-dir);
 
       self!run-powershell-task("$root/task.ps1");
 
@@ -377,7 +393,9 @@ class Api
 
       }
 
-    } 
+    }
+
+    self!reset-cache-dir();
 
   }
 

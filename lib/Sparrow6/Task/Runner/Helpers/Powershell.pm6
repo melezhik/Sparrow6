@@ -8,13 +8,13 @@ role Role {
 
   method !make-sparrow6-powershell-lib ($path) {
 
-      mkdir $.cache-root-dir ~ $path ~ '/sparrow6lib';
+      mkdir $.cache-dir ~ '/sparrow6lib';
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/sparrow6lib/sparrow6lib.psm1', :w;
+      my $fh = open $.cache-dir ~ '/sparrow6lib/sparrow6lib.psm1', :w;
       $fh.say(slurp %?RESOURCES<sparrow6lib.ps1>.Str);
       $fh.close;
 
-      self!log("powershell lib deployed","{$.cache-root-dir}$path/sparrow6lib/sparrow6lib.psm1");
+      self!log("powershell lib deployed","{$.cache-dir}/sparrow6lib/sparrow6lib.psm1");
 
   }
 
@@ -36,28 +36,28 @@ role Role {
 
       self!log("powershell run cmd", $cmd);
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/cmd.bash', :w;
+      my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
-      $fh.say("export PSModulePath={$.cache-root-dir}{$path}:\$PSModulePath");
+      $fh.say("export PSModulePath={$.cache-dir}:\$PSModulePath");
       $fh.say($cmd);
       $fh.close;
 
-      return $.cache-root-dir ~ $path ~ '/cmd.bash'
+      return $.cache-dir ~ '/cmd.bash'
   }
 
 
   method !make-powershell-glue ($path) {
 
-      my $stdout-file = $.cache-root-dir ~ $path ~ '/stdout';
+      my $stdout-file = $.cache-dir ~ '/stdout';
 
       if $stdout-file.IO ~~ :e {
         unlink $stdout-file;
         self!log("remove stdout file", $stdout-file);
       }
 
-      mkdir $.cache-root-dir ~ $path ~ '/glue/';
+      mkdir $.cache-dir ~ '/glue/';
 
-      my $fh = open $.cache-root-dir ~ $path ~ '/glue/glue.psm1', :w;
+      my $fh = open $.cache-dir ~ '/glue/glue.psm1', :w;
 
       $fh.say('function root_dir {', "\n\t'", $.root.IO.absolute,"'\n}" );
       $fh.say('function os {', "\n\t'" , $.os , "'\n}" );
@@ -67,11 +67,11 @@ role Role {
       $fh.say('function cache_root_dir {', "\n\t'" , $.cache-root-dir , "'\n}" );
       $fh.say("# test_root_dir is deprecated");
       $fh.say('function test_root_dir {', "\n\t'" , $.cache-root-dir , "'\n}" );
-      $fh.say('function cache_dir {', "\n\t'" , $.cache-root-dir , $path , "'\n}" );
+      $fh.say('function cache_dir {', "\n\t'" , $.cache-dir , "'\n}" );
       $fh.say('function stdout_file {', "\n\t'" , $stdout-file , "'\n}" );
       $fh.close;
 
-      self!log("powershell glue deployed", "{$.cache-root-dir}$path/glue/glue.psm1");
+      self!log("powershell glue deployed", "{$.cache-dir}/glue/glue.psm1");
 
   }
 
