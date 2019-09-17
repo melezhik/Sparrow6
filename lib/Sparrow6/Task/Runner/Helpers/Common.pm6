@@ -81,15 +81,26 @@ role Role {
   method !bash-command ($cmd) {
 
     self!log("effective command", "bash $cmd");
-    return run 'bash', $cmd, :out, :err;
+
+    if $*DISTRO.is-win {
+      return run $cmd, :out, :err;
+    } else {
+      return run 'bash', $cmd, :out, :err;
+    }
   
   }
 
   method !run-bash-command-async ($cmd) {
 
-    self!log("effective command", "bash $cmd");
+    my $proc;
 
-    my $proc = Proc::Async.new("bash",$cmd );
+    if $*DISTRO.is-win {
+      self!log("effective command", $cmd);
+      $proc = Proc::Async.new($cmd);
+    } else {
+      self!log("effective command", "bash $cmd");
+      $proc = Proc::Async.new("bash",$cmd );
+    }
 
     react {
 

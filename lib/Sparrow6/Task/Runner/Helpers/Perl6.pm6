@@ -35,12 +35,19 @@ role Role {
 
       self!log("perl6 run cmd", $cmd);
 
-      my $fh = open $.cache-dir ~ '/cmd.bash', :w;
-      $fh.say("set -e");
-      $fh.say($cmd);
-      $fh.close;
-
-      return $.cache-dir ~ '/cmd.bash'
+      if $*DISTRO.is-win {
+        my $fh = open $.cache-dir ~ '/cmd.cmd', :w;
+        $fh.say('@ECHO OFF');
+        $fh.say($cmd);
+        $fh.close;
+        return $.cache-dir ~ '/cmd.cmd'
+      } else {
+        my $fh = open $.cache-dir ~ '/cmd.bash', :w;
+        $fh.say("set -e");
+        $fh.say($cmd);
+        $fh.close;
+        return $.cache-dir ~ '/cmd.bash'
+      }
   }
 
 

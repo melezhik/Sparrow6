@@ -22,6 +22,8 @@ sub set-config(%c) is export {
 
 sub os() is export {
 
+return 'windows' if $*DISTRO.is-win;
+
 return $os if $os;
 
 my $script = slurp %?RESOURCES<os-resolver.sh>.Str;
