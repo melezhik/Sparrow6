@@ -24,7 +24,7 @@ class Api
 
 {
 
-  has Str   $.url = %*ENV<SP6_REPO> || "{%*ENV<HOME>}/repo";
+  has Str   $.url = %*ENV<SP6_REPO> || ( $*DISTRO.is-win ?? "{%*ENV<HOMEDRIVE>}{%*ENV<HOMEPATH>}/repo" !! "{%*ENV<HOME>}/repo" ) ;
   has Str   $.sparrow-root is rw;
   has Str   $.prefix;
   has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False ;

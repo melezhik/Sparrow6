@@ -70,9 +70,23 @@ class Api
       $.config = "{$.root}/config.yaml";
     }
 
-    $.cache-root-dir = $.sparrow-root                               ??
-    $.sparrow-root ~ "/tmp/" ~ $*PID ~ 22.rand.Int.Str              !! 
-    %*ENV<HOME> ~ "/.sparrow6/tmp/" ~ $*PID   ~ 22.rand.Int.Str     ;
+    if $*DISTRO.is-win {
+
+     if $.sparrow-root {
+      $.cache-root-dir = $.sparrow-root ~ "/tmp/" ~ $*PID ~ 22.rand.Int.Str
+     } else {
+      $.cache-root-dir = "{%*ENV<HOMEDRIVE>}{%*ENV<HOMEPATH>}" ~ "/.sparrow6/tmp/" ~ $*PID   ~ 22.rand.Int.Str
+     }
+
+    } else {
+
+     if $.sparrow-root {
+        $.cache-root-dir = $.sparrow-root ~ "/tmp/" ~ $*PID ~ 22.rand.Int.Str
+     } else {
+        $.cache-root-dir = %*ENV<HOME> ~ "/.sparrow6/tmp/" ~ $*PID   ~ 22.rand.Int.Str
+     }
+
+    }
 
     if $.cache-root-dir.IO ~~ :e {
       empty-directory $.cache-root-dir;
