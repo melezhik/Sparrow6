@@ -41,7 +41,18 @@ role Role {
 
     } else {
 
-      if %*ENV<HOME> {
+      if $*DISTRO.is-win {
+
+        my $home = "{%*ENV<HOMEDRIVE>}{%*ENV<HOMEPATH>}";
+
+        $root = %*ENV<SP6_PREFIX> ?? "{$home}/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !! "{$home}/sparrow6".IO.absolute;
+
+        unless $root.IO ~~ :e {
+          mkdir $root;
+          self!log("sparrow root directory created", $root);
+        }
+
+      } elsif %*ENV<HOME> {
 
         $root = %*ENV<SP6_PREFIX> ?? "{%*ENV<HOME>}/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !! "{%*ENV<HOME>}/sparrow6".IO.absolute;
 
