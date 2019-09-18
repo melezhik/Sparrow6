@@ -10,7 +10,7 @@ function set_stdout {
 
   $file = stdout_file
 
-  $line | Out-File $file
+  $line | Out-File -Encoding utf8 $file
 
 }
 
@@ -135,7 +135,7 @@ function update_state {
 
   $json = $State | ConvertTo-Json -Depth 10
 
-  $json | Out-File $file
+  $json | Out-File -Encoding utf8 $file
 
 
 }
