@@ -10,7 +10,7 @@ use JSON::Tiny;
 
 use Sparrow6::Common::Helpers;
 use Sparrow6::Task::Repository::Helpers::Common;
-use Sparrow6::Task::Repository::Helpers::Plugin;
+use Sparrow6::Task::Repository::Helpers::qPlugin;
 use Sparrow6::Task::Repository::Helpers::Index;
 use Sparrow6::Task::Repository::Helpers::Init;
 
@@ -24,7 +24,7 @@ class Api
 
 {
 
-  has Str   $.url = %*ENV<SP6_REPO> || ( $*DISTRO.is-win ?? "{%*ENV<HOMEDRIVE>}{%*ENV<HOMEPATH>}/repo" !! "{%*ENV<HOME>}/repo" ) ;
+  has Str   $.url = %*ENV<SP6_REPO> || ( $*DISTRO.is-win ?? "file://{%*ENV<HOMEDRIVE>}{%*ENV<HOMEPATH>}/repo" !! "file://{%*ENV<HOME>}/repo" ) ;
   has Str   $.sparrow-root is rw;
   has Str   $.prefix;
   has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False ;
