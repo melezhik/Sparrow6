@@ -10,7 +10,7 @@ use JSON::Tiny;
 
 use Sparrow6::Common::Helpers;
 use Sparrow6::Task::Repository::Helpers::Common;
-use Sparrow6::Task::Repository::Helpers::qPlugin;
+use Sparrow6::Task::Repository::Helpers::Plugin;
 use Sparrow6::Task::Repository::Helpers::Index;
 use Sparrow6::Task::Repository::Helpers::Init;
 
