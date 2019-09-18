@@ -231,7 +231,12 @@ role Role {
 
       unlink "{$.sparrow-root}/.cache/archive.tar.gz" if "{$.sparrow-root}/.cache/archive.tar.gz".IO ~~ :e;
 
-      my @cmd = (
+      my @cmd = $*DISTRO.is-win ?? (
+        'tar',
+        '-zcf',
+        "{$.sparrow-root}/.cache/archive.tar.gz",
+        '.'
+      ) !! (
         'tar', 
         '--exclude=.tom', 
         '--exclude=local', 
