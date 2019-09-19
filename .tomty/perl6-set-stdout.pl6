@@ -1,5 +1,11 @@
 #!perl6
 
+=begin tomty
+%(
+  tag => "windows"
+)
+=end tomty
+
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(

@@ -31,23 +31,16 @@ role Role {
 
       unlink "{$.root}/lib/.precomp" if "{$.root}/lib/.precomp".IO ~~ :d;
 
-      my $cmd = "perl6 -I {$.cache-dir} -I {$.root}/lib -Mglue -Msparrow6lib $path";
+      my $cmd = $*DISTRO.is-win 
+      ??
+      "cmd.exe /c perl6 -I {$.cache-dir} -I {$.root}/lib -Mglue -Msparrow6lib $path"
+      !!
+      "perl6 -I {$.cache-dir} -I {$.root}/lib -Mglue -Msparrow6lib $path";
 
       self!log("perl6 run cmd", $cmd);
 
-      if $*DISTRO.is-win {
-        my $fh = open $.cache-dir ~ '/cmd.cmd', :w;
-        $fh.say('@ECHO OFF');
-        $fh.say($cmd);
-        $fh.close;
-        return $.cache-dir ~ '/cmd.cmd'
-      } else {
-        my $fh = open $.cache-dir ~ '/cmd.bash', :w;
-        $fh.say("set -e");
-        $fh.say($cmd);
-        $fh.close;
-        return $.cache-dir ~ '/cmd.bash'
-      }
+      return $cmd;
+
   }
 
 
