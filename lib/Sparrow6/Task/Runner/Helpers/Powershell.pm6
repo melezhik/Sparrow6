@@ -43,6 +43,9 @@ role Role {
         $fh.say("Import-Module glue");
         $fh.say("Import-Module sparrow6lib");
         $fh.say(". $path");
+        $fh.say("if ( \$lastexitcode -ne 0 ) \{");
+        $fh.say("exit(\$lastexitcode)");
+        $fh.say("}");   
         $fh.close;
 
         return 'powershell', '-NoLogo', '-NonInteractive', '-NoProfile', $.cache-dir ~ '/cmd.ps1';

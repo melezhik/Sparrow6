@@ -25,22 +25,22 @@ use Sparrow6::Task::Runner::Helpers::Check;
 class Api
 
   does Sparrow6::Common::Helpers::Role
-  does Sparrow6::Task::Runner::Helpers::Common::Role 
-  does Sparrow6::Task::Runner::Helpers::Perl6::Role 
-  does Sparrow6::Task::Runner::Helpers::Perl::Role 
-  does Sparrow6::Task::Runner::Helpers::Bash::Role 
-  does Sparrow6::Task::Runner::Helpers::Ruby::Role 
-  does Sparrow6::Task::Runner::Helpers::Python::Role 
-  does Sparrow6::Task::Runner::Helpers::Powershell::Role 
-  does Sparrow6::Task::Runner::Helpers::Test::Role 
-  does Sparrow6::Task::Runner::Helpers::Check::Role 
+  does Sparrow6::Task::Runner::Helpers::Common::Role
+  does Sparrow6::Task::Runner::Helpers::Perl6::Role
+  does Sparrow6::Task::Runner::Helpers::Perl::Role
+  does Sparrow6::Task::Runner::Helpers::Bash::Role
+  does Sparrow6::Task::Runner::Helpers::Ruby::Role
+  does Sparrow6::Task::Runner::Helpers::Python::Role
+  does Sparrow6::Task::Runner::Helpers::Powershell::Role
+  does Sparrow6::Task::Runner::Helpers::Test::Role
+  does Sparrow6::Task::Runner::Helpers::Check::Role
 
   {
 
   has Str   $.root is required is rw;
   has Str   $.task is rw;
   has Str   $.sparrow-root;
-  has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False; 
+  has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
   has Str   $.os = os();
   has Hash  $.parameters;
   has Str   $.config      is rw;
@@ -53,7 +53,7 @@ class Api
   has Hash  $.task-vars is rw;
   has Bool  $.test-pass is rw;
   has Bool  $.check-pass is rw;
-  has Bool  $.keep-cache is rw; 
+  has Bool  $.keep-cache is rw;
   has Bool  $.do-test;
   has Bool  $.show-test-result;
   has Bool  $.ignore-task-error is rw;
@@ -171,7 +171,7 @@ class Api
     chdir $.cwd;
 
     self!erase-stdout-data;
-    
+
     die "directory $.root does not exist" unless "$.root".IO ~~ :e;
     die "$.root is not a directory" unless "$.root".IO ~~ :d;
 
@@ -183,7 +183,7 @@ class Api
       } elsif "{$.root}/{$.task}".IO ~~ :d  {
         self!run-task("{$.root}/{$.task}");
       } else {
-        die "neither {$.root}/{$.task}, nor {$.task} directory exists,\nwhat are you trying to do?"; 
+        die "neither {$.root}/{$.task}, nor {$.task} directory exists,\nwhat are you trying to do?";
       }
 
     } else {
@@ -203,7 +203,7 @@ class Api
     }
 
     exit($status) if $status != 0;
-    
+
     my %state = self!get-state;
 
     unless %*ENV<SP6_KEEP_CACHE> or $.keep-cache {
@@ -230,11 +230,10 @@ class Api
   }
 
   method !reset-cache-dir {
-
+    self!log("reset task cache dir", $.cache-dir);
     $task-run--;
     $.cache-dir = $.cache-root-dir ~ "/" ~ $task-run;
-    self!log("reset task cache dir", $.cache-dir);
-
+    self!log("current task cache dir", $.cache-dir);
   }
 
   method !run-task ($root) {
@@ -243,7 +242,7 @@ class Api
 
     self!erase-stdout-data;
 
-    # try to run hooks first 
+    # try to run hooks first
 
     if "$root/hook.pl6".IO ~~ :e {
 
