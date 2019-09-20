@@ -78,7 +78,7 @@ role Role {
   }
 
 
-  method !bash-command ($cmd) {
+  method !run-command ($cmd) {
 
     my @arr = $cmd.split(/\s+/);
     self!log("effective command", @arr);
@@ -87,7 +87,7 @@ role Role {
   }
 
 
-  method !run-bash-command-async ($cmd) {
+  method !run-command-async ($cmd) {
 
     my $proc;
 

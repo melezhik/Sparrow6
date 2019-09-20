@@ -79,7 +79,7 @@ role Role {
 
     self!log("bash task cmd deployed", $cmd);
 
-    self!run-bash-command-async($cmd);
+    self!run-command-async($cmd);
 
   }
 
@@ -93,7 +93,7 @@ role Role {
 
     self!log("bash hook cmd deployed", $cmd);
 
-    my $bash-cmd = self!bash-command($cmd);
+    my $bash-cmd = self!run-command($cmd);
 
     my %task-vars;
 

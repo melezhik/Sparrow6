@@ -91,9 +91,9 @@ role Role {
 
       self!log("perl task cmd deployed", $cmd);
 
-      my $bash-cmd = self!bash-command($cmd);
+      my $bash-cmd = self!run-command($cmd);
 
-      self!run-bash-command-async($cmd);
+      self!run-command-async($cmd);
 
   }
 
@@ -107,7 +107,7 @@ role Role {
 
     self!log("perl hook cmd deployed", $cmd-path );
 
-    my $bash-cmd = self!bash-command($cmd-path);
+    my $bash-cmd = self!run-command($cmd-path);
 
     my $task-vars;
 
