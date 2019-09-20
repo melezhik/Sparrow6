@@ -79,7 +79,7 @@ role Role {
 
       self!log("python task cmd deployed", $cmd);
 
-      self!run-bash-command-async($cmd);
+      self!run-command-async($cmd);
 
   }
 
@@ -93,7 +93,7 @@ role Role {
 
     self!log("python hook cmd deployed", $cmd-path );
 
-    my $bash-cmd = self!bash-command($cmd-path);
+    my $bash-cmd = self!run-command($cmd-path);
 
     my $task-vars;
 
