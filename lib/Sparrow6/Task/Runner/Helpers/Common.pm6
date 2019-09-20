@@ -81,7 +81,7 @@ role Role {
   method !bash-command ($cmd) {
 
     my @arr = $cmd.split(/\s+/);
-    self!log("effective command", "@arr");
+    self!log("effective command", @arr);
     return run @arr, :out, :err;
   
   }
@@ -93,7 +93,7 @@ role Role {
 
     my @arr = $cmd.split(/\s+/);
 
-    self!log("effective command", "@arr");
+    self!log("effective command", @arr);
     $proc = Proc::Async.new(@arr);
 
     react {

@@ -67,7 +67,7 @@ role Role {
 
         self!log("powershell run cmd", $cmd);
 
-        return "{$.cache-dir}/cmd.bash"
+        return "bash {$.cache-dir}/cmd.bash"
 
       }  
 
