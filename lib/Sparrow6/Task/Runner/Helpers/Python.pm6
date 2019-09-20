@@ -39,7 +39,7 @@ role Role {
 
       self!log("python run cmd", $cmd);
 
-      return "{$.cache-dir}/cmd.bash"
+      return "bash {$.cache-dir}/cmd.bash"
   }
 
 
