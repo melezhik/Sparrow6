@@ -36,9 +36,9 @@ role Role {
     $fh.say("source $path");
     $fh.close;
 
-    self!log("bash run cmd", "{$.cache-dir}/cmd.bash");
+    self!log("bash run cmd", "bash {$.cache-dir}/cmd.bash");
 
-    return "{$.cache-dir}/cmd.bash";
+    return "bash {$.cache-dir}/cmd.bash";
 
   }
 

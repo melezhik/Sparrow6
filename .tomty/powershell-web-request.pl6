@@ -2,7 +2,7 @@
 
 =begin tomty
 %(
-  tag => "windows"
+  tag => ( "windows", "internet" )
 )
 =end tomty
 

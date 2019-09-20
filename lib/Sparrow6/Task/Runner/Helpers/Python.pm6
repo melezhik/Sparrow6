@@ -32,14 +32,14 @@ role Role {
 
       my $cmd = "export PYTHONPATH=\$PYTHONPATH:" ~ $.cache-dir ~ " && python $path";
 
-      self!log("python run cmd", $cmd);
-
       my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
       $fh.say($cmd);
       $fh.close;
 
-      return $.cache-dir ~ '/cmd.bash'
+      self!log("python run cmd", $cmd);
+
+      return "{$.cache-dir}/cmd.bash"
   }
 
 
