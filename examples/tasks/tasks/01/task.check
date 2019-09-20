@@ -1,6 +1,7 @@
 
 generator: <<CODE
-my $foo = task_var('foo');
-print "assert: ", defined($foo), " foo varibale is defined\n"; 
-print "foo: ".task_var("foo"), "\n";
+!perl6
+    my $foo = task_var('foo');
+    say "assert: ", defined($foo), " foo variable is defined"; 
+    say "foo: ",task_var("foo");
 CODE
