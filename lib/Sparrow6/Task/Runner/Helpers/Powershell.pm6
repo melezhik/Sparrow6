@@ -48,13 +48,15 @@ role Role {
         $fh.say("}");   
         $fh.close;
 
-        return 'powershell', '-NoLogo', '-NonInteractive', '-NoProfile', $.cache-dir ~ '/cmd.ps1';
+        my $cmd = "powershell -NoLogo -NonInteractive -NoProfile {$.cache-dir}/cmd.ps1";
+
+        self!log("powershell run cmd", $cmd);
+
+        return $cmd;
 
       } else {
 
         my $cmd = "pwsh -NoLogo -NonInteractive -NoProfile -OutputFormat Text -c '\$global:ErrorActionPreference = \"Stop\";  Import-Module glue; Import-Module sparrow6lib; . $path'";
-
-        self!log("powershell run cmd", $cmd);
 
         my $fh = open $.cache-dir ~ '/cmd.bash', :w;
 
@@ -63,7 +65,9 @@ role Role {
         $fh.say($cmd);
         $fh.close;
 
-        return $.cache-dir ~ '/cmd.bash'
+        self!log("powershell run cmd", $cmd);
+
+        return "{$.cache-dir}/cmd.bash"
 
       }  
 

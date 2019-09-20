@@ -81,14 +81,8 @@ role Role {
   method !bash-command ($cmd) {
 
     my @arr = $cmd.split(/\s+/);
-
-    if $*DISTRO.is-win {
-      self!log("effective command", @arr);
-      return run @arr, :out, :err;
-    } else {
-      self!log("effective command", "bash @arr");
-      return run 'bash', @arr, :out, :err;
-    }
+    self!log("effective command", "@arr");
+    return run @arr, :out, :err;
   
   }
 
@@ -99,13 +93,8 @@ role Role {
 
     my @arr = $cmd.split(/\s+/);
 
-    if $*DISTRO.is-win {
-      self!log("effective command", @arr);
-      $proc = Proc::Async.new(@arr);
-    } else {
-      self!log("effective command", "bash @arr");
-      $proc = Proc::Async.new("bash",@arr );
-    }
+    self!log("effective command", "@arr");
+    $proc = Proc::Async.new(@arr);
 
     react {
 

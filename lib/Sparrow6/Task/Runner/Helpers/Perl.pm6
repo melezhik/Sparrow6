@@ -41,14 +41,14 @@ role Role {
         $cmd = "perl -I {$.cache-dir} -I {$.root}/lib -Msparrow6lib $path";
       }
 
-      self!log("perl run cmd", $cmd);
-
       my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
       $fh.say($cmd);
       $fh.close;
 
-      return $.cache-dir ~ '/cmd.bash'
+      self!log("perl run cmd", $cmd);
+
+      return "bash {$.cache-dir}/cmd.bash"
   }
 
 

@@ -42,14 +42,14 @@ role Role {
         $cmd ~= "-I {$.root}/local/lib/ruby5 -I {$.root}/lib -r sparrow6lib $path";
       }
 
-      self!log("ruby run cmd", $cmd);
-
       my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
       $fh.say($cmd);
       $fh.close;
 
-      return $.cache-dir ~ '/cmd.bash'
+      self!log("ruby run cmd", $cmd);
+
+      return "bash {$.cache-dir}/cmd.bash"
   }
 
 
