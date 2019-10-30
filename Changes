@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.10  2019-10-29T19:10:58-06:00
+
     - Windows support ( partitial )
     - Switch test suite to Tomty
 
