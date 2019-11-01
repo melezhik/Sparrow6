@@ -1,6 +1,6 @@
 # Sparrow6
 
-> Sparrow6 - Perl6 Automation Framework
+> Sparrow6 - Raku Automation Framework
 
 # Comparison with other tools
 
