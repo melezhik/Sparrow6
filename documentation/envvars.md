@@ -2,7 +2,7 @@
 
 Sparrow6 environmental variables list.
 
-- SP6_REPO 
+- SP6_REPO
 
 Sets Sparrow6 Repository url.
 
@@ -11,6 +11,18 @@ For example:
     SP6_REPO=file:///var/sparrow-local-repo
 
     SP6_REPO=http://192.168.0.1
+
+- SP6_TASK_ROOT
+
+Set root directory for local tasks
+
+For example:
+
+    SP6_TASK_ROOT=~/tasks
+
+Once is set Sparrow6 will look tasks locations in `SP6_TASK_ROOT`, not just in `CWD`:
+
+    task-run "birds" # Will look in ./birds,  then in ~/tasks/birds
 
 - SP6_DEBUG
 

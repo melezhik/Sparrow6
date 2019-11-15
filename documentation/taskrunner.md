@@ -16,19 +16,27 @@ Use this method to run Sparrow6 [plugins](https://github.com/melezhik/Sparrow6/b
 
 2. DSL-like style, local tasks
 
-`task-run $root-dir, %parameters`
+`task-run $task-dir, %parameters`
 
 Use this method to run local tasks:
 
-    # Run default task located at the root directory utilities/animals
+    # Run default task located at the task directory ./utilities/animals
 
     task-run "utilities/animals", %( hello => 'Cow ');
 
-You can run a certain task located at the root directory, by using `$root-dir@task-path` notation:
+You can run specific task located at the task directory, by using `$task-dir@task-path` notation:
 
-    # Run birds/tiny task located at the root directory utilities/animals:
+    # Run birds/tiny task located at the task directory ./utilities/animals:
 
     task-run "utilities/animals@birds/tiny", %( hello => 'Sparrow ');
+
+You can set task root directory to add alternative location where local tasks are searched:
+
+    SP6_TASK_ROOT=~/tasks
+
+Then following task will be searched in `./utilities/animals`,  then in `~/tasks/utilities/animals`:
+
+    task-run "utilities/animals"
 
 3. Low level API
 
