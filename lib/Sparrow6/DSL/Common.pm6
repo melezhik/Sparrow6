@@ -36,12 +36,25 @@ multi sub task-run(Str $path, %parameters = %()) is export(:DEFAULT) {
 
     $sph-api.install-plugin-deps($path);
 
+    my $task-name;
+
+    if  %*ENV<SP6_TASK_ROOT> {
+      if $root.IO !~~ :d &&  "{%*ENV<SP6_TASK_ROOT>}/$root".IO ~~ :d  {
+         $root = "{%*ENV<SP6_TASK_ROOT>}/$root";
+         $task-name = "::{$path}"
+      } else {
+        $task-name = $path
+      }
+    } else {
+      $task-name = $path
+    }
+
     if $task {
 
       my $runner = Sparrow6::Task::Runner::Api.new(
         name  => $path,
         root  => $root,
-        task => $task,
+        task => $task-name,
         do-test => False,
         show-test-result => True,
         parameters => %parameters
@@ -52,8 +65,8 @@ multi sub task-run(Str $path, %parameters = %()) is export(:DEFAULT) {
     } else {
 
       my $runner = Sparrow6::Task::Runner::Api.new(
-        name  => $path,
-        root  => $path,
+        name  => $task-name,
+        root  => $root,
         do-test => False,
         show-test-result => True,
         parameters => %parameters
