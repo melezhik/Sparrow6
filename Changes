@@ -2,6 +2,9 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Bug Fix - `root@task` task-run
+    - Erase context and streams when search fails in sequential mode
+
 0.0.10  2019-10-29T19:10:58-06:00
 
     - Windows support ( partitial )

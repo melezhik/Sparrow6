@@ -195,6 +195,13 @@ class Api
 
     $!last-check-status = $status;
 
+    unless $status {
+     if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {
+        self.current-context.context = ();
+        self.current-context.streams = %();
+     } 
+    }
+
     self.current-context.change-context(@new-context) if @new-context;
 
     if $.debug {
