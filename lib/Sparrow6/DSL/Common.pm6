@@ -52,9 +52,9 @@ multi sub task-run(Str $path, %parameters = %()) is export(:DEFAULT) {
     if $task {
 
       my $runner = Sparrow6::Task::Runner::Api.new(
-        name  => $path,
+        name  => $task-name,
         root  => $root,
-        task => $task-name,
+        task =>  $task,
         do-test => False,
         show-test-result => True,
         parameters => %parameters
