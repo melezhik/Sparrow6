@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.11  2019-12-25T21:42:16-06:00
+
     - Bug Fix - `root@task` task-run
     - Erase context and streams when search fails in sequential mode
 
