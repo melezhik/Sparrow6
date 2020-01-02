@@ -251,30 +251,9 @@ Examples:
 
 ## Copy local files 
 
-Sparrowdo provides limited API to copy local files at your project to remote server:
+Sparrowdo copies all files located at `data/` to a remote server, so you can copy it to various locations from here:
 
     copy-local-file 'data/hello.txt','/tmp/hello.txt';
-
-This code will copy file located at $*PWD/data/hello.txt to remote server under location '/tmp/hello.txt'.
-Please aware that local file coping gets happened at the very beginning of sparrowdo scenario execution, so this
-code ***won't work*** unless you have a remote directory /opt/data exists at the target server:
-
-    copy-local-file 'data/hello.txt','/opt/data/hello.txt';
-
-And even this won't help you due to local file coping gets happened first:
-
-    directory '/opt/data/';
-    copy-local-file 'data/hello.txt','/opt/data/hello.txt';
-
-But you can use `$sparrow-root/sparrow-cache/files` directory ( which existence is ensured ) to keep your data safely:
-
-    copy-local-file 'data/hello.txt','/opt/sparrow/sparrow-cache/files';
-
-And then:
-
-    directory '/opt/data/';
-
-    file '/opt/data/hello.txt', %( source => /opt/sparrow/sparrow-cache/files/hello.txt );
 
 ## Templates
 
