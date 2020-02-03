@@ -2,6 +2,10 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.12  2020-02-03T23:27:41Z
+
+    - Improvement - don't handle SP6_CONFIG during a module load ( it leads to bugs in some cases )
+
 0.0.11  2019-12-25T21:42:16-06:00
 
     - Bug Fix - `root@task` task-run
