@@ -2,7 +2,7 @@ language: perl
 
 env:
   global:
-    - PATH=/usr/local/bin:/opt/rakudo-pkg/bin/:/home/travis/.perl6/bin:$PATH
+    - PATH=/usr/local/bin:/opt/rakudo-pkg/bin/:/home/travis/.raku/bin:$PATH
     - SP6_REPO=file:///tmp/repo
     #- SP6_REPO=http://repo.southcentralus.cloudapp.azure.com
     - SKIP_POWERSHELL=1
