@@ -5,15 +5,20 @@ unit module Sparrow6::Common::Config;
 my %config;
 my $os;
 
-if %*ENV<SP6_CONFIG> {
-
-  %*ENV<SP6_CONFIG>.IO ~~ :e or die "configuration file {%*ENV<SP6_CONFIG>} does not exist";
-  %config = (EVALFILE %*ENV<SP6_CONFIG>);
-
-}
 
 sub config() is export {
+
+  return %config if %config;
+
+  if %*ENV<SP6_CONFIG> {
+
+    %*ENV<SP6_CONFIG>.IO ~~ :e or die "configuration file {%*ENV<SP6_CONFIG>} does not exist";
+    %config = (EVALFILE %*ENV<SP6_CONFIG>);
+
+  }
+
   return %config;
+
 }
 
 sub set-config(%c) is export {
