@@ -1,0 +1,4 @@
+group-create 'birds';
+group-delete 'birds';
+group 'birds';
+group 'birds' , %( action => 'delete' );

@@ -1,0 +1,13 @@
+if target_os() ~~ m/minoca/ {
+  package-install ('nano', 'git', 'zsh');
+} else {
+  package-install ('nano', 'git', 'mc');
+}
+
+package-install 'gzip tar';
+
+if target_os() ~~ m/minoca/ {
+  package-install 'zsh';
+} else {
+  package-install 'mc';
+}

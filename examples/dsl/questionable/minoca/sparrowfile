@@ -1,0 +1,17 @@
+use v6;
+use Sparrowdo;
+
+package-install ("nano", "zsh", "nginx");
+
+user "alexey";
+
+directory "/var/data/bar", %( owner => "alexey");
+
+service-enable "sshd";
+
+service-enable "nginx";
+service-stop "nginx";
+service-start "nginx";
+
+http-ok %( port => 8888 );
+

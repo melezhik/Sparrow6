@@ -1,0 +1,19 @@
+directory-delete '/tmp/foo';
+
+directory '/tmp/foo';
+directory-create '/tmp/foo';
+
+user 'foo';
+
+directory-create '/tmp/foo/bar', %( 
+  recursive => 1 , 
+  owner => 'foo', 
+  mode => '755' 
+);
+
+directory '/tmp/foo/bar/bar/123', %( 
+  action => 'create', 
+  recursive => 1 , 
+  owner => 'foo', 
+  mode => '755' 
+);

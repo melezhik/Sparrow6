@@ -1,0 +1,2 @@
+task_run "check disk space", "df-check";
+task_run "check disk space", "df-check", %( threshold => 80 );

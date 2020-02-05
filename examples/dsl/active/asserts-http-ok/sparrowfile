@@ -1,0 +1,13 @@
+if os() ~~ / ubuntu || debian / {
+
+  service-start 'nginx';
+
+  http-ok;
+
+  http-ok %( no-proxy => True , path => '/' , port => 80 );
+
+}
+
+
+http-ok 'https://raku.org', %( has-content => '"Raku Programming Language"' );
+

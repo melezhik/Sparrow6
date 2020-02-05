@@ -1,0 +1,19 @@
+#!perl6
+
+my %default_config = EVALFILE ('./examples/runtime_variables/config.pl6');
+
+my $subject = %default_config<subject>;
+
+my $rewrited_subject = config<subject>;
+
+my $after = config<after>;
+
+bash "echo the day after $after", %(
+  expect_stdout => 'Christmas');
+
+bash "echo a flock of $subject", %(
+  expect_stdout => 'flock of sparrows');
+
+
+bash "echo lands in left-over $rewrited_subject", %(
+  expect_stdout => 'left-over trees');

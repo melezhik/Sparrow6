@@ -1,0 +1,15 @@
+#!perl6
+
+# install Foo::Bar module
+my $user = %*ENV<USER>;
+
+zef 'Foo', %( user => $user );
+
+# Force install
+zef 'Foo', %( force => True, user => $user );
+
+# Sets custom description
+zef 'Foo', %( description => 'A dummy module to use for testing Github Perl 6 modules and their interaction with the Perl 6 part of CPAN', user => $user );
+
+# Show debug info when install
+zef 'Foo', %( debug => True, user => $user );
