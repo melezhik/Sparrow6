@@ -1,0 +1,34 @@
+#!perl6
+
+package-install "openssh-server";
+
+if target_os() ~~ m/centos/ {
+
+  package-install "openssh-clients";
+
+}
+
+bash "echo \$PATH";
+
+if target_os() ~~ m/ubuntu/ {
+  service-restart "ssh";
+} else {
+  service-restart "sshd";
+}
+
+file-delete "/root/.ssh/id_rsa.pub";
+file-delete '/root/.ssh/id_rsa';
+file-delete '/root/.ssh/authorized_keys';
+
+bash 'cat /dev/zero | ssh-keygen -q -N ""';
+bash 'cat /root/.ssh/id_rsa.pub > /root/.ssh/authorized_keys';
+
+
+
+ssh q:to/HERE/, %( host => "127.0.0.1" , user => 'root' );
+  echo one
+  echo two
+  echo three
+HERE
+
+ssh 'uptime', %( host => "127.0.0.1" );

@@ -1,0 +1,33 @@
+# ensure existence by PID taken from /var/run/nginx.pid
+
+if os() ~~ /centos/ {
+  package-install ('epel-release', 'nginx');
+  package-install ('initscripts');
+} else {
+  package-install ('nginx');
+}
+
+if os() ~~ /debian || alpine / {
+  package-install ('procps');
+}
+
+
+unless os() ~~ / ubuntu || debian / {
+  say "skip - services do not work properly on docker for this os:" ~ os();
+  exit;
+}
+
+service-start('nginx');
+ 
+proc-exists 'nginx';
+
+proc-exists-by-footprint 'nginx', 'nginx.*master';
+
+# ensure existence by footprint
+proc-exists-by-pid 'nginx', '/var/run/nginx.pid';
+
+service-stop('nginx');
+
+http-ok 'https://perl.org';
+
+

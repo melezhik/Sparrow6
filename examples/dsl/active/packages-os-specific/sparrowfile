@@ -1,0 +1,9 @@
+#!perl6
+
+package-install %(
+  centos => [ "mc" ],
+  ubuntu => [ "mc" ],
+  debian => [ "procps" ],
+  alpine => [ "procps" ],
+);
+

@@ -1,0 +1,40 @@
+group 'animals';
+user  'zookeeper';
+
+directory '/var/data';
+
+file '/var/data/animals.txt';
+
+file-create '/var/data/animals.txt';
+
+file-create '/var/data/animals.txt', %(
+  owner => 'zookeeper',
+  group => 'animals' ,
+  mode => '644',
+  content => 'I am read fox!'
+);
+
+file '/var/data/animals.txt', %(
+  action  => 'create',
+  owner   => 'zookeeper',
+  group   => 'animals' ,
+  mode    => '644',
+  content => 'I am read fox!'
+);
+
+file '/var/data/animals.txt', %(content => 'hello owl');
+
+file '/var/data/animals2.txt', %(source => '/var/data/animals.txt');
+
+bash 'cat /var/data/animals2.txt', %(
+  expect_stdout => "'hello owl'"
+);
+
+file-delete '/var/data/animals.txt';
+
+file-delete '/var/data/animals2.txt';
+
+file '/var/data/animals.txt', %( action => 'delete');
+
+group-delete 'animals';
+user-delete  'zookeeper';

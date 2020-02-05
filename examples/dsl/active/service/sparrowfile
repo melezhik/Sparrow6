@@ -1,0 +1,20 @@
+unless os() ~~ / ubuntu || debian / {
+  say "skip - services do not work properly on docker for this os:" ~ os();
+  exit;
+}
+
+package-install ('nginx');
+
+service-enable 'nginx';
+
+service-start 'nginx';
+
+service-stop 'nginx';
+
+service-restart 'nginx';
+
+service 'nginx', %( action => 'stop' );
+
+service 'nginx', %( action => 'disable' );
+
+service-disable 'nginx';

@@ -1,0 +1,10 @@
+package-install 'git';
+
+directory-delete '/tmp/foo';
+directory-create '/tmp/foo';
+
+git-scm 'https://github.com/melezhik/Sparrow6.git', %( to => '/tmp/foo' );
+
+git-scm 'https://github.com/melezhik/Sparrow6.git', %( to => '/tmp/foo' );
+
+

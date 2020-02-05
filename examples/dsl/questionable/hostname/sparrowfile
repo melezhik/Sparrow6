@@ -1,0 +1,2 @@
+my $hostname = target_hostname;
+bash "echo $hostname"

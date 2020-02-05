@@ -1,0 +1,54 @@
+#!perl6
+
+say "run on os: {os}";
+
+unless os() ~~ / ubuntu | debian | fedora /  {
+  say "we don't run cpan package test for this os:" ~ os();
+  exit;
+}
+
+
+# package-install "cpanminus" takes awhile in ubuntu/debian
+# so this is just quick and dirty workaround
+# to install cpanm  
+
+bash "curl -sL https://cpanmin.us/ -o /bin/cpanm";
+bash "chmod a+x /bin/cpanm";
+
+
+user-create 'travis';
+
+directory '/home/travis/cpan-test', %( owner => 'travis' );
+
+cpan-package-install ('Class::Tiny', 'Config::Tiny', 'HTTP::Tiny'), %( 
+    user =>'travis',
+    install-base => '/home/travis/cpan-test',
+  );
+
+cpan-package-install 'Class::Tiny Config::Tiny HTTP::Tiny', %( 
+    user =>'travis',
+    install-base => '/home/travis/cpan-test',
+);
+
+cpan-package-install 'Class::Tiny', %( 
+    user =>'travis',
+    install-base => '/home/travis/cpan-test',
+);
+
+cpan-package 'Class::Tiny', %( 
+    user =>'travis',
+    install-base => '/home/travis/cpan-test',
+);
+
+cpan-package ('Class::Tiny','Config::Tiny'), %( 
+    user =>'travis',
+    install-base => '/home/travis/cpan-test',
+);
+
+bash 'perl -MConfig::Tiny -e "print qq{OKOKOK}"', %(
+  user => 'travis',
+  debug => True,
+  envvars => %(
+    PERL5LIB => "/home/travis/cpan-test/lib/perl5"
+  )
+)

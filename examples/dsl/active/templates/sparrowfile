@@ -1,0 +1,56 @@
+#!perl6
+
+if  os() ~~ / ubuntu | debian  / {
+
+  package-install 'carton';
+
+
+} else {
+
+  say "skip this test for os #{os()}";
+  exit;
+
+}
+
+
+group 'animals';
+user  'zookeeper';
+
+directory '/var/data';
+
+template '/var/data/animals.txt', %( 
+  source => slurp 'templates/empty.tmpl' 
+);
+
+template-create '/var/data/animals.txt', %( 
+  source => slurp 'templates/empty.tmpl' 
+);
+
+
+template-create '/var/data/animals.txt', %(
+  source => ( slurp 'templates/animals.tmpl' ),
+  owner => 'zookeeper',
+  group => 'animals' ,
+  mode => '644',
+  variables => %(
+    name => 'red fox',
+    language => 'English'
+  ),
+);
+
+template-create '/var/data/animals.txt', %(
+  source => ( slurp 'templates/animals.tmpl' ),
+  owner => 'zookeeper',
+  group => 'animals' ,
+  mode => '644',
+  variables => %(
+    name => 'red fish',
+    language => 'Spanish'
+  ),
+  on_change => "echo hello world"
+);
+
+
+file-delete '/var/data/animals.txt';
+group-delete 'animals';
+user-delete  'zookeeper';

@@ -1,0 +1,7 @@
+#!perl6
+
+user-delete 'nuthatch';
+user-create 'nuthatch';
+user-delete 'nuthatch';
+user 'nuthatch';
+user 'nuthatch' , %( action => 'delete' );

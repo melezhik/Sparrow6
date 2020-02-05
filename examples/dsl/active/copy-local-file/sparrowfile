@@ -1,0 +1,7 @@
+
+copy-local-file 'data/hello.txt','/tmp/hello.txt';
+
+bash 'cat /tmp/hello.txt', %(
+  expect_stdout => "'<hello txt file>'"
+);
+

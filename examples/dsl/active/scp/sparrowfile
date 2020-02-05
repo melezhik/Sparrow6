@@ -1,0 +1,80 @@
+#!perl6
+
+package-install "openssh-server";
+
+if target_os() ~~ m/centos/ {
+
+  package-install "openssh-clients";
+
+}
+
+if target_os() ~~ m/ubuntu/ {
+  service-restart "ssh";
+} else {
+  service-restart "sshd";
+}
+
+file-delete "/root/.ssh/id_rsa.pub";
+
+file-delete '/root/.ssh/id_rsa';
+
+file-delete '/root/.ssh/authorized_keys';
+
+bash 'cat /dev/zero | ssh-keygen -q -N ""';
+
+bash 'cat /root/.ssh/id_rsa.pub > /root/.ssh/authorized_keys';
+
+
+ssh 'rm -rf  /tmp/test-ssh-scp && mkdir -p /tmp/test-ssh-scp', %( 
+  host => '127.0.0.1',
+);
+
+bash 'mkdir -p ~/data/ && cd ~/data && echo "<hello txt file>" > hello.txt && echo "<hello2 txt file>" > hello2.txt';
+
+scp %( 
+  data    => "~/data/hello.txt",
+  host    => "127.0.0.1:/tmp/test-ssh-scp", 
+);
+
+bash 'cat /tmp/test-ssh-scp/hello.txt', %(
+  expect_stdout => "'<hello txt file>'"
+);
+
+scp %( 
+  data    => "~/data/hello2.txt",
+  host    => "127.0.0.1:/tmp/test-ssh-scp", 
+);
+
+bash 'cat /tmp/test-ssh-scp/hello2.txt', %(
+  expect_stdout => "'<hello2 txt file>'"
+);
+
+directory-delete '/tmp/test-ssh-scp-pull';
+directory-create '/tmp/test-ssh-scp-pull';
+
+scp %( 
+  data    => '/tmp/test-ssh-scp-pull',
+  host    => "127.0.0.1:/tmp/test-ssh-scp/hello.txt",
+  pull    => True, 
+);
+
+bash 'cat /tmp/test-ssh-scp-pull/hello.txt', %(
+  expect_stdout => "'<hello txt file>'"
+);
+
+bash 'rm -rf /tmp/test-ssh-scp-pull/*.txt';
+
+scp %( 
+  data    => '/tmp/test-ssh-scp-pull',
+  host    => "127.0.0.1:/tmp/test-ssh-scp/hello.txt 127.0.0.1:/tmp/test-ssh-scp/hello2.txt",
+  pull    => True, 
+);
+
+bash 'cat /tmp/test-ssh-scp-pull/hello.txt', %(
+  expect_stdout => "'<hello txt file>'"
+);
+
+bash 'cat /tmp/test-ssh-scp-pull/hello2.txt', %(
+  expect_stdout => "'<hello2 txt file>'"
+);
+
