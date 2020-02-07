@@ -7,7 +7,7 @@ task-run "templater-plugin", "templater", %(
     name => 'Sparrow6',
     language => 'perl6'
   ),
-  target  => '/tmp/greetings.out',
+  target  => 'greetings.out',
   mode    => '644',
   source  => slurp 'examples/greetings.tmpl'
 );
