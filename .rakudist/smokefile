@@ -1,0 +1,8 @@
+bash "cd /data/test/{config()<user>} && tomty --all --show-failed", %(
+  user => config()<user>,
+  envvars => %( 
+    PATH => "/home/{config()<user>}/.raku/bin:/home/{config()<user>}/.perl6/bin:{%*ENV<PATH>}",
+    SP6_REPO => "http://repo.westus.cloudapp.azure.com",
+    SKIP_POWERSHELL => 1
+  )
+)
