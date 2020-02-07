@@ -1,4 +1,4 @@
-bash "cd /data/test/{config()<user>} && tomty --all --show-failed", %(
+bash "cd /data/test/{config()<user>} && tomty --skip=sudo --show-failed", %(
   user => config()<user>,
   envvars => %( 
     PATH => "/home/{config()<user>}/.raku/bin:/home/{config()<user>}/.perl6/bin:{%*ENV<PATH>}",
