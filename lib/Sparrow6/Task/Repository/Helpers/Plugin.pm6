@@ -231,10 +231,18 @@ role Role {
 
       unlink "{$.sparrow-root}/.cache/archive.tar.gz" if "{$.sparrow-root}/.cache/archive.tar.gz".IO ~~ :e;
 
+
+      if $*DISTRO.is-win  {
+         unlink "artifacts/archive.tar.gz" if "artifacts/archive.tar.gz".IO ~~ :f;
+         rmdir "artifacts/" if "artifacts".IO ~~ :d;
+         mkdir "artifacts/";
+      }
+	
       my @cmd = $*DISTRO.is-win ?? (
         'tar',
         '-zcf',
-        "{$.sparrow-root}/.cache/archive.tar.gz",
+        "artifacts/archive.tar.gz", # some Windows distros have tar that does not understand absolute pathes )=:
+        "--exclude=./artifacts",
         '.'
       ) !! (
         'tar', 
@@ -255,7 +263,13 @@ role Role {
 
       run @cmd;
 
-      self!put-resource("{$.sparrow-root}/.cache/archive.tar.gz","plugins/{$plg-name}-v{$repository-version}.tar.gz");
+      if $*DISTRO.is-win  {
+        self!put-resource("artifacts/archive.tar.gz","plugins/{$plg-name}-v{$repository-version}.tar.gz");
+        unlink "artifacts/archive.tar.gz";
+        rmdir "artifacts/";
+      } else {
+        self!put-resource("{$.sparrow-root}/.cache/archive.tar.gz","plugins/{$plg-name}-v{$repository-version}.tar.gz");
+      }	
 
       self.repository-index-update($plg-name,$repository-version);
 
