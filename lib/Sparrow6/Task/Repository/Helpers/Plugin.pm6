@@ -162,8 +162,20 @@ role Role {
     mkdir(self.plugin-directory($pid));
 
     self.get-resource("plugins/$distro", "{self.plugin-directory($pid)}/$distro" );
+
+    if $*DISTRO.is-win  {
+
+       my $dir = $*CWD;
+       chdir  "{self.plugin-directory($pid)}";
+       run "tar", "-xzf" , $distro;
+       chdir $dir;
+
+    } else {
+
+       run "tar", "-xzf" , "{self.plugin-directory($pid)}/$distro", "-C", self.plugin-directory($pid);
+
+    }
     
-    run "tar", "-xzf" , "{self.plugin-directory($pid)}/$distro", "-C", self.plugin-directory($pid);
   
     self!log("unpack {self.plugin-directory($pid)}/$distro to", self.plugin-directory($pid));
 
