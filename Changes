@@ -2,6 +2,10 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.13  2020-02-13T22:43:25Z
+
+    - Workaround for some Windows tar version
+
 0.0.12  2020-02-03T23:27:41Z
 
     - Improvement - don't handle SP6_CONFIG during a module load ( it leads to bugs in some cases )
