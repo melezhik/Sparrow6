@@ -149,7 +149,7 @@ sub MAIN (
 
     $sparrow-task-cli.console("list sparrow tasks");
 
-    $sparrow-task-cli.task-list;
+    $sparrow-task-cli.task-list($thing||'.');
 
   } elsif $rt-list {
 
