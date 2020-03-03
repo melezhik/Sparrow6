@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.14  2020-03-03T23:37:38Z
+
     - s6 cli improvements - split by Sparrow/Raku tasks
     
 0.0.13  2020-02-13T22:43:25Z
