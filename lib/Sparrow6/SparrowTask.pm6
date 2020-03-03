@@ -5,6 +5,8 @@ use v6;
 unit module Sparrow6::SparrowTask;
 
 use Sparrow6::Common::Helpers;
+use Sparrow6::DSL;
+use File::Directory::Tree;
 
 class Cli
 
@@ -76,17 +78,45 @@ class Cli
 
   }
 
+  method task-del ($path)  {
+
+    empty-directory $path;
+
+    self!log("task dir erased", $path);
+
+    if "{$path}".IO ~~ :d {
+
+      rmdir $path;
+
+      self!log("task dir removesd", $path);
+
+    }
+
+  }
 
   method task-list () {
+
+    my $i = 0;
 
     for self.find-tasks(
       ".",
       test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
     ) -> $t {
+        $i++;
         say $t
     }
 
+    say "===";
+    say "sparrow [$i] tasks found";
+
   }
 
+  method task-run ($thing)  {
+
+    my ($task, %params) = self!parse-run-params($thing);
+
+    task-run $task, %params;
+
+  }
 
 }

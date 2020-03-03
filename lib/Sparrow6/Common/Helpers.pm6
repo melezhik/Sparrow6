@@ -26,12 +26,12 @@ role Role {
     my $root;
 
     if $.sparrow-root {
-  
+
       $root = %*ENV<SP6_PREFIX> ?? "{$.sparrow-root}/{%*ENV<SP6_PREFIX>}".IO.absolute  !! $.sparrow-root.IO.absolute;
 
-      unless $root.IO ~~ :e { 
+      unless $root.IO ~~ :e {
 
-        mkdir $root; 
+        mkdir $root;
 
         self!log("sparrow root directory created", $root);
 
@@ -89,4 +89,35 @@ role Role {
     self.sparrow-root = $root;
 
   }
+
+  method !parse-run-params ( $thing is copy ) {
+
+    my $what;
+
+    my %params = Hash.new();
+
+    if $thing ~~ /\S+/ && $thing ~~ /^^ (<- [ @ ] > ** 1..*) / {
+
+      $what = "$0";
+
+      self.console("run thing $what");
+
+      if $thing ~~ /'@' ( .* )  $$/ {
+
+        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
+
+        self!log("$what params",%params.perl);
+
+      }
+
+    } else {
+
+      die "bad thing - $thing";
+
+    }
+
+    return $what, %params;
+
+  }
+
 }

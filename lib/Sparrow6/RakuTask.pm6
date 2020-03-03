@@ -27,7 +27,7 @@ class Cli
 
   method find-tasks ($dir, Mu :$test) {
       gather for dir $dir -> $path {
-          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("{self.sparrow-root}/tasks","",:g).subst("\\",'/', :g)  }
+          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("\\",'/', :g)  }
           if $path.d                 { .take for self.find-tasks($path, :$test) };
       }
   }
@@ -113,12 +113,24 @@ class Cli
 
   method task-list () {
 
+    my $cd = $*CWD;
+
+    chdir "{self.sparrow-root}/tasks";
+
+    my $i = 0;
+
     for self.find-tasks(
-      "{self.sparrow-root}/tasks",
+      ".",
       test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
     ) -> $t {
+        $i++;
         say $t
     }
+
+    chdir $cd;
+
+    say "===";
+    say "raku [$i] tasks found";
 
   }
 

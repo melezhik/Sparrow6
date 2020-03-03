@@ -3,6 +3,7 @@
 use Sparrow6::Task::Repository;
 use Sparrow6::Task;
 use Sparrow6::RakuTask;
+use Sparrow6::SparrowTask;
 
 sub MAIN (
   $thing?,
@@ -17,6 +18,10 @@ sub MAIN (
   Bool :$install          = False,
   Bool :$plg-run          = False,
   Bool :$plg-man          = False,
+  Bool :$task-run         = False,
+  Bool :$task-cat         = False,
+  Bool :$task-list        = False,
+  Bool :$task-del         = False,
   Bool :$rt-run         = False,
   Bool :$rt-set         = False,
   Bool :$rt-cat         = False,
@@ -44,6 +49,11 @@ sub MAIN (
     prefix  => $prefix
   );
 
+  my $sparrow-task-cli = Sparrow6::SparrowTask::Cli.new(
+    debug   => $debug,
+    prefix  => $prefix
+  );
+
   if ($help) {
     $task-cli.help;
     exit;
@@ -65,9 +75,17 @@ sub MAIN (
 
     $repo-api.plugin-install($thing, %( force => $force ));
 
+  } elsif $task-run && $thing {
+
+    $sparrow-task-cli.console("run sparrow task $thing");
+
+    for $thing.split(/ "+" /) -> $i {
+      $sparrow-task-cli.task-run($i);
+    }
+
   } elsif $rt-run && $thing {
 
-    $raku-task-cli.console("run task $thing");
+    $raku-task-cli.console("run raku task $thing");
 
     $raku-task-cli.task-run($thing);
 
@@ -75,7 +93,9 @@ sub MAIN (
 
     $task-cli.console("run module $thing");
 
-    $task-cli.module-run($thing);
+    for $thing.split(/ "+" /) -> $i {
+      $task-cli.module-run($i);
+    }
 
   } elsif $plg-run && $thing {
 
@@ -97,31 +117,50 @@ sub MAIN (
 
   } elsif $rt-set && $thing {
 
-    $raku-task-cli.console("set task $thing");
+    $raku-task-cli.console("set raku task $thing");
 
     $raku-task-cli.task-set($thing);
 
+  } elsif $task-cat && $thing {
+
+    $sparrow-task-cli.console("show sparrow task $thing");
+
+    $sparrow-task-cli.task-cat($thing);
+
   } elsif $rt-cat && $thing {
 
-    $raku-task-cli.console("show task $thing");
+    $raku-task-cli.console("show raku task $thing");
 
     $raku-task-cli.task-cat($thing);
 
+  } elsif $task-del && $thing {
+
+    $sparrow-task-cli.console("delete sparrow task $thing");
+
+    $sparrow-task-cli.task-del($thing);
+
   } elsif $rt-del && $thing {
 
-    $raku-task-cli.console("delete task $thing");
+    $raku-task-cli.console("delete raku task $thing");
 
     $raku-task-cli.task-del($thing);
 
+  } elsif $task-list {
+
+    $sparrow-task-cli.console("list sparrow tasks");
+
+    $sparrow-task-cli.task-list;
+
   } elsif $rt-list {
 
-    $raku-task-cli.console("list tasks");
+    $raku-task-cli.console("list raku tasks");
 
     $raku-task-cli.task-list;
 
   } elsif $index-update {
 
     $repo-api.console("update local index");
+
     $repo-api.index-update();
 
   } elsif $list {
