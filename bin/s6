@@ -2,6 +2,7 @@
 
 use Sparrow6::Task::Repository;
 use Sparrow6::Task;
+use Sparrow6::RakuTask;
 
 sub MAIN (
   $thing?,
@@ -38,6 +39,11 @@ sub MAIN (
     prefix  => $prefix
   );
 
+  my $raku-task-cli = Sparrow6::RakuTask::Cli.new(
+    debug   => $debug,
+    prefix  => $prefix
+  );
+
   if ($help) {
     $task-cli.help;
     exit;
@@ -61,9 +67,9 @@ sub MAIN (
 
   } elsif $rt-run && $thing {
 
-    $task-cli.console("run task $thing");
+    $raku-task-cli.console("run task $thing");
 
-    $task-cli.rt-run($thing);
+    $raku-task-cli.task-run($thing);
 
   } elsif $module-run && $thing {
 
@@ -91,27 +97,27 @@ sub MAIN (
 
   } elsif $rt-set && $thing {
 
-    $task-cli.console("set task $thing");
+    $raku-task-cli.console("set task $thing");
 
-    $task-cli.rt-set($thing);
+    $raku-task-cli.task-set($thing);
 
   } elsif $rt-cat && $thing {
 
-    $task-cli.console("show task $thing");
+    $raku-task-cli.console("show task $thing");
 
-    $task-cli.rt-cat($thing);
+    $raku-task-cli.task-cat($thing);
 
   } elsif $rt-del && $thing {
 
-    $task-cli.console("delete task $thing");
+    $raku-task-cli.console("delete task $thing");
 
-    $task-cli.rt-del($thing);
+    $raku-task-cli.task-del($thing);
 
   } elsif $rt-list {
 
-    $task-cli.console("list tasks");
+    $raku-task-cli.console("list tasks");
 
-    $task-cli.rt-list;
+    $raku-task-cli.task-list;
 
   } elsif $index-update {
 
