@@ -1,0 +1,132 @@
+#!perl6
+
+use v6;
+
+unit module Sparrow6::RakuTask;
+
+use Sparrow6::Common::Helpers;
+use File::Directory::Tree;
+use Sparrow6::DSL;
+
+class Cli
+
+  does Sparrow6::Common::Helpers::Role
+
+{
+
+  has Bool  $.debug;
+  has Str   $.name = "task";
+  has Str   $.sparrow-root is rw;
+  has Str   $.prefix;
+
+  method TWEAK() {
+
+    self!set-sparrow-root();
+
+  }
+
+  method find-tasks ($dir, Mu :$test) {
+      gather for dir $dir -> $path {
+          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("{self.sparrow-root}/tasks","",:g).subst("\\",'/', :g)  }
+          if $path.d                 { .take for self.find-tasks($path, :$test) };
+      }
+  }
+
+  method task-set ($path)  {
+
+    my $task-path = self!task-path($path);
+
+    mkdir $task-path;
+
+    self!log("create task dir", $task-path);
+
+    if "{$task-path}/task.pl6".IO ~~ :e {
+
+      self.console("{$task-path}/task.pl6 exists, update task");
+
+      die "EDITOR env is not set" unless %*ENV<EDITOR>;
+
+      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
+
+    }  else {
+
+      self!log("task file","{$task-path}/task.pl6");
+
+      my $fh = open "{$task-path}/task.pl6", :w;
+
+      $fh.say("task-run \"{$path}\", \"plugin-name\", \%(\n);");
+
+      $fh.close;
+
+      die "EDITOR env is not set" unless %*ENV<EDITOR>;
+
+      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
+
+    }
+
+  }
+
+  method task-cat ($path)  {
+
+    my $task-path = self!task-path($path);
+
+    if "{$task-path}/task.pl6".IO ~~ :f {
+
+      self!log("task show", "$task-path/task.pl6");
+
+      say slurp "{$task-path}/task.pl6".IO;
+
+    } else {
+
+      die "task $path not found";
+
+    }
+
+  }
+
+  method task-del ($path)  {
+
+    my $task-path = self!task-path($path);
+
+    empty-directory $task-path;
+
+    self!log("task dir erased", "$task-path");
+
+    if "{$task-path}".IO ~~ :d {
+
+      rmdir $task-path;
+
+      self!log("task dir removesd", "$task-path");
+
+    }
+
+  }
+
+  method task-run ($path) {
+
+    my $task-path = self!task-path($path);
+
+    EVALFILE "{$task-path}/task.pl6";
+
+  }
+
+
+  method task-list () {
+
+    for self.find-tasks(
+      "{self.sparrow-root}/tasks",
+      test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
+    ) -> $t {
+        say $t
+    }
+
+  }
+
+  method !task-path ($path) {
+
+    return "{self.sparrow-root}/tasks/$path";
+
+  }
+
+
+}

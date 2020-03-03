@@ -5,7 +5,6 @@ use v6;
 unit module Sparrow6::Task;
 
 use Sparrow6::Common::Helpers;
-use File::Directory::Tree;
 use Sparrow6::DSL;
 
 class Cli
@@ -15,7 +14,7 @@ class Cli
 {
 
   has Bool  $.debug;
-  has Str   $.name = "rt-cli";
+  has Str   $.name = "task";
   has Str   $.sparrow-root is rw;
   has Str   $.prefix;
 
@@ -76,103 +75,6 @@ class Cli
 DOC
   }
 
-  method find-tasks ($dir, Mu :$test) {
-      gather for dir $dir -> $path {
-          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("{self.sparrow-root}/tasks","",:g).subst("\\",'/', :g)  }
-          if $path.d                 { .take for self.find-tasks($path, :$test) };
-      }
-  }
-
-  method rt-set ($path)  {
-
-    my $rt-path = self!rt-path($path);
-
-    mkdir $rt-path;
-
-    self!log("create task dir", $rt-path);
-
-    if "{$rt-path}/task.pl6".IO ~~ :e {
-
-      self.console("{$rt-path}/task.pl6 exists, update task");
-
-      die "EDITOR env is not set" unless %*ENV<EDITOR>;
-
-      shell("exec {%*ENV<EDITOR>} {$rt-path}/task.pl6");
-
-    }  else {
-
-      self!log("task file","{$rt-path}/task.pl6");
-
-      my $fh = open "{$rt-path}/task.pl6", :w;
-
-      $fh.say("rt-run \"{$path}\", \"plugin-name\", \%(\n);");
-
-      $fh.close;
-
-      die "EDITOR env is not set" unless %*ENV<EDITOR>;
-
-      shell("exec {%*ENV<EDITOR>} {$rt-path}/task.pl6");
-
-    }
-
-  }
-
-  method rt-cat ($path)  {
-
-    my $rt-path = self!rt-path($path);
-
-    if "{$rt-path}/task.pl6".IO ~~ :f {
-
-      self!log("task show", "$rt-path/task.pl6");
-
-      say slurp "{$rt-path}/task.pl6".IO;
-
-    } else {
-
-      die "task $path not found";
-
-    }
-
-  }
-
-  method rt-del ($path)  {
-
-    my $rt-path = self!rt-path($path);
-
-    empty-directory $rt-path;
-
-    self!log("task dir erased", "$rt-path");
-
-    if "{$rt-path}".IO ~~ :d {
-
-      rmdir $rt-path;
-
-      self!log("task dir removesd", "$rt-path");
-
-    }
-
-  }
-
-  method rt-run ($path) {
-
-    my $rt-path = self!rt-path($path);
-
-    EVALFILE "{$rt-path}/task.pl6";
-
-  }
-
-
-  method rt-list () {
-
-    for self.find-tasks(
-      "{self.sparrow-root}/tasks",
-      test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
-    ) -> $t {
-        say $t
-    }
-
-  }
-
   method plg-run ($thing)  {
 
     my ($plg, %params) = self!parse-run-params($thing);
@@ -186,12 +88,6 @@ DOC
     my ($mod, %params) = self!parse-run-params($thing);
 
     module-run $mod, %params;
-
-  }
-
-  method !rt-path ($path) {
-
-    return "{self.sparrow-root}/tasks/$path";
 
   }
 
