@@ -94,12 +94,12 @@ class Cli
 
   }
 
-  method task-list () {
+  method task-list ( $path = '.' ) {
 
     my $i = 0;
 
     for self.find-tasks(
-      ".",
+      $path,
       test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
     ) -> $t {
         $i++;
