@@ -1,9 +1,3 @@
-=begin tomty
-%(
-  tag => "dsl"
-)
-=end tomty
-
 # ensure existence by PID taken from /var/run/nginx.pid
 
 if os() ~~ /centos/ {

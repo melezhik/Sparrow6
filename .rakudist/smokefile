@@ -6,11 +6,3 @@ bash "tomty --skip=sudo --show-failed", %(
   ),
   cwd => "{$*CWD}/../"
 );
-
-bash "tomty --only=dsl --verbose", %(
-  user => config()<user>,
-  envvars => %(
-    SP6_REPO => "http://repo.westus.cloudapp.azure.com",
-  ),
-  cwd => "{$*CWD}/../"
-);

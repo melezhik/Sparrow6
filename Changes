@@ -3,8 +3,7 @@ Revision history for Sparrowdo
 {{$NEXT}}
 
     - s6 cli improvements - split by Sparrow/Raku tasks
-    - enabling some DSL tests ( moved from Sparrowdo )
-
+    
 0.0.13  2020-02-13T22:43:25Z
 
     - Workaround for some Windows tar version
