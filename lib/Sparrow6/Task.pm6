@@ -15,7 +15,7 @@ class Cli
 {
 
   has Bool  $.debug;
-  has Str   $.name = "task-cli";
+  has Str   $.name = "rt-cli";
   has Str   $.sparrow-root is rw;
   has Str   $.prefix;
 
@@ -26,21 +26,21 @@ class Cli
   }
 
   method help () {
-  
+
     say q:to/DOC/;
 
     usage:
       s6 $action|$options $thing
-  
+
     update index:
       s6 --index-update
-  
+
     list installed plugins:
       s6 --list
-  
+
     upload plugin:
       s6 --upload
-  
+
     install plugin:
       s6 --install $plugin
       s6 --install --force $plugin # reinstall, even though if higher version is here
@@ -54,20 +54,20 @@ class Cli
     man plugin:
       s6 --plg-man plg-name
 
-    create/update task:
-      s6 --task-set task/path
+    create/update raku task:
+      s6 --rt-set task/path
 
-    show task:
-      s6 --task-cat task/path
+    show raku task:
+      s6 --rt-cat task/path
 
-    run task:
-      s6 --task-run task/path
+    run raku task:
+      s6 --rt-run task/path
 
-    delete task:
-      s6 --task-del task/path
+    delete raku task:
+      s6 --rt-del task/path
 
-    list tasks:
-      s6 --task-list
+    list raku tasks:
+      s6 --rt-list
 
     options:
       --debug   # enable debug mode
@@ -75,51 +75,57 @@ class Cli
 
 DOC
   }
-  
 
-  method task-set ($path)  {
- 
-    my $task-path = self!task-path($path);
+  method find-tasks ($dir, Mu :$test) {
+      gather for dir $dir -> $path {
+          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("\\",'/', :g)  }
+          if $path.d                 { .take for self.find-tasks($path, :$test) };
+      }
+  }
 
-    mkdir $task-path;
+  method rt-set ($path)  {
 
-    self!log("create task dir", $task-path);
+    my $rt-path = self!rt-path($path);
 
-    if "{$task-path}/task.pl6".IO ~~ :e {
+    mkdir $rt-path;
 
-      self.console("{$task-path}/task.pl6 exists, update task");
+    self!log("create task dir", $rt-path);
+
+    if "{$rt-path}/task.pl6".IO ~~ :e {
+
+      self.console("{$rt-path}/task.pl6 exists, update task");
 
       die "EDITOR env is not set" unless %*ENV<EDITOR>;
 
-      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
+      shell("exec {%*ENV<EDITOR>} {$rt-path}/task.pl6");
 
     }  else {
 
-      self!log("task file","{$task-path}/task.pl6");
+      self!log("task file","{$rt-path}/task.pl6");
 
-      my $fh = open "{$task-path}/task.pl6", :w;
+      my $fh = open "{$rt-path}/task.pl6", :w;
 
-      $fh.say("task-run \"{$path}\", \"plugin-name\", \%(\n);");
+      $fh.say("rt-run \"{$path}\", \"plugin-name\", \%(\n);");
 
       $fh.close;
 
       die "EDITOR env is not set" unless %*ENV<EDITOR>;
 
-      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
+      shell("exec {%*ENV<EDITOR>} {$rt-path}/task.pl6");
 
     }
 
   }
 
-  method task-cat ($path)  {
+  method rt-cat ($path)  {
 
-    my $task-path = self!task-path($path);
+    my $rt-path = self!rt-path($path);
 
-    if "{$task-path}/task.pl6".IO ~~ :f {
+    if "{$rt-path}/task.pl6".IO ~~ :f {
 
-      self!log("task show", "$task-path/task.pl6");
+      self!log("task show", "$rt-path/task.pl6");
 
-      say slurp "{$task-path}/task.pl6".IO;
+      say slurp "{$rt-path}/task.pl6".IO;
 
     } else {
 
@@ -129,36 +135,43 @@ DOC
 
   }
 
-  method task-del ($path)  {
+  method rt-del ($path)  {
 
-    my $task-path = self!task-path($path);
+    my $rt-path = self!rt-path($path);
 
-    empty-directory $task-path;
+    empty-directory $rt-path;
 
-    self!log("task dir erased", "$task-path");
+    self!log("task dir erased", "$rt-path");
 
-    if "{$task-path}".IO ~~ :d {
+    if "{$rt-path}".IO ~~ :d {
 
-      rmdir $task-path;
+      rmdir $rt-path;
 
-      self!log("task dir removesd", "$task-path");
+      self!log("task dir removesd", "$rt-path");
 
     }
 
   }
 
-  method task-run ($path) {
+  method rt-run ($path) {
 
-    my $task-path = self!task-path($path);
+    my $rt-path = self!rt-path($path);
 
-    EVALFILE "{$task-path}/task.pl6";
+    EVALFILE "{$rt-path}/task.pl6";
 
   }
 
 
-  method task-list () {
+  method rt-list () {
 
-    shell("find {self.sparrow-root}/tasks -name task.pl6 -execdir pwd \\;| sed -n 's|^{self.sparrow-root}/tasks/||p'")
+    for self.find-tasks(
+      "{self.sparrow-root}/tasks",
+      test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
+    ) -> $t {
+        say $t
+    }
+
+    #shell("find {self.sparrow-root}/tasks -name task.pl6 -execdir pwd \\;| sed -n 's|^{self.sparrow-root}/tasks/||p'")
 
   }
 
@@ -178,7 +191,7 @@ DOC
 
   }
 
-  method !task-path ($path) {
+  method !rt-path ($path) {
 
     return "{self.sparrow-root}/tasks/$path";
 

@@ -4,26 +4,26 @@ use Sparrow6::Task::Repository;
 use Sparrow6::Task;
 
 sub MAIN (
-  $thing?, 
-  Bool :$debug            = False, 
-  Bool :$clean            = False, 
-  Bool :$help             = False, 
-  Bool :$index-update     = False, 
-  Bool :$list             = False, 
-  Bool :$search           = False, 
-  Bool :$upload           = False, 
-  Bool :$repo-init        = False, 
-  Bool :$install          = False, 
-  Bool :$plg-run          = False, 
-  Bool :$plg-man          = False, 
-  Bool :$task-run         = False, 
-  Bool :$task-set         = False, 
-  Bool :$task-cat         = False, 
-  Bool :$task-list        = False, 
-  Bool :$task-del         = False, 
-  Bool :$module-run       = False, 
-  Bool :$force            = False, 
-  Str  :$prefix, 
+  $thing?,
+  Bool :$debug            = False,
+  Bool :$clean            = False,
+  Bool :$help             = False,
+  Bool :$index-update     = False,
+  Bool :$list             = False,
+  Bool :$search           = False,
+  Bool :$upload           = False,
+  Bool :$repo-init        = False,
+  Bool :$install          = False,
+  Bool :$plg-run          = False,
+  Bool :$plg-man          = False,
+  Bool :$rt-run         = False,
+  Bool :$rt-set         = False,
+  Bool :$rt-cat         = False,
+  Bool :$rt-list        = False,
+  Bool :$rt-del         = False,
+  Bool :$module-run       = False,
+  Bool :$force            = False,
+  Str  :$prefix,
 )
 
 {
@@ -41,7 +41,7 @@ sub MAIN (
   if ($help) {
     $task-cli.help;
     exit;
-  } 
+  }
 
   if $repo-init {
 
@@ -59,11 +59,11 @@ sub MAIN (
 
     $repo-api.plugin-install($thing, %( force => $force ));
 
-  } elsif $task-run && $thing {
+  } elsif $rt-run && $thing {
 
     $task-cli.console("run task $thing");
 
-    $task-cli.task-run($thing);
+    $task-cli.rt-run($thing);
 
   } elsif $module-run && $thing {
 
@@ -89,29 +89,29 @@ sub MAIN (
 
     $task-cli.console("run module $thing");
 
-  } elsif $task-set && $thing {
+  } elsif $rt-set && $thing {
 
     $task-cli.console("set task $thing");
 
-    $task-cli.task-set($thing);
+    $task-cli.rt-set($thing);
 
-  } elsif $task-cat && $thing {
+  } elsif $rt-cat && $thing {
 
     $task-cli.console("show task $thing");
 
-    $task-cli.task-cat($thing);
+    $task-cli.rt-cat($thing);
 
-  } elsif $task-del && $thing {
+  } elsif $rt-del && $thing {
 
     $task-cli.console("delete task $thing");
 
-    $task-cli.task-del($thing);
+    $task-cli.rt-del($thing);
 
-  } elsif $task-list {
+  } elsif $rt-list {
 
     $task-cli.console("list tasks");
 
-    $task-cli.task-list;
+    $task-cli.rt-list;
 
   } elsif $index-update {
 
@@ -145,5 +145,3 @@ sub MAIN (
   }
 
 }
-
-
