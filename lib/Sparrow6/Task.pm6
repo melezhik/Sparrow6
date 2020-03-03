@@ -78,7 +78,7 @@ DOC
 
   method find-tasks ($dir, Mu :$test) {
       gather for dir $dir -> $path {
-          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("\\",'/', :g)  }
+          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("{self.sparrow-root}/tasks","",:g).subst("\\",'/', :g)  }
           if $path.d                 { .take for self.find-tasks($path, :$test) };
       }
   }
@@ -170,8 +170,6 @@ DOC
     ) -> $t {
         say $t
     }
-
-    #shell("find {self.sparrow-root}/tasks -name task.pl6 -execdir pwd \\;| sed -n 's|^{self.sparrow-root}/tasks/||p'")
 
   }
 
