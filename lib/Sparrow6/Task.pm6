@@ -53,20 +53,32 @@ class Cli
     man plugin:
       s6 --plg-man plg-name
 
+    list sparrow tasks:
+      s6 --task-list
+
+    run sparrow task:
+      s6 -task-run task/path
+
+    show sparrow task:
+      s6 --task-cat task/path
+
+    delete sparrow task:
+      s6 --rt-del task/path
+
+    list raku tasks:
+      s6 --rt-list
+
+    run raku task:
+      s6 --rt-run task/path
+
     create/update raku task:
       s6 --rt-set task/path
 
     show raku task:
       s6 --rt-cat task/path
 
-    run raku task:
-      s6 --rt-run task/path
-
     delete raku task:
       s6 --rt-del task/path
-
-    list raku tasks:
-      s6 --rt-list
 
     options:
       --debug   # enable debug mode
@@ -91,34 +103,5 @@ DOC
 
   }
 
-
-  method !parse-run-params ( $thing is copy ) {
-
-    my $what;
-    my %params = Hash.new();
-
-    if $thing ~~ /\S+/ && $thing ~~ /^^ (<- [ @ ] > ** 1..*) / {
-
-      $what = "$0";
-
-      self.console("run thing $what");
-
-      if $thing ~~ /'@' ( .* )  $$/ {
-
-        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
-
-        self!log("$what params",%params.perl);
-
-      }
-
-    } else {
-
-      die "bad thing - $thing";
-
-    }
-
-    return $what, %params;
-
-  }
 
 }
