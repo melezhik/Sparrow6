@@ -1,3 +1,9 @@
+=begin tomty
+%(
+  tag => "dsl"
+)
+=end tomty
+
 # ensure existence by PID taken from /var/run/nginx.pid
 
 if os() ~~ /centos/ {
@@ -18,7 +24,7 @@ unless os() ~~ / ubuntu || debian / {
 }
 
 service-start('nginx');
- 
+
 proc-exists 'nginx';
 
 proc-exists-by-footprint 'nginx', 'nginx.*master';
@@ -28,6 +34,4 @@ proc-exists-by-pid 'nginx', '/var/run/nginx.pid';
 
 service-stop('nginx');
 
-http-ok 'https://perl.org';
-
-
+http-ok 'https://raku.org';

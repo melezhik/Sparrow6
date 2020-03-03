@@ -1,7 +1,16 @@
-bash "cd /data/test/{config()<user>} && tomty --skip=sudo --show-failed", %(
+bash "tomty --skip=sudo --show-failed", %(
   user => config()<user>,
-  envvars => %( 
+  envvars => %(
     SP6_REPO => "http://repo.westus.cloudapp.azure.com",
     SKIP_POWERSHELL => 1
-  )
-)
+  ),
+  cwd => "{$*CWD}/../"
+);
+
+bash "tomty --only=dsl --verbose", %(
+  user => config()<user>,
+  envvars => %(
+    SP6_REPO => "http://repo.westus.cloudapp.azure.com",
+  ),
+  cwd => "{$*CWD}/../"
+);
