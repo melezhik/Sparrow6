@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.15  2020-03-04T17:06:40Z
+
     - s6 cli - task list - regexp support
 
 0.0.14  2020-03-03T23:37:38Z
