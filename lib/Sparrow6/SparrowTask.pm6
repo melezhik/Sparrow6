@@ -25,10 +25,14 @@ class Cli
 
   }
 
-  method find-tasks ($dir, Mu :$test) {
+  method find-tasks ($dir, Mu :$basename, Mu :$pattern) {
       gather for dir $dir -> $path {
-          if $path.basename ~~ $test { my $a = $path.dirname; take $a.subst("\\",'/', :g)  }
-          if $path.d                 { .take for self.find-tasks($path, :$test) };
+          if $path.basename ~~ $basename && $path ~~ $pattern {
+            my $a = $path.dirname; take $a.subst("\\",'/', :g)
+          }
+          if $path.d {
+            .take for self.find-tasks($path, :$basename, :$pattern)
+          };
       }
   }
 
@@ -94,20 +98,31 @@ class Cli
 
   }
 
-  method task-list ( $path = '.' ) {
+  method task-list ( $thing = '.' ) {
 
     my $i = 0;
 
+    # default search settings
+    my $pattern = /.*/;
+    my $path = $thing;
+
+    if $thing.IO !~~ :d {
+      say "look by regexp: $thing";
+      $pattern = /<$thing>/,
+      $path = "."
+    }
+
     for self.find-tasks(
       $path,
-      test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
+      basename => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/,
+      pattern => $pattern
     ) -> $t {
         $i++;
         say $t
     }
 
     say "===";
-    say "sparrow [$i] tasks found";
+    say "[$i] sparrow tasks found";
 
   }
 
