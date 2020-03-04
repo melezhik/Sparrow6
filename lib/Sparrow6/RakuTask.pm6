@@ -130,7 +130,7 @@ class Cli
     chdir $cd;
 
     say "===";
-    say "raku [$i] tasks found";
+    say "[$i] raku tasks found";
 
   }
 
