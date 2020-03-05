@@ -58,7 +58,8 @@ class Api
   has Bool  $.show-test-result;
   has Bool  $.ignore-task-error is rw;
   has Str   $.cwd = "{$*CWD}";
-  has Bool  $.silent is rw;
+  has Bool  $.silent-stdout is rw;
+  has Bool  $.silent-stderr is rw;
 
   my $task-run = 0;
 

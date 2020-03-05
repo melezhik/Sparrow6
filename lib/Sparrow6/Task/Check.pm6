@@ -80,7 +80,8 @@ class Api
     my @orig-stderr-data = self.tr.stderr-data;
 
     self.tr.keep-cache = True;
-    self.tr.silent = True;
+    self.tr.silent-stdout = True;
+    self.tr.silent-stderr = False;
     self.tr.name = "task-check";
     self.tr.task = "{$cache-root-dir}/.checks/";
 

@@ -104,7 +104,7 @@ role Role {
 
           my $stdout-lines = 0;
 
-          self.console($line) unless self.silent;
+          self.console($line) unless self.silent-stdout;
           push self.stdout-data, $line;
 
           #say ‘line: ’, $_
@@ -116,7 +116,7 @@ role Role {
           my $line = chomp($_);
 
           push self.stderr-data, $line;
-          self.console("stderr: $line") unless self.silent;
+          self.console("stderr: $line"); # unless self.silent-stderr;
 
           # say ‘stderr: ’, $_
 
@@ -130,7 +130,7 @@ role Role {
 
             #say ‘Proc finished: exitcode=’, .exitcode, ‘ signal=’, .signal;
 
-            unless self.silent {
+            unless self.silent-stdout {
               self.console("<empty stdout>") if self.stdout-data.elems == 0;
             }
   
@@ -201,19 +201,19 @@ role Role {
     unless %args<ignore-stderr> {
       for $cmd.err.lines -> $line {
         push self.stderr-data, $line;
-        self.console("stderr: $line") unless self.silent;
+        self.console("stderr: $line") unless self.silent-stderr;
       }
     }
 
     my $stdout-lines = 0;
 
     for $cmd.out.lines -> $line {
-      self.console($line) unless self.silent;
+      self.console($line) unless self.silent-stdout;
       push self.stdout-data, $line;
       $stdout-lines++;
     }
 
-    unless self.silent {
+    unless self.silent-stdout {
       self.console("<empty stdout>") if $stdout-lines == 0;
     }
 

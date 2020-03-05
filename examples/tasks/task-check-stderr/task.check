@@ -1,0 +1,5 @@
+generator: <<CODE
+!perl6
+1
+say "OK";
+CODE
