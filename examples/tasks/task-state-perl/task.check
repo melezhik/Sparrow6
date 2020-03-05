@@ -1,0 +1,6 @@
+generator: <<CODE
+!perl6
+my $name = get_state()<name>;
+say "note: found name: $name";
+say "assert: ", $name.defined, " name is not null";
+CODE
