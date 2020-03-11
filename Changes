@@ -3,6 +3,7 @@ Revision history for Sparrowdo
 {{$NEXT}}
 
     - task check - logs stderr ( to help debug when task check fails )
+    - s6 - upload, install plugin - full support of `--force` option
 
 0.0.15  2020-03-04T17:06:40Z
 

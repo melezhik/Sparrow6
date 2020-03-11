@@ -117,10 +117,9 @@ class Api
     }
 
     # stringify <args>
-    if self.task-config<args>:exists {
+    if self.task-config<args>:exists && self.task-config<args>.isa("Array") {
       self!log("stringify args start",self.task-config<args>.perl);
       self!log("args has elements",self.task-config<args>.elems);
-      die "args should be Array, but it is {self.task-config<args>.^name}" unless self.task-config<args>.isa("Array");
       my @args; my $j = 0;
       for self.task-config<args><> -> $i {
         $j++;
