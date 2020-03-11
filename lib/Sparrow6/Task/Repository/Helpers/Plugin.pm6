@@ -22,7 +22,7 @@ role Role {
 
       if "$plg-src/requirements.txt".IO ~~ :e {
 
-        my %plg-meta = self.read-plugin-meta($plg-src);
+        my %plg-meta = self!read-plugin-meta($plg-src);
 
         if  %plg-meta<python_version> && %plg-meta<python_version> eq '3' {
           $pip-command = 'pip3'
