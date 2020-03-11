@@ -106,6 +106,7 @@ class Range
     has Array $.data;
     has Hash @.context is rw;
     has Array %.streams is rw;
+    has Hash $.failed-streams is rw;
     has Str $.start is required;
     has Str $.end   is required;
     has Bool $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
@@ -137,7 +138,7 @@ class Range
 
     method change-context (@data) {
 
-      my @new-context;
+      my %succeed-streams;
       my %new-streams;
 
       for @data -> $i {
@@ -145,29 +146,56 @@ class Range
         my $stream-id = $i<stream-id>;
 
         if self.streams{$stream-id}:exists {
-          %new-streams{$stream-id} = self.streams{$stream-id}; 
-          push %new-streams{$stream-id}, $i;
-          self!log("update stream", $stream-id);
+          %succeed-streams{$stream-id} = self.streams{$stream-id}; 
+          push %succeed-streams{$stream-id}, $i;
+          self!log("update succeed stream", $stream-id);
         } else {
-          %new-streams{$stream-id} = [$i];
+          %succeed-streams{$stream-id} = [$i];
           self.streams{$stream-id} = [$i];
-          self!log("new stream", $stream-id);
+          self!log("new succeed stream", $stream-id);
         }
 
 
       }
 
 
-      for self.context -> $i {
-        my $stream-id = $i<stream-id>;
-        push @new-context, $i if %new-streams{$stream-id}:exists;
+      for self.streams.keys -> $stream-id {
+        
+          unless %succeed-streams{$stream-id}:exists {
+            self!log("mark failed stream:", $stream-id);
+            self.failed-streams{$stream-id} = 1              
+          }
+        
+      }
+
+      for %succeed-streams.keys -> $stream-id {
+
+          unless self.failed-streams{$stream-id}:exists {
+              %new-streams{$stream-id} = %succeed-streams{$stream-id}
+          }
       }
 
       self.streams = %new-streams;
+
       self!log("current stream",self.streams.keys.perl);
-      self.context = @new-context;
 
     }  
+
+    method mark-all-streams-as-failed () {
+
+
+      for self.streams.keys -> $stream-id {
+        
+          unless self.failed-streams{$stream-id}:exists {
+            self!log("mark failed stream:", $stream-id);
+            self.failed-streams{$stream-id} = 1              
+          }
+        
+      }
+
+      self.streams = %();
+
+    }
 
     method check-message ($l) { 
 

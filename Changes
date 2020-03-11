@@ -2,8 +2,10 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Sparrow6::Task::Check::Context::Range - continue to search within range even for failed streams
     - task check - logs stderr ( to help debug when task check fails )
     - s6 - upload, install plugin - full support of `--force` option
+    - s6 - install, `--verbose` option
 
 0.0.15  2020-03-04T17:06:40Z
 
