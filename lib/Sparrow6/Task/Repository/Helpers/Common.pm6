@@ -24,6 +24,24 @@ role Role {
 
   }
 
+  method !target-exists ($target) {
+
+    self!log("check if target exists", $target);
+
+    my $url = $.url;
+    
+    if $url ~~ s/^ 'file://' // {
+
+      "$url/$target".IO ~~ :e
+
+    } else {
+
+      die "target-exist for http repository is not supported yet"
+
+    }  
+
+  }
+
   method !put-resource ($resource, $target) {
 
 

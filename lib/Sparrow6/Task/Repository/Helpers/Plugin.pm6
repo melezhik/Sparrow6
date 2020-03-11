@@ -61,7 +61,10 @@ role Role {
 
     # try to update existing plugin
 
-    self.plugin-remove($pid) if %args<force>;
+    if %args<force> {
+      self.console("force is set, remove plugin from {self.plugin-directory($pid)}");
+      self.plugin-remove($pid) 
+    }
 
     if "{self.plugin-directory($pid)}/sparrow.json".IO ~~ :e {
 
@@ -75,13 +78,13 @@ role Role {
 
       if ($plg-canonical-v > $inst-v) {
 
-        self!log("upgrading $pid", "from version $inst-v to version $plg-canonical-v");
+        self.console("upgrading $pid from version $inst-v to version $plg-canonical-v");
 
         self!load-unpack-and-install($pid,"{$pid}-v{$plg-v}.tar.gz");
 
       } else {
 
-          self!log("$pid is uptodate", "version $inst-v");
+          self.console("$pid is uptodate. version $inst-v") if %args<verbose>;
 
           # fixme:  don't install dependencies for python requirements.txt
           self.install-plugin-deps("{self.plugin-directory($pid)}");
@@ -94,7 +97,7 @@ role Role {
 
         my $v = %args<version> ||  %list{$pid}<version>;
 
-        self!log("installing $pid", "version $v");
+        self.console("installing $pid, version $v");
 
         self!load-unpack-and-install($pid,"{$pid}-v{$v}.tar.gz");
 
@@ -104,7 +107,7 @@ role Role {
 
     } elsif "{self.plugin-directory($pid)}/".IO ~~ :d  {
 
-      self!log("plugin {self.plugin-directory($pid)}/ installed locally", "nothing to do here");
+      self.console("plugin {self.plugin-directory($pid)} installed locally, nothing to do here");
 
     } else {
 
@@ -152,6 +155,7 @@ role Role {
     self!log("plugin uploaded", $distro);
 
     return "{$.sparrow-root}/plugins/$distro";
+
   }
 
   method !load-unpack-and-install ($pid,$distro) {
@@ -218,7 +222,9 @@ role Role {
   }
 
 
-  method plugin-upload ($dir=$*CWD) {
+  method plugin-upload (%args?) {
+
+      my $dir = $*CWD;
 
       self!log("plugin upload", $dir);
 
@@ -240,6 +246,19 @@ role Role {
       self!log("plugin version",$plg-v);
 
       self!log("plugin repository version",$repository-version);
+
+      if %args<force> && self!target-exists("plugins/{$plg-name}-v{$repository-version}.tar.gz") {
+
+        self.console("force is enabled, override current plugin plugins/{$plg-name}-v{$repository-version}.tar.gz");
+  
+      } elsif self!target-exists("plugins/{$plg-name}-v{$repository-version}.tar.gz") {
+
+        self.console("plugin with this version exists, bump a version an upload again");
+
+        return
+
+      }
+
 
       unlink "{$.sparrow-root}/.cache/archive.tar.gz" if "{$.sparrow-root}/.cache/archive.tar.gz".IO ~~ :e;
 

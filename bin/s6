@@ -8,6 +8,7 @@ use Sparrow6::SparrowTask;
 sub MAIN (
   $thing?,
   Bool :$debug            = False,
+  Bool :$verbose          = False,
   Bool :$clean            = False,
   Bool :$help             = False,
   Bool :$index-update     = False,
@@ -67,13 +68,14 @@ sub MAIN (
   } elsif $upload {
 
     $repo-api.console("upload plugin");
-    $repo-api.plugin-upload();
+
+    $repo-api.plugin-upload( %( force => $force ) );
 
   } elsif $install && $thing {
 
     $repo-api.console("install plugin $thing");
 
-    $repo-api.plugin-install($thing, %( force => $force ));
+    $repo-api.plugin-install($thing, %( force => $force, verbose => $verbose ));
 
   } elsif $task-run && $thing {
 
