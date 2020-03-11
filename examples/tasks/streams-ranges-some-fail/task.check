@@ -1,0 +1,21 @@
+between: {foo} {bar}
+
+  regexp: \S 1
+  regexp: \S 2
+  regexp: \S 3
+  #regexp: \S 5
+  regexp: \S 1
+
+  code:  <<CODE
+  
+    for my $s (@{streams_array()}) {
+        my $i=1;
+        for my $l (@{$s}){
+          print "layer: ", $i++, " ", (join "", map {"{$_}"} @{$l}), "\n";
+        }
+      print "\n";
+    }
+  
+  CODE
+  
+end:

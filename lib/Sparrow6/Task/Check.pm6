@@ -197,6 +197,9 @@ class Api
     $!last-check-status = $status;
 
     unless $status {
+     if self.current-context.WHAT === Sparrow6::Task::Check::Context::Range {
+         self.current-context.mark-all-streams-as-failed();
+     } 
      if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {
         self.current-context.context = ();
         self.current-context.streams = %();
