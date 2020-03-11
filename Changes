@@ -2,6 +2,7 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - s6 install, s6 plg-run - various fixes for python based tasks
     - Sparrow6::Task::Check::Context::Range - continue to search within range even for failed streams
     - task check - logs stderr ( to help debug when task check fails )
     - s6 - upload, install plugin - full support of `--force` option
