@@ -54,21 +54,26 @@ class Sequence
       my %new-streams;
       my $j=0;
 
+      self!log("input context:", self.context.perl);
+
       for @data -> $i {
 
-        my $next = $i<next>;
         my $stream-id;
+
         if $i<stream-id>:exists {
-          $stream-id = $i<stream-id> || $j++;
+          $stream-id = $i<stream-id>;
         } else {
           $j++;
           $stream-id = $j;
           $i<stream-id> = $j;
         }
 
+        my $next = $i<next>;
+
         if $next.defined  {
           my $data = self.data[$i<next>];
-          push @new-context, %( data => $data, next => $i<next>+1, stream-id => $stream-id )
+          push @new-context, %( data => $data, next => $i<next>+1, stream-id => $stream-id );
+          self!log("push to a new context:", "{$data.perl} at index: {$i<next>}. next is: {$i<next>+1}");
         } 
 
         if self.streams{$stream-id}:exists {
@@ -83,8 +88,13 @@ class Sequence
       }
 
       self.streams = %new-streams;
+
       self!log("current stream",self.streams.keys.perl);
       self.context = @new-context;
+
+
+      self!log("output context:", self.context.perl);
+
     }  
 
     method check-message ($l) { 
