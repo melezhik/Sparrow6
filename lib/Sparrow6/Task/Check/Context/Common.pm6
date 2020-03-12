@@ -16,6 +16,8 @@ role Role {
         }
       }
 
+      self!log("start context:", self.context.perl);
+
     }
 
     method streams-as-array () {

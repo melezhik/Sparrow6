@@ -1,3 +1,11 @@
 within: 'color:' \s+  red || green || blue 
+  ff
+  RE2
+  #RE44
   RE2
 end:
+
+code: <<CODE
+!perl6
+  dump_streams();
+CODE

@@ -122,20 +122,7 @@ sub streams_array () is export {
 
 sub dump_streams () is export {
 
-  my @streams = streams_array();
-
-  my $s = 0;
-
-  for @streams -> $str {
-      $s++;
-      say "stream: $s";
-      my $l = 0;
-      for $str -> $layer {
-        $l++;
-        say "\tlayer: $l";
-        say "\t\t", $layer.join(" ");
-      }
-  }
+  say streams().perl;
 
 }
 
