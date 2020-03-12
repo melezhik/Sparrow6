@@ -196,14 +196,23 @@ class Api
 
     $!last-check-status = $status;
 
-    unless $status {
-     if self.current-context.WHAT === Sparrow6::Task::Check::Context::Range {
+    if $status {
+
+      self!log("SEARCH SUCCEEDS (=;", $pattern);
+
+    } else {
+
+      self!log("SEARCH FAILS )=;", $pattern);
+
+      if self.current-context.WHAT === Sparrow6::Task::Check::Context::Range {
          self.current-context.mark-all-streams-as-failed();
-     } 
-     if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {
+      } 
+
+      if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {
         self.current-context.context = ();
         self.current-context.streams = %();
-     } 
+      } 
+
     }
 
     self.current-context.change-context(@new-context) if @new-context;
@@ -288,7 +297,7 @@ class Api
           my $start = "$0";
 
           if self.current-context.^name eq "Sparrow6::Task::Check::Context::Default" {
-            self.current-context = Sparrow6::Task::Check::Context::Within.new( data => self.data, start => $start );
+            self.current-context = Sparrow6::Task::Check::Context::Range.new( data => self.data, start => $start );
           } else {
             die "nested contexts are forbidden";
           }
