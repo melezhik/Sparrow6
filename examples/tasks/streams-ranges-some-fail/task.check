@@ -3,7 +3,7 @@ between: {foo} {bar}
   regexp: \S 1
   regexp: \S 2
   regexp: \S 3
-  #regexp: \S 5
+  regexp: \S 5
   regexp: \S 1
 
   code:  <<CODE

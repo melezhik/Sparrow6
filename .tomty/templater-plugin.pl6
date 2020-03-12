@@ -2,13 +2,16 @@
 
 use Sparrow6::DSL;
 
+directory "foo";
+
 task-run "templater-plugin", "templater", %(
   variables => %(
     name => 'Sparrow6',
     language => 'perl6'
   ),
-  target  => 'greetings.out',
+  target  => 'foo/greetings.out',
   mode    => '644',
   source  => slurp 'examples/greetings.tmpl'
 );
 
+directory-delete "foo";

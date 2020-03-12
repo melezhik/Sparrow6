@@ -16,7 +16,13 @@ begin:
 
         regexp: (\S+)
 
-        generator: print 'assert: ', ( join ' ', map {$_->[0]} @{captures()} ) eq 'a 1 0 .' ? 1 : 0 , " captures == 'a 1 0 .' \n";
+        generator: <<CODE
+
+          my $cpt = join ' ', map {$_->[0]} @{captures()};
+
+          print 'assert: ', $cpt eq 'a 1 0 .' ? 1 : 0 , " captures($cpt) == 'a 1 0 .' \n";
+  
+        CODE
 
         regexp: (\S+)
 
