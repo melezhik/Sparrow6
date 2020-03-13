@@ -10,7 +10,8 @@ between: {foo} {bar}
   code:  <<CODE
   !perl6
 
-  say dump_streams;  
+  print "streams: ";
+  dump_streams;  
   
   CODE
   

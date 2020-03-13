@@ -7,4 +7,8 @@ A
 Z
 end:
 
-code: dump_streams();
+code: <<CODE
+!perl6
+print "streams: ";
+dump_streams();
+CODE
