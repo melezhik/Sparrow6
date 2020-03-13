@@ -6,6 +6,7 @@ unit module Sparrow6::Task::Check::Context;
 
 use Sparrow6::Common::Helpers;
 use Sparrow6::Task::Check::Context::Common;
+use Data::Dump;
 
 class Default
 
@@ -55,7 +56,7 @@ class Sequence
       my %new-streams;
       my $j=0;
 
-      self!log("input context:", self.context.perl);
+      self!log("input context:", Dump(self.context));
 
       for @data -> $i {
 
@@ -94,7 +95,7 @@ class Sequence
       self.context = @new-context;
 
 
-      self!log("output context:", self.context.perl);
+      self!log("output context:", Dump(self.context));
 
     }  
 
@@ -141,7 +142,7 @@ class Range
   
           if $d ~~ /<$pattern>/ {
              $stream-id++;
-             push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id )
+             push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id );
           }
   
         }
@@ -156,7 +157,7 @@ class Range
           $stream-id++ if $d ~~ /<$pattern1>/;
   
           if $d ~~ /<$pattern1>/ ^fff^ $d ~~ /<$pattern2>/ {
-              push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id )
+              push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id );
           }
   
           $i++;
@@ -166,7 +167,7 @@ class Range
       }
 
 
-      self!log("start context:", self.context.perl);
+      self!log("start context:", Dump(self.context));
 
     }  
 
@@ -212,7 +213,7 @@ class Range
 
       self.streams = %new-streams;
 
-      self!log("current stream",self.streams.keys.perl);
+      self!log("current stream",Dump(self.streams));
 
     }  
 

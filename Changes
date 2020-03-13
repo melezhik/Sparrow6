@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - improve debugging of task checks
+
 0.0.16  2020-03-12T20:08:09Z
 
     - s6 install, s6 plg-run - various fixes for python based tasks
