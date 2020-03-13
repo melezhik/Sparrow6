@@ -230,7 +230,7 @@ class Range
 
     method check-message ($l) { 
 
-      "stdout match (r) <$l>"
+      return self.end.defined ?? "stdout match (r) <$l>" !! "stdout match (w) <$l>"; 
 
     }
 
