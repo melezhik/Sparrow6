@@ -205,7 +205,8 @@ class Api
       self!log("SEARCH FAILS )=;", $pattern);
 
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Range {
-         self.current-context.mark-all-streams-as-failed();
+         self.current-context.disable-streams();
+         self.current-context.streams = %();
       } 
 
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {

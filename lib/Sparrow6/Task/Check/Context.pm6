@@ -122,9 +122,12 @@ class Range
     has Str $.start is required;
     has Str $.end;
     has Bool $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
+    has Bool $.streams-allowed is rw;
     has Str $.name = "range-context";
  
     method TWEAK() {
+
+      self.streams-allowed = True;
 
       my @new-context;
 
@@ -173,6 +176,8 @@ class Range
 
     method change-context (@data) {
 
+      return if ! self.streams-allowed;
+
       my %succeed-streams;
 
       my %new-streams;
@@ -217,19 +222,9 @@ class Range
 
     }  
 
-    method mark-all-streams-as-failed () {
+    method disable-streams () {
 
-
-      for self.streams.keys -> $stream-id {
-        
-          unless self.failed-streams{$stream-id}:exists {
-            self!log("mark failed stream:", $stream-id);
-            self.failed-streams{$stream-id} = 1              
-          }
-        
-      }
-
-      self.streams = %();
+      self.streams-allowed = False;
 
     }
 
