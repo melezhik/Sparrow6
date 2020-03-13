@@ -7,5 +7,6 @@ end:
 
 code: <<CODE
 !perl6
+  print "streams: ";
   dump_streams();
 CODE
