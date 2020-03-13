@@ -1,0 +1,17 @@
+between: {foo} {bar}
+
+  aaaa
+  regexp: \S 1
+  regexp: \S 2
+  regexp: \S 3
+  #regexp: \S 5
+  #regexp: \S 1
+
+  code:  <<CODE
+  !perl6
+
+  say dump_streams;  
+  
+  CODE
+  
+end:

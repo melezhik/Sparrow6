@@ -1,0 +1,10 @@
+begin:
+A
+0
+1
+2
+6
+Z
+end:
+
+code: dump_streams();
