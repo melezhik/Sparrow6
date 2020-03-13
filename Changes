@@ -2,7 +2,10 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
-    - improve debugging of task checks
+    - Task check - Range/Within search are now combined
+    - Task check - Range/Within search - fixing issues for some edge scenarious 
+    - Improve debugging of task checks
+    - Added negative tests
 
 0.0.16  2020-03-12T20:08:09Z
 
