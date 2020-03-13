@@ -5,6 +5,7 @@ use v6;
 unit module sparrow6lib;
 
 use JSON::Tiny;
+use Data::Dump;
 
 use glue;
 
@@ -122,7 +123,7 @@ sub streams_array () is export {
 
 sub dump_streams () is export {
 
-  say streams().perl;
+  say Dump(streams());
 
 }
 

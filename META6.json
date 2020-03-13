@@ -7,7 +7,8 @@
     "File::Directory::Tree",
     "Hash::Merge",
     "YAMLish",
-    "JSON::Tiny"
+    "JSON::Tiny",
+    "Data::Dump"
   ],
   "description" : "Sparrow6 - Perl6 Automation Framework",
   "license" : "Artistic-2.0",
