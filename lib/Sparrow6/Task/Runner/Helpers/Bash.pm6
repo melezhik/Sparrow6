@@ -48,6 +48,11 @@ role Role {
     }
 
 
+    self!log("set PYTHONPATH","{$path.IO.dirname.IO.absolute}/python-lib");
+    $fh.say("# set PYTHONPATH for $path.IO.dirname.IO.absolute}/python-lib");
+    $fh.say("export PYTHONPATH={$path.IO.dirname.IO.absolute}/python-lib:\$PYTHONPATH");
+    $fh.say("");
+
     $fh.say("source " ~  $.cache-dir ~ '/glue.bash');
     $fh.say("source " ~  $.cache-dir ~ '/sparrow6lib.bash');
     $fh.say("source " ~  $.cache-dir ~ '/variables.bash');

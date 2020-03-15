@@ -2,6 +2,7 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Export pip environment to bash task
     - Export cpanfile environment to bash task
     - Export local bin/ to bash task PATH
     - Remove meanigless code from ruby task run command
