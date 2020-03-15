@@ -2,7 +2,9 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
-    - Export cpanfile environment to bash tasks
+    - Export cpanfile environment to bash task
+    - Export local bin/ to bash task PATH
+    - Remove meanigless code from ruby task run command
 
 0.0.17  2020-03-13T14:17:05Z
 
