@@ -31,8 +31,6 @@ role Role {
 
     my $fh = open $.cache-dir ~ '/cmd.bash', :w;
 
-    $fh.say("set -e");
-
     $fh.say("# export lib to task Perl env");
     $fh.say("export PERL5LIB={$.root}/lib:\$PERL5LIB");
     $fh.say("# export lib to task Ruby env");
