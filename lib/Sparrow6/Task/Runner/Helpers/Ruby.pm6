@@ -36,10 +36,10 @@ role Role {
         self!log("pick up Gemfile","{$.root}/cpanfile");
         $cmd = "cd {$.root} && bundle exec " ;
         $cmd ~= "ruby -I {$.cache-dir} ";
-        $cmd ~= "-I {$.root}/local/lib/ruby5 -I {$.root}/lib -r sparrow6lib $path";
+        $cmd ~= "-I {$.root}/lib -r sparrow6lib $path";
       } else {
         $cmd ~= "ruby -I {$.cache-dir} ";
-        $cmd ~= "-I {$.root}/local/lib/ruby5 -I {$.root}/lib -r sparrow6lib $path";
+        $cmd ~= "-I {$.root}/lib -r sparrow6lib $path";
       }
 
       my $fh = open $.cache-dir ~ '/cmd.bash', :w;
