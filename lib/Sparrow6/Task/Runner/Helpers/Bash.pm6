@@ -30,6 +30,16 @@ role Role {
   method !deploy-bash-run-cmd ($path) {
 
     my $fh = open $.cache-dir ~ '/cmd.bash', :w;
+
+    if "{$.root}/cpanfile".IO ~~ :e {
+      self!log("pick up cpanfile","{$.root}/cpanfile");
+      $fh.say("set -e");
+      $fh.say("echo \"pick up cpanfile from {$.root}/cpanfile\"");
+      $fh.say("export PATH={$.root}/local/bin/:\$PATH");
+      $fh.say("export PERL5LIB={$.root}/local/lib/perl5:{$.root}/lib:\$PERL5LIB");
+      $fh.say("");
+    }
+
     $fh.say("source " ~  $.cache-dir ~ '/glue.bash');
     $fh.say("source " ~  $.cache-dir ~ '/sparrow6lib.bash');
     $fh.say("source " ~  $.cache-dir ~ '/variables.bash');
