@@ -33,17 +33,17 @@ role Role {
 
     $fh.say("set -e");
 
-    $fh.say("echo \"export lib to task Perl env\"");
+    $fh.say("# export lib to task Perl env");
     $fh.say("export PERL5LIB={$.root}/lib:\$PERL5LIB");
-    $fh.say("echo \"export lib to task Ruby env\"");
+    $fh.say("# export lib to task Ruby env");
     $fh.say("export RUBYLIB={$.root}/lib:\$RUBYLIB");
-    $fh.say("echo \"export bin to task PATH\"");
+    $fh.say("# export bin to task PATH");
     $fh.say("export PATH={$.root}/bin/:\$PATH");
     $fh.say("");
 
     if "{$.root}/cpanfile".IO ~~ :e {
       self!log("pick up cpanfile","{$.root}/cpanfile");
-      $fh.say("echo \"pick up cpanfile from {$.root}/cpanfile\"");
+      $fh.say("# pick up cpanfile from {$.root}/cpanfile");
       $fh.say("export PATH={$.root}/local/bin/:\$PATH");
       $fh.say("export PERL5LIB={$.root}/local/lib/perl5:\$PERL5LIB");
       $fh.say("");
