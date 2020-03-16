@@ -1,6 +1,10 @@
 #!perl6 
 
-use Sparrow6::DSL;
+=begin tomty
+%(
+  tag => "plugin"
+)
+=end tomty
 
 directory "foo";
 
