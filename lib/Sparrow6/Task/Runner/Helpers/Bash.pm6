@@ -52,7 +52,7 @@ role Role {
 
     if "{$.root}/requirements.txt".IO ~~ :e {
       self!log("pick up requirements.txt","{$.root}/requirements.txt");
-      $fh.say("export PATH={$.root}/local/bin/:\$PATH");
+      $fh.say("export PATH={$.root}/python-lib/bin/:\$PATH");
       $fh.say("export PYTHONPATH={$path.IO.dirname.IO.absolute}/python-lib:\$PYTHONPATH");
       $fh.say("");
     }

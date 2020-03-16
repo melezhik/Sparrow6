@@ -24,7 +24,7 @@ role Role {
 
         my %plg-meta = self!read-plugin-meta($plg-src);
 
-        shell("bash -c 'cd $plg-src && $pip-command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=$plg-src/local/bin\"'");
+        shell("bash -c 'cd $plg-src && $pip-command install -t ./python-lib -r requirements.txt'");
 
       }
 
