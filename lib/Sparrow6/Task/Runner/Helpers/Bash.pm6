@@ -30,6 +30,29 @@ role Role {
   method !deploy-bash-run-cmd ($path) {
 
     my $fh = open $.cache-dir ~ '/cmd.bash', :w;
+
+    $fh.say("# export lib to task Perl env");
+    $fh.say("export PERL5LIB={$.root}/lib:\$PERL5LIB");
+    $fh.say("# export lib to task Ruby env");
+    $fh.say("export RUBYLIB={$.root}/lib:\$RUBYLIB");
+    $fh.say("# export bin to task PATH");
+    $fh.say("export PATH={$.root}/bin/:\$PATH");
+    $fh.say("");
+
+    if "{$.root}/cpanfile".IO ~~ :e {
+      self!log("pick up cpanfile","{$.root}/cpanfile");
+      $fh.say("# pick up cpanfile from {$.root}/cpanfile");
+      $fh.say("export PATH={$.root}/local/bin/:\$PATH");
+      $fh.say("export PERL5LIB={$.root}/local/lib/perl5:\$PERL5LIB");
+      $fh.say("");
+    }
+
+
+    self!log("set PYTHONPATH","{$path.IO.dirname.IO.absolute}/python-lib");
+    $fh.say("# set PYTHONPATH for $path.IO.dirname.IO.absolute}/python-lib");
+    $fh.say("export PYTHONPATH={$path.IO.dirname.IO.absolute}/python-lib:\$PYTHONPATH");
+    $fh.say("");
+
     $fh.say("source " ~  $.cache-dir ~ '/glue.bash');
     $fh.say("source " ~  $.cache-dir ~ '/sparrow6lib.bash');
     $fh.say("source " ~  $.cache-dir ~ '/variables.bash');
