@@ -10,7 +10,7 @@ role Role {
 
       self!log("install deps for $plg-src",$plg-src);
 
-      my $pip-command = 'pip';
+      my $pip-command = 'pip3';
 
       if "$plg-src/cpanfile".IO ~~ :e && ! %*ENV<SP6_CARTON_OFF> {
         shell("bash -c 'cd $plg-src && carton install'");
@@ -23,10 +23,6 @@ role Role {
       if "$plg-src/requirements.txt".IO ~~ :e {
 
         my %plg-meta = self!read-plugin-meta($plg-src);
-
-        if  %plg-meta<python_version> && %plg-meta<python_version> eq '3' {
-          $pip-command = 'pip3'
-        }
 
         shell("bash -c 'cd $plg-src && $pip-command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=$plg-src/local/bin\"'");
 
@@ -87,7 +83,7 @@ role Role {
           self.console("$pid is uptodate. version $inst-v") if %args<verbose>;
 
           # fixme:  don't install dependencies for python requirements.txt
-          self.install-plugin-deps("{self.plugin-directory($pid)}");
+          # self.install-plugin-deps("{self.plugin-directory($pid)}");
 
      }
 
