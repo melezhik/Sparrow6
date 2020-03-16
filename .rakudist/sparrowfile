@@ -1,1 +1,1 @@
-package-install "libtemplate-perl carton ruby-full python bundler";
+package-install "python3 libtemplate-perl carton ruby-full python bundler";

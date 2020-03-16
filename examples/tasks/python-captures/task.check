@@ -1,6 +1,6 @@
 generator: <<CODE
 !python
-print "regexp: (\d+)\w"
+print("regexp: (\d+)\w")
 CODE
 
 generator: <<CODE
@@ -8,7 +8,7 @@ generator: <<CODE
 from sparrow6lib import *
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
-print capture()[0]
+print(capture()[0])
 
 #if (capture()[0] == '1'):
 #  print "assert: 1 first capture is 1"
