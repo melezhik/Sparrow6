@@ -1,6 +1,6 @@
 code: <<GENE
 !python
-print "OK"
+print("OK")
 import sys
 sys.stdout.write('PYTHON DEBUG MESSAGE')
 GENE
