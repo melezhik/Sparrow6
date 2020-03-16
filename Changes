@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.18  2020-03-16T14:17:44Z
+
     - Export pip environment to bash task
     - Export cpanfile environment to bash task
     - Export local bin/ to bash task PATH
