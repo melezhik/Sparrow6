@@ -2,6 +2,7 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - fix bug in args stringification
     - Remove python2 support. Only python3 now is supported
     - Don't install dependencies again for already installed python based plugin
 
