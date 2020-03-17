@@ -82,10 +82,15 @@ role Role {
 
           self.console("$pid is uptodate. version $inst-v") if %args<verbose>;
 
-          # fixme:  don't install dependencies for python requirements.txt
-          # self.install-plugin-deps("{self.plugin-directory($pid)}");
+          # reinstall dependencies for already installed plugin
+          # if options --force-install-deps passed
 
-     }
+          if %args<force-install-deps> {
+            self.console("force-install-deps is set, reinstalling plugin dependencies");
+            self.install-plugin-deps("{self.plugin-directory($pid)}");
+          }
+
+      }
 
      # first installation of a plugin
 

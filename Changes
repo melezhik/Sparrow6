@@ -2,8 +2,10 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
-    - fix bug in args stringification
-    - Remove python2 support. Only python3 now is supported
+    - Pyhton plugins - remove python2 support. Only python3 now is supported
+    - Document integration with package managers (cpan,rubygems,pip)
+    - Pass language related environments to Sparrow tasks (PERL5LIB,RUBYLIB,PYTHONPATH,PATH)
+    - Fix bug in args stringification
     - Don't install dependencies again for already installed python based plugin
 
 0.0.18  2020-03-16T14:17:44Z
