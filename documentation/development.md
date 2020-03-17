@@ -464,6 +464,42 @@ This make it easy to place custom Perl modules under task root directory:
 
       use Foo::Bar::Baz;
 
+# RUBYLIB
+
+`$root_dir/lib` path is added to `RUBYLIB` variable. 
+
+# PYTHONPATH
+
+`$root_dir/lib` path is added to `PYTHONPATH` variable. 
+
+# PATH
+
+`$root_dir/bin` path is added to `PATH` variable. 
+
+# Package managers
+
+Sparrow supports following package managers:
+
+* `bundler/Gemfile`
+
+* `cpan/cpanfile`
+
+* `pip/requirements.txt` (\*)
+
+
+Just place appropriate file to `$root_dir`:
+
+
+    echo "requires 'HTTP::Tiny'" > $root_dir/cpanfile 
+
+(\*) With Python3/pip3 is the only supported Python 
+
+And Sparrow will handle related dependencies and install them _locally_, so one use them within tasks:
+
+    $ cat task.pl
+
+    use HTTP::Tiny;
+
 # Task configuration
 
 To define configuration available across tasks and hook create `config.yaml` in the root directory:
