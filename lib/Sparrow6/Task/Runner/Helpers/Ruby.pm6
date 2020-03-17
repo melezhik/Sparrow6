@@ -33,7 +33,7 @@ role Role {
       my $cmd;
 
       if "{$.root}/Gemfile".IO ~~ :e {
-        self!log("pick up Gemfile","{$.root}/cpanfile");
+        self!log("pick up Gemfile","{$.root}/Gemfile");
         $cmd = "cd {$.root} && bundle exec " ;
         $cmd ~= "ruby -I {$.cache-dir} ";
         $cmd ~= "-I {$.root}/lib -r sparrow6lib $path";
