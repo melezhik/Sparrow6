@@ -484,21 +484,24 @@ Sparrow supports following package managers:
 
 * `cpan/cpanfile`
 
-* `pip/requirements.txt` (\*)
+* `pip/requirements.txt` \*
 
 
 Just place appropriate file to `$root_dir`:
 
 
-    echo "requires 'HTTP::Tiny'" > $root_dir/cpanfile 
+    $root_dir/cpanfile 
 
-(\*) With Python3/pip3 is the only supported Python 
+    requires "HTTP::Tiny"
+
 
 And Sparrow will handle related dependencies and install them _locally_, so one use them within tasks:
 
-    $ cat task.pl
+    task.pl
 
     use HTTP::Tiny;
+
+(\*) Python3/pip3 is the only supported Python.
 
 # Task configuration
 
