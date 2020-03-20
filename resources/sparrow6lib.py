@@ -26,23 +26,23 @@ def config():
 
 def run_task( path, params = [] ):
 
-    print "task_var_json_begin"
+    print("task_var_json_begin")
     if bool(params):
-      print json.dumps(params, ensure_ascii=False)
+      print(json.dumps(params, ensure_ascii=False))
     else:
-      print "{}"
+      print("{}")
 
-    print "task_var_json_end"
-    print "task: " + path
+    print("task_var_json_end")
+    print("task: " + path)
 
 # this syntax is deprecated
 # use `ignore_error` instead
 
 def ignore_task_error(val):
-  print "ignore_task_error: " + str(val)
+  print("ignore_task_error: " + str(val))
 
 def ignore_error():
-  print "ignore_task_error: "
+  print("ignore_task_error: ")
 
 def task_variables():
 

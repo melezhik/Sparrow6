@@ -121,7 +121,7 @@ class Api
       self!log("stringify args start",self.task-config<args>.perl);
       self!log("args has elements",self.task-config<args>.elems);
       my @args; my $j = 0;
-      for self.task-config<args><> -> $i {
+      for self.task-config<args> -> $i {
         $j++;
         self!log("args, handle element {$j}, type", $i.^name);
         if $i.isa("Int") or $i.isa("Str") {

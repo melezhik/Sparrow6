@@ -2,6 +2,16 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.19  2020-03-17T18:51:34Z
+
+    - Pyhton plugins - remove python2 support. Only python3 now is supported
+    - Document integration with package managers (cpan,rubygems,pip)
+    - Pass language related environments to Sparrow tasks (PERL5LIB,RUBYLIB,PYTHONPATH,PATH)
+    - Fix bug in args stringification
+    - Don't install dependencies again for already installed python based plugin
+
+0.0.18  2020-03-16T14:17:44Z
+
     - Export pip environment to bash task
     - Export cpanfile environment to bash task
     - Export local bin/ to bash task PATH
