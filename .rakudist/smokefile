@@ -1,8 +1,0 @@
-bash "tomty --skip=sudo --show-failed", %(
-  user => config()<user>,
-  envvars => %(
-    SP6_REPO => "http://repo.westus.cloudapp.azure.com",
-    SKIP_POWERSHELL => 1
-  ),
-  cwd => "{$*CWD}/../"
-);
