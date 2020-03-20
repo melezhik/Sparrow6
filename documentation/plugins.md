@@ -54,12 +54,6 @@ This parameter is optional, but recommended.
 
 This parameter is optional and could be useful when one need to refer to plugin documentation site.
 
-* `python_version` - sets Python language version.
-
-In case plugin has pip modules dependencies, respected pip installer version will be chosen.
-
-Available values is 2 or 3.
-
 ## Upload plugin
 
 Go to directory with plugin source code and run Sparrow6 cli:
