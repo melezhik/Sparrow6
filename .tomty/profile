@@ -1,0 +1,7 @@
+#!perl6
+
+%(
+  default => %(
+    skip => "sudo,windows"
+  )
+)
