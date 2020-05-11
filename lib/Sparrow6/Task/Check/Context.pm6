@@ -74,8 +74,8 @@ class Sequence
 
         if $next.defined  {
           my $data = self.data[$next];
-          my $next_next = $next + 1;
-          if self.data{$next_next}.defined {
+          my $next_next = $next+1;
+          if self.data[$next_next].defined {
             push @new-context, %( data => $data, next => $next_next, stream-id => $stream-id );
             self!log("push to a new context:", "{$data.perl} at index: {$i<next>}. next is: {$next_next}");
           } else {
