@@ -1,4 +1,4 @@
 language: minimal
 
 script:
-- curl http://repo.westus.cloudapp.azure.com/rakudist/api/run/debian/melezhik/Sparrow6 -s | bash
+- curl -d thing=https://github.com/melezhik/Sparrow6  http://repo.westus.cloudapp.azure.com/rakudist2/ci -s | bash

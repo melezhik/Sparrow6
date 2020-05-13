@@ -233,7 +233,7 @@ See [documentation/envvars](https://github.com/melezhik/Sparrow6/blob/master/doc
 
 # Examples
 
-See `.tomty/` folder
+See `.tomty/` folder.
 
 # Author
 
