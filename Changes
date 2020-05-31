@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.21  2020-05-30T19:50:47-05:00
+
     - New feature. s6 repo info.  
     - Fix travis build, switched to rakudist.raku.org
 
