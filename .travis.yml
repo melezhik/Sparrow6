@@ -1,4 +1,4 @@
 language: minimal
 
 script:
-- curl -d thing=https://github.com/melezhik/Sparrow6  http://repo.westus.cloudapp.azure.com/rakudist2/ci -s | bash
+  - curl -d thing=https://github.com/melezhik/Sparrow6 http://rakudist.raku.org/ci -s | bash

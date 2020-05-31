@@ -1,6 +1,8 @@
 Revision history for Sparrowdo
 
 {{$NEXT}}
+  
+    - Fix travis build, switched to rakudist.raku.org
 
 0.0.20  2020-05-12T01:55:57Z
 

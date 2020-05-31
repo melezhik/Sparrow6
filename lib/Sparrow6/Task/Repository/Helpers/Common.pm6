@@ -44,7 +44,6 @@ role Role {
 
   method !put-resource ($resource, $target) {
 
-
     self!log("put resource", $resource);
 
     my $url = $.url;
@@ -66,6 +65,12 @@ role Role {
     self!log("target file", $target);
 
 
+  }
+
+  method repo-info () {
+    say "repo: ", self.url;
+    say "sparrow root: ",self.sparrow-root;
+    say "prefix: ",self.prefix;
   }
 
 }
