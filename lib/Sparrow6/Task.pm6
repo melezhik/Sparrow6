@@ -44,6 +44,12 @@ class Cli
       s6 --install $plugin
       s6 --install --force $plugin # reinstall, even though if higher version is here
 
+    init sparrow repo:
+      s6 --repo-init
+
+    sparrow repo information:
+      s6 --repo-info
+
     run plugin:
       s6 --plg-run $plugin@param1=value2,@param2=value2
 
@@ -57,7 +63,7 @@ class Cli
       s6 --task-list
 
     run sparrow task:
-      s6 -task-run task/path
+      s6 --task-run task/path
 
     show sparrow task:
       s6 --task-cat task/path

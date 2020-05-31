@@ -16,6 +16,7 @@ sub MAIN (
   Bool :$search           = False,
   Bool :$upload           = False,
   Bool :$repo-init        = False,
+  Bool :$repo-info        = False,
   Bool :$install          = False,
   Bool :$plg-run          = False,
   Bool :$plg-man          = False,
@@ -64,6 +65,11 @@ sub MAIN (
 
     $repo-api.console("repo initialization");
     $repo-api.repo-init($thing);
+
+  } elsif $repo-info {
+
+    $repo-api.console("repo information");
+    $repo-api.repo-info();
 
   } elsif $upload {
 
