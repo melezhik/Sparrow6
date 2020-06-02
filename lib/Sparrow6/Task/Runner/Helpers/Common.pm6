@@ -94,7 +94,10 @@ role Role {
     my @arr = $cmd.split(/\s+/);
 
     self!log("effective command", @arr);
+
     $proc = Proc::Async.new(@arr);
+
+    ($*OUT,$*ERR).map: {.out-buffer = 0};
 
     react {
 
