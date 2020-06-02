@@ -97,8 +97,6 @@ role Role {
 
     $proc = Proc::Async.new(@arr);
 
-    ($*OUT,$*ERR).map: {.out-buffer = 0};
-
     react {
 
         whenever $proc.stdout.lines { # split input on \r\n, \n, and \r 
