@@ -95,6 +95,8 @@ role Role {
 
     self!log("effective command", @arr);
 
+    ($*OUT,$*ERR).map: {.out-buffer = 0};
+
     $proc = Proc::Async.new(@arr);
 
     react {
