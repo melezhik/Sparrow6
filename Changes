@@ -2,6 +2,10 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.22  2020-06-03T22:25:32Z
+
+    - Disable buffering when run sub process using Proc::Async
+
 0.0.21  2020-05-30T19:50:47-05:00
 
     - New feature. s6 repo info.  
