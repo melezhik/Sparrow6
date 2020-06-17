@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+0.0.23  2020-06-17T21:11:10Z
+
     - Bug Fix: cache reset bug fixed
 
 0.0.22  2020-06-03T22:25:32Z
