@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Bug Fix: cache reset bug fixed
+
 0.0.22  2020-06-03T22:25:32Z
 
     - Disable buffering when run sub process using Proc::Async
