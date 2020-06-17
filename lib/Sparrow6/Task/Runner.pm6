@@ -252,6 +252,8 @@ class Api
 
       self!run-perl6-hook("$root/hook.pl6");
 
+      self!reset-cache-dir();
+
     } elsif "$root/hook.pl".IO ~~ :e {
 
       self!set-cache-dir();
@@ -259,6 +261,8 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-perl-hook("$root/hook.pl");
+
+      self!reset-cache-dir();
 
     } elsif "$root/hook.bash".IO ~~ :e {
 
@@ -268,6 +272,8 @@ class Api
 
       self!run-bash-hook("$root/hook.bash");
 
+      self!reset-cache-dir();
+
     } elsif "$root/hook.rb".IO ~~ :e {
 
       self!set-cache-dir();
@@ -275,6 +281,8 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-ruby-hook("$root/hook.rb");
+
+      self!reset-cache-dir();
 
     } elsif "$root/hook.py".IO ~~ :e {
 
@@ -284,6 +292,8 @@ class Api
 
       self!run-python-hook("$root/hook.py");
 
+      self!reset-cache-dir();
+
     } elsif "$root/hook.ps1".IO ~~ :e {
 
       self!set-cache-dir();
@@ -291,6 +301,8 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-powershell-hook("$root/hook.ps1");
+
+      self!reset-cache-dir();
 
     }
 
@@ -312,6 +324,8 @@ class Api
 
       }
 
+      self!reset-cache-dir();
+
 
     } elsif "$root/task.pl".IO ~~ :e {
 
@@ -331,6 +345,7 @@ class Api
 
       }
 
+      self!reset-cache-dir();
 
     } elsif "$root/task.bash".IO ~~ :e {
 
@@ -350,6 +365,7 @@ class Api
 
       }
 
+      self!reset-cache-dir();
 
     } elsif "$root/task.rb".IO ~~ :e {
 
@@ -368,6 +384,8 @@ class Api
         EVALFILE "$root/test.pl6";
 
       }
+
+      self!reset-cache-dir();
 
 
     } elsif "$root/task.py".IO ~~ :e {
@@ -388,6 +406,8 @@ class Api
 
       }
 
+      self!reset-cache-dir();
+
     } elsif "$root/task.ps1".IO ~~ :e {
 
       self!set-cache-dir();
@@ -406,9 +426,10 @@ class Api
 
       }
 
+      self!reset-cache-dir();
+
     }
 
-    self!reset-cache-dir();
 
   }
 
