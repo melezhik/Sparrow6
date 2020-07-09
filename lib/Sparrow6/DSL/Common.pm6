@@ -119,7 +119,7 @@ sub parse-tags ($tags) is export(:DEFAULT) {
 
   my %tags = %();
 
-  for %*ENV<SP6_TAGS>.split(",").grep({/\S/}).map({ if /(\S+)/ { "$0" } }) -> $i {
+  for $tags.split(",").grep({/\S/}).map({ if /(\S+)/ { "$0" } }) -> $i {
     %tags{$i} = True
   }
 
