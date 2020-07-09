@@ -31,6 +31,7 @@ BEGIN for <
 &set-config
 &task-run
 &task_run
+&tags
 &module-run
 &bash
 &directory

@@ -2,6 +2,8 @@ Revision history for Sparrowdo
 
 {{$NEXT}}
 
+    - Introducing sparrowdo tags
+
 0.0.24  2020-06-17T21:15:49Z
 
     - Enable Raku tests

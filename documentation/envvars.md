@@ -40,10 +40,27 @@ For example:
 
     SP6_CONFIG=config.pl6
 
-
 - SP6_CARTON_OFF
 
 Don't use Carton to install CPAN dependencies, useful when one
 install CPAN modules though others means
+
+
+- SP6_TAGS
+
+Tags for hosts. Mostly used in Sparrowdo scenarios, to separate one hosts from another.
+
+For example:
+
+  SP6_TAG=database,prod
+
+So in sparrow scenario:
+
+    if tags()<database> && tags()<prod> {
+      package-install "postgresql";
+      task-run "harden postgresql config", "postgresql-strict-configuration";
+    }
+
+
 
 

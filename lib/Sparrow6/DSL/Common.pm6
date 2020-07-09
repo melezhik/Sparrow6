@@ -110,3 +110,19 @@ multi sub task_run(%args) is export {
   task-run(%args<task>, %args<plugin>, %args<parameters>); 
 }
 
+
+sub tags () is export(:DEFAULT) {
+
+  my %tags = %();
+
+  if %*ENV<SP6_TAGS> {
+
+    for %*ENV<SP6_TAGS>.split(",").grep({/\S/}).map({ if /(\S+)/ { "$0" } }) -> $i {
+      %tags{$i} = True
+    }
+
+  }
+
+  %tags;
+
+}
