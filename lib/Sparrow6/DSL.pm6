@@ -32,6 +32,7 @@ BEGIN for <
 &task-run
 &task_run
 &tags
+&parse-tags
 &module-run
 &bash
 &directory

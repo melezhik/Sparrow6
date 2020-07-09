@@ -112,15 +112,15 @@ multi sub task_run(%args) is export {
 
 
 sub tags () is export(:DEFAULT) {
+  %*ENV<SP6_TAGS> ?? parse-tags(%*ENV<SP6_TAGS>) !! %();
+}
+
+sub parse-tags ($tags) is export(:DEFAULT) {
 
   my %tags = %();
 
-  if %*ENV<SP6_TAGS> {
-
-    for %*ENV<SP6_TAGS>.split(",").grep({/\S/}).map({ if /(\S+)/ { "$0" } }) -> $i {
-      %tags{$i} = True
-    }
-
+  for %*ENV<SP6_TAGS>.split(",").grep({/\S/}).map({ if /(\S+)/ { "$0" } }) -> $i {
+    %tags{$i} = True
   }
 
   %tags;
