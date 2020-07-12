@@ -61,6 +61,13 @@ So in sparrow scenario:
       task-run "harden postgresql config", "postgresql-strict-configuration";
     }
 
+Tags might also contain values, representing 'key/value' pairs:
+
+
+SP6_TAG=nginx_port=443
+
+  say tags()<nginx_port>;
+
 
 
 

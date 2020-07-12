@@ -120,7 +120,11 @@ sub parse-tags ($tags) is export(:DEFAULT) {
   my %tags = %();
 
   for $tags.split(",").grep({/\S/}).map({ if /(\S+)/ { "$0" } }) -> $i {
-    %tags{$i} = True
+    if $i ~~ /(\S+) '=' (\S+)/ {
+       %tags{"$0"} = "$1"
+   } else {
+      %tags{$i} = True
+    }
   }
 
   %tags;
