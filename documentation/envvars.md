@@ -48,7 +48,8 @@ install CPAN modules though others means
 
 - SP6_TAGS
 
-Tags for hosts. Mostly used in Sparrowdo scenarios, to separate one hosts from another.
+Tags for hosts. Mostly used in Sparrowdo scenarios, to separate one hosts from another
+or supply scenarios with variables.
 
 For example:
 
@@ -63,11 +64,7 @@ So in sparrow scenario:
 
 Tags might also contain values, representing 'key/value' pairs:
 
-
 SP6_TAG=nginx_port=443
 
-  say tags()<nginx_port>;
-
-
-
+    say tags()<nginx_port>;
 
