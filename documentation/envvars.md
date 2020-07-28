@@ -53,7 +53,7 @@ or supply scenarios with variables.
 
 For example:
 
-  SP6_TAG=database,prod
+    SP6_TAG=database,prod
 
 So in sparrow scenario:
 
@@ -64,7 +64,10 @@ So in sparrow scenario:
 
 Tags might also contain values, representing 'key/value' pairs:
 
-SP6_TAG=nginx_port=443
+    SP6_TAG=nginx_port=443,mode=production
+
+Sparrow scenario:
 
     say tags()<nginx_port>;
+    say tags()<mode>;
 
