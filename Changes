@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    - Stringification bugfix (decontainerization of list)
+
 0.0.25  2020-07-15T16:25:37-05:00
 
     - Introducing sparrowdo tags
