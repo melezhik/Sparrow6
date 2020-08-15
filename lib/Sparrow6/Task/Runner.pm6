@@ -21,6 +21,7 @@ use Sparrow6::Task::Runner::Helpers::Python;
 use Sparrow6::Task::Runner::Helpers::Powershell;
 use Sparrow6::Task::Runner::Helpers::Test;
 use Sparrow6::Task::Runner::Helpers::Check;
+use Data::Dump;
 
 class Api
 
@@ -118,12 +119,15 @@ class Api
 
     # stringify <args>
     if self.task-config<args>:exists && self.task-config<args>.isa("Array") {
-      self!log("stringify args start",self.task-config<args>.perl);
-      self!log("args has elements",self.task-config<args>.elems);
+      my $args = self.task-config<args>;
+      self!log("stringify args start, type:",$args.^name);
+      self!log("stringify args start, data:",Dump($args));
       my @args; my $j = 0;
-      for self.task-config<args><> -> $i {
+      push $args, []; # workaround for 1 VS N elements Array iterator Rakudo bug
+      for $args<> -> $i {
         $j++;
         self!log("args, handle element {$j}, type", $i.^name);
+        self!log("args, element {$j}:", Dump($i));
         if $i.isa("Int") or $i.isa("Str") {
           push @args, $i;
         } elsif $i.isa("Hash") or $i.isa("Pair") {
@@ -134,7 +138,7 @@ class Api
               push @args, "--{$k} {$i{$k}}"
             }
           }
-        } elsif $i.isa("Array") {
+        } elsif $i.isa("Array") or $i.isa("List") {
           for $i<> -> $k {
             if $k ~~ /^ '-'/ {
               push @args, $k;
