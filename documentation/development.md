@@ -564,7 +564,7 @@ One can override default configuration through constructor:
 
 # Args stringification
 
-`Args stringification` the process of coercing `args` array into command line parameters.
+`Args stringification` the process of coercing `args` List into command line parameters.
 
 Consider a simple example.
 
@@ -588,7 +588,7 @@ And value is just a string:
 
     value
 
-The above scenario implemented by passing `args` array into `Sparrow6::Task::Runner::Api`
+The above scenario implemented by passing `args` List into `Sparrow6::Task::Runner::Api`
 constructor:
 
     Sparrow6::Task::Runner::Api.new(
