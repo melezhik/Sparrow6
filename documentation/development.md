@@ -564,7 +564,7 @@ One can override default configuration through constructor:
 
 # Args stringification
 
-`Arg stringification` the process of coercing `args` array into command line parameters.
+`Args stringification` the process of coercing `args` array into command line parameters.
 
 Consider a simple example.
 
@@ -576,17 +576,17 @@ Where
 
 Flags are:
 
-    --verbose
-    --debug
+      --verbose
+      --debug
 
 Named parameters are:
 
-    --foo foo-_value
-    --var bar_value
-
+      --foo foo-_value
+      --var bar_value
+  
 And value is just a string:
 
-    parameter
+    value
 
 The above scenario implemented by passing `args` array into `Sparrow6::Task::Runner::Api`
 constructor:
@@ -597,7 +597,7 @@ constructor:
         args => [
           [ 'debug', 'verbose' ],
           %( 'foo' => 'foo_value', 'bar' => 'bar_value' ),
-          'parameter'
+          'value'
         ]
       )
     ).task-run;
@@ -615,16 +615,20 @@ So that `script` run with the following command line arguments:
 ## `args` semantic
 
 * `args` should be an array which elements are processed in order
-* for every elements rules are applied depending on element's type
-* Scalars are turned into scalars: `parameter ---> parameter`
-* Arrays are turned into scalars started with double dashes: `(debug, verbose) ---> --debug --verbose`.
+
+* For every elements rules are applied depending on element's type
+
+* Scalars are turned into scalars: `value ---> value`
+
+* Arrays/Lists are turned into scalars started with double dashes: `(debug, verbose) ---> --debug --verbose`.
+
 * Hashes are turned into named parameters: `%( foo => foo_value, bar => bar_value )  ---> --foo foo_value --bar => bar_value`
 
 ## Single or double dashes
 
-Double dashes is default behavior when coercing `args` array into string.
+Double dashes is default behavior when coercing `args` arrays into a string.
 
-If you need single dashes use _explicit_ notation:
+If you need single dashes use _explicit_ notation, by adding `-` before a parameter:
 
     Sparrow6::Task::Runner::Api.new(
       name  => "my task",
@@ -632,14 +636,36 @@ If you need single dashes use _explicit_ notation:
         args => [
           [ '-debug', '-verbose' ],
           %( '--foo' => 'foo_value', '-bar' => 'bar_value' ),
-          'parameter'
+          'value'
         ]
       )
     ).task-run;
 
-Results in args stringified as:
+Results follwing command line parameters:
 
-    -debug -verbose --foo foo_value --bar bar_value  parameter
+    -debug -verbose --foo foo_value --bar bar_value  value
+
+## List VS Arrays
+
+Because Rakudo decontainerizes arrays via `<>` operator, one need to add extra caution when using a _single_ element
+`args` array:
+
+    args => %(
+      ['foo', 'bar']
+    )
+
+    # Results in `foo bar` command line parameters
+    # Because here `args` is an Array, not a List
+
+Adding a `,` after `['foo', 'bar']` will "convert" `args` into a List and fix the issue:
+
+    args => %(
+      ['foo', 'bar'],
+    )
+
+    # Results in `--foo --bar` command line parameters
+
+Let's put it simple, add `,` sign _after_ a first `args` array's element to make `args` a list.
 
 # See also
 
