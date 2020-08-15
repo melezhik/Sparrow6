@@ -614,7 +614,7 @@ So that `script` run with the following command line arguments:
 
 ## `args` semantic
 
-* `args` should be an array which elements are processed in order
+* `args` should be a List which elements are processed in order
 
 * For every elements rules are applied depending on element's type
 
@@ -626,7 +626,7 @@ So that `script` run with the following command line arguments:
 
 ## Single or double dashes
 
-Double dashes is default behavior when coercing `args` arrays into a string.
+Double dashes is default behavior when coercing `args` array elements into a string.
 
 If you need single dashes use _explicit_ notation, by adding `-` before a parameter:
 
@@ -647,8 +647,7 @@ Results follwing command line parameters:
 
 ## List VS Arrays
 
-Because Rakudo decontainerizes arrays via `<>` operator, one need to add extra caution when using a _single_ element
-`args` array:
+Because Rakudo decontainerizes arrays via `<>` operator, one need to add extra caution when passing `args` as an _array_:
 
     args => [
       ['foo', 'bar']
