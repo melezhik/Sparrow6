@@ -6,6 +6,6 @@
 
 task-run "run python puck", "puck", %(
   args => [
-    [ "version" ]
+    [ "version" ],
   ]
 );
