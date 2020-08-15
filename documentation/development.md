@@ -650,18 +650,18 @@ Results follwing command line parameters:
 Because Rakudo decontainerizes arrays via `<>` operator, one need to add extra caution when using a _single_ element
 `args` array:
 
-    args => %(
+    args => [
       ['foo', 'bar']
-    )
+    ]
 
     # Results in `foo bar` command line parameters
     # Because here `args` is an Array, not a List
 
 Adding a `,` after `['foo', 'bar']` will "convert" `args` into a List and fix the issue:
 
-    args => %(
+    args => [
       ['foo', 'bar'],
-    )
+    ]
 
     # Results in `--foo --bar` command line parameters
 
