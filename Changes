@@ -2,7 +2,7 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-    - Stringification bugfix (second version)
+    - Fix failing python-puck test
 
 0.0.26  2020-08-14T21:47:51-05:00
 

@@ -123,7 +123,6 @@ class Api
       self!log("stringify args start, type:",$args.^name);
       self!log("stringify args start, data:",Dump($args));
       my @args; my $j = 0;
-      push $args, []; # workaround for 1 VS N elements Array iterator Rakudo bug
       for $args<> -> $i {
         $j++;
         self!log("args, handle element {$j}, type", $i.^name);
