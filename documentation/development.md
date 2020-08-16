@@ -563,7 +563,7 @@ One can override default configuration through constructor:
 
 # Args stringification
 
-`Args stringification` the process of coercing `args` Array into command line parameters.
+`Args stringification` the process of coercing `args` array into command line parameters.
 
 It allows one to easily create wrappers around existing command line utilities, without
 declaring configuration parameters and _reuse_ an _existing_ command line api.
@@ -616,7 +616,7 @@ So that `script` run with the following command line arguments:
 
 ## `args` coercion semantic
 
-`args` should be an Array of _elements_ representing command line arguments
+`args` should be an array of _elements_ representing command line arguments
 
 The logic of constructing of command line arguments by an array elements is following:
 
@@ -624,7 +624,7 @@ The logic of constructing of command line arguments by an array elements is foll
 
 * `Str/Int` are turned into _value_ parameters: `value ---> value`
 
-* `Arrays/List` and lists are turned into flags: `(debug, verbose) ---> --debug --verbose`.
+* `Array/List` and lists are turned into flags: `(debug, verbose) ---> --debug --verbose`.
 
 * `Hash/Pair` are turned into named parameters: `%( foo => foo_value, bar => bar_value )  ---> --foo foo_value --bar => bar_value`
 
@@ -649,10 +649,10 @@ Results following command line parameters:
 
      -debug -verbose --foo foo_value --bar bar_value  value
 
-## Single elements args arrays
+## Single element `args` array
 
-Because Raku's iteration of nested Arrays has none trivial [logic](https://docs.raku.org/language/list#Single_Argument_Rule)
-one needs to be cautious when using single elements `args` array:
+Because Raku's iteration of nested arrays has none trivial [logic](https://docs.raku.org/language/list#Single_Argument_Rule)
+one needs to be cautious when using single element `args` array:
 
     # Results in `foo bar` command line parameters
     # Iterator will "flatten" args array into 'foo', 'bar'
