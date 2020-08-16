@@ -655,7 +655,7 @@ Because Raku's iteration of nested arrays has none trivial [logic](https://docs.
 one needs to be cautious when using single element `args` array:
 
     # Results in `foo bar` command line parameters
-    # Iterator will "flatten" args array into 'foo', 'bar'
+    # Iterator will "flatten" args array into [ 'foo', 'bar' ] array
 
     args => [
       ['foo', 'bar']
