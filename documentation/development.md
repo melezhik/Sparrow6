@@ -550,7 +550,6 @@ Overriding configuration
 
 One can override default configuration through constructor:
 
-
     Sparrow6::Task::Runner::Api.new(
       name  => "my task",
       parameters => %( 
@@ -564,7 +563,10 @@ One can override default configuration through constructor:
 
 # Args stringification
 
-`Args stringification` the process of coercing `args` List into command line parameters.
+`Args stringification` the process of coercing `args` Array into command line parameters.
+
+It allows one to easily create wrappers around existing command line utilities, without
+declaring configuration parameters and _reuse_ an _existing_ command line api.
 
 Consider a simple example.
 
@@ -583,7 +585,7 @@ Named parameters are:
 
       --foo foo-_value
       --var bar_value
-  
+
 And value is just a string:
 
     value
@@ -610,25 +612,27 @@ Inside Bash task `args` argument is represented as a _string_:
 
 So that `script` run with the following command line arguments:
 
-    --debug --verbose --foo foo_value --bar bar_value  parameter
+    --debug --verbose --foo foo_value --bar bar_value  value
 
-## `args` semantic
+## `args` coercion semantic
 
-* `args` should be a List which elements are processed in order
+`args` should be an Array of _elements_ representing command line arguments
 
-* For every elements rules are applied depending on element's type
+The logic of constructing of command line arguments by an array elements is following:
 
-* Scalars are turned into scalars: `value ---> value`
+* For every elements a _rule_ is applied depending on element's type
 
-* Arrays/Lists are turned into scalars started with double dashes: `(debug, verbose) ---> --debug --verbose`.
+* `Str/Int` are turned into _value_ parameters: `value ---> value`
 
-* Hashes are turned into named parameters: `%( foo => foo_value, bar => bar_value )  ---> --foo foo_value --bar => bar_value`
+* `Arrays/List` and lists are turned into flags: `(debug, verbose) ---> --debug --verbose`.
+
+* `Hash/Pair` are turned into named parameters: `%( foo => foo_value, bar => bar_value )  ---> --foo foo_value --bar => bar_value`
 
 ## Single or double dashes
 
-Double dashes is default behavior when coercing `args` array elements into a string.
+Double dashes are chosen by default when coercing `args` `Array/List/Hash/Pair` elements into strings.
 
-If you need single dashes use _explicit_ notation, by adding `-` before a parameter:
+If one needs single dashes use _explicit_ notation, by adding `-` before a parameter name:
 
     Sparrow6::Task::Runner::Api.new(
       name  => "my task",
@@ -641,30 +645,30 @@ If you need single dashes use _explicit_ notation, by adding `-` before a parame
       )
     ).task-run;
 
-Results follwing command line parameters:
+Results following command line parameters:
 
-    -debug -verbose --foo foo_value --bar bar_value  value
+     -debug -verbose --foo foo_value --bar bar_value  value
 
-## List VS Arrays
+## Single elements args arrays
 
-Because Rakudo decontainerizes arrays via `<>` operator, one need to add extra caution when passing `args` as an _array_:
+Because Raku's iteration of nested Arrays has none trivial [logic](https://docs.raku.org/language/list#Single_Argument_Rule)
+one needs to be cautious when using single elements `args` array:
+
+    # Results in `foo bar` command line parameters
+    # Iterator will "flatten" args array into 'foo', 'bar'
 
     args => [
       ['foo', 'bar']
     ]
 
-    # Results in `foo bar` command line parameters
-    # Because here `args` is an Array, not a List
+Adding trailing comma to the end of `args` array usually does the trick:
 
-Adding a `,` after `['foo', 'bar']` will "convert" `args` into a List and fix the issue:
+    # Iterator will handle args array as a single element list 
+    # With first element ['foo', 'bar']
 
     args => [
       ['foo', 'bar'],
     ]
-
-    # Results in `--foo --bar` command line parameters
-
-Let's put it simple, add `,` sign _after_ a first `args` array's element to make `args` a list.
 
 # See also
 
