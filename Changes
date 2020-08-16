@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.27  2020-08-15T22:49:14-05:00
+
     - Fix failing python-puck test
     - More tests on stringifications
     - Clarifying Arrays VS Lists caveats in `args` stringification
