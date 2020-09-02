@@ -3,9 +3,13 @@
 Sparrow6 is a Raku based automation framework. It's written on Raku and has a Raku API.
 
 Who might want to use Sparrow? People dealing with daily tasks varying from servers software installation/configuration to
-cloud resources creation. Sparrow could be thought as an alternative to existing configuration management
+cloud resources creation. 
+
+Sparrow could be thought as an alternative to existing configuration management
 and provisioning tools like Ansible or Chef, however Sparrow is much broader and not limited to configuration
-management only. It could be seen as generic automation framework enabling a user quick and effective scripts development
+management only. 
+
+It could be seen as generic automation framework enabling a user quick and effective scripts development
 easing some typical challenges along the road - such as scripts configurations, code reuse and testing.
 
 #  Sparrow6 essential features
@@ -38,7 +42,7 @@ using just an Nginx web server.
 
 # Documentation
 
-Sparrow6 consists of various APIs and clients.
+Sparrow6 consists of various subsystems and clients.
 
 It's depends on your needs and purposes which one to use.
 
