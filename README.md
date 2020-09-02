@@ -1,12 +1,31 @@
 # Sparrow6
 
-> Sparrow6 - Raku Automation Framework
+Sparrow6 is a Raku based automation framework. It's written on Raku and has a Raku API.
 
-# Comparison with other tools
+Who might want to use Sparrow? People dealing with daily tasks varying from servers software installation/configuration to
+cloud resources creation. Sparrow could be thought as an alternative to existing configuration management
+and provisioning tools like Ansible or Chef, however Sparrow is much broader and not limited to configuration
+management. It could be seen as generic automation framework enabling a user quick and effective scripts development
+easing some typical challenges along the road - such as scripts configurations, code reuse and testing.
 
-* Are you familiar with configuration management tools, and/or automation frameworks like Ansible/Chef/Salt? Sparrow6 is written to solve pretty much the same tasks but with different approach.
+Sparrow6 essential features:
 
-* As well as there is task runners like Grunt/Gulp - Sparrow6 could be used as a replacement for them.
+* Sparrow is a language friendly framework. A user write underlying code on language of their choice (see supported languages),
+and Sparrow glues all the code using Raku API within high level Sparrow scenarios.
+
+* Sparrow has command line API. A user can run scripts using command line API, at this point to _use_ Sparrow one does not
+even have to know any language at all
+
+
+* Sparrow is a script oriented framework. Basic low level building in Sparrow is a script.
+
+
+* Sparrow is a function oriented framework. Though users write underlying code as scripts, those scripts are always called as
+a Raku functions withing high level scenarios.
+
+* Sparrow has a repository of ready to use scripts or Sparrow plugins as they called in Sparrow. No need to code at all,
+just find a proper plugin and start using it, where as command line or Raku function
+
 
 # Install
 
@@ -34,67 +53,24 @@ Check [documentation/development](https://github.com/melezhik/Sparrow6/blob/mast
 
 # Sparrow6 Task Runner API
 
-Sparrow6 Runner is an internal runner for Sparrow6 tasks:
+Sparrow6 Runner is a runner for Sparrow6 tasks. This is how an end user runs most of the Sparrow plugins:
 
-    task_run "run my build", "vsts-build", %(
+    task-run "run my build", "vsts-build", %(
       definition => "JavaApp"
     );
-  
+
 Read more about task runner at [documentation/taskrunner](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskrunner.md).
-
-# Sparrow6::Task::Repository API
-
-Sparrow6::Task::Repository API is an internal API to interact with Sparrow6 repositories, you probably don't need to
-get into it's guts, but if you do, here is briefly outlined API.
-
-Index update
-
-    #!perl6
-
-    use Sparrow6::Task::Repository;
-
-    Sparrow6::Task::Repository::Api.new(
-      url => "file:///var/sparrow-local-repo",
-      debug => True,
-    ).index-update;
-
-
-Plugin install
-
-    #!perl6
-
-    use Sparrow6::Task::Repository;
-
-    Sparrow6::Task::Repository::Api.new(
-      url     => "http://192.168.0.1",
-      debug   => True,
-    ).plugin-install("foo-test");
-
 
 # Sparrow6 DSL
 
-Sparrow6 DSL is a syntax sugar to run Sparrow6 tasks, instead of using internal runner you'd
-better use this one. This DSL is also exposed through various of clients (Tomtit, Sparrowdo, Sparky, Sparrowform )
+Sparrow6 DSL allows one to run some _predefined_ Sparrow plugins, using Raku functions shortcuts.
 
+All those plugins are already shipped with Sparrow repository, so you can start use them right away.
 
-    #!perl6
+    #!raku
 
-    use Sparrow6::DSL;
+    package-install "nginx";
 
-    # Run task as plugin
-    task-run "my task", "plugin", %(
-      foo => "BAR",
-      bar => 100
-    );
-
-    # Run local task, located at path/to/task directory
-    task-run "path/to/task", %(
-      foo => "BAR",
-      bar => 100
-    );
-
-    file "/tmp/foo.txt";
-  
     service-restart "nginx";
 
     bash "echo Hello World";
@@ -103,7 +79,7 @@ See the full list of DSL functions here - [documentation/dsl](https://github.com
 
 # Sparrow6 modules
 
-Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Perl6 modules, 
+Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Raku modules, 
 read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md)
 
 # Embedded testing facilities
@@ -231,6 +207,12 @@ Visit [Sparrowform](https://github.com/melezhik/sparrowform) GH project for deta
 
 See [documentation/envvars](https://github.com/melezhik/Sparrow6/blob/master/documentation/envvars.md).
 
+# Internal APIs 
+
+This section contains links to some internal APIs, which are mostly of interest for Sparrow developers:
+
+* Sparrow6::Task::Repository API - [documentation/internal/repo-and-plugins-api](https://github.com/melezhik/Sparrow6/blob/master/documentation/internal/repo-and-plugins-api.md)
+
 # Examples
 
 See `.tomty/` folder.
@@ -244,4 +226,4 @@ Alexey Melezhik
 God as the One Who inspires me in my life!
 
 
-#
+

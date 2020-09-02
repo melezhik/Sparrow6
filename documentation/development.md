@@ -480,17 +480,18 @@ This make it easy to place custom Perl modules under task root directory:
 
 Sparrow supports following package managers:
 
+* `raku/depends.raku`
+
 * `bundler/Gemfile`
 
 * `cpan/cpanfile`
 
 * `pip/requirements.txt` \*
 
+Just place an appropriate file to a `$root_dir`:
 
-Just place appropriate file to `$root_dir`:
 
-
-    $root_dir/cpanfile 
+    $root_dir/cpanfile
 
     requires "HTTP::Tiny"
 
@@ -502,6 +503,14 @@ And Sparrow will handle related dependencies and install them _locally_, so one 
     use HTTP::Tiny;
 
 (\*) Python3/pip3 is the only supported Python.
+
+
+An example for `depends.raku`:
+
+    $root_dir/depends.raku
+
+    App::Mi6 notest
+
 
 # Task configuration
 
