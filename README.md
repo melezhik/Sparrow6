@@ -9,7 +9,7 @@ Sparrow could be thought as an alternative to existing configuration management
 and provisioning tools like Ansible or Chef, however Sparrow is much broader and not limited to configuration
 management only. 
 
-It could be seen as generic automation framework enabling a user quick and effective scripts development
+It could be seen as a generic automation framework enabling an end user quick and effective script development
 easing some typical challenges along the road - such as scripts configurations, code reuse and testing.
 
 #  Sparrow6 essential features
