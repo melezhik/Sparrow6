@@ -60,6 +60,7 @@ The Roadmap of Sparrow6 project development.
 + Args stringification
 
 # Urgent
+
 - Reconsider Sparrowdo bootstrap ( need to remove some packages from there - git, perl ? )
 
 # New syntax / renaming
