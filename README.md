@@ -1,6 +1,6 @@
 # Sparrow6
 
-Sparrow6 is a Raku based automation framework. It's written on Raku and has Raku API.
+Sparrow is a Raku based automation framework. It's written on Raku and has Raku API.
 
 Who might want to use Sparrow? People dealing with daily tasks varying from servers software installations/configurations to
 cloud resources creation. 
@@ -18,7 +18,7 @@ easing some typical challenges along the road - such as scripts configurations, 
 and Sparrow glues all the code using Raku API within high level Sparrow scenarios.
 
 * Sparrow has a command line API. A user can run scripts using command line API, at this point to _use_ Sparrow one does not
-need to know any programming langauge at all.
+need to know any programming language at all.
 
 
 * Sparrow is a script oriented framework. Basic low level building blocks in Sparrow are old good scripts.
@@ -51,7 +51,7 @@ You can write underlying Sparrow tasks using following languages:
 * Bash
 * Powershell
 
-All the languages have a _unified_ Sparrow API easing script developements, see Sparrow development guide.
+All the languages have a _unified_ Sparrow API easing script development, see Sparrow development guide.
 
 # Documentation
 
@@ -66,7 +66,7 @@ choose Sparrow DSL to call a subset of Raku functions designed for most popular 
 
 ## Task run
 
-Sparrow provides Raku API to run Sparow tasks as functions:
+Sparrow provides Raku API to run Sparrow tasks as functions:
 
     task-run "run my build", "vsts-build", %(
       definition => "JavaApp"
@@ -90,98 +90,9 @@ validation and dedicated function names. DSL is limited to a certain subset of S
 
 See a full list of DSL functions here - [documentation/dsl](https://github.com/melezhik/Sparrow6/blob/master/documentation/dsl.md)
 
-## Sparrow6 modules
-
-Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Raku modules, 
-read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md)
-
-Sparrow encompases various subsystems and clients.
-
-It's depends on your needs and purposes which one to use.
-
-Following a brief introduction into each of the Sparrow components.
-
-
-## Embedded testing facilities
-
-Sparrow6 have it's way to write tests for tasks. Choose the one you need.
-
-### Task Checks
-
-Task checks is regexp based DSL to verify structured and unstructured text. 
-
-It allows to write embedded test, verifying tasks output. 
-
-The DSL is extremely flexible and _sometimes_ has quite a steep learning curve, 
-but this worth it, once you've got to grips with it,  you'll never want something else! ((=:
-
-Here are some examples:
-
-    # check that output is sequence of English alphabet:
-
-    begin:
-      generator: <<CODE
-        print join "\n", map {'regexp: ^^' . $_ . '$$'} a .. z;
-      CODE
-    end:
-
-    #  find all numbers between <number> </number> tags
-    #  sum them up
-    #  and print sums in sorted order 
-
-    # <number>
-    #  10
-    #  20
-    #  30
-    # </number>
-
-    # <number>
-    #  20
-    #  10
-    #  10
-    # </number>
-
-    between: {'<number>'}  {'</number>'}
-      regexp: (\d+)
-    end:
-
-
-    code: << CODE
-
-      my %sums;
-      my $s = 0;  
-      for my $stream (@{streams_array()}) {
-          $s++;  
-          for my $layer (@{$stream}){
-            for my $captures @{$layer}) {
-              for my $c (@{$captures}){
-                $sums{$s} += $c;
-              }
-            }
-          }
-      }
-
-      print sort values %sums; 
-
-    CODE
-
-Read more about task checks at [documentation/taskchecks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md).
-
-### M10 
-
-METEN - is a Minimalistic Embedded Testing Engine. You can "embed" test into task source code and conditionally run them.
-
-It's like task check but much simpler, and it's pure Perl6 rather than DSL:
-
-    cat test.pl6
-
-    self.stdout-ok("'foo: {self.task-config<foo>}'");
-
-See [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md).
-
 ## Plugins
 
-Sparrow plugins are distributable scripts written on Sparrow compatble languages. One can run plugins as Raku functions using Raku API or
+Sparrow plugins are distributable scripts written on Sparrow compatible languages. One can run plugins as Raku functions using Raku API or
 as command line utilities.
 
 Check out [documentation/plugins](https://github.com/melezhik/Sparrow6/blob/master/documentation/plugins.md) for details.
@@ -192,17 +103,44 @@ Sparrow6 repositories store distributable Sparrow6 tasks packaged as plugins.
 
 See [documentation/repository](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md).
 
-## Sparrow6::S6
+## Cli API
 
-`s6` is a command line client and plugin manager. 
+`s6` is a Sparrow command line client and plugin manager.
 
 You use `s6` to install, configure and run tasks as well as uploading tasks to repositories.
 
 See [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/documentation/s6.md).
 
+## Sparrow6 modules
+
+Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Raku modules, 
+read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md)
+
+
+## Embedded testing facilities
+
+Sparrow6 have it's way to write tests for tasks. Choose the one you need.
+
+### Task Checks
+
+Task checks is regexp based DSL to verify structured and unstructured text.
+
+It allows to write _embedded_ tests for user scripts verifying scripts output.
+
+With task checks it's easy to develop scripts in TDD way or create black box testing test suites. See, for example, Tomty framework.
+
+Read more about task checks at [documentation/taskchecks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md).
+
+### M10 
+
+METEN - is a Minimalist Embedded Testing Engine. You can "embed" test into task source code and conditionally run them.
+
+See [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md).
+
+
 # Sparrow eco system
 
-Sparrow eco system encompases varios tools and substems. Choose the one you need. All the tools are powerd by Sparrow engine.
+Sparrow eco system encompasses various tools and subsystems. Choose the one you need. All the tools are powered by Sparrow engine.
 
 # Sparrowdo
 

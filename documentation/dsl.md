@@ -1,6 +1,11 @@
-# SYNOPSIS
+# Sparrow6 DSL
 
-Sparrow6 DSL functions spec.
+Sparrow6 DSL allows one to run Sparrow tasks using even better Raku functions shortcuts. In comparison with `task-run` function, DSL provides input parameters
+validation and dedicated function names. DSL is limited to a certain subset of Sparrow plugins.
+
+# Functions List
+
+Following a list of DSL functions and specifications.
 
 * [User accounts](#user-accounts)
 * [User groups](#user-groups)
@@ -79,16 +84,16 @@ Examples:
 
     # install 3 cpan modules, system wide paths
     cpan-package-install ('CGI', 'Config::Tiny', 'HTTP::Tiny');
-    
+
     # short form of above
     cpan-package ('CGI', 'Config::Tiny', 'HTTP::Tiny');
-    
+
     # install 3 cpan modules, users install
     cpan-package-install 'CGI Config::Tiny HTTP::Tiny', %(
         user =>'foo',
         install-base => '/home/foo/',
     );
-    
+
     # the same as above but passing cpan modules list as Array
     cpan-package-install ('CGI', 'Config::Tiny', 'HTTP::Path'), %(
         user =>'foo',
