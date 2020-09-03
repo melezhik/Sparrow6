@@ -1,6 +1,6 @@
-# Sparrow
+# Sparrow6
 
-Sparrow is a Raku based automation framework. It's written on Raku and has Raku API.
+Sparrow6 is a Raku based automation framework. It's written on Raku and has Raku API.
 
 Who might want to use Sparrow? People dealing with daily tasks varying from servers software installations/configurations to
 cloud resources creation. 
