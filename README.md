@@ -1,8 +1,8 @@
-# Sparrow6
+# Sparrow
 
-Sparrow6 is a Raku based automation framework. It's written on Raku and has a Raku API.
+Sparrow is a Raku based automation framework. It's written on Raku and has Raku API.
 
-Who might want to use Sparrow? People dealing with daily tasks varying from servers software installation/configuration to
+Who might want to use Sparrow? People dealing with daily tasks varying from servers software installations/configurations to
 cloud resources creation. 
 
 Sparrow could be thought as an alternative to existing configuration management
@@ -40,33 +40,45 @@ using just an Nginx web server.
 
 [![Build Status](https://travis-ci.org/melezhik/Sparrow6.svg?branch=master)](https://travis-ci.org/melezhik/Sparrow6)
 
+# Supported languages
+
+You can write underlying Sparrow tasks using following languages:
+
+* Raku
+* Perl5
+* Ruby
+* Python
+* Bash
+* Powershell
+
+All the languages have a _unified_ Sparrow API easing script developements, see Sparrow development guide.
+
 # Documentation
 
-Sparrow6 consists of various subsystems and clients.
-
-It's depends on your needs and purposes which one to use.
-
-Following a brief introduction into each of the Sparrow6 components.
-
-# Sparrow6 Development Guide
+## Sparrow Development Guide
 
 Check [documentation/development](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) on how to develop Sparrow6 tasks.
 
-# Sparrow6 Task Runner API
+# Raku API
 
-Sparrow6 Runner is a runner for Sparrow6 tasks. This is how an end user runs most of the Sparrow plugins:
+Sparrow Raku API allows to run Sparrow tasks as Raku functions. One can use `task-run` function to run arbitrary Sparrow plugins or tasks. Or
+choose Sparrow DSL to call a subset of Raku functions designed for most popular automation tasks.
+
+## Task run
+
+Sparrow provides Raku API to run Sparow tasks as functions:
 
     task-run "run my build", "vsts-build", %(
       definition => "JavaApp"
     );
 
-Read more about task runner at [documentation/taskrunner](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskrunner.md).
+Read more about Sparrow task runner at [documentation/taskrunner](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskrunner.md).
 
-# Sparrow6 DSL
+## Sparrow6 DSL
 
-Sparrow6 DSL allows one to run some _predefined_ Sparrow plugins, using Raku functions shortcuts.
+Sparrow6 DSL allows one to run Sparrow tasks using even better Raku functions shortcuts. In comparison with `task-run` function, DSL provides input parameters
+validation and dedicated function names. DSL is limited to a certain subset of Sparrow plugins:
 
-All those plugins are already shipped with Sparrow repository, so you can start use them right away.
 
     #!raku
 
@@ -76,18 +88,25 @@ All those plugins are already shipped with Sparrow repository, so you can start 
 
     bash "echo Hello World";
 
-See the full list of DSL functions here - [documentation/dsl](https://github.com/melezhik/Sparrow6/blob/master/documentation/dsl.md)
+See a full list of DSL functions here - [documentation/dsl](https://github.com/melezhik/Sparrow6/blob/master/documentation/dsl.md)
 
-# Sparrow6 modules
+## Sparrow6 modules
 
 Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Raku modules, 
 read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md)
 
-# Embedded testing facilities
+Sparrow encompases various subsystems and clients.
+
+It's depends on your needs and purposes which one to use.
+
+Following a brief introduction into each of the Sparrow components.
+
+
+## Embedded testing facilities
 
 Sparrow6 have it's way to write tests for tasks. Choose the one you need.
 
-# Task Checks
+### Task Checks
 
 Task checks is regexp based DSL to verify structured and unstructured text. 
 
@@ -148,7 +167,7 @@ Here are some examples:
 
 Read more about task checks at [documentation/taskchecks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md).
 
-# M10 
+### M10 
 
 METEN - is a Minimalistic Embedded Testing Engine. You can "embed" test into task source code and conditionally run them.
 
@@ -160,25 +179,30 @@ It's like task check but much simpler, and it's pure Perl6 rather than DSL:
 
 See [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md).
 
-# Plugins
+## Plugins
 
-Sparrow6 plugins are distributable tasks.
+Sparrow plugins are distributable scripts written on Sparrow compatble languages. One can run plugins as Raku functions using Raku API or
+as command line utilities.
 
-See [documentation/plugins](https://github.com/melezhik/Sparrow6/blob/master/documentation/plugins.md).
+Check out [documentation/plugins](https://github.com/melezhik/Sparrow6/blob/master/documentation/plugins.md) for details.
 
-# Repositories
+## Repositories
 
 Sparrow6 repositories store distributable Sparrow6 tasks packaged as plugins.
 
 See [documentation/repository](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md).
 
-# Sparrow6::S6
+## Sparrow6::S6
 
 `s6` is a command line client and plugin manager. 
 
 You use `s6` to install, configure and run tasks as well as uploading tasks to repositories.
 
 See [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/documentation/s6.md).
+
+# Sparrow eco system
+
+Sparrow eco system encompases varios tools and substems. Choose the one you need. All the tools are powerd by Sparrow engine.
 
 # Sparrowdo
 
@@ -192,17 +216,17 @@ Task runner and workflow management tool.
 
 Visit [Tomtit](https://github.com/melezhik/tomtit) GH project for details.
 
+# Tomty
+
+Tomty is Sparrow based test framework. 
+
+Visit [Tomty](https://github.com/melezhik/tomty) GH project for details.
+
 # Sparky
 
 Run Sparrow tasks in asynchronously and remotely.
 
 Visit [Sparky](https://github.com/melezhik/sparky) GH project for details.
-
-# Sparrowform
-
-Runs Sparrowdo configuration on Terraform instances.
-
-Visit [Sparrowform](https://github.com/melezhik/sparrowform) GH project for details.
 
 # Environment variables
 
