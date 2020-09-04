@@ -82,7 +82,9 @@ This table describes `file name -> language` mapping:
 
 # Task folders structure
 
-By default task root folder location is current working directory. This is where Sparrow looks for a code when run a task.
+By default task root folder is a current working directory. 
+
+This is where Sparrow looks for a code when execute a task.
 
 However you can organize a folders structure as you wish:
 
@@ -101,7 +103,7 @@ However you can organize a folders structure as you wish:
 To run task from none default location override task path when call `task-run` function:
 
      task-run "animals/cow";
-     taskr-run "people/me"; 
+     task-run "people/me"; 
 
 Or through command line:
 
@@ -111,22 +113,49 @@ Or through command line:
 
 Subtasks are tasks that get called by other tasks. 
 
-You can think subtasks as functions:
-
+You can think subtasks as functions which you _call_ from other tasks.
 
     hook.pl6
 
-      run_task "execute", %( command => "uptime" )
+      run_task "system", %( command => "uptime" )
 
-    tasks/execute/task.bash
+    tasks/system/task.bash
 
       $(task_var command)
 
-* One creates subtasks at the _reserved_ folder named `tasks`.
-* To call subtask one has to create a _hook_ file.
-* `run_task` function accepts relative folder within `tasks/` directory
-* Subtask handles input parameters through `task_var` function
+How to create and use subtasks?
 
+* To create a subtask place a task code into _reserved_ `tasks/` folder
+
+For example:
+
+    $ mkdir -p tasks/system
+    $ nano tasks/system/task.bash
+    
+    
+* To call subtask one has to create a _hook_ file and use `run_task` within it
+
+For example:
+
+    $ nano hook.pl6
+    
+* A `run_task` function accepts relative folder within a `tasks/` directory
+
+For example:
+
+    #!raku 
+    
+    run_task "system", %( command => "uptime" )
+    
+* A subtask handles input parameters through a `task_var` function
+
+For example:
+
+    #!bash
+    
+    $(task_var command)
+    
+   
 `run_task` function signatures for Sparrow6 supported languages:
 
     +------------+----------------------------------------------+
@@ -174,14 +203,13 @@ You can call subtask from other subtask using a subtask's hooks.
 
 # Hooks
 
-* Hooks are scripts that run _before_ task
+* Hooks are scripts that run _before_ a task
 
 * Usually hooks just call subtasks
 
 * But hooks could also do other useful job
 
-* The only difference between task and hook, that hook always runs _before_ task and output from hook does not appear in STDOUT
-
+* The only difference between task and hook, that hook always runs _before_ task and an output from hook does not appear in STDOUT
 
 This table describes file name -> language mapping for hooks:
 
