@@ -4,7 +4,7 @@ This document describes how to develop Sparrow6 tasks.
 
 # Tasks
 
-A task in Sparrow represents a script being exectued. A user could write a task code on many languages.
+A task in Sparrow represents a script being executed. A user could write a task code on many languages.
 
 To create task simply create `task.*` file in the current directory:
 
@@ -226,7 +226,7 @@ This table describes file name -> language mapping for hooks:
 
 # Set hook output
 
-By default an output from hook script is suppresed and does not appear in STDOUT.
+By default an output from hook script is suppressed and does not appear in STDOUT.
 
 To _generate_ hook's output use `set_stdout` function:
 
@@ -294,7 +294,7 @@ Python, Bash specific:
 
 # Recognizable OS list
 
-Sparrow provides an `os()` helper function which returns a mnemonic name for underlying OS where tasks are exectuted.
+Sparrow provides an `os()` helper function which returns a mnemonic name for underlying OS where tasks are executed.
 
 Following is the list of recognizable OS:
 
@@ -329,7 +329,7 @@ Task description is printed out when task is executed.
 
 If a task fails ( a task exit code is not equal to zero ), the task runner stops and raises an exception. 
 
-To privent the task runner from stop use  `ignore_error` function inside a task hook:
+To prevent the task runner from stop use  `ignore_error` function inside a task hook:
 
     hook.pl6
 
@@ -604,7 +604,7 @@ Or in command line (\*):
 
     $ s6 --task-run task1@foo=1,bar=2
 
-(\*) command line call does not support nestead Hash like parameters, just plain strings.
+(\*) command line call does not support nested Hash like parameters, just plain strings.
 
 
 # Args stringification
