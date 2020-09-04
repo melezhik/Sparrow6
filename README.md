@@ -1,6 +1,6 @@
-# Sparrow6
+# Sparrow
 
-Sparrow6 is a Raku based automation framework. It's written on Raku and has Raku API.
+Sparrow is a Raku based automation framework. It's written on Raku and has Raku API.
 
 Who might want to use Sparrow? People dealing with daily tasks varying from servers software installations/configurations to
 cloud resources creation. 
@@ -12,7 +12,7 @@ management only.
 It could be seen as a generic automation framework enabling an end user quick and effective script development
 easing some typical challenges along the road - such as scripts configurations, code reuse and testing.
 
-#  Sparrow6 Essential Features
+#  Sparrow Essential Features
 
 * Sparrow is a language friendly framework. A user write underlying code on a language of their choice (see supported languages),
 and Sparrow glues all the code using Raku API within high level Sparrow scenarios.
@@ -38,7 +38,7 @@ using just an Nginx web server.
 
 # Build Status
 
-[![Build Status](https://travis-ci.org/melezhik/Sparrow6.svg?branch=master)](https://travis-ci.org/melezhik/Sparrow6)
+[![Build Status](https://travis-ci.org/melezhik/.svg?branch=master)](https://travis-ci.org/melezhik/Sparrow6)
 
 # Supported languages
 
@@ -57,7 +57,8 @@ All the languages have a _unified_ Sparrow API easing script development, see Sp
 
 ## Sparrow Development Guide
 
-Check [documentation/development](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) on how to develop Sparrow6 tasks.
+Check out [documentation/development](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) guide on how to develop Sparrow tasks
+using Sparrow compatible languages.
 
 ## Raku API
 
@@ -74,9 +75,9 @@ Sparrow provides Raku API to run Sparrow tasks as functions:
 
 Read more about Sparrow task runner at [documentation/taskrunner](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskrunner.md).
 
-### Sparrow6 DSL
+### Sparrow DSL
 
-Sparrow6 DSL allows one to run Sparrow tasks using even better Raku functions shortcuts. In comparison with `task-run` function, DSL provides input parameters
+Sparrow DSL allows one to run Sparrow tasks using even better Raku functions shortcuts. In comparison with `task-run` function, DSL provides input parameters
 validation and dedicated function names. DSL is limited to a certain subset of Sparrow plugins:
 
     #!raku
@@ -91,14 +92,15 @@ See a full list of DSL functions here - [documentation/dsl](https://github.com/m
 
 ## Plugins
 
-Sparrow plugins are distributable scripts written on Sparrow compatible languages. One can run plugins as Raku functions using Raku API or
-as command line utilities.
+Sparrow plugins are distributable scripts written on Sparrow compatible languages. 
+
+One could run plugins as Raku functions using Raku API or as command line utilities.
 
 Check out [documentation/plugins](https://github.com/melezhik/Sparrow6/blob/master/documentation/plugins.md) for details.
 
 ## Repositories
 
-Sparrow6 repositories store distributable Sparrow6 tasks packaged as plugins.
+Sparrow repositories store distributable Sparrow tasks packaged as plugins.
 
 See [documentation/repository](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md).
 
@@ -114,12 +116,12 @@ Check [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/docume
 
 ### Sparrow6 modules
 
-Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Raku modules, 
-read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md).
+Sparrow modules allow to write portable Sparrow scenarios distributed as Raku modules, 
+read more about it in [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md).
 
 ## Testing API
 
-Sparrow6 has it's way to write tests for tasks. Choose the one you need.
+Sparrow provides it's way to write tests for tasks
 
 ### Task Checks
 
@@ -135,12 +137,16 @@ Read more about task checks at [documentation/taskchecks](https://github.com/mel
 
 METEN - is a Minimalist Embedded Testing Engine. You can "embed" test into task source code and conditionally run them.
 
-See [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md).
+The method is not much of use in favour of task check approach.
+
+Check out [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md) for details.
 
 
 ## Environment variables
 
-See [documentation/envvars](https://github.com/melezhik/Sparrow6/blob/master/documentation/envvars.md).
+Sparrow is configurable though some environment varibales.
+
+Check out [documentation/envvars](https://github.com/melezhik/Sparrow6/blob/master/documentation/envvars.md) documentation.
 
 # Sparrow eco system
 
@@ -148,7 +154,7 @@ Sparrow eco system encompasses various tools and subsystems. Choose the one you 
 
 ## Sparrowdo
 
-Configuration management tool.
+Sparrow based configuration management tool.
 
 Visit [Sparrowdo](https://github.com/melezhik/sparrowdo) GH project for details.
 
@@ -160,7 +166,7 @@ Visit [Tomtit](https://github.com/melezhik/tomtit) GH project for details.
 
 ## Tomty
 
-Tomty is Sparrow based test framework. 
+Tomty is a Sparrow based test framework. 
 
 Visit [Tomty](https://github.com/melezhik/tomty) GH project for details.
 
@@ -178,7 +184,7 @@ This section contains links to some internal APIs, which are mostly of interest 
 
 # Roadmap
 
-Sparrow6 is not yet (fully) implemented, see [Roadmap](https://github.com/melezhik/Sparrow6/blob/master/Roadmap.md) for progress.
+Sparrow6 is not yet (fully) implemented, see [Roadmap](https://github.com/melezhik/Sparrow6/blob/master/Roadmap.md) to check a status.
 
 # Examples
 
