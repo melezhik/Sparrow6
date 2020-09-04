@@ -4,7 +4,7 @@ This document describes how to develop Sparrow6 tasks.
 
 # Tasks
 
-Task in Sparrow represents a script being exectued. A user can write task code on many languages.
+A task in Sparrow represents a script being exectued. A user could write a task code on many languages.
 
 To create task simply create `task.*` file in the current directory:
 
@@ -50,11 +50,11 @@ Powershell:
       Write-Host "What is your name?"
       Write-Host "Powershell"
 
-Now a task could be run either as Raku API:
+Now a task could be run either as a Raku API:
 
     task-run ".";
     
-Or as command line:
+Or as a command line:
 
     $ s6 --task-run .
 
