@@ -121,7 +121,7 @@ read more about it in [documentation/modules](https://github.com/melezhik/Sparro
 
 ## Testing API
 
-Sparrow provides it's way to write tests for tasks
+Sparrow provides it's way to write tests for tasks, making it is easy not only create scripts, but write tests for your script codebase.
 
 ### Task Checks
 
@@ -137,7 +137,7 @@ Read more about task checks at [documentation/taskchecks](https://github.com/mel
 
 METEN - is a Minimalist Embedded Testing Engine. You can "embed" test into task source code and conditionally run them.
 
-The method is not much of use in favour of task check approach.
+The method is not much of use in favour of task checks approach.
 
 Check out [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md) for details.
 
