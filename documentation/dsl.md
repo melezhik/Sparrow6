@@ -67,7 +67,7 @@ Examples:
 | package-install | install software package | `package-install(@list\|$list)` | [package-generic](https://github.com/melezhik/sparrow-plugins/tree/master/package-generic) |
 | cpan-package-install | install CPAN package | `cpan-package-install(@list\|$list,%opts)` | [cpan-package](https://github.com/melezhik/sparrow-plugins/tree/master/cpan-package) | 
 | cpan-package         | alias for cpan-install function | * | *  |
-| zef                  | install Raku modules using zef | `zef "identinty",[%params]` | * |
+| zef                  | install Raku modules using zef | `zef "identity",[%params]` | * |
 
 Examples:
 
@@ -377,10 +377,10 @@ Examples:
     directory '/tmp/foo';
     git-scm 'https://github.com/melezhik/sparrow.git', %( to => '/tmp/foo' );
 
-    # Specify ssh key for authentification
+    # Specify ssh key for authentication
     git-scm 'ssh://git@github.com/melezhik/sparrow.git', %( to => '/tmp/foo', ssh-key => '/tmp/my.key' );
 
-    # ssh authentification with unknown server key
+    # ssh authentication with unknown server key
     git-scm 'ssh://git@github.com/melezhik/sparrow.git', %( to => '/tmp/foo', ssh-key => '/tmp/my.key', accept-hostkey => True );
 
     # checkout under user
