@@ -59,12 +59,12 @@ All the languages have a _unified_ Sparrow API easing script development, see Sp
 
 Check [documentation/development](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) on how to develop Sparrow6 tasks.
 
-# Raku API
+## Raku API
 
 Sparrow Raku API allows to run Sparrow tasks as Raku functions. One can use `task-run` function to run arbitrary Sparrow plugins or tasks. Or
 choose Sparrow DSL to call a subset of Raku functions designed for most popular automation tasks.
 
-## Task run
+### Sparrow6 Task Run
 
 Sparrow provides Raku API to run Sparrow tasks as functions:
 
@@ -74,7 +74,7 @@ Sparrow provides Raku API to run Sparrow tasks as functions:
 
 Read more about Sparrow task runner at [documentation/taskrunner](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskrunner.md).
 
-## Sparrow6 DSL
+### Sparrow6 DSL
 
 Sparrow6 DSL allows one to run Sparrow tasks using even better Raku functions shortcuts. In comparison with `task-run` function, DSL provides input parameters
 validation and dedicated function names. DSL is limited to a certain subset of Sparrow plugins:
@@ -103,7 +103,7 @@ Sparrow6 repositories store distributable Sparrow6 tasks packaged as plugins.
 
 See [documentation/repository](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md).
 
-## Cli API
+### CLI API
 
 `s6` is a Sparrow command line client and plugin manager.
 
@@ -111,13 +111,12 @@ You use `s6` to install, configure and run tasks as well as uploading tasks to r
 
 See [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/documentation/s6.md).
 
-## Sparrow6 modules
+### Sparrow6 modules
 
 Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Raku modules, 
 read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md)
 
-
-## Embedded testing facilities
+## Testing API
 
 Sparrow6 have it's way to write tests for tasks. Choose the one you need.
 
@@ -137,6 +136,10 @@ METEN - is a Minimalist Embedded Testing Engine. You can "embed" test into task 
 
 See [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md).
 
+
+## Environment variables
+
+See [documentation/envvars](https://github.com/melezhik/Sparrow6/blob/master/documentation/envvars.md).
 
 # Sparrow eco system
 
@@ -165,10 +168,6 @@ Visit [Tomty](https://github.com/melezhik/tomty) GH project for details.
 Run Sparrow tasks in asynchronously and remotely.
 
 Visit [Sparky](https://github.com/melezhik/sparky) GH project for details.
-
-# Environment variables
-
-See [documentation/envvars](https://github.com/melezhik/Sparrow6/blob/master/documentation/envvars.md).
 
 # Internal APIs
 
