@@ -1,7 +1,9 @@
 # Sparrow6 modules
 
-Sparrow6 modules allow to write  portable Sparrow6 scenarios distributed as Perl6 modules:
+Sparrow6 modules allow to write  portable Sparrow6 scenarios distributed as Raku modules:
 
+    #!raku 
+    
     use v6;
 
     unit module Sparrow6::Nginx;
