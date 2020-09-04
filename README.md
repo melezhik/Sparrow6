@@ -157,7 +157,7 @@ Task runner and workflow management tool.
 
 Visit [Tomtit](https://github.com/melezhik/tomtit) GH project for details.
 
-# Tomty
+## Tomty
 
 Tomty is Sparrow based test framework. 
 
