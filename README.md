@@ -87,7 +87,7 @@ validation and dedicated function names. DSL is limited to a certain subset of S
 
     bash "echo Hello World";
 
-See a full list of DSL functions here - [documentation/dsl](https://github.com/melezhik/Sparrow6/blob/master/documentation/dsl.md)
+See a full list of DSL functions here - [documentation/dsl](https://github.com/melezhik/Sparrow6/blob/master/documentation/dsl.md).
 
 ## Plugins
 
