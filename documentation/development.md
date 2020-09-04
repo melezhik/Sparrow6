@@ -4,7 +4,7 @@ This document describes how to develop Sparrow6 tasks.
 
 # Tasks
 
-Task is a main unit of operations. One can think task as a script or scenario.
+Task in Sparrow represents a script being exectued. A user can write task code on many languages.
 
 To create task simply create `task.*` file in the current directory:
 
@@ -50,8 +50,15 @@ Powershell:
       Write-Host "What is your name?"
       Write-Host "Powershell"
 
+Now a task could be run either as Raku API:
 
-Sparrow6 supports six languages:
+    task-run ".";
+    
+Or as command line:
+
+    $ s6 --task-run .
+
+Sparrow supports six languages to write tasks:
 
 * Raku
 * Perl 
@@ -75,53 +82,36 @@ This table describes `file name -> language` mapping:
 
 # Task folders structure
 
-By default task root location is current working directory:
+By default task root folder location is current working directory. This is where Sparrow looks for a code when run a task.
 
-    use Sparrow6::Task::Runner;
+However you can organize a folders structure as you wish:
 
-    Sparrow6::Task::Runner::Api.new(
-      name  => "my task"
-    ).task-run;
-
-
-
-However you can organize the folders structure as you wish:
-
-    tasks/cow/task.pl6
+    animals/cow/task.pl6
 
       say "I make milk";
 
-    tasks/cat/task.pl6
+    animals/cat/task.pl6
 
       say "I drink milk";
 
-    tasks/me/task.pl6
+    people/me/task.pl6
 
       say "I buy milk";
 
-One run none default task by passing `task` parameter to constructor:
+To run task from none default location override task path when call `task-run` function:
 
-    #!raku
+     task-run "animals/cow";
+     taskr-run "people/me"; 
 
-    use Sparrow6::Task::Runner;
+Or through command line:
 
-    Sparrow6::Task::Runner::Api.new(
-      task  => "tasks/cow"
-      name  => "cow task"
-    ).task-run;
-    
-You can also pass `root` parameter to set task root directory:
-
-    Sparrow6::Task::Runner::Api.new(
-      root  => "/var/data/tasks"
-      task  => "cow"
-      name  => "cow task"
-    ).task-run;
-
+    $ s6 --task-run people/me
 
 # Subtasks
 
-Subtasks are tasks that get called by other tasks. You can think sub tasks as functions:
+Subtasks are tasks that get called by other tasks. 
+
+You can think subtasks as functions:
 
 
     hook.pl6
@@ -132,9 +122,9 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
 
       $(task_var command)
 
-* One define sub tasks at _reserved_ folder named `tasks`.
-* To call subtask from other task one defines _hook_ file.
-* `subtask function` accepts relative task folder ( without `tasks/` chunk )
+* One creates subtasks at the _reserved_ folder named `tasks`.
+* To call subtask one has to create a _hook_ file.
+* `run_task` function accepts relative folder within `tasks/` directory
 * Subtask handles input parameters through `task_var` function
 
 `run_task` function signatures for Sparrow6 supported languages:
@@ -168,7 +158,7 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
 
 (*) You need to use  `from sparrow6lib import *` to import `task_var` function.
 
-In Bash you can use alternative notation to access sub task parameters:
+In Bash you can use alternative notation to access subtask parameters:
 
     tasks/hello-world/task.bash
 
@@ -180,15 +170,17 @@ Compare with:
 
       echo $(task_var he) say $(task_var hello) world
 
-One can call subtask from other sub task and so on.
+You can call subtask from other subtask using a subtask's hooks. 
 
 # Hooks
 
-* Hooks are scripts that run _before_ task, _usually_ hooks call sub tasks,
-and do some other useful job. 
+* Hooks are scripts that run _before_ task
 
-* The only difference between task and hook, that hook always runs _before_ task 
-and output from hook does not appear in STDOUT.
+* Usually hooks just call subtasks
+
+* But hooks could also do other useful job
+
+* The only difference between task and hook, that hook always runs _before_ task and output from hook does not appear in STDOUT
 
 
 This table describes file name -> language mapping for hooks:
@@ -559,17 +551,20 @@ Powershell:
 
 Overriding configuration
 
-One can override default configuration through constructor:
+One can override default configuration through an optional `task-run` function HASH parameter:
 
-    Sparrow6::Task::Runner::Api.new(
-      name  => "my task",
-      parameters => %( 
-        main => %(
-          foo => 1,
-          bar => 2
-        )
-      )  
-    ).task-run;
+    task-run "task1", %( 
+      main => %(
+        foo => 1,
+        bar => 2
+      )
+    );
+
+Or in command line (\*):
+
+    $ s6 --task-run task1@foo=1,bar=2
+
+(\*) command line call does not support nestead Hash like parameters, just plain strings.
 
 
 # Args stringification
