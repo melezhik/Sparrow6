@@ -10,7 +10,7 @@
     "JSON::Tiny",
     "Data::Dump"
   ],
-  "description" : "Sparrow6 - Perl6 Automation Framework",
+  "description" : "Sparrow is a Raku based automation framework",
   "license" : "Artistic-2.0",
   "name" : "Sparrow6",
   "perl" : "6.*",

@@ -79,7 +79,6 @@ Read more about Sparrow task runner at [documentation/taskrunner](https://github
 Sparrow6 DSL allows one to run Sparrow tasks using even better Raku functions shortcuts. In comparison with `task-run` function, DSL provides input parameters
 validation and dedicated function names. DSL is limited to a certain subset of Sparrow plugins:
 
-
     #!raku
 
     package-install "nginx";
@@ -105,11 +104,13 @@ See [documentation/repository](https://github.com/melezhik/Sparrow6/blob/master/
 
 ### Cli API
 
-`s6` is a Sparrow command line client and plugin manager.
+Sparrow provides a handy command line interface to run Sparrow tasks as command line.
+
+Enter `s6` - Sparrow command line client and plugin manager.
 
 You use `s6` to install, configure and run tasks as well as uploading tasks to repositories.
 
-See [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/documentation/s6.md).
+Check [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/documentation/s6.md) for details.
 
 ### Sparrow6 modules
 

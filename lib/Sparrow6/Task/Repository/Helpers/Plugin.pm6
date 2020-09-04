@@ -28,13 +28,13 @@ role Role {
 
       }
 
-      if "$plg-src/depends.raku".IO ~~ :e {
-        for "{$plg-src}/depends.raku".IO.lines -> $line {
+      if "$plg-src/rakufile".IO ~~ :e {
+        for "{$plg-src}/rakufile".IO.lines -> $line {
           next if $line ~~ /^^ \s* '#' /;
+          next unless $line ~~ /\S/;
           my @params = $line.split(/\s+/);
           my $module = @params.shift;
-          next unless $line ~~ /\S/;
-          my $zef-options = @params.Set{'notest'} ?? "--/test" !! "";
+          my $zef-options =  "{@params}" || "";
           shell("bash -c 'zef install $module $zef-options'");
         }
       }

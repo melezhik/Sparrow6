@@ -1,6 +1,6 @@
 # Sparrow6 Development Guide
 
-This document describes how to develop Sparrow6 tasks. 
+This document describes how to develop Sparrow6 tasks.
 
 # Tasks
 
@@ -8,7 +8,7 @@ Task is a main unit of operations. One can think task as a script or scenario.
 
 To create task simply create `task.*` file in the current directory:
 
-Perl6:
+Raku:
 
     task.pl6
 
@@ -53,7 +53,7 @@ Powershell:
 
 Sparrow6 supports six languages:
 
-* Perl6
+* Raku
 * Perl 
 * Bash
 * Python
@@ -65,7 +65,7 @@ This table describes `file name -> language` mapping:
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Perl6      | task.pl6     |
+    | Raku      | task.pl6     |
     | Perl       | task.pl      |
     | Bash       | task.bash    |
     | Python     | task.py      |
@@ -101,7 +101,7 @@ However you can organize the folders structure as you wish:
 
 One run none default task by passing `task` parameter to constructor:
 
-    #!perl6
+    #!raku
 
     use Sparrow6::Task::Runner;
 
@@ -142,7 +142,7 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
     +------------+----------------------------------------------+
     | Language   | Signature                                    |
     +------------+----------------------------------------------+
-    | Perl6      | run_task(String,HASH)                        |
+    | Raku      | run_task(String,HASH)                        |
     | Perl       | run_task(SCALAR,HASHREF)                     |
     | Bash       | run_task TASK_NANE NAME VAL NAME2 VAL2       |
     | Python(*)  | run_task(STRING,DICT)                        |
@@ -157,7 +157,7 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
     +------------------+------------------------------------------------+
     | Language         | Signature                                      |
     +------------------+------------------------------------------------+
-    | Perl6            | task_var(STRING)                               |
+    | Raku            | task_var(STRING)                               |
     | Perl             | task_var(SCALAR)                               |
     | Python(*)        | task_var(STRING)                               |
     | Ruby             | task_var(STRING)                               |
@@ -196,7 +196,7 @@ This table describes file name -> language mapping for hooks:
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Perl6      | hook.pl6     |
+    | Raku      | hook.pl6     |
     | Perl       | hook.pl      |
     | Bash       | hook.bash    |
     | Python     | hook.py      |
@@ -241,7 +241,7 @@ If hook has output, the _related_ task is executed and task output get merged wi
     +-------------+-----------------------+
     | Language    | signature             |
     +-------------+-----------------------+
-    | Perl6       | set_stdout(STRING)    |
+    | Raku       | set_stdout(STRING)    |
     | Perl        | set_stdout(SCALAR)    |
     | Bash        | set_stdout(STRING)    |
     | Python(*)   | set_stdout(STRING)    |
@@ -315,7 +315,7 @@ To continue others tasks execution use `ignore_error` function inside hook:
     +-------------+-------------------+
     | Language    | signature         |
     +-------------+-------------------+
-    | Perl6       | ignore_error()    |
+    | Raku       | ignore_error()    |
     | Perl        | ignore_error()    |
     | Bash        | ignore_error      |
     | Python(*)   | ignore_error()    |
@@ -379,7 +379,7 @@ And this is how task state is returned from task and used in "pipeline":
     +-------------+-------------------+
     | Language    | signature         |
     +-------------+-------------------+
-    | Perl6       | get_state()       |
+    | Raku       | get_state()       |
     | Perl        | get_state()       |
     | Bash        | not supported     |
     | Python(*)   | get_state()       |
@@ -392,7 +392,7 @@ And this is how task state is returned from task and used in "pipeline":
     +-------------+-----------------------------+
     | Language    | signature                   |
     +-------------+-----------------------------+
-    | Perl6       | update_state(array|hash)    |
+    | Raku       | update_state(array|hash)    |
     | Perl        | update_state(array|hash)    |
     | Bash        | not supported               |
     | Python(*)   | update_state(array|hash)    |
@@ -480,7 +480,7 @@ This make it easy to place custom Perl modules under task root directory:
 
 Sparrow supports following package managers:
 
-* `raku/depends.raku`
+* `raku/rakufile`
 
 * `bundler/Gemfile`
 
@@ -505,11 +505,11 @@ And Sparrow will handle related dependencies and install them _locally_, so one 
 (\*) Python3/pip3 is the only supported Python.
 
 
-An example for `depends.raku`:
+An example for `rakufile`:
 
     $root_dir/depends.raku
 
-    App::Mi6 notest
+    App::Mi6 --/test
 
 
 # Task configuration
