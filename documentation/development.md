@@ -65,7 +65,7 @@ This table describes `file name -> language` mapping:
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Raku      | task.pl6     |
+    | Raku       | task.pl6     |
     | Perl       | task.pl      |
     | Bash       | task.bash    |
     | Python     | task.py      |
@@ -142,7 +142,7 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
     +------------+----------------------------------------------+
     | Language   | Signature                                    |
     +------------+----------------------------------------------+
-    | Raku      | run_task(String,HASH)                        |
+    | Raku       | run_task(String,HASH)                        |
     | Perl       | run_task(SCALAR,HASHREF)                     |
     | Bash       | run_task TASK_NANE NAME VAL NAME2 VAL2       |
     | Python(*)  | run_task(STRING,DICT)                        |
@@ -157,7 +157,7 @@ Subtasks are tasks that get called by other tasks. You can think sub tasks as fu
     +------------------+------------------------------------------------+
     | Language         | Signature                                      |
     +------------------+------------------------------------------------+
-    | Raku            | task_var(STRING)                               |
+    | Raku             | task_var(STRING)                               |
     | Perl             | task_var(SCALAR)                               |
     | Python(*)        | task_var(STRING)                               |
     | Ruby             | task_var(STRING)                               |
@@ -196,7 +196,7 @@ This table describes file name -> language mapping for hooks:
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Raku      | hook.pl6     |
+    | Raku       | hook.pl6     |
     | Perl       | hook.pl      |
     | Bash       | hook.bash    |
     | Python     | hook.py      |
@@ -241,7 +241,7 @@ If hook has output, the _related_ task is executed and task output get merged wi
     +-------------+-----------------------+
     | Language    | signature             |
     +-------------+-----------------------+
-    | Raku       | set_stdout(STRING)    |
+    | Raku        | set_stdout(STRING)    |
     | Perl        | set_stdout(SCALAR)    |
     | Bash        | set_stdout(STRING)    |
     | Python(*)   | set_stdout(STRING)    |
@@ -315,7 +315,7 @@ To continue others tasks execution use `ignore_error` function inside hook:
     +-------------+-------------------+
     | Language    | signature         |
     +-------------+-------------------+
-    | Raku       | ignore_error()    |
+    | Raku        | ignore_error()    |
     | Perl        | ignore_error()    |
     | Bash        | ignore_error      |
     | Python(*)   | ignore_error()    |
@@ -379,7 +379,7 @@ And this is how task state is returned from task and used in "pipeline":
     +-------------+-------------------+
     | Language    | signature         |
     +-------------+-------------------+
-    | Raku       | get_state()       |
+    | Raku        | get_state()       |
     | Perl        | get_state()       |
     | Bash        | not supported     |
     | Python(*)   | get_state()       |
@@ -392,7 +392,7 @@ And this is how task state is returned from task and used in "pipeline":
     +-------------+-----------------------------+
     | Language    | signature                   |
     +-------------+-----------------------------+
-    | Raku       | update_state(array|hash)    |
+    | Raku        | update_state(array|hash)    |
     | Perl        | update_state(array|hash)    |
     | Bash        | not supported               |
     | Python(*)   | update_state(array|hash)    |
@@ -599,20 +599,16 @@ And value is just a string:
 
     value
 
-The above scenario implemented by passing `args` List into `Sparrow6::Task::Runner::Api`
-constructor:
+The above scenario is implemented by passing `args` List to `task-run` function that run a task:
 
-    Sparrow6::Task::Runner::Api.new(
-      name  => "my task",
-      parameters => %(
+    task-run "task1", %(
         args => [
           [ 'debug', 'verbose' ],
           %( 'foo' => 'foo_value', 'bar' => 'bar_value' ),
           'value'
         ]
-      )
-    ).task-run;
-
+    );
+     
 Inside Bash task `args` argument is represented as a _string_:
 
     task.bash
@@ -643,16 +639,13 @@ Double dashes are chosen by default when coercing `args` `Array/List/Hash/Pair` 
 
 If one needs single dashes use _explicit_ notation, by adding `-` before a parameter name:
 
-    Sparrow6::Task::Runner::Api.new(
-      name  => "my task",
-      parameters => %(
+      task-run "task1", %(
         args => [
           [ '-debug', '-verbose' ],
           %( '--foo' => 'foo_value', '-bar' => 'bar_value' ),
           'value'
         ]
-      )
-    ).task-run;
+      );
 
 Results following command line parameters:
 
