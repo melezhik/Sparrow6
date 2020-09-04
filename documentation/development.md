@@ -53,7 +53,7 @@ Powershell:
 Now a task could be run either as a Raku API:
 
     task-run ".";
-    
+
 Or as a command line:
 
     $ s6 --task-run .
@@ -61,7 +61,7 @@ Or as a command line:
 Sparrow supports six languages to write tasks:
 
 * Raku
-* Perl 
+* Perl
 * Bash
 * Python
 * Ruby
@@ -103,7 +103,7 @@ However you can organize a folders structure as you wish:
 To run task from none default location override task path when call `task-run` function:
 
      task-run "animals/cow";
-     task-run "people/me"; 
+     task-run "people/me";
 
 Or through command line:
 
@@ -111,7 +111,7 @@ Or through command line:
 
 # Subtasks
 
-Subtasks are tasks that get called by other tasks. 
+Subtasks are tasks that get called by other tasks.
 
 You can think subtasks as functions which you _call_ from other tasks.
 
@@ -131,22 +131,22 @@ For example:
 
     $ mkdir -p tasks/system
     $ nano tasks/system/task.bash
-    
-    
+
+
 * To call subtask one has to create a _hook_ file and use `run_task` within it
 
 For example:
 
     $ nano hook.pl6
-    
+
 * A `run_task` function accepts relative folder within a `tasks/` directory
 
 For example:
 
-    #!raku 
-    
+    #!raku
+
     run_task "system", %( command => "uptime" )
-    
+
 * A subtask handles input parameters through a `task_var` function
 
 For example:
@@ -203,9 +203,11 @@ You can call subtask from other subtask using a subtask's hooks.
 
 # Hooks
 
-* Hooks are scripts that run _before_ a task
+* Hooks are scripts that run _before_ tasks
 
-* Usually hooks just call subtasks
+* One task might have one and only one hook associated with it
+
+* Usually hooks _are used_ to call other subtasks
 
 * But hooks could also do other useful job
 
@@ -239,7 +241,7 @@ If hook send an output through a `set_stdout` function, and _the same folder_ ta
 
     hook.pl6
 
-      if config<mood> eq "sleepy" {  
+      if config<mood> eq "sleepy" {
         set_stdout("Black Coffee")
       }
 
@@ -271,7 +273,11 @@ Hook might not have the same folder tasks, in this case it's just a hook that is
 
 # Helper functions
 
-Here is the list of function one can use _inside tasks and hooks_:
+Sparrow provides some helper function that could be useful.
+
+Those functions are available _inside tasks and hooks_.
+
+Following is the list of helper functions:
 
 * `root_dir()` - task root directory.
 
@@ -281,16 +287,16 @@ Here is the list of function one can use _inside tasks and hooks_:
 
 * `task_dir()` - task directory relative to `root_dir()`
 
-* `config()` - task configuration object.
+* `config()` - task configuration object
 
-* `os()` - mnemonic name of underlying operation system.
+* `os()` - mnemonic name of underlying operation system
 
 
-Python, Bash specific:
+Function usage specific for Bash and Python:
 
-- You need to use `from sparrow6lib import *` in Python to import helpers functions.
+- You need to use `from sparrow6lib import *` in Python to import helpers functions
 
-- In Bash these functions are represented by variables, e.g. $root_dir, $os, so on.
+- In Bash these functions are represented by variables, e.g. $root_dir, $os, so on
 
 # Recognizable OS list
 
