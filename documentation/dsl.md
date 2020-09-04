@@ -553,5 +553,5 @@ respected Sparrow6 plugins can support different operation system selectively
 
 # See also
 
-[Sparrowdo](https://github.com/melezhik/sparrowdo/tree/sparrowdo) - configuration management tool based on Sparrow6.
+[Sparrowdo](https://github.com/melezhik/sparrowdo) - configuration management tool based on Sparrow6.
 
