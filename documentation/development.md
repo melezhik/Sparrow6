@@ -226,13 +226,16 @@ This table describes file name -> language mapping for hooks:
 
 # Set hook output
 
-If one need to generate output from hook use `set_stdout` function:
+By default an output from hook script is suppresed and does not appear in STDOUT.
+
+To _generate_ hook's output use `set_stdout` function:
 
     hook.bash
 
       set_stdout "Hello from hook"
 
-If hook has output, the _related_ task is executed and task output get merged with what produced by set_stdout:
+
+If hook send an output through a `set_stdout` function, and _the same folder_ task's been executed, the task output get merged with the hook's one:
 
     hook.pl6
 
@@ -244,14 +247,7 @@ If hook has output, the _related_ task is executed and task output get merged wi
 
       say "Sandwich"
 
-    run
-
-      Sparrow6::Task::Runner::Api.new(
-        name  => "make an order",
-        parameters => %( mood => "sleepy" )
-      ).task-run;
-
-    output
+    $ task-run .@mood=sleepy
 
       BlackCoffee
       Sandwich
@@ -271,8 +267,7 @@ If hook has output, the _related_ task is executed and task output get merged wi
 
 (*) You need to `from sparrow6lib import *` to import set_stdout function.
 
-
-It's ok to have a hook without having related task, in this case it's just hook that is executed.
+Hook might not have the same folder tasks, in this case it's just a hook that is executed.
 
 # Helper functions
 
@@ -290,11 +285,18 @@ Here is the list of function one can use _inside tasks and hooks_:
 
 * `os()` - mnemonic name of underlying operation system.
 
+
+Python, Bash specific:
+
 - You need to use `from sparrow6lib import *` in Python to import helpers functions.
 
 - In Bash these functions are represented by variables, e.g. $root_dir, $os, so on.
 
 # Recognizable OS list
+
+Sparrow provides an `os()` helper function which returns a mnemonic name for underlying OS where tasks are exectuted.
+
+Following is the list of recognizable OS:
 
 * alpine
 * amazon
@@ -312,7 +314,7 @@ Here is the list of function one can use _inside tasks and hooks_:
 
 # Task descriptions
 
-Task description is just a plain text file with useful description of a task.
+Task description (\*) is just a plain text file with useful description of a task.
 
 Task description is printed out when task is executed.
 
@@ -320,14 +322,19 @@ Task description is printed out when task is executed.
 
       This task do this or that
 
+(\*) - currently is not supported, a future request 
+
+
 # Ignore task failures
 
-If task fails ( the exit code is not equal to zero ), task runner stops and raises exception. 
+If a task fails ( a task exit code is not equal to zero ), the task runner stops and raises an exception. 
 
-To continue others tasks execution use `ignore_error` function inside hook:
+To privent the task runner from stop use  `ignore_error` function inside a task hook:
 
-    hook.pl
+    hook.pl6
 
+      #!raku
+      
       ignore_error();
 
 `ignore_error` function signatures for Sparrow6 supported languages:
@@ -347,45 +354,50 @@ To continue others tasks execution use `ignore_error` function inside hook:
 
 Task state is a piece of data that is shared across tasks and returned when task's finished:
 
+    #!raku 
+    
     my %state = task-run "my-task", "task";
 
     say %state<foo>;
 
     say %state<bar>;
 
-This feature allows to write tasks like function and run tasks in pipelines style, where
+This feature allows to write tasks like functions and run tasks in a "pipeline" style, 
 
-the next task gets input parameters resulted from previous task.
+where the next task gets input parameters taken as a result of the previous one.
 
-Any task or hook get an access to task data through a couple of functions:
+Any task or hook get an access to a task data through a couple of functions:
 
 * `get_state`
 
-Return current task state. The return object is Hash.
+Return current task state. The return object is a Hash.
 
 * `update_state(hash)`
 
-Update current task state. The input parameter should be Hash.
+Updates a current task state. The input parameter should be a Hash.
 
-Here is en example for task written on Perl:
-
+Here is en example for task written in Perl:
 
     task.pl
 
-    update_state({ foo => config<foo>})
+      #!perl
+    
+      update_state({ foo => config<foo>})
 
-    task "foo"
+      task "foo"
 
     tasks/foo/task.pl
 
-    my $foo = get_state()->{foo};
+      my $foo = get_state()->{foo};
 
-    $foo++;
+      $foo++;
 
-    update_state({ foo => $foo });
+      update_state({ foo => $foo });
 
-And this is how task state is returned from task and used in "pipeline":
+And this is how task state is returned and used in a Raku API:
 
+    #!raku 
+    
     my %state = task-run "set foo", "set-foo", %( foo => 100 );
 
     task-run "set foo", "set-foo";
