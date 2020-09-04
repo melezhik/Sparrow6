@@ -114,7 +114,7 @@ See [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/document
 ### Sparrow6 modules
 
 Sparrow6 modules allow to write portable Sparrow6 scenarios distributed as Raku modules, 
-read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md)
+read more about it - [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md).
 
 ## Testing API
 
