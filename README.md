@@ -114,7 +114,7 @@ You use `s6` to install, configure and run tasks as well as uploading tasks to r
 
 Check [documentation/s6](https://github.com/melezhik/Sparrow6/blob/master/documentation/s6.md) for details.
 
-### Sparrow6 modules
+### Sparrow modules
 
 Sparrow modules allow to write portable Sparrow scenarios distributed as Raku modules, 
 read more about it in [documentation/modules](https://github.com/melezhik/Sparrow6/blob/master/documentation/modules.md).
@@ -184,7 +184,7 @@ This section contains links to some internal APIs, which are mostly of interest 
 
 # Roadmap
 
-Sparrow6 is not yet (fully) implemented, see [Roadmap](https://github.com/melezhik/Sparrow6/blob/master/Roadmap.md) to check a status.
+Sparrow is not yet (fully) implemented, see [Roadmap](https://github.com/melezhik/Sparrow6/blob/master/Roadmap.md) to check a status.
 
 # Examples
 
