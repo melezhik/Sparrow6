@@ -14,7 +14,7 @@ easing some typical challenges along the road - such as scripts configurations, 
 
 #  Sparrow6 Essential Features
 
-* Sparrow is a language friendly framework. A user write underlying code on language of their choice (see supported languages),
+* Sparrow is a language friendly framework. A user write underlying code on a language of their choice (see supported languages),
 and Sparrow glues all the code using Raku API within high level Sparrow scenarios.
 
 * Sparrow has a command line API. A user can run scripts using command line API, at this point to _use_ Sparrow one does not
