@@ -12,7 +12,7 @@ management only.
 It could be seen as a generic automation framework enabling an end user quick and effective script development
 easing some typical challenges along the road - such as scripts configurations, code reuse and testing.
 
-#  Sparrow6 essential features
+#  Sparrow6 Essential Features
 
 * Sparrow is a language friendly framework. A user write underlying code on language of their choice (see supported languages),
 and Sparrow glues all the code using Raku API within high level Sparrow scenarios.
@@ -64,7 +64,7 @@ Check [documentation/development](https://github.com/melezhik/Sparrow6/blob/mast
 Sparrow Raku API allows to run Sparrow tasks as Raku functions. One can use `task-run` function to run arbitrary Sparrow plugins or tasks. Or
 choose Sparrow DSL to call a subset of Raku functions designed for most popular automation tasks.
 
-### Sparrow6 Task Run
+### Task Run
 
 Sparrow provides Raku API to run Sparrow tasks as functions:
 
@@ -103,7 +103,7 @@ Sparrow6 repositories store distributable Sparrow6 tasks packaged as plugins.
 
 See [documentation/repository](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md).
 
-### CLI API
+### Cli API
 
 `s6` is a Sparrow command line client and plugin manager.
 
@@ -145,13 +145,13 @@ See [documentation/envvars](https://github.com/melezhik/Sparrow6/blob/master/doc
 
 Sparrow eco system encompasses various tools and subsystems. Choose the one you need. All the tools are powered by Sparrow engine.
 
-# Sparrowdo
+## Sparrowdo
 
 Configuration management tool.
 
 Visit [Sparrowdo](https://github.com/melezhik/sparrowdo) GH project for details.
 
-# Tomtit
+## Tomtit
 
 Task runner and workflow management tool. 
 
@@ -163,7 +163,7 @@ Tomty is Sparrow based test framework.
 
 Visit [Tomty](https://github.com/melezhik/tomty) GH project for details.
 
-# Sparky
+## Sparky
 
 Run Sparrow tasks in asynchronously and remotely.
 
