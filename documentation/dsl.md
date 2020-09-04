@@ -67,6 +67,7 @@ Examples:
 | package-install | install software package | `package-install(@list\|$list)` | [package-generic](https://github.com/melezhik/sparrow-plugins/tree/master/package-generic) |
 | cpan-package-install | install CPAN package | `cpan-package-install(@list\|$list,%opts)` | [cpan-package](https://github.com/melezhik/sparrow-plugins/tree/master/cpan-package) | 
 | cpan-package         | alias for cpan-install function | * | *  |
+| zef                  | install Raku modules using zef | `zef "identinty",[%params]` | * |
 
 Examples:
 
@@ -100,11 +101,11 @@ Examples:
         install-base => '/home/foo/',
     );
 
-### Zef modules
+### Raku modules
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| zef | install zef module | `zef($module,[%opts])` | * | 
+| zef | install zef module | `zef($module,[%params])` | * | 
 
 Examples:
 
