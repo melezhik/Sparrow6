@@ -25,7 +25,7 @@ need to know any programming language at all.
 That makes Sparrow extremely effective when working with existing codebase written on many well known languages.
 
 * Sparrow is a function oriented framework. Though users write underlying code as scripts, those scripts are called as
-Raku functions with high level scenarios.
+Raku functions within high level scenarios.
 
 * Sparrow has a repository of ready to use scripts or Sparrow plugins as they called in Sparrow. No need to code at all,
 just find a proper plugin and start using it. Sparrow repository could be easily deployed as public or private instances
