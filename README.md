@@ -137,7 +137,7 @@ Read more about task checks at [documentation/taskchecks](https://github.com/mel
 
 METEN - is a Minimalist Embedded Testing Engine. You can "embed" test into task source code and conditionally run them.
 
-The method is not much of use in favour of task checks approach.
+The method is not of much use in favour of task checks approach.
 
 Check out [documentation/m10](https://github.com/melezhik/Sparrow6/blob/master/documentation/m10.md) for details.
 
