@@ -488,21 +488,23 @@ Sparrow supports following package managers:
 
 * `pip/requirements.txt` \*
 
-Just place an appropriate file to a `$root_dir`:
+Just place an appropriate file to a `$root_dir` and Sparrow will handle related dependencies 
+and install them _locally_, so they are available with task.
+
+(\*) Python3/pip3 is the only supported Python.
+
+Some examples.
+
+An example for `cpanfile`:
 
 
     $root_dir/cpanfile
 
     requires "HTTP::Tiny"
 
-
-And Sparrow will handle related dependencies and install them _locally_, so one use them within tasks:
-
     task.pl
 
     use HTTP::Tiny;
-
-(\*) Python3/pip3 is the only supported Python.
 
 
 An example for `rakufile`:
