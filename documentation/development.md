@@ -120,7 +120,15 @@ To define configuration available across tasks create `config.yaml` in the root 
       bar : 2
 
 
-Configuration data is accessible via `config` function:
+Configuration data is accessible via `config` function.
+
+Example for Raku:
+
+      my $foo = config()<main><foo>;
+      my $bar = config()<main><bar>;
+
+
+Example for Perl:
 
       my $foo = config()->{main}->{foo};
       my $bar = config()->{main}->{bar};
@@ -129,8 +137,8 @@ Examples for other languages:
 
 Bash:
 
-      foo=$(config main.foo )
-      bar=$(config main.bar )
+      foo=$(config main.foo)
+      bar=$(config main.bar)
 
 Python:
 
