@@ -602,15 +602,9 @@ Some examples.
 
 An example for `cpanfile`:
 
-
     $root_dir/cpanfile
 
     requires "HTTP::Tiny"
-
-    task.pl
-
-    use HTTP::Tiny;
-
 
 An example for `rakufile`:
 
