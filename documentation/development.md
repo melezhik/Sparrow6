@@ -109,6 +109,65 @@ Or through command line:
 
     $ s6 --task-run people/me
 
+# Task configuration
+
+To define configuration available across tasks create `config.yaml` in the root directory:
+
+    config.yaml
+
+    main :
+      foo : 1
+      bar : 2
+
+
+Configuration data is accessible via `config` function:
+
+      my $foo = config()->{main}->{foo};
+      my $bar = config()->{main}->{bar};
+
+Examples for other languages:
+
+Bash:
+
+      foo=$(config main.foo )
+      bar=$(config main.bar )
+
+Python:
+
+      from sparrow6lib import *
+
+      foo = config()['main']['foo']
+      bar = config()['main']['bar']
+
+Ruby:
+
+      foo = config['main']['foo']
+      bar = config['main']['bar']
+
+Powershell:
+
+      $config = config 'main'
+      $foo = $config.foo
+      $bar = $config.bar
+
+
+Overriding configuration
+
+One can override default configuration through an optional `task-run` function HASH parameter:
+
+    task-run "task1", %(
+      main => %(
+        foo => 1,
+        bar => 2
+      )
+    );
+
+Or in command line (\*):
+
+    $ s6 --task-run task1@foo=1,bar=2
+
+(\*) command line call does not support nested Hash like parameters, just plain strings.
+
 # Subtasks
 
 Subtasks are tasks that get called by other tasks.
@@ -550,68 +609,6 @@ An example for `rakufile`:
     $root_dir/depends.raku
 
     App::Mi6 --/test
-
-
-# Task configuration
-
-To define configuration available across tasks and hook create `config.yaml` in the root directory:
-
-    config.yaml
-
-    main :
-      foo : 1
-      bar : 2
-
-
-Configuration data is accessible via `config` function:
-
-      my $foo = config()->{main}->{foo};
-      my $bar = config()->{main}->{bar};
-
-Examples for other languages:
-
-Bash:
-
-      foo=$(config main.foo )
-      bar=$(config main.bar )
-
-Python:
-
-      from sparrow6lib import *
-
-      foo = config()['main']['foo']
-      bar = config()['main']['bar']
-
-
-Ruby:
-
-      foo = config['main']['foo']
-      bar = config['main']['bar']
-
-Powershell:
-
-      $config = config 'main'
-      $foo = $config.foo
-      $bar = $config.bar
-
-
-Overriding configuration
-
-One can override default configuration through an optional `task-run` function HASH parameter:
-
-    task-run "task1", %( 
-      main => %(
-        foo => 1,
-        bar => 2
-      )
-    );
-
-Or in command line (\*):
-
-    $ s6 --task-run task1@foo=1,bar=2
-
-(\*) command line call does not support nested Hash like parameters, just plain strings.
-
 
 # Args stringification
 

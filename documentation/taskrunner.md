@@ -1,7 +1,6 @@
 # Task Runner API
 
-Sparrow6 Task Runner is underlying engine to run Sparrow6 tasks,
-it has 3 flavors to use:
+Sparrow Task Runner is underlying engine to run Sparrow6 tasks, it has 3 flavors to use:
 
 1. DSL-like style, plugins
 
