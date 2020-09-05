@@ -153,7 +153,7 @@ Powershell:
 
 Overriding configuration
 
-One can override default configuration through an optional `task-run` function HASH parameter:
+One can override default configuration through an optional `task-run` function Hash parameter:
 
     task-run "task1", %(
       main => %(
@@ -164,9 +164,9 @@ One can override default configuration through an optional `task-run` function H
 
 Or in command line (\*):
 
-    $ s6 --task-run task1@foo=1,bar=2
+    $ s6 --task-run task1@main.foo=1,main.bar=2
 
-(\*) command line call does not support nested Hash like parameters, just plain strings.
+(\*) Use dot separated notation to pass nested Hash like parameters.
 
 # Subtasks
 
