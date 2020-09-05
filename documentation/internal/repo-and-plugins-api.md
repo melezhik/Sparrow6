@@ -1,7 +1,7 @@
 # Sparrow6::Task::Repository API
 
-Sparrow6::Task::Repository API is an internal API to interact with Sparrow6 repositories, you probably don't need to
-get into it's guts, but if you do, here is briefly outlined API.
+Sparrow6::Task::Repository API is an internal API to interact with Sparrow repositories, you probably don't need to
+get into it's guts, but if you do, here is brief documentation.
 
 Index update
 
@@ -25,5 +25,3 @@ Plugin install
       url     => "http://192.168.0.1",
       debug   => True,
     ).plugin-install("foo-test");
-
-
