@@ -1,4 +1,4 @@
-# Sparrow6 Development Guide
+# Sparrow Development Guide
 
 This document describes how to develop Sparrow6 tasks.
 
