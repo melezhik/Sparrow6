@@ -602,19 +602,13 @@ Some examples.
 
 An example for `cpanfile`:
 
-
     $root_dir/cpanfile
 
     requires "HTTP::Tiny"
 
-    task.pl
-
-    use HTTP::Tiny;
-
-
 An example for `rakufile`:
 
-    $root_dir/depends.raku
+    $root_dir/rakufile
 
     App::Mi6 --/test
 
