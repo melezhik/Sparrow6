@@ -39,10 +39,11 @@ role Role {
       $fh.say("# export lib to task Python env");
       $fh.say("export PYTHONPATH={$.root}/lib:\$PYTHONPATH");
       $fh.say("# export lib to task Raku env");
-      $fh.say("export PAKULIB={$.root}/lib,\$PAKULIB");
+      $fh.say("export RAKULIB=file\#{$.root}/lib,\$RAKULIB");
     }
 
     if "{$.root}/bin".IO ~~ :d {
+      $fh.say("");
       $fh.say("# export bin to task PATH");
       $fh.say("export PATH={$.root}/bin/:\$PATH");
       $fh.say("");
@@ -66,6 +67,7 @@ role Role {
 
     if "{$.root}/rakufile".IO ~~ :e {
       self!log("pick up rakufile","{$.root}/rakufile");
+      $fh.say("# pick up rakufile from {$.root}/rakufile");
       $fh.say("export PATH={$.root}/raku-lib/bin/:\$PATH");
       $fh.say("export RAKULIB=\"inst\#{$.root}/raku-lib\",\$RAKULIB");
       $fh.say("");
