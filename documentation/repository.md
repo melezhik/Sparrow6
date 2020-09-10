@@ -1,6 +1,6 @@
-# Sparrow6 Repositories
+# Sparrow Repositories
 
-Sparrow6 repositories store distributable Sparrow6 tasks packaged as plugins.
+Sparrow repositories store distributable Sparrow tasks packaged as plugins.
 
 ## Repositories types
 
