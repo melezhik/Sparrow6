@@ -37,7 +37,7 @@ role Role {
           my $module = @params.shift;
           my $zef-options = "--to=$plg-src/raku-lib";
           $zef-options ~=  " {@params}" if @params;
-          self.console("install $module to $plg-src");
+          self.console("install $module to $plg-src/raku-lib");
           shell("bash -c 'zef install $module $zef-options'");
         }
       }
