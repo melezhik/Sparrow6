@@ -515,7 +515,7 @@ Bash:
 
       function helper1 {
         # some code here
-      } 
+      }
 
     task.bash
 
@@ -553,11 +553,25 @@ This table describes `file name -> language` mapping for libraries:
     |           |                 | $task_dir/common.bash  |
     +-----------+-----------------+------------------------+
 
+# RAKULIB
+
+`$root_dir/lib` path is added to `$RAKULIB` variable.
+
+This make it easy to place custom Raku modules under a task root directory:
+
+    lib/Foo.pm6
+
+      unit module Foo;
+
+    task.pl6
+
+      use Foo;
+
 # PERL5LIB
 
-`$root_dir/lib` path is added to `$PERL5LIB` variable. 
+`$root_dir/lib` path is added to `$PERL5LIB` variable.
 
-This make it easy to place custom Perl modules under task root directory:
+This make it easy to place custom Perl modules under a task root directory:
 
     lib/Foo/Bar/Baz.pm
 
