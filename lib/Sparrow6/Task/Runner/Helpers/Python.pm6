@@ -30,7 +30,7 @@ role Role {
 
   method !deploy-python-run-cmd ($path) {
 
-      my $cmd = "export PYTHONPATH={$.root}/lib:{$path.IO.dirname.IO.absolute}/python-lib:\$PYTHONPATH:" ~ $.cache-dir ~ " && python3 $path";
+      my $cmd = "export PYTHONPATH={$.root}/lib:{$.root}/python-lib:\$PYTHONPATH:" ~ $.cache-dir ~ " && python3 $path";
 
       my $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");

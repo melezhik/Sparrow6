@@ -31,15 +31,20 @@ role Role {
 
     my $fh = open $.cache-dir ~ '/cmd.bash', :w;
 
-    $fh.say("# export lib to task Perl env");
-    $fh.say("export PERL5LIB={$.root}/lib:\$PERL5LIB");
-    $fh.say("# export lib to task Ruby env");
-    $fh.say("export RUBYLIB={$.root}/lib:\$RUBYLIB");
-    $fh.say("# export lib to task Python env");
-    $fh.say("export PYTHONPATH={$.root}/lib:\$PYTHONPATH");
-    $fh.say("# export bin to task PATH");
-    $fh.say("export PATH={$.root}/bin/:\$PATH");
-    $fh.say("");
+    if "{$.root}/lib".IO ~~ :d {
+      $fh.say("# export lib to task Perl env");
+      $fh.say("export PERL5LIB={$.root}/lib:\$PERL5LIB");
+      $fh.say("# export lib to task Ruby env");
+      $fh.say("export RUBYLIB={$.root}/lib:\$RUBYLIB");
+      $fh.say("# export lib to task Python env");
+      $fh.say("export PYTHONPATH={$.root}/lib:\$PYTHONPATH");
+    }
+
+    if "{$.root}/bin".IO ~~ :d {
+      $fh.say("# export bin to task PATH");
+      $fh.say("export PATH={$.root}/bin/:\$PATH");
+      $fh.say("");
+    }
 
     if "{$.root}/cpanfile".IO ~~ :e {
       self!log("pick up cpanfile","{$.root}/cpanfile");
@@ -53,7 +58,14 @@ role Role {
     if "{$.root}/requirements.txt".IO ~~ :e {
       self!log("pick up requirements.txt","{$.root}/requirements.txt");
       $fh.say("export PATH={$.root}/python-lib/bin/:\$PATH");
-      $fh.say("export PYTHONPATH={$path.IO.dirname.IO.absolute}/python-lib:\$PYTHONPATH");
+      $fh.say("export PYTHONPATH={$.root}/python-lib:\$PYTHONPATH");
+      $fh.say("");
+    }
+
+    if "{$.root}/rakufile".IO ~~ :e {
+      self!log("pick up rakufile","{$.root}/rakufile");
+      $fh.say("export PATH={$.root}/raku-lib/bin/:\$PATH");
+      $fh.say("export RAKULIB=\"inst\#{$.root}/raku-lib\"");
       $fh.say("");
     }
 

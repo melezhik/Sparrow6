@@ -29,12 +29,15 @@ role Role {
       }
 
       if "$plg-src/rakufile".IO ~~ :e {
+        mkdir "{$plg-src}/raku-lib";
         for "{$plg-src}/rakufile".IO.lines -> $line {
           next if $line ~~ /^^ \s* '#' /;
           next unless $line ~~ /\S/;
           my @params = $line.split(/\s+/);
           my $module = @params.shift;
-          my $zef-options =  "{@params}" || "";
+          my $zef-options = "--to=$plg-src/raku-lib";
+          $zef-options ~=  " {@params}" if @params;
+          self.console("install $module to $plg-src");
           shell("bash -c 'zef install $module $zef-options'");
         }
       }

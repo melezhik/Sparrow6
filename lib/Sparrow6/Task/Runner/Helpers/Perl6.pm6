@@ -31,11 +31,11 @@ role Role {
 
       unlink "{$.root}/lib/.precomp" if "{$.root}/lib/.precomp".IO ~~ :d;
 
-      my $cmd = $*DISTRO.is-win 
+      my $cmd = $*DISTRO.is-win
       ??
-      "cmd.exe /c perl6 -I {$.cache-dir} -I {$.root}/lib -Mglue -Msparrow6lib $path"
+      "cmd.exe /c perl6 -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path"
       !!
-      "perl6 -I {$.cache-dir} -I {$.root}/lib -Mglue -Msparrow6lib $path";
+      "perl6 -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path";
 
       self!log("perl6 run cmd", $cmd);
 

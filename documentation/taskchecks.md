@@ -6,7 +6,7 @@ Regexp based DSL to verify structured, unstructured text output.
 
 ## Input data
 
-Any text ( structured or not ) to be verified. 
+Any text ( structured or not ) to be verified.
 
 An input text is parsed line by line and analyzed _mostly_ on per line basis.
 
