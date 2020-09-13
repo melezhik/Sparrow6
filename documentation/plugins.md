@@ -1,6 +1,6 @@
 # Plugins
 
-Sparrow6 plugins are distributable tasks. 
+Sparrow plugins are distributable tasks.
 
 Users upload plugins to [repositories](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md)
 

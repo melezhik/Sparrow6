@@ -18,6 +18,7 @@ sub MAIN (
   Bool :$repo-init        = False,
   Bool :$repo-info        = False,
   Bool :$install          = False,
+  Bool :$uninstall        = False,
   Bool :$plg-run          = False,
   Bool :$plg-man          = False,
   Bool :$task-run         = False,
@@ -82,6 +83,12 @@ sub MAIN (
     $repo-api.console("install plugin $thing");
 
     $repo-api.plugin-install($thing, %( force => $force, verbose => $verbose ));
+
+  } elsif $uninstall && $thing {
+
+    $repo-api.console("uninstall plugin $thing");
+
+    $repo-api.plugin-uninstall($thing, %( verbose => $verbose ));
 
   } elsif $task-run && $thing {
 

@@ -44,6 +44,9 @@ class Cli
       s6 --install $plugin
       s6 --install --force $plugin # reinstall, even though if higher version is here
 
+    uninstall plugin:
+      s6 --uninstall $plugin
+
     init sparrow repo:
       s6 --repo-init
 
