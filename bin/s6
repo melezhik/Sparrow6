@@ -20,6 +20,7 @@ sub MAIN (
   Bool :$install          = False,
   Bool :$uninstall        = False,
   Bool :$plg-run          = False,
+  Bool :$plg-info         = False,
   Bool :$plg-man          = False,
   Bool :$task-run         = False,
   Bool :$task-cat         = False,
@@ -89,6 +90,12 @@ sub MAIN (
     $repo-api.console("uninstall plugin $thing");
 
     $repo-api.plugin-uninstall($thing, %( verbose => $verbose ));
+
+  } elsif $plg-info && $thing {
+
+    $repo-api.console("plugin $thing info");
+
+    $repo-api.plugin-info($thing, %( verbose => $verbose ));
 
   } elsif $task-run && $thing {
 
