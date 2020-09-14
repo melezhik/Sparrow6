@@ -47,6 +47,9 @@ class Cli
     uninstall plugin:
       s6 --uninstall $plugin
 
+    plugin info:
+      s6 --plg-info $plugin
+
     init sparrow repo:
       s6 --repo-init
 

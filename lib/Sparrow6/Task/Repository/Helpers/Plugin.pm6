@@ -175,6 +175,51 @@ role Role {
 
   }
 
+  method plugin-info ( $pid, %args? ) {
+
+    my $ptype;
+
+    my %list = self!read-plugin-list();
+
+    if %list{$pid}:exists {
+
+      my $plg-v  = %list{$pid}<version>;
+
+      my $plg-canonical-v = self!canonical-version($plg-v);
+
+      if "{self.plugin-directory($pid)}/sparrow.json".IO ~~ :e {
+
+        my %plg-meta = self!read-plugin-meta("{self.plugin-directory($pid)}/");
+
+        my $inst-v = Version.new(%plg-meta<version>);
+
+        if $plg-canonical-v > $inst-v {
+          self.console("plugin {$pid} version {$inst-v} (next available version is {$plg-canonical-v}) installed at directory {self.plugin-directory($pid)}");
+        } else {
+          self.console("plugin {$pid} version {$inst-v} (uptodate) installed at directory {self.plugin-directory($pid)}");
+        }
+
+      } else {
+
+        self.console("plugin {$pid} is not installed (next available version is {$plg-canonical-v})");
+
+      }
+
+     # locally installed plugin
+
+    } elsif "{self.plugin-directory($pid)}/".IO ~~ :d  {
+
+        self.console("plugin {$pid} installed locally at directory {self.plugin-directory($pid)}");
+
+    } else {
+
+      die "unknown plugin $pid";
+
+    }
+
+  }
+
+
   method !read-plugin-list ($index-file?) {
 
     my %list;
@@ -184,13 +229,13 @@ role Role {
     if $file.IO ~~ :e {
 
       for $file.IO.lines -> $i {
-  
+
         next unless $i ~~ /\S+/;
-  
+
         my @foo = split(/\s+/, $i);
-  
+
         %list{@foo[0]} = %( name => @foo[0], version => @foo[1], canonical-version => self!canonical-version(@foo[1]) );
-  
+
       }
 
       self!log("read index file", $file);

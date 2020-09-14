@@ -14,13 +14,13 @@ use Sparrow6::Task::Repository::Helpers::Plugin;
 use Sparrow6::Task::Repository::Helpers::Index;
 use Sparrow6::Task::Repository::Helpers::Init;
 
-class Api 
+class Api
 
   does Sparrow6::Common::Helpers::Role
   does Sparrow6::Task::Repository::Helpers::Common::Role
-  does Sparrow6::Task::Repository::Helpers::Plugin::Role 
-  does Sparrow6::Task::Repository::Helpers::Index::Role 
-  does Sparrow6::Task::Repository::Helpers::Init::Role 
+  does Sparrow6::Task::Repository::Helpers::Plugin::Role
+  does Sparrow6::Task::Repository::Helpers::Index::Role
+  does Sparrow6::Task::Repository::Helpers::Init::Role
 
 {
 
