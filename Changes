@@ -2,7 +2,7 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-    - documentation reworked and improved
+    - Documentation reworked and improved
     - `rakufile` support
     - `$task_root_dir/lib` gets added to `RAKULIB` env var
     - `s6` - add uninstall plugin action
