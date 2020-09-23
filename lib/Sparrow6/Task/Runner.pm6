@@ -132,9 +132,9 @@ class Api
         } elsif $i.isa("Hash") or $i.isa("Pair") {
           for $i.keys -> $k {
             if $k ~~ /^ '-'/ {
-              push @args, "{$k} {$i{$k}}";
+              push @args, $i{$k} ~~ /^\s*'='/ ??  "{$k}={$i{$k}}" !! "{$k} {$i{$k}}";
             } else {
-              push @args, "--{$k} {$i{$k}}"
+              push @args, $i{$k} ~~ /^\s*'='/ ?? "--{$k}={$i{$k}}" !! "--{$k} {$i{$k}}"
             }
           }
         } elsif $i.isa("Array") or $i.isa("List") {
