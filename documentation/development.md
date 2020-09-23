@@ -693,7 +693,7 @@ The logic of constructing of command line arguments by an array elements is foll
 
 Double dashes are chosen by default when coercing `args` `Array/List/Hash/Pair` elements into strings.
 
-If one needs single dashes use _explicit_ notation, by adding `-` before a parameter name:
+For single dashes use _explicit_ notation, by adding `-` before a parameter name:
 
       task-run "task1", %(
         args => [
@@ -703,9 +703,19 @@ If one needs single dashes use _explicit_ notation, by adding `-` before a param
         ]
       );
 
-Results following command line parameters:
+Results in the following command line:
 
      -debug -verbose --foo foo_value --bar bar_value  value
+
+For named parameters in `a=value` notation,  prepend Hash values with `=`, thus
+    
+    args => [                                                                                                                                                                        args => [
+      %( foo => "=value" )
+    ]
+
+Will result in the following command line:                                                                                                                              
+
+    --foo=value  
 
 ## Single element `args` array
 
