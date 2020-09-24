@@ -13,3 +13,11 @@ task-run "examples/tasks/args-stringification-example", %(
   ]
 );
 
+task-run "examples/tasks/args-stringification-example", %(
+  args => [
+    %( a => "value" ),
+    'verbose=true', 
+    'force=false'
+  ]
+);
+
