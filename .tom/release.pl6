@@ -1,4 +1,8 @@
-#!perl6
-
-zef "App::Mi6", %( notest => True );
-bash "mi6 release";
+# run `mi6 --keep release`
+task-run "module release", "raku-utils-mi6", %(
+  args => [
+    ["yes","keep"], 
+    %( next-version => "=0.0.29" ),
+    "release",
+  ]
+);
