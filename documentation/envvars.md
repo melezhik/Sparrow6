@@ -71,3 +71,8 @@ Sparrow scenario:
     say tags()<nginx_port>;
     say tags()<mode>;
 
+
+- SP6_LOG_NO_TIMESTAMPS
+
+Don't add timestamps to Sparrow reports
+x

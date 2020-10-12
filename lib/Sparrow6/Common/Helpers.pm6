@@ -16,7 +16,9 @@ role Role {
 
   method console ($message) {
 
-    say "{DateTime.new(now, formatter => $timeformat)} [{$.name}] $message";
+    say %*ENV<SP6_LOG_NO_TIMESTAMPS> ??
+      $message !!
+      "{DateTime.new(now, formatter => $timeformat)} [{$.name}] {$message}";
 
   };
 
