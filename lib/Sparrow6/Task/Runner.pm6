@@ -193,20 +193,6 @@ class Api
       self!run-task($.root);
     }
 
-    my $status = 0;
-
-    if $.check-pass == False {
-      say("=================\nTASK CHECK FAIL");
-      $status = 2;
-    }
-
-    if $.do-test && $.test-pass == False {
-      say("=================\nTEST FAIL");
-      $status = 3;
-    }
-
-    exit($status) if $status != 0;
-
     my %state = self!get-state;
 
     unless %*ENV<SP6_KEEP_CACHE> or $.keep-cache {
@@ -433,9 +419,21 @@ class Api
 
     }
 
+    my $status = 0;
+
+    if $.check-pass == False {
+      say("=================\nTASK CHECK FAIL");
+      $status = 2;
+    }
+
+    if $.do-test && $.test-pass == False {
+      say("=================\nTEST FAIL");
+      $status = 3;
+    }
+
+    exit($status) if $status != 0;
+
 
   }
 
 }
-
-
