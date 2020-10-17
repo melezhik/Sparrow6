@@ -75,4 +75,3 @@ Sparrow scenario:
 - SP6_LOG_NO_TIMESTAMPS
 
 Don't add timestamps to Sparrow reports
-x
