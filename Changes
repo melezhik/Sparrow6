@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    - Bugfix - add task name when SP6_LOG_NO_TIMESTAMPS is enabled
+
 0.0.30  2020-10-17T03:32:13Z
 
     - Bug fix - fail fast if task checks fail
