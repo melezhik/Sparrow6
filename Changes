@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.32  2020-11-18T21:18:07Z
+
+    - Freezing Hash::Merge version
+
 0.0.31  2020-11-04T19:00:51Z
 
     - Bugfix - add task name when SP6_LOG_NO_TIMESTAMPS is enabled
