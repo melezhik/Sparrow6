@@ -6,7 +6,7 @@
   ],
   "depends": [
     "File::Directory::Tree",
-    "Hash::Merge",
+    "Hash::Merge:ver<1.0.0>",
     "YAMLish",
     "JSON::Tiny",
     "Data::Dump"
