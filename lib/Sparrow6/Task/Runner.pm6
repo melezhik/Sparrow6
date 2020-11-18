@@ -5,7 +5,7 @@ use v6;
 unit module Sparrow6::Task::Runner;
 
 use File::Directory::Tree;
-use Hash::Merge;
+use Hash::Merge:ver<1.0.0>;
 
 use YAMLish;
 use JSON::Tiny;
