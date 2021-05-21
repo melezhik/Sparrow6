@@ -196,7 +196,7 @@ Alexey Melezhik
 
 # Thanks to
 
-God as the One Who inspires me in my life!
+God Who inspires me in my life!
 
 
 
