@@ -75,3 +75,7 @@ Sparrow scenario:
 - SP6_LOG_NO_TIMESTAMPS
 
 Don't add timestamps to Sparrow reports
+
+- SP6_FORMAT_TERSE
+
+Enable terse format ( only scripts output ) in Sparrow reports
