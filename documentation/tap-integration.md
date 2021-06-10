@@ -1,0 +1,62 @@
+# Sparrow6 TAP integration
+
+*** WARNING! This feature is experimental, things could change ***
+
+Sparrow scenarios could be easily integrated into Raku [prove6] (https://docs.raku.org/language/testing)
+test scenarios:
+
+```raku
+#!raku
+
+use Test;
+use Sparrow6::DSL;
+
+BEGIN %*ENV<SP6_IGNORE_CHECK_FAIL> = 1;
+
+plan 2;
+
+my ($state, $status) = task-run "tasks/01";
+
+ok($status, "tasks/01");
+
+pass "test2";
+
+done-testing();
+
+```
+
+Output:
+
+```
+1..2
+[tasks/01] :: OK
+# Failed test 'tasks/01'
+# at t/nn.t line 12
+# You failed 1 test of 2
+[task check] stdout match <OK1> False
+not ok 1 - tasks/01
+ok 2 - test2
+t/nn.t .. Dubious, test returned 1
+Failed 1/2 subtests
+
+Test Summary Report
+-------------------
+t/nn.t (Wstat: 256 Tests: 2 Failed: 1)
+  Failed tests:  1
+Non-zero exit status: 1
+Files=1, Tests=2,  0 wallclock secs
+Result: FAILED
+
+```
+
+Explanation. `SP6_IGNORE_CHECK_FAIL` environment variables makes Sparrow 
+ignore [task checks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md) failures.
+
+`task-run` function returns state and status. If a Sparrow task fails any of task checks, the status will be False.
+
+Now one can just turn into Raku test `ok()` primitive:
+
+```
+ok($status, "tasks/01");
+```
+

@@ -204,7 +204,7 @@ class Api
       }
     }
 
-    return %state;
+    return %state, $.check-pass;
 
   }
 
@@ -419,20 +419,24 @@ class Api
 
     }
 
-    my $status = 0;
 
-    if $.check-pass == False {
-      say("=================\nTASK CHECK FAIL");
-      $status = 2;
+    unless %*ENV<SP6_IGNORE_CHECK_FAIL> {
+
+      my $status = 0;
+
+      if $.check-pass == False {
+        say("=================\nTASK CHECK FAIL");
+        $status = 2;
+      }
+
+      if $.do-test && $.test-pass == False {
+        say("=================\nTEST FAIL");
+        $status = 3;
+      }
+
+      exit($status) if $status != 0;
+
     }
-
-    if $.do-test && $.test-pass == False {
-      say("=================\nTEST FAIL");
-      $status = 3;
-    }
-
-    exit($status) if $status != 0;
-
 
   }
 
