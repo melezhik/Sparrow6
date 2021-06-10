@@ -5,8 +5,6 @@
 Sparrow tasks could be easily integrated into Raku [testing](https://docs.raku.org/language/testing) scenarios:
 
 ```raku
-#!raku
-
 use Test;
 use Sparrow6::DSL;
 
@@ -53,14 +51,20 @@ Files=1, Tests=2,  0 wallclock secs
 Result: FAILED
 ```
 
-Explanation. `SP6_IGNORE_CHECK_FAIL` environment variables makes Sparrow 
-ignore [task checks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md) failures.
+Explanation. 
 
-`task-run` function returns state and status. If a Sparrow task fails any of task checks, the status will be False.
+* `SP6_IGNORE_CHECK_FAIL` environment variables makes Sparrow 
+ignore [task checks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md) failures,
+so no `exit` gets called on task check failures.
 
-Now one can just turn into Raku test `ok()` primitive:
+* Instead `task-run` function returns a `state` and `status`. 
 
-```
+* If any of task checks fail, the status will be `False`.
+
+* Now one can just turn a check failure into Raku test `ok()` equivalent:
+
+```raku
+my ($state, $status) = task-run "tasks/01";
 ok($status, "tasks/01");
 ```
 
