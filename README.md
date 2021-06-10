@@ -123,7 +123,7 @@ read more about it in [documentation/modules](https://github.com/melezhik/Sparro
 
 Sparrow provides it's way to write tests for tasks, making it is easy not only create scripts, but write tests for your script codebase.
 
-### Task Checks
+### Task checks
 
 Task checks is regexp based DSL to verify structured and unstructured text.
 
@@ -132,6 +132,12 @@ It allows to write _embedded_ tests for user scripts verifying scripts output.
 With task checks it's easy to develop scripts in TDD way or create black box testing test suites. See, for example, Tomty framework.
 
 Read more about task checks at [documentation/taskchecks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md).
+
+### TAP integration
+
+Sparrow tasks could be easily integrated into Raku [testing](https://docs.raku.org/language/testing) scenarios. 
+
+See [tap.md](https://github.com/melezhik/Sparrow6/blob/master/documentation/tap.md)
 
 ### M10 
 

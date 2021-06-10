@@ -2,8 +2,7 @@
 
 *** WARNING! This feature is experimental, things could change ***
 
-Sparrow scenarios could be easily integrated into Raku [prove6] (https://docs.raku.org/language/testing)
-test scenarios:
+Sparrow tasks could be easily integrated into Raku [testing](https://docs.raku.org/language/testing) scenarios:
 
 ```raku
 #!raku
