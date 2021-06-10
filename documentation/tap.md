@@ -24,6 +24,12 @@ done-testing();
 
 ```
 
+Run:
+
+```
+prove6 -v t/nn.t
+```
+
 Output:
 
 ```
@@ -45,7 +51,6 @@ t/nn.t (Wstat: 256 Tests: 2 Failed: 1)
 Non-zero exit status: 1
 Files=1, Tests=2,  0 wallclock secs
 Result: FAILED
-
 ```
 
 Explanation. `SP6_IGNORE_CHECK_FAIL` environment variables makes Sparrow 
