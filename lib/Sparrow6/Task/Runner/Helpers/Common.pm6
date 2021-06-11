@@ -3,6 +3,7 @@
 unit module Sparrow6::Task::Runner::Helpers::Common;
 
 use JSON::Tiny;
+use Colorizable;
 
 role Role {
 
@@ -12,9 +13,55 @@ role Role {
 
   };
 
-  method !check-log ($header, $message) {
+  method !check-log (%data) {
 
-    say "[$header] $message";
+    my $message = %data<message> but Colorizable;
+    my $status = %data<status>;
+
+    if %data<type> eq "check" and %data<status>:exists {
+      my $status-str = "{%data<status>}" but Colorizable;
+      my $header = "[task check]" but Colorizable;
+      if %*ENV<SP6_FORMAT_COLOR> {
+        if $status eq True {
+          self!print-check-log(
+            $header.colorize(:bg(yellow)),
+            $message ~ ' ' ~ $status-str.colorize(green, yellow, bold)
+          );
+        } elsif $status eq False {
+          self!print-check-log(
+            $header.colorize(:bg(yellow)),
+            $message ~ ' ' ~ $status-str.colorize(red, yellow, bold)
+          );
+        }
+      } else {
+        self!print-check-log($header,"$message $status");
+      }
+    } elsif %data<type> eq "note" {
+      my $header = "[task check]" but Colorizable;
+      if %*ENV<SP6_FORMAT_COLOR> {
+        self!print-check-log(
+          $header.colorize(:bg(yellow)),
+          $message
+        );
+      } else {
+        self!print-check-log($header,$message);
+      }
+    } else {
+      my $header = "[task check]" but Colorizable;
+      if %*ENV<SP6_FORMAT_COLOR> {
+        self!print-check-log(
+          $header.colorize(:bg(yellow)),
+          $message
+        );
+      } else {
+        self!print-check-log($header,$message);
+      }
+    }
+  };
+
+  method !print-check-log ($header, $message) {
+
+    say "$header $message";
 
   };
 

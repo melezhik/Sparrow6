@@ -20,10 +20,10 @@ role Role {
 
       for $tc.results -> $r {
         if $r<type> eq "check-expression" {
-          self!check-log("task check","{$r<message>} {$r<status>}");
+          self!check-log(%( message => $r<message>, status => $r<status>, type => "check" ));
           $.check-pass = False unless $r<status>;
         } elsif $r<type> eq "note" {
-          self!check-log("task check","{$r<message>}");
+          self!check-log(%( message => $r<message>, type => "note" ));
         }
 
       }
