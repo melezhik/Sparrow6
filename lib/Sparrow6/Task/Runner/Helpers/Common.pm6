@@ -24,13 +24,13 @@ role Role {
       if %*ENV<SP6_FORMAT_COLOR> {
         if $status eq True {
           self!print-check-log(
-            $header.colorize(:bg(yellow)),
-            $message ~ ' ' ~ $status-str.colorize(green, yellow, bold)
+            $header,
+            $message ~ ' ' ~ $status-str.colorize(:fg(green))
           );
         } elsif $status eq False {
           self!print-check-log(
-            $header.colorize(:bg(yellow)),
-            $message ~ ' ' ~ $status-str.colorize(red, yellow, bold)
+            $header,
+            $message ~ ' ' ~ $status-str.colorize(:fg(red))
           );
         }
       } else {
@@ -40,8 +40,8 @@ role Role {
       my $header = "[task check]" but Colorizable;
       if %*ENV<SP6_FORMAT_COLOR> {
         self!print-check-log(
-          $header.colorize(:bg(yellow)),
-          $message
+          $header,
+          $message.colorize(:fg(yellow))
         );
       } else {
         self!print-check-log($header,$message);
@@ -50,7 +50,7 @@ role Role {
       my $header = "[task check]" but Colorizable;
       if %*ENV<SP6_FORMAT_COLOR> {
         self!print-check-log(
-          $header.colorize(:bg(yellow)),
+          $header,
           $message
         );
       } else {

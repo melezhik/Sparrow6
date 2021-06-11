@@ -9,7 +9,8 @@
     "Hash::Merge:ver<1.0.0>",
     "YAMLish",
     "JSON::Tiny",
-    "Data::Dump"
+    "Data::Dump",
+    "Colorizable"
   ],
   "description": "Sparrow is a Raku based automation framework",
   "license": "Artistic-2.0",
