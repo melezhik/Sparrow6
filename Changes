@@ -3,6 +3,7 @@ Revision history for Sparrow6
 {{$NEXT}}
 
     Introducing `SP6_FORMAT_TERSE`
+    Colors support via `SP6_FORMAT_COLOR` variable
 
 0.0.32  2020-11-18T21:18:07Z
 
