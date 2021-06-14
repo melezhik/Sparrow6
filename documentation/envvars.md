@@ -79,3 +79,7 @@ Don't add timestamps to Sparrow reports
 - SP6_FORMAT_TERSE
 
 Enable terse format ( only scripts output ) in Sparrow reports
+
+- SP6_FORMAT_COLOR
+
+Enable colors in Sparrow reports

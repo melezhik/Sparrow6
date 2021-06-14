@@ -3,6 +3,7 @@
 unit module Sparrow6::Common::Helpers;
 
 my $timeformat = sub ($self) { sprintf "%02d:%02d:%02d %02d/%02d/%04d", .hour, .minute, .second,   .month, .day, .year given $self; };
+use Colorizable;
 
 role Role {
 
@@ -16,12 +17,18 @@ role Role {
 
   method console ($message) {
 
+    my $header = "[{$.name}]" but Colorizable;
+    my $ts = "{DateTime.new(now, formatter => $timeformat)}" but Colorizable;
     if %*ENV<SP6_FORMAT_TERSE> {
       say $message
     } elsif %*ENV<SP6_LOG_NO_TIMESTAMPS> {
-      say "[{$.name}] :: {$message}"
+      say %*ENV<SP6_FORMAT_COLOR> 
+        ?? "{$header.colorize(:fg(magenta))} :: {$message}" 
+        !! "$header :: {$message}";
     } else {
-      say "{DateTime.new(now, formatter => $timeformat)} [{$.name}] :: {$message}";
+      say %*ENV<SP6_FORMAT_COLOR> 
+        ?? "{$ts.colorize(:fg(magenta))} {$header.colorize(:fg(magenta))} :: {$message}" 
+        !! "$ts $header :: {$message}";
     }
 
   };
