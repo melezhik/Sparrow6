@@ -23,46 +23,28 @@ role Role {
       my $header = "[task check]" but Colorizable;
       if %*ENV<SP6_FORMAT_COLOR> {
         if $status eq True {
-          self!print-check-log(
-            $header,
-            $message ~ ' ' ~ $status-str.colorize(:fg(green))
-          );
+          say $header.colorize(:fg(cyan)), " ", $message, " ", $status-str.colorize(:fg(cyan))
         } elsif $status eq False {
-          self!print-check-log(
-            $header,
-            $message ~ ' ' ~ $status-str.colorize(:fg(red))
-          );
+          say $header.colorize(:fg(red)), $message, " ", $status-str.colorize(:fg(red))
         }
       } else {
-        self!print-check-log($header,"$message $status");
+          say $header, " ", $message, " ", $status;
       }
     } elsif %data<type> eq "note" {
       my $header = "[task check]" but Colorizable;
       if %*ENV<SP6_FORMAT_COLOR> {
-        self!print-check-log(
-          $header,
-          $message.colorize(:fg(yellow))
-        );
+        say $header.colorize(:fg(yellow)), " ", $message.colorize(:fg(yellow));
       } else {
-        self!print-check-log($header,$message);
+        say $header, " ", $message;
       }
     } else {
       my $header = "[task check]" but Colorizable;
       if %*ENV<SP6_FORMAT_COLOR> {
-        self!print-check-log(
-          $header,
-          $message
-        );
+        say $header, " ", $message;
       } else {
-        self!print-check-log($header,$message);
+        say $header, " ", $message;
       }
     }
-  };
-
-  method !print-check-log ($header, $message) {
-
-    say "$header $message";
-
   };
 
   method !make-sparrow6-common-lib ($path) {
