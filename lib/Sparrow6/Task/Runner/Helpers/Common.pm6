@@ -25,7 +25,7 @@ role Role {
         if $status eq True {
           say $header.colorize(:fg(cyan)), " ", $message, " ", $status-str.colorize(:fg(cyan))
         } elsif $status eq False {
-          say $header.colorize(:fg(red)), $message, " ", $status-str.colorize(:fg(red))
+          say $header.colorize(:fg(red)), " ", $message, " ", $status-str.colorize(:fg(red))
         }
       } else {
           say $header, " ", $message, " ", $status;
