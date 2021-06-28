@@ -12,7 +12,7 @@ Following a list of DSL functions and specifications.
 * [Packages](#packages)
   * [System packages](#system-packages)
   * [CPAN packages](#cpan-packages)
-  * [Zef modules](#zef-modules)
+  * [Raku modules](#raku-modules)
 * [Services](#services)
   * [Systemd](#systemd)
 * [Directories](#directories)
