@@ -191,7 +191,7 @@ role Role {
 
   method !handle-task-status ($cmd) {
   
-    my $st = $cmd.exit-code;
+    my $st = $cmd.exitcode;
 
     $cmd.out.close().^name; # we don't want to sink here
 
