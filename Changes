@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    change `.status` by `.exitcode` because `.status` is deprecated since Rakudo 2021.07
+
 0.0.33  2021-06-30T01:24:00Z
 
     Introducing `SP6_FORMAT_TERSE`
