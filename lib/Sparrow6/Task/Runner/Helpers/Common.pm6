@@ -191,7 +191,7 @@ role Role {
 
   method !handle-task-status ($cmd) {
   
-    my $st = $cmd.status;
+    my $st = $cmd.exit-code;
 
     $cmd.out.close().^name; # we don't want to sink here
 
@@ -208,7 +208,7 @@ role Role {
 
   method !handle-hook-status ($cmd) {
   
-    my $st = $cmd.status;
+    my $st = $cmd.exitcode;
 
     if $st != 0 {
       self.console("hook exit status: $st");
