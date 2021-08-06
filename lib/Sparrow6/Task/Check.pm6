@@ -132,7 +132,11 @@ class Api
     $l ~~ s/ \s+ $$ //;
     $l ~~ s/^^ \s+//;
 
+    my $time = time;
+
     self!check-line($l, $check-type, self.current-context.check-message($l));
+
+    say "handle-simple($check-type) last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
   
     self!log("$check-type check DONE", $l);
 
