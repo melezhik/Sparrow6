@@ -228,7 +228,7 @@ class Range
 
       self!log("current stream",Dump(self.streams)) if %*ENV<SP6_DEBUG_STREAM>;
 
-      self!log("change-context last", "{time - $time} sec");
+      say "change-context last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
 
     }  
 
