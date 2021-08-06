@@ -176,11 +176,13 @@ class Range
       }
 
 
-      self!log("start context:", Dump(self.context));
+      self!log("Start context:", Dump(self.context)) if %*ENV<SP6_DEBUG_STREAM>;
 
     }  
 
     method change-context (@data) {
+
+      my $time = time; 
 
       return if ! self.streams-allowed;
 
@@ -195,11 +197,11 @@ class Range
         if self.streams{$stream-id}:exists {
           %succeed-streams{$stream-id} = self.streams{$stream-id}; 
           push %succeed-streams{$stream-id}, $i;
-          self!log("update succeed stream", $stream-id);
+          self!log("update succeed stream", $stream-id) if %*ENV<SP6_DEBUG_STREAM>;
         } else {
           %succeed-streams{$stream-id} = [$i];
           self.streams{$stream-id} = [$i];
-          self!log("new succeed stream", $stream-id);
+          self!log("new succeed stream", $stream-id) if %*ENV<SP6_DEBUG_STREAM>;
         }
 
 
@@ -209,7 +211,7 @@ class Range
       for self.streams.keys -> $stream-id {
         
           unless %succeed-streams{$stream-id}:exists {
-            self!log("mark failed stream:", $stream-id);
+            self!log("mark failed stream:", $stream-id) if %*ENV<SP6_DEBUG_STREAM>;
             self.failed-streams{$stream-id} = 1              
           }
         
@@ -224,7 +226,9 @@ class Range
 
       self.streams = %new-streams;
 
-      self!log("current stream",Dump(self.streams));
+      self!log("current stream",Dump(self.streams)) if %*ENV<SP6_DEBUG_STREAM>;
+
+      self!log("change-context last", "{time - $time} sec");
 
     }  
 

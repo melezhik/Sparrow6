@@ -154,7 +154,7 @@ class Api
 
         for self.current-context.context -> $ln {
 
-            my $st = index($ln<data>,$pattern);
+            my $st = $pattern eq ":any:" ?? True !! index($ln<data>,$pattern);
 
             if $st.defined {
                 $status = True;
