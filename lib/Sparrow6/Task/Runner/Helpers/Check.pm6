@@ -26,8 +26,8 @@ role Role {
               self!log("mark check-pass as False",$root);
               $.check-pass = False;
             }
-            $.check-pass-err-cnt++;
-            self!log("bump check-pass-err-cnt",$.check-pass-err-cnt);
+            $.task-check-err-cnt++;
+            self!log("bump task-check-err-cnt",$.task-check-err-cnt);
           }
         } elsif $r<type> eq "note" {
           self!check-log(%( message => $r<message>, type => "note" ));
