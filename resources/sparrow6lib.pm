@@ -57,6 +57,10 @@ sub ignore_error {
   print "ignore_error:\n";
 }
 
+sub ignore_task_check_error {
+  print "ignore_task_check_error:\n";
+}
+
 sub config {
 
 

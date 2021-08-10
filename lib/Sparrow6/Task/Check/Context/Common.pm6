@@ -16,7 +16,7 @@ role Role {
         }
       }
 
-      self!log("start context:", self.context.perl);
+      self!log("start context:", self.context.perl) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     }
 

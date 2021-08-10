@@ -17,6 +17,10 @@ function ignore_error {
   echo ignore_error:
 }
 
+function ignore_task_check_error {
+  echo ignore_task_check_error:
+}
+
 function run_task {
 
   task_to_run=$1
