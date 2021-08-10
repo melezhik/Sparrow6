@@ -431,7 +431,7 @@ class Api
 
     if $.check-pass == False {
       say("=================\nTASK CHECK FAIL");
-      $status = 2 unless $.ignore-task-check-error;
+      $status = 2;
     }
 
     if $.do-test && $.test-pass == False {
