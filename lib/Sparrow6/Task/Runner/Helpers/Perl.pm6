@@ -124,6 +124,11 @@ role Role {
         self!log("ingnore task errors","enabled");
       }
 
+      if $line ~~ / 'ignore_task_check_error:' / {
+        $.ignore-task-check-error = True;
+        self!log("ingnore task check errors","enabled");
+      }
+
       if $line ~~ /'task_var_json_begin' .* / ff $line ~~ /'task_var_json_end' .*/ {
         $task-vars ~= $line;
         next;

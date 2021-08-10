@@ -63,7 +63,7 @@ class Api
 
     if $code ~~ s/^^ \s* '!' (\w+) \s* $$// {
         $language = $0;
-        self!log("code set language", $language);
+        self!log("code set language", $language) if %*ENV<SP6_DEBUG_TASK_CHECK>;
     }
 
     die "language $language not supported for task checks" unless %lang-to-extension{$language}:exists;
@@ -74,11 +74,12 @@ class Api
 
     spurt "{$cache-root-dir}/.checks/task.{ %lang-to-extension{$language}}", $code;
 
-    self!log("code run language", $language);
+    self!log("code run language", $language) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     my @orig-stdout-data = self.tr.stdout-data;
     my @orig-stderr-data = self.tr.stderr-data;
 
+    self.tr.check-pass = True;
     self.tr.keep-cache = True;
     self.tr.silent-stdout = True;
     self.tr.silent-stderr = False;
@@ -95,7 +96,7 @@ class Api
 
     self.tr.task-run();
 
-    self!log("code return", self.tr.stdout-data.perl);
+    self!log("code return", self.tr.stdout-data.perl) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     my @r;
 
@@ -138,7 +139,7 @@ class Api
 
     say "handle-simple($check-type) last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
   
-    self!log("$check-type check DONE", $l);
+    self!log("$check-type check DONE", $l) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
   }
 
@@ -148,7 +149,7 @@ class Api
 
     my @captures = Array.new;
 
-    self!log("lookup pattern", $pattern);
+    self!log("lookup pattern", $pattern) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     @!succeeded = Array.new;
 
@@ -202,11 +203,11 @@ class Api
 
     if $status {
 
-      self!log("SEARCH SUCCEEDS (=;", $pattern);
+      self!log("SEARCH SUCCEEDS (=;", $pattern) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     } else {
 
-      self!log("SEARCH FAILS )=;", $pattern);
+      self!log("SEARCH FAILS )=;", $pattern) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Range {
          self.current-context.disable-streams();
@@ -232,19 +233,19 @@ class Api
 
     spurt $.cache-root-dir ~ '/matched.txt', join "\n", @!succeeded;
 
-    self!log("MATCHED saved", $.cache-root-dir ~ '/matched.txt' );
+    self!log("MATCHED saved", $.cache-root-dir ~ '/matched.txt' ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     spurt $.cache-root-dir ~ '/captures.json', to-json(@!captures);
 
-    self!log("CAPTURES saved", $.cache-root-dir ~ '/captures.json' );
+    self!log("CAPTURES saved", $.cache-root-dir ~ '/captures.json' ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     spurt $.cache-root-dir ~ '/streams.json', to-json(self.current-context.streams);
 
-    self!log("STREAMS hash saved", $.cache-root-dir ~ '/streams.json' );
+    self!log("STREAMS hash saved", $.cache-root-dir ~ '/streams.json' ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     spurt $.cache-root-dir ~ '/streams-array.json', to-json(self.current-context.streams-as-array);
 
-    self!log("STREAMS array saved", $.cache-root-dir ~ '/streams-array.json' );
+    self!log("STREAMS array saved", $.cache-root-dir ~ '/streams-array.json' ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     self!add-result({ status => $status , message => $message });
 
@@ -262,7 +263,7 @@ class Api
 
         my $l = $ll.chomp;
 
-        self!log("parse item", ($block-type || 'LINE') ~ '@' ~ $l );
+        self!log("parse item", ($block-type || 'LINE') ~ '@' ~ $l ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
         unless $here-str-mode { # don't strip comments and blank lines in here-string mode
 
@@ -284,7 +285,7 @@ class Api
 
           $here-str-mode = False; 
 
-          self!log("here string mode", "off");
+          self!log("here string mode", "off") if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
           self!flush-multiline-block( $block-type, @multiline-block) if $block-type;
 
@@ -293,7 +294,7 @@ class Api
            # this is multiline block as here string, 
            # accumulate lines until here string end marker
   
-           self!log("push $l to block", $block-type);
+           self!log("push $l to block", $block-type) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
            @multiline-block.push: $l;
 
@@ -328,7 +329,7 @@ class Api
 
             my $status-string = "$0"; my $message = $1;
 
-            self!log("assert found", "status: $status-string | message: $message");
+            self!log("assert found", "status: $status-string | message: $message") if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
             my $status = $status-string.Int.Bool; # from int conversion
 
@@ -358,11 +359,11 @@ class Api
 
                 $here-str-marker = $0;
 
-                self!log("$block-type block start. heredoc marker", $here-str-marker);
+                self!log("$block-type block start. heredoc marker", $here-str-marker) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
             } else {
 
-                self!log("one-line $my-block-type found", $code);
+                self!log("one-line $my-block-type found", $code) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
                 self!flush-multiline-block( $block-type, @multiline-block) if $block-type;
 
@@ -392,7 +393,7 @@ class Api
 
     my $name = "handle-" ~ $block-type; 
 
-    self!log("block end",$block-type);
+    self!log("block end",$block-type) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     self!"$name"(@multiline-block.join("\n"));
   

@@ -58,6 +58,7 @@ class Api
   has Bool  $.do-test;
   has Bool  $.show-test-result;
   has Bool  $.ignore-task-error is rw;
+  has Bool  $.ignore-task-check-error is rw;
   has Str   $.cwd = "{$*CWD}";
   has Bool  $.silent-stdout is rw;
   has Bool  $.silent-stderr is rw;
@@ -167,9 +168,11 @@ class Api
     $.check-pass = True;
 
     $.ignore-task-error = False;
+    $.ignore-task-check-error = False;
 
-    self!log("run task, root:", $.root);
-    self!log("run task, cwd:", $.cwd);
+    self!log("task-run(), root", $.root);
+    self!log("task-run(), cwd", $.cwd);
+    self!log("task-run(), check-pass", $.check-pass);
 
     chdir $.cwd;
 
@@ -227,7 +230,8 @@ class Api
 
   method !run-task ($root) {
 
-    self!log("runs task", $root);
+    self!log("run-task(), root", $root);
+    self!log("run-task(), check-pass", $.check-pass);
 
     self!erase-stdout-data;
 
@@ -421,9 +425,12 @@ class Api
 
     my $status = 0;
 
+    self!log("run-task() finish, root", $root);
+    self!log("run-task() finish, check-pass", $.check-pass);
+
     if $.check-pass == False {
       say("=================\nTASK CHECK FAIL");
-      $status = 2;
+      $status = 2 unless $.ignore-task-check-error;
     }
 
     if $.do-test && $.test-pass == False {
