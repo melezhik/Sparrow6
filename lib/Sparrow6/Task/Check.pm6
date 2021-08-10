@@ -79,7 +79,6 @@ class Api
     my @orig-stdout-data = self.tr.stdout-data;
     my @orig-stderr-data = self.tr.stderr-data;
 
-    self.tr.check-pass = True;
     self.tr.keep-cache = True;
     self.tr.silent-stdout = True;
     self.tr.silent-stderr = False;
