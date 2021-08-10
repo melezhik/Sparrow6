@@ -59,7 +59,7 @@ class Api
   has Bool  $.show-test-result;
   has Bool  $.ignore-task-error is rw;
   has Bool  $.ignore-task-check-error is rw;
-  has Int   $.check-pass-err-cnt is rw;
+  has Int   $.task-check-err-cnt is rw;
   has Str   $.cwd = "{$*CWD}";
   has Bool  $.silent-stdout is rw;
   has Bool  $.silent-stderr is rw;
@@ -208,6 +208,10 @@ class Api
       }
     }
 
+    # mix in task check statistic into state
+    %state<__data__> = %(
+      task-check-err-cnt => $.task-check-err-cnt
+    );
     return %state;
 
   }
