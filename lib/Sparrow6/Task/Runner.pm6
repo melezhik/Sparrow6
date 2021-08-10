@@ -59,6 +59,7 @@ class Api
   has Bool  $.show-test-result;
   has Bool  $.ignore-task-error is rw;
   has Bool  $.ignore-task-check-error is rw;
+  has Int   $.check-pass-err-cnt is rw;
   has Str   $.cwd = "{$*CWD}";
   has Bool  $.silent-stdout is rw;
   has Bool  $.silent-stderr is rw;

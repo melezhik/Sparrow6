@@ -22,8 +22,12 @@ role Role {
         if $r<type> eq "check-expression" {
           self!check-log(%( message => $r<message>, status => $r<status>, type => "check" ));
           if ! $r<status> {
-            self!log("mark check-pass as False",$root);
-            $.check-pass = False;
+            if ! $.ignore-task-check-error {
+              self!log("mark check-pass as False",$root);
+              $.check-pass = False;
+            }
+            $.check-pass-err-cnt++;
+            self!log("bump check-pass-err-cnt",$.check-pass-err-cnt);
           }
         } elsif $r<type> eq "note" {
           self!check-log(%( message => $r<message>, type => "note" ));
