@@ -41,6 +41,10 @@ def ignore_error val = nil
   puts "ignore_error:"
 end
 
+def ignore_task_check_error val = nil
+  puts "ignore_task_check_error:"
+end
+
 def captures
    @captures ||=  JSON.parse(File.read("#{cache_root_dir}/captures.json")).map { |c|  c['data'] }  
 end
