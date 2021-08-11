@@ -44,6 +44,9 @@ def ignore_task_error(val):
 def ignore_error():
   print("ignore_task_error: ")
 
+def ignore_task_check_error(val):
+  print("ignore_task_check_error: " + str(val))
+
 def task_variables():
 
   global TASK_VARIABLES

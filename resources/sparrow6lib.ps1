@@ -48,6 +48,13 @@ function ignore_task_error {
 
 }
 
+function ignore_task_check_error {
+
+  Write-Host "ignore_task_check_error:"
+
+}
+
+
 function captures {
 
   $cache_root_dir = cache_root_dir

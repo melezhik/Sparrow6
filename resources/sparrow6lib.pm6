@@ -50,6 +50,10 @@ sub ignore_error () is export {
   say "ignore_error:";
 }
 
+sub ignore_task_check_error () is export {
+  say "ignore_task_check_error:";
+}
+
 sub config () is export {
 
   return $config if $config.defined;
