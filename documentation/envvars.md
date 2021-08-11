@@ -26,7 +26,11 @@ Once is set Sparrow6 will look tasks locations in `SP6_TASK_ROOT`, not just in `
 
 - SP6_DEBUG
 
-Enable Sparrow6 debugging
+Enable Sparrow6 debugging ( basic info )
+
+- SP6_DEBUG_TASK_CHECK
+
+Enable Sparrow6 task checks debugging
 
 - SP6_DEBUG_STREAM
 
@@ -38,7 +42,7 @@ Enable Sparrow6 profiler
 
 - SP6_KEEP_CACHE
 
-Don't remove Sparrow6 cache upon task finish. Useful when  debugging.
+Don't remove Sparrow6 cache upon task finish. Useful when  debugging
 
 - SP6_CONFIG
 

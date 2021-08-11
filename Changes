@@ -2,7 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-    change `.status` by `.exitcode` because `.status` is deprecated since Rakudo 2021.07
+0.0.34  2021-08-11T09:48:00Z
+
+    Fix: change `.status` by `.exitcode` because `.status` is deprecated since Rakudo 2021.07
+    Add `SP6_DEBUG_TASK_CHECK` environmental variable
+    Add `ignore_task_check_error` - experimental, not documented feature, see `ssh-bulk-check` plugin
 
 0.0.33  2021-06-30T01:24:00Z
 

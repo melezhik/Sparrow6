@@ -3,5 +3,9 @@
 %(
   default => %(
     skip => "sudo,windows,broken,should-fail"
-  )
+  ),
+  windows => %(
+    skip => "sudo,broken,should-fail",
+    only => "windows"
+  ),
 )
