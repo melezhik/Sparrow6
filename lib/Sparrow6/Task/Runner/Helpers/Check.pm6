@@ -37,6 +37,9 @@ role Role {
 
     }
 
+    # revert ignore task check error to default
+    $.ignore-task-check-error = False;
+
   }
 
 }

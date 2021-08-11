@@ -2,6 +2,6 @@
 
 %(
   default => %(
-    skip => "sudo,windows,broken"
+    skip => "sudo,windows,broken,should-fail"
   )
 )
