@@ -1,0 +1,12 @@
+regexp: (\S+)
+
+generator: <<RAKU
+!perl6
+my $word = capture()[0];
+say "note: new word found"
+RAKU
+
+code: <<CODE
+!bash
+echo OK
+CODE
