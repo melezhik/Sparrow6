@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.35  2021-08-20T01:34:00Z
+
     Bugfix: rm `.checks/task.*` to cleanup old task check tasks and avoid onflicts when run another task check code gets run
 
 0.0.34  2021-08-11T09:48:00Z
