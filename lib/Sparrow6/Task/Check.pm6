@@ -72,6 +72,10 @@ class Api
 
     mkdir "{$cache-root-dir}/.checks/";
 
+    for %lang-to-extension.values -> $ext {
+      unlink "{$cache-root-dir}/.checks/task.{$ext}" if "{$cache-root-dir}/.checks/task.{$ext}".IO ~~ :e;
+    }
+
     spurt "{$cache-root-dir}/.checks/task.{ %lang-to-extension{$language}}", $code;
 
     self!log("code run language", $language) if %*ENV<SP6_DEBUG_TASK_CHECK>;
