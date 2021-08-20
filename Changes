@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Bugfix: rm `.checks/task.*` to cleanup old task check tasks and avoid onflicts when run another task check code gets run
+
 0.0.34  2021-08-11T09:48:00Z
 
     Fix: change `.status` by `.exitcode` because `.status` is deprecated since Rakudo 2021.07
