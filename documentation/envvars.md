@@ -58,6 +58,12 @@ Don't use Carton to install CPAN dependencies, useful when one
 install CPAN modules though others means
 
 
+- SP6_TAR_PATH
+
+Path to tar program. For example, for macos users:
+
+    SP6_TAR_PATH=~/homebrew/bin/gtar
+
 - SP6_TAGS
 
 Tags for hosts. Mostly used in Sparrowdo scenarios, to separate one hosts from another

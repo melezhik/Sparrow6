@@ -372,14 +372,16 @@ role Role {
          mkdir "artifacts/";
       }
 	
+      my $tar-cmd = %*ENV<SP6_TAR_PATH> || "tar";
+
       my @cmd = $*DISTRO.is-win ?? (
-        'tar',
+        $tar-cmd,
         '-zcf',
         "artifacts/archive.tar.gz", # some Windows distros have tar that does not understand absolute pathes )=:
         "--exclude=./artifacts",
         '.'
       ) !! (
-        'tar', 
+        $tar-cmd, 
         '--exclude=.tom', 
         '--exclude=local', 
         '--exclude=*.log',
