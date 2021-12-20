@@ -3,6 +3,7 @@ Revision history for Sparrow6
 {{$NEXT}}
 
     SP6_TAR_PATH environment variable support
+    Improvement: respect spaces in SP6_TAGS
 
 0.0.35  2021-08-20T01:34:00Z
 
