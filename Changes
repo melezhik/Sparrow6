@@ -4,6 +4,7 @@ Revision history for Sparrow6
 
     SP6_TAR_PATH environment variable support
     Improvement: respect spaces in SP6_TAGS
+    Fix: remove unsupported Bool.new syntax in Sparrow6::DSL::Git
 
 0.0.35  2021-08-20T01:34:00Z
 
