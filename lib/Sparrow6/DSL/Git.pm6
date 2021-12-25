@@ -6,12 +6,11 @@ use Sparrow6::DSL::Common;
 
 use Sparrow6::DSL::Bash;
 
-
 multi sub git-scm ( $source, %args? ) is export {
 
   my $cd-cmd = %args<to> ?? "cd " ~ %args<to> ~ ' && pwd ' !! 'pwd';
 
-  %args<accept-hostkey> = Bool.new( False ) if not %args<accept-hostkey>;
+  %args<accept-hostkey> = False if not %args<accept-hostkey>;
 
   my @git-ssh-opts = Array.new;
   @git-ssh-opts.push: 'ssh';
