@@ -346,13 +346,13 @@ Those functions are available _inside tasks and hooks_.
 
 Following is the list of helper functions:
 
-* `root_dir()` - task root directory.
+* `root_dir()` - root task directory.
 
 * `cache_root_dir()` - cache root directory, every task has a cache directory served for it's purposes
 
 * `cache_dir()` - task cache directory, every task has a cache directory served for it's purposes
 
-* `task_dir()` - task directory relative to `root_dir()`
+* `task_dir()` - task directory
 
 * `config()` - task configuration object
 
