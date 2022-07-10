@@ -2,7 +2,7 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-    Move to from Colorizable to Terminal::ANSIColor - thanks to @jjatria 
+    Move from Colorizable to Terminal::ANSIColor - thanks to @jjatria 
 
 0.0.36 2022-02-12T17:33:04Z
 
