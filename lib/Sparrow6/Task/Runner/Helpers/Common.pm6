@@ -3,7 +3,7 @@
 unit module Sparrow6::Task::Runner::Helpers::Common;
 
 use JSON::Tiny;
-use Colorizable;
+use Terminal::ANSIColor;
 
 role Role {
 
@@ -15,35 +15,29 @@ role Role {
 
   method !check-log (%data) {
 
-    my $message = %data<message> but Colorizable;
+    my $message = %data<message>;
     my $status = %data<status>;
+    my $header = "[task check]";
 
     if %data<type> eq "check" and %data<status>:exists {
-      my $status-str = "{%data<status>}" but Colorizable;
-      my $header = "[task check]" but Colorizable;
+      my $status-str = %data<status>;
       if %*ENV<SP6_FORMAT_COLOR> {
         if $status eq True {
-          say $header.colorize(:fg(cyan)), " ", $message, " ", $status-str.colorize(:fg(cyan))
+          say $header.&colored('cyan'), " ", $message, " ", $status-str.&colored('cyan')
         } elsif $status eq False {
-          say $header.colorize(:fg(red)), " ", $message, " ", $status-str.colorize(:fg(red))
+          say $header.&colored('red'), " ", $message, " ", $status-str.&colored('red')
         }
       } else {
           say $header, " ", $message, " ", $status;
       }
     } elsif %data<type> eq "note" {
-      my $header = "[task check]" but Colorizable;
       if %*ENV<SP6_FORMAT_COLOR> {
-        say $header.colorize(:fg(yellow)), " ", $message.colorize(:fg(yellow));
+        say $header.&colored('yellow'), " ", $message.&colored('yellow');
       } else {
         say $header, " ", $message;
       }
     } else {
-      my $header = "[task check]" but Colorizable;
-      if %*ENV<SP6_FORMAT_COLOR> {
-        say $header, " ", $message;
-      } else {
-        say $header, " ", $message;
-      }
+      say $header, " ", $message;
     }
   };
 
