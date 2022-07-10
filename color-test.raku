@@ -1,12 +1,12 @@
-use Colorizable;
+use Terminal::ANSIColor;
 
-my $planet = "Sparrow" but Colorizable;
+my $planet = "Sparrow";
 
-say $planet.colorize(:fg(blue), :bg(red), :mo(bold));
-say $planet.colorize(:fg(blue), :bg(green), :mo(italic));
-say $planet.colorize(:fg(green));
-say $planet.colorize(:fg(green), :mo(bold));
-say $planet.colorize(:fg(green), :mo(italic));
-say $planet.colorize(:fg(red), :mo(italic));
-say $planet.colorize(:fg(cyan), :mo(italic));
-say $planet.colorize(:fg(yellow), :mo(italic));
+say $planet.&colored('bold blue on_red');
+say $planet.&colored('italic blue on_green');
+say $planet.&colored('green');
+say $planet.&colored('bold green');
+say $planet.&colored('italic green');
+say $planet.&colored('italic red');
+say $planet.&colored('italic cyan');
+say $planet.&colored('italic yellow');
