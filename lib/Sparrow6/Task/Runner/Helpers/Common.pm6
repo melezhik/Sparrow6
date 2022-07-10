@@ -20,7 +20,7 @@ role Role {
     my $header = "[task check]";
 
     if %data<type> eq "check" and %data<status>:exists {
-      my $status-str = %data<status>;
+      my $status-str = %data<status>.Str;
       if %*ENV<SP6_FORMAT_COLOR> {
         if $status eq True {
           say $header.&colored('cyan'), " ", $message, " ", $status-str.&colored('cyan')
