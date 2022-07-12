@@ -1,4 +1,4 @@
-#!perl6 
+#!raku
 
 =begin tomty
 %(
@@ -9,13 +9,9 @@
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(
-  name  => "perl6-hello-world",
+  name  => "raku-ignore-task-err",
   root  => "examples/tasks",
-  task => "perl6-hello-world",
+  task => "raku-ignore-task-err",
   do-test => True,
   show-test-result => True,
-  parameters => %(
-    language => "Perl6"
-  )
 ).task-run;
-

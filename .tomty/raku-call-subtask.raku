@@ -1,4 +1,4 @@
-#!perl6 
+#!raku
 
 =begin tomty
 %(
@@ -9,13 +9,13 @@
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(
-  name  => "perl6-call-subtask",
+  name  => "raku-call-subtask",
   root  => "examples/tasks",
-  task => "perl6-call-subtask",
+  task => "raku-call-subtask",
   do-test => True,
   show-test-result => True, 
   parameters => %(
-    language => "Perl6"
+    language => "raku"
   )
 ).task-run;
 

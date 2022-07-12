@@ -1,4 +1,4 @@
-#!perl6 
+#!raku 
 
 =begin tomty
 %(
@@ -9,9 +9,9 @@
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(
-  name  => "perl6-captures",
+  name  => "raku-streams",
   root  => "examples/tasks",
-  task => "perl6-captures",
+  task => "raku-streams",
   do-test => True,
   show-test-result => True,
 ).task-run;

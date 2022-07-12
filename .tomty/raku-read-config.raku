@@ -1,4 +1,4 @@
-#!perl6 
+#!raku 
 
 =begin tomty
 %(
@@ -9,9 +9,9 @@
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(
-  name  => "perl6-read-config",
+  name  => "raku-read-config",
   root  => "examples/tasks",
-  task => "perl6-read-config",
+  task => "raku-read-config",
   do-test => True,
   show-test-result => True,  
 ).task-run;

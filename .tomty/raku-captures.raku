@@ -1,4 +1,4 @@
-#!perl6
+#!raku 
 
 =begin tomty
 %(
@@ -9,9 +9,10 @@
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(
-  name  => "perl6-ignore-task-err",
+  name  => "raku-captures",
   root  => "examples/tasks",
-  task => "perl6-ignore-task-err",
+  task => "raku-captures",
   do-test => True,
   show-test-result => True,
 ).task-run;
+
