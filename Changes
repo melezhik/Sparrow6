@@ -2,8 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-    Move from Colorizable to Terminal::ANSIColor - thanks to @jjatria 
-
+    pl6 -> raku, Perl -> Raku renaming (1-st stage)
+    
 0.0.36 2022-02-12T17:33:04Z
 
     SP6_TAR_PATH environment variable support
@@ -13,7 +13,7 @@ Revision history for Sparrow6
 
 0.0.35  2021-08-20T01:34:00Z
 
-    Bugfix: rm `.checks/task.*` to cleanup old task check tasks and avoid onflicts when run another task check code gets run
+    Bugfix: rm `.checks/task.*` to cleanup old task check tasks and avoid conflicts when run another task check code gets run
 
 0.0.34  2021-08-11T09:48:00Z
 
@@ -99,12 +99,12 @@ Revision history for Sparrow6
     - Export pip environment to bash task
     - Export cpanfile environment to bash task
     - Export local bin/ to bash task PATH
-    - Remove meanigless code from ruby task run command
+    - Remove meaningless code from ruby task run command
 
 0.0.17  2020-03-13T14:17:05Z
 
     - Task check - Range/Within search are now combined
-    - Task check - Range/Within search - fixing issues for some edge scenarious 
+    - Task check - Range/Within search - fixing issues for some edge scenarios 
     - Improve debugging of task checks
     - Added negative tests
 
@@ -115,7 +115,7 @@ Revision history for Sparrow6
     - task check - logs stderr ( to help debug when task check fails )
     - s6 - upload, install plugin - full support of `--force` option
     - s6 - install, `--verbose` option
-    - add usefull debug message to Task Check Context for Seqs
+    - add useful debug message to Task Check Context for Seqs
 
 0.0.15  2020-03-04T17:06:40Z
 
@@ -140,7 +140,7 @@ Revision history for Sparrow6
 
 0.0.10  2019-10-29T19:10:58-06:00
 
-    - Windows support ( partitial )
+    - Windows support ( partial )
     - Switch test suite to Tomty
 
 0.0.9  2019-08-10T18:08:32-05:00
@@ -156,7 +156,7 @@ Revision history for Sparrow6
       use $global:progressPreference = 'silentlyContinue' as a workaround
       see https://stackoverflow.com/questions/18770723/hide-progress-of-invoke-webrequest
 
-    - Use modules for Powershell harness ( glue.psm1 and sparrowlib.psm1 ) rathe then scripts
+    - Use modules for Powershell harness ( glue.psm1 and sparrowlib.psm1 ) rather then scripts
 
 
 0.0.7  2019-07-30T17:43:43Z
