@@ -50,7 +50,7 @@ Set path to configuration file.
 
 For example:
 
-    SP6_CONFIG=config.pl6
+    SP6_CONFIG=config.raku
 
 - SP6_CARTON_OFF
 

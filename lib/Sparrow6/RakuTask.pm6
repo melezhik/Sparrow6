@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 use v6;
 
@@ -40,19 +40,19 @@ class Cli
 
     self!log("create task dir", $task-path);
 
-    if "{$task-path}/task.pl6".IO ~~ :e {
-
-      self.console("{$task-path}/task.pl6 exists, update task");
+    if "{$task-path}/task.raku".IO ~~ :e {
+      
+      self.console("{$task-path}/task.raku exists, update task");
 
       die "EDITOR env is not set" unless %*ENV<EDITOR>;
 
-      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
+      shell("exec {%*ENV<EDITOR>} {$task-path}/task.raku");
 
     }  else {
 
-      self!log("task file","{$task-path}/task.pl6");
+      self!log("task file","{$task-path}/task.raku");
 
-      my $fh = open "{$task-path}/task.pl6", :w;
+      my $fh = open "{$task-path}/task.raku", :w;
 
       $fh.say("task-run \"{$path}\", \"plugin-name\", \%(\n);");
 
@@ -60,7 +60,7 @@ class Cli
 
       die "EDITOR env is not set" unless %*ENV<EDITOR>;
 
-      shell("exec {%*ENV<EDITOR>} {$task-path}/task.pl6");
+      shell("exec {%*ENV<EDITOR>} {$task-path}/task.raku");
 
     }
 
@@ -70,11 +70,11 @@ class Cli
 
     my $task-path = self!task-path($path);
 
-    if "{$task-path}/task.pl6".IO ~~ :f {
+    if "{$task-path}/task.raku".IO ~~ :f {
 
-      self!log("task show", "$task-path/task.pl6");
+      self!log("task show", "$task-path/task.raku");
 
-      say slurp "{$task-path}/task.pl6".IO;
+      say slurp "{$task-path}/task.raku".IO;
 
     } else {
 
@@ -106,7 +106,7 @@ class Cli
 
     my $task-path = self!task-path($path);
 
-    EVALFILE "{$task-path}/task.pl6";
+    EVALFILE "{$task-path}/task.raku";
 
   }
 
@@ -121,7 +121,7 @@ class Cli
 
     for self.find-tasks(
       ".",
-      test => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/
+      test => /^^ task '.' (ps1||pl|||raku||bash||python||ruby) $$/
     ) -> $t {
         $i++;
         say $t

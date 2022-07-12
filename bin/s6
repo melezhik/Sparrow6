@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 use Sparrow6::Task::Repository;
 use Sparrow6::Task;

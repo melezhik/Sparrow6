@@ -242,7 +242,17 @@ class Api
 
     # try to run hooks first
 
-    if "$root/hook.pl6".IO ~~ :e {
+    if "$root/hook.raku".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-perl6-hook("$root/hook.raku");
+
+      self!reset-cache-dir();
+
+    } elsif "$root/hook.pl6".IO ~~ :e {
 
       self!set-cache-dir();
 
@@ -304,7 +314,27 @@ class Api
 
     }
 
-    if "$root/task.pl6".IO ~~ :e {
+    if "$root/task.raku".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-perl6-task("$root/task.raku");
+
+      self!run-task-check($root);
+
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.raku");
+
+        EVALFILE "$root/test.raku";
+
+      }
+
+      self!reset-cache-dir();
+
+    } elsif "$root/task.pl6".IO ~~ :e {
 
       self!set-cache-dir();
 
@@ -314,16 +344,15 @@ class Api
 
       self!run-task-check($root);
 
-      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
 
-        self!log("execute embeded test","$root/test.pl6");
+        self!log("execute embeded test","$root/test.raku");
 
-        EVALFILE "$root/test.pl6";
+        EVALFILE "$root/test.raku";
 
       }
 
       self!reset-cache-dir();
-
 
     } elsif "$root/task.pl".IO ~~ :e {
 
@@ -335,11 +364,11 @@ class Api
 
       self!run-task-check($root);
 
-      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
 
-        self!log("execute embeded test","$root/test.pl6");
+        self!log("execute embeded test","$root/test.raku");
 
-        EVALFILE "$root/test.pl6";
+        EVALFILE "$root/test.raku";
 
       }
 
@@ -355,11 +384,11 @@ class Api
 
       self!run-task-check($root);
 
-      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
 
-        self!log("execute embeded test","$root/test.pl6");
+        self!log("execute embeded test","$root/test.raku");
 
-        EVALFILE "$root/test.pl6";
+        EVALFILE "$root/test.raku";
 
       }
 
@@ -375,11 +404,11 @@ class Api
 
       self!run-task-check($root);
 
-      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
 
-        self!log("execute embeded test","$root/test.pl6");
+        self!log("execute embeded test","$root/test.raku");
 
-        EVALFILE "$root/test.pl6";
+        EVALFILE "$root/test.raku";
 
       }
 
@@ -396,11 +425,11 @@ class Api
 
       self!run-task-check($root);
 
-      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
 
-        self!log("execute embeded test","$root/test.pl6");
+        self!log("execute embeded test","$root/test.raku");
 
-        EVALFILE "$root/test.pl6";
+        EVALFILE "$root/test.raku";
 
       }
 
@@ -416,11 +445,11 @@ class Api
 
       self!run-task-check($root);
 
-      if  "$root/test.pl6".IO ~~ :e  and $.do-test {
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
 
-        self!log("execute embeded test","$root/test.pl6");
+        self!log("execute embeded test","$root/test.raku");
 
-        EVALFILE "$root/test.pl6";
+        EVALFILE "$root/test.raku";
 
       }
 

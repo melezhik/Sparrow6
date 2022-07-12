@@ -496,7 +496,7 @@ Asserts are functions to audit your server state. Here are some examples
 
 It's just simple check by `curl's GET` with follow redirect enabled.
 
-    http-ok 'http://perl6.org';
+    http-ok 'https://raku.org';
 
 Ignore http proxy when making request:
 
@@ -512,7 +512,7 @@ The same as above but with `port` and `path`:
 
 Checks that web page has content:
 
-    http-ok 'http://perl6.org', %( has-content => "'Perl 6'" );
+    http-ok 'https://raku.org', %( has-content => "'Raku Programming Language'" );
  
 
 ## Helper functions

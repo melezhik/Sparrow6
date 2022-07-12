@@ -42,7 +42,7 @@ Static rules - check expressions - that define verification.
 
 * DSL compatible programming languages:
  
-  * Perl6
+  * Raku
   * Perl5
   * Bash
   * Ruby
@@ -98,7 +98,7 @@ Search context is restored to default one every time when DSL parser meets `end:
 
 ## DSL Parser Implementation
 
-* `Sparrow6::Task::Check` is Perl6 implementation of the TC language
+* `Sparrow6::Task::Check` is Raku implementation of the TC language
 
 * The document describes the TC language itself, rather then methods of `Sparrow6::Task::Check` class
 
@@ -217,7 +217,7 @@ Output:
 
 Similarly to plain text matching, one may check against regular expressions.
 
-The TC language uses [Perl6 Regular Expressions](https://docs.perl6.org/language/regexes).
+The TC language uses [Raku Regular Expressions](https://docs.raku.org/language/regexes).
 
 story.bash
 
@@ -264,7 +264,7 @@ But you can match consecutive series of lines using sequence expressions.
 
 * Matched lines are captured and accumulated inside @matched array and available through `matched()` function 
 
-* If regular expressions with [capturing](https://docs.perl6.org/language/regexes#Capturing) are used, 
+* If regular expressions with [capturing](https://docs.raku.org/language/regexes#Capturing) are used, 
 the respected captures get _accumulated_ inside `@captures` array and available through `captures()` function
 
 * Layer is captures for a single check step, see also streams
@@ -335,7 +335,7 @@ Output:
     
 The difference between `matched` and `captures()` is that `matched()` returns array of matched lines, while
 `captures()` returns array of _captured_ variables for _every_ matched line ( that means array of arrays ),
-_if_ regular expression has [capturing](https://docs.perl6.org/language/regexes#Capturing);
+_if_ regular expression has [capturing](https://docs.raku.org/language/regexes#Capturing);
 
 In case there is no capturing in regular expression or plain strings check used `captures()` is equivalent of `matched()`
 
@@ -563,10 +563,10 @@ between lines matching right and left regular expression of between statement:
 
     between: {re1} {re2}
 
-DSL parser uses Perl6 [^fff^](https://docs.perl6.org/language/operators#infix_^fff^) operator to 
+DSL parser uses Raku [^fff^](https://docs.raku.org/language/operators#infix_^fff^) operator to 
 search within diapason.
 
-It's technically equally to this Perl6 code:
+It's technically equally to this Raku code:
 
     if /$re/ ^fff^ /$re2/
 
@@ -847,10 +847,10 @@ The code language is defined in shebang on the first line of here document.
 
 Examples:
 
-## perl6
+## raku
 
     code:  <<HERE
-      !perl6
+      !raku
       say 'hi there!'
     HERE
 
@@ -894,8 +894,8 @@ DSL:
     
     assert: 1 this is true
     assert: 0 this is false
-    assert: True this is also true, Perl6 style 
-    assert: False this is false, Perl6 style 
+    assert: True this is also true, Raku style 
+    assert: False this is false, Raku style 
     assert: true this is true, python/ruby style 
     assert: false this is false, python/ruby style 
 
@@ -903,8 +903,8 @@ Output:
 
     [task check] <this is true> True
     [task check] <this is false> False
-    [task check] <this is also true, Perl6 style> True
-    [task check] <this is false, Perl6 style> False
+    [task check] <this is also true, Raku style> True
+    [task check] <this is false, Raku style> False
     [task check] <this is true, python/ruby style> True
     [task check] <this is false, python/ruby style> False
     

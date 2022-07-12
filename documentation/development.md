@@ -10,7 +10,7 @@ To create task simply create `task.*` file in the current directory:
 
 Raku:
 
-    task.pl6
+    task.raku
 
       say "What is your name?";
       say "Rakudo!";
@@ -72,7 +72,7 @@ This table describes `file name -> language` mapping:
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Raku       | task.pl6     |
+    | Raku       | task.raku     |
     | Perl       | task.pl      |
     | Bash       | task.bash    |
     | Python     | task.py      |
@@ -88,15 +88,15 @@ This is where Sparrow looks for a code when execute a task.
 
 However you can organize a folders structure as you wish:
 
-    animals/cow/task.pl6
+    animals/cow/task.raku
 
       say "I make milk";
 
-    animals/cat/task.pl6
+    animals/cat/task.raku
 
       say "I drink milk";
 
-    people/me/task.pl6
+    people/me/task.raku
 
       say "I buy milk";
 
@@ -182,7 +182,7 @@ Subtasks are tasks that get called by other tasks.
 
 You can think subtasks as functions which you _call_ from other tasks.
 
-    hook.pl6
+    hook.raku
 
       run_task "system", %( command => "uptime" )
 
@@ -204,7 +204,7 @@ For example:
 
 For example:
 
-    $ nano hook.pl6
+    $ nano hook.raku
 
 * A `run_task` function accepts relative folder within a `tasks/` directory
 
@@ -285,7 +285,7 @@ This table describes file name -> language mapping for hooks:
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Raku       | hook.pl6     |
+    | Raku       | hook.raku     |
     | Perl       | hook.pl      |
     | Bash       | hook.bash    |
     | Python     | hook.py      |
@@ -306,13 +306,13 @@ To _generate_ hook's output use `set_stdout` function:
 
 If hook send an output through a `set_stdout` function, and _the same folder_ task's been executed, the task output get merged with the hook's one:
 
-    hook.pl6
+    hook.raku
 
       if config<mood> eq "sleepy" {
         set_stdout("Black Coffee")
       }
 
-    task.pl6
+    task.raku
 
       say "Sandwich"
 
@@ -404,7 +404,7 @@ If a task fails ( a task exit code is not equal to zero ), the task runner stops
 
 To prevent the task runner from stop use  `ignore_error` function inside a task hook:
 
-    hook.pl6
+    hook.raku
 
       #!raku
       
@@ -563,7 +563,7 @@ This make it easy to place custom Raku modules under a task root directory:
 
       unit module Foo;
 
-    task.pl6
+    task.raku
 
       use Foo;
 

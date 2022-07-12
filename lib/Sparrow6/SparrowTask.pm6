@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 use v6;
 
@@ -38,11 +38,11 @@ class Cli
 
   method task-cat ($path)  {
 
-    if "{$path}/task.pl6".IO ~~ :f {
+    if "{$path}/task.raku".IO ~~ :f {
 
-      self!log("task show", "$path/task.pl6");
+      self!log("task show", "$path/task.raku");
 
-      say slurp "{$path}/task.pl6".IO;
+      say slurp "{$path}/task.raku".IO;
 
     } elsif "{$path}/task.bash".IO ~~ :f {
 
@@ -114,7 +114,7 @@ class Cli
 
     for self.find-tasks(
       $path,
-      basename => /^^ task '.' (ps1||pl||pl6||raku||bash||python||ruby) $$/,
+      basename => /^^ task '.' (raku||ps1||pl||bash||python||ruby) $$/,
       pattern => $pattern
     ) -> $t {
         $i++;
