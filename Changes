@@ -2,6 +2,13 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    SP6_DUMP_TASK_CODE environment variable allows to
+    dump code of Sparrow tasks automatically
+    ( useful for r3tool )
+
+    Improvement: Reports get more clear
+    and understandable 
+
 0.0.37 2022-07-11T21:35:04Z
 
     pl6 -> raku, Perl -> Raku renaming (1-st stage)

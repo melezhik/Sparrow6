@@ -3,6 +3,7 @@
 unit module Sparrow6::Task::Runner::Helpers::Common;
 
 use JSON::Tiny;
+
 use Terminal::ANSIColor;
 
 role Role {
@@ -17,27 +18,26 @@ role Role {
 
     my $message = %data<message>;
     my $status = %data<status>;
-    my $header = "[task check]";
 
     if %data<type> eq "check" and %data<status>:exists {
       my $status-str = %data<status>.Str;
       if %*ENV<SP6_FORMAT_COLOR> {
         if $status eq True {
-          say $header.&colored('cyan'), " ", $message, " ", $status-str.&colored('cyan')
+          say $message, " ", $status-str.&colored('cyan')
         } elsif $status eq False {
-          say $header.&colored('red'), " ", $message, " ", $status-str.&colored('red')
+          say $message, " ", $status-str.&colored('red')
         }
       } else {
-          say $header, " ", $message, " ", $status;
+          say $message, " ", $status;
       }
     } elsif %data<type> eq "note" {
       if %*ENV<SP6_FORMAT_COLOR> {
-        say $header.&colored('yellow'), " ", $message.&colored('yellow');
+        say "# {$message}".&colored('yellow');
       } else {
-        say $header, " ", $message;
+        say $message;
       }
     } else {
-      say $header, " ", $message;
+      say $message;
     }
   };
 
@@ -118,9 +118,13 @@ role Role {
 
     self!log("effective command", @arr);
 
+    self.console-header("stdout") unless self.silent-stdout;
+
     ($*OUT,$*ERR).map: {.out-buffer = 0};
 
     $proc = Proc::Async.new(@arr);
+
+    my @stderr;
 
     react {
 
@@ -131,18 +135,22 @@ role Role {
           my $stdout-lines = 0;
 
           self.console($line) unless self.silent-stdout;
+
           push self.stdout-data, $line;
 
           #say ‘line: ’, $_
 
         }
 
-        whenever $proc.stderr { # chunks 
+        whenever $proc.stderr.lines { # split input on \r\n, \n, and \r
 
           my $line = chomp($_);
 
           push self.stderr-data, $line;
-          self.console("stderr: $line"); # unless self.silent-stderr;
+
+          push @stderr, $line;
+
+          #self.console("stderr: $line"); # unless self.silent-stderr;
 
           # say ‘stderr: ’, $_
 
@@ -176,6 +184,16 @@ role Role {
             done # gracefully jump from the react block
 
         }
+    }
+
+    if @stderr and ! self.silent-stderr {
+
+      self.console-header("stderr");
+
+      for @stderr {
+        self.console($_)
+      }
+
     }
 
     return

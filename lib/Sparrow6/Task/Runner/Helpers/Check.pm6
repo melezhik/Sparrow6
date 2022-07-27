@@ -7,6 +7,8 @@ role Role {
 
     if  "$root/task.check".IO ~~ :e {
 
+      self.console-header("verification");
+
       self!log("execute task check","$root/task.check");
 
       my $tc = Sparrow6::Task::Check::Api.new(

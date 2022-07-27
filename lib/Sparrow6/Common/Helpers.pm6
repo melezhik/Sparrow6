@@ -2,8 +2,9 @@
 
 unit module Sparrow6::Common::Helpers;
 
-my $timeformat = sub ($self) { sprintf "%02d:%02d:%02d %02d/%02d/%04d", .hour, .minute, .second,   .month, .day, .year given $self; };
 use Terminal::ANSIColor;
+
+my $timeformat = sub ($self) { sprintf "%02d:%02d:%02d %02d/%02d/%04d", .hour, .minute, .second,   .month, .day, .year given $self; };
 
 role Role {
 
@@ -33,6 +34,26 @@ role Role {
 
   };
 
+
+
+  method console-header ($header) {
+
+    say %*ENV<SP6_FORMAT_COLOR> ?? "[$header]".&colored('bold cyan') !!"[$header]";
+
+  };
+
+  method dump-code ($lang,$code) {
+
+    my $i = 0;
+
+    self.console-header("code: $lang");
+
+    for $code.IO.slurp.split("\n") -> $line {
+      $i++;
+      say "[$i] $line";
+    }
+
+  }
 
   method !set-sparrow-root () {
 

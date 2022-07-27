@@ -63,6 +63,7 @@ class Api
   has Str   $.cwd = "{$*CWD}";
   has Bool  $.silent-stdout is rw;
   has Bool  $.silent-stderr is rw;
+  has Bool  $.code-dumpable is rw = True;
 
   my $task-run = 0;
 

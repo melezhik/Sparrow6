@@ -101,3 +101,8 @@ Enable terse format ( only scripts output ) in Sparrow reports
 - SP6_FORMAT_COLOR
 
 Enable colors in Sparrow reports
+
+- SP6_DUMP_TASK_CODE
+
+Dump code of Sparrow tasks automatically  ( useful for r3 and other test tools )
+

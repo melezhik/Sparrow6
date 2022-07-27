@@ -122,6 +122,8 @@ role Role {
 
     self!log("bash task cmd deployed", $cmd);
 
+    self.dump-code("bash",$path) if %*ENV<SP6_DUMP_TASK_CODE> and self.code-dumpable;
+
     self!run-command-async($cmd);
 
   }
