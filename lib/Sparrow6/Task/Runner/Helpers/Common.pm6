@@ -86,6 +86,8 @@ role Role {
 
       self!log("read stdout from", $stdout-file);
 
+      self.console-header("hook stdout");
+
       for $stdout-file.IO.lines -> $line {
         self!log("set stdout",$line);
         push self.stdout-data, $line;
@@ -118,7 +120,7 @@ role Role {
 
     self!log("effective command", @arr);
 
-    self.console-header("stdout") unless self.silent-stdout;
+    self.console-header("task stdout");
 
     ($*OUT,$*ERR).map: {.out-buffer = 0};
 
@@ -188,7 +190,7 @@ role Role {
 
     if @stderr and ! self.silent-stderr {
 
-      self.console-header("stderr");
+      self.console-header("task stderr");
 
       for @stderr {
         self.console($_)
@@ -257,9 +259,9 @@ role Role {
       $stdout-lines++;
     }
 
-    unless self.silent-stdout {
-      self.console("<empty stdout>") if $stdout-lines == 0;
-    }
+    #unless self.silent-stdout {
+    #  self.console("<empty stdout>") if $stdout-lines == 0;
+    #}
 
   }
 

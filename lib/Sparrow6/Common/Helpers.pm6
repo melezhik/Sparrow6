@@ -4,7 +4,8 @@ unit module Sparrow6::Common::Helpers;
 
 use Terminal::ANSIColor;
 
-my $timeformat = sub ($self) { sprintf "%02d:%02d:%02d %02d/%02d/%04d", .hour, .minute, .second,   .month, .day, .year given $self; };
+#my $timeformat = sub ($self) { sprintf "%02d:%02d:%02d %02d/%02d/%04d", .hour, .minute, .second,   .month, .day, .year given $self; };
+my $timeformat = sub ($self) { sprintf "%02d:%02d:%02d", .hour, .minute, .second given $self; };
 
 role Role {
 
@@ -18,18 +19,16 @@ role Role {
 
   method console ($message) {
 
-    my $header = "[{$.name}]";
+    #my $header = "[{$.name}]";
+
     my $ts = DateTime.now(formatter => $timeformat).Str;
-    if %*ENV<SP6_FORMAT_TERSE> {
-      say $message
-    } elsif %*ENV<SP6_LOG_NO_TIMESTAMPS> {
-      say %*ENV<SP6_FORMAT_COLOR>
-        ?? "$header.&colored('magenta') :: $message"
-        !! "$header :: $message";
+
+    if %*ENV<SP6_LOG_NO_TIMESTAMPS> {
+      say $message;
     } else {
       say %*ENV<SP6_FORMAT_COLOR>
-        ?? "$ts.&colored('magenta') $header.&colored('magenta') :: $message"
-        !! "$ts $header :: $message";
+        ?? "$ts.&colored('magenta') :: $message"
+        !! "$ts :: $message";
     }
 
   };
@@ -38,15 +37,19 @@ role Role {
 
   method console-header ($header) {
 
+    return if self.silent-stdout;
+
+    return if %*ENV<SP6_FORMAT_TERSE>;
+
     say %*ENV<SP6_FORMAT_COLOR> ?? "[$header]".&colored('bold cyan') !!"[$header]";
 
   };
 
-  method dump-code ($lang,$code) {
+  method dump-code ($code) {
 
     my $i = 0;
 
-    self.console-header("code: $lang");
+    self.console-header("dump code: {$code.IO.basename}");
 
     for $code.IO.slurp.split("\n") -> $line {
       $i++;
