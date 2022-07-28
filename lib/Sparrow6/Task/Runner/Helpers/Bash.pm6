@@ -122,9 +122,9 @@ role Role {
 
     self!log("bash task cmd deployed", $cmd);
 
-    self.dump-code($path) if %*ENV<SP6_DUMP_TASK_CODE> and self.code-dumpable;
-
     self.console-header("run task: {$path.IO.basename} - {self.name}");
+
+    self.dump-code($path) if %*ENV<SP6_DUMP_TASK_CODE> and self.code-dumpable;
 
     self!run-command-async($cmd);
 

@@ -19,7 +19,22 @@ role Role {
 
   method console ($message) {
 
-    #my $header = "[{$.name}]";
+    my $header = $.name;
+
+    my $ts = DateTime.now(formatter => $timeformat).Str;
+
+    if %*ENV<SP6_LOG_NO_TIMESTAMPS> {
+      say "[$header] - $message";
+    } else {
+      say %*ENV<SP6_FORMAT_COLOR>
+        ?? "$ts.&colored('magenta') :: [$header] - $message"
+        !! "$ts :: [$header] - $message";
+    }
+
+  };
+
+
+  method console-wo-prefix ($message) {
 
     my $ts = DateTime.now(formatter => $timeformat).Str;
 
@@ -32,7 +47,6 @@ role Role {
     }
 
   };
-
 
 
   method console-header ($header) {

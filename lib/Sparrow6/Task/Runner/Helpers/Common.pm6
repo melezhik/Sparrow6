@@ -91,7 +91,7 @@ role Role {
       for $stdout-file.IO.lines -> $line {
         self!log("set stdout",$line);
         push self.stdout-data, $line;
-        self.console($line);
+        self.console-wo-prefix($line);
       }
 
     }
@@ -136,7 +136,7 @@ role Role {
 
           my $stdout-lines = 0;
 
-          self.console($line) unless self.silent-stdout;
+          self.console-wo-prefix($line) unless self.silent-stdout;
 
           push self.stdout-data, $line;
 
@@ -152,7 +152,7 @@ role Role {
 
           push @stderr, $line;
 
-          #self.console("stderr: $line"); # unless self.silent-stderr;
+          #self.console-wo-prefix("stderr: $line"); # unless self.silent-stderr;
 
           # say ‘stderr: ’, $_
 
@@ -166,19 +166,24 @@ role Role {
 
             #say ‘Proc finished: exitcode=’, .exitcode, ‘ signal=’, .signal;
 
-            unless self.silent-stdout {
-              self.console("<empty stdout>") if self.stdout-data.elems == 0;
-            }
+            #unless self.silent-stdout {
+            #  self.console-wo-prefix("<empty stdout>") if self.stdout-data.elems == 0;
+            #}
   
 
             my $exit-code = .exitcode;
 
             if $exit-code != 0 and ! $.ignore-task-error {
-              self.console("task exit status: $exit-code");
-              self.console("task {self.name} FAILED");
+              if @stderr and ! self.silent-stderr {
+                self.console-header("task stderr");
+                for @stderr {
+                    self.console-wo-prefix($_)
+                }
+              }
+              self.console-wo-prefix("task exit status: $exit-code");
+              self.console-wo-prefix("task {self.name} FAILED");
               exit($exit-code);
             }
-
 
             # reset ignore-task-error
             self.ignore-task-error = False;
@@ -193,7 +198,7 @@ role Role {
       self.console-header("task stderr");
 
       for @stderr {
-        self.console($_)
+        self.console-wo-prefix($_)
       }
 
     }
@@ -210,8 +215,8 @@ role Role {
     $cmd.out.close().^name; # we don't want to sink here
 
     if $st != 0 and ! $.ignore-task-error {
-      self.console("task exit status: $st");
-      self.console("task {self.name} FAILED");
+      self.console-wo-prefix("task exit status: $st");
+      self.console-wo-prefix("task {self.name} FAILED");
       exit(100);
     }
 
@@ -225,14 +230,23 @@ role Role {
     my $st = $cmd.exitcode;
 
     if $st != 0 {
-      self.console("hook exit status: $st");
-      self.console("hook {self.name} FAILED");
-      for $cmd.err.lines -> $line {
-        self.console("stderr: $line");
+      self.console-wo-prefix("hook exit status: $st");
+      self.console-wo-prefix("hook {self.name} FAILED");
+
+      if $cmd.out.lines {
+        self.console-header("out");
+        for $cmd.out.lines -> $line {
+          self.console-wo-prefix($line);
+        }
       }
-      for $cmd.out.lines -> $line {
-        self.console("stdout: $line");
+
+      if $cmd.err.lines {
+        self.console-header("stderr");
+        for $cmd.err.lines -> $line {
+          self.console-wo-prefix($line);
+        }
       }
+
       $cmd.out.close().^name; # we don't want to sink here
       exit(101);
     } else {
@@ -241,29 +255,6 @@ role Role {
 
   }
 
-
-  method !capture-cmd-output ($cmd, %args?) {
-
-    unless %args<ignore-stderr> {
-      for $cmd.err.lines -> $line {
-        push self.stderr-data, $line;
-        self.console("stderr: $line") unless self.silent-stderr;
-      }
-    }
-
-    my $stdout-lines = 0;
-
-    for $cmd.out.lines -> $line {
-      self.console($line) unless self.silent-stdout;
-      push self.stdout-data, $line;
-      $stdout-lines++;
-    }
-
-    #unless self.silent-stdout {
-    #  self.console("<empty stdout>") if $stdout-lines == 0;
-    #}
-
-  }
 
 
   method !get-state {
