@@ -42,7 +42,7 @@ class Cli
 
     if "{$task-path}/task.raku".IO ~~ :e {
       
-      self.console("{$task-path}/task.raku exists, update task");
+      self.console-with-prefix("{$task-path}/task.raku exists, update task");
 
       die "EDITOR env is not set" unless %*ENV<EDITOR>;
 

@@ -6,7 +6,7 @@ role Role {
 
     die "usage: repo-init \$repo-root" unless $repo-root.defined;
 
-    self.console("initialize Sparrow6 repository for $repo-root ");
+    self.console-with-prefix("initialize Sparrow6 repository for $repo-root ");
 
     mkdir "$repo-root/plugins/";
 

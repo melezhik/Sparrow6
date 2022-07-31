@@ -8,7 +8,7 @@ role Role {
 
     self!log("index updated from", "{$.url}/api/v1/index");
 
-    self.console("index updated from {$.url}/api/v1/index");
+    self.console-with-prefix("index updated from {$.url}/api/v1/index");
 
     self!log("index save to", "{self!index-file}");
 

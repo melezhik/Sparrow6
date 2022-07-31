@@ -37,7 +37,7 @@ role Role {
           my $module = @params.shift;
           my $zef-options = "--to=$plg-src/raku-lib";
           $zef-options ~=  " {@params}" if @params;
-          self.console("install $module to $plg-src/raku-lib");
+          self.console-with-prefix("install $module to $plg-src/raku-lib");
           shell("bash -c 'zef install $module $zef-options'");
         }
       }
@@ -72,7 +72,7 @@ role Role {
       # try to update existing plugin
 
       if %args<force> {
-        self.console("force is set, remove plugin from {self.plugin-directory($pid)}");
+        self.console-with-prefix("force is set, remove plugin from {self.plugin-directory($pid)}");
         self.plugin-remove($pid) 
       }
 
@@ -88,19 +88,19 @@ role Role {
 
         if ($plg-canonical-v > $inst-v) {
 
-          self.console("upgrading $pid from version $inst-v to version $plg-canonical-v");
+          self.console-with-prefix("upgrading $pid from version $inst-v to version $plg-canonical-v");
 
           self!load-unpack-and-install($pid,"{$pid}-v{$plg-v}.tar.gz");
 
         } else {
 
-            self.console("$pid is uptodate. version $inst-v") if %args<verbose>;
+            self.console-with-prefix("$pid is uptodate. version $inst-v") if %args<verbose>;
 
             # reinstall dependencies for already installed plugin
             # if options --force-install-deps passed
 
             if %args<force-install-deps> {
-              self.console("force-install-deps is set, reinstalling plugin dependencies");
+              self.console-with-prefix("force-install-deps is set, reinstalling plugin dependencies");
               self.install-plugin-deps("{self.plugin-directory($pid)}");
             }
 
@@ -112,7 +112,7 @@ role Role {
 
           my $v = %args<version> ||  %list{$pid}<version>;
 
-          self.console("installing $pid, version $v");
+          self.console-with-prefix("installing $pid, version $v");
 
           self!load-unpack-and-install($pid,"{$pid}-v{$v}.tar.gz");
 
@@ -122,7 +122,7 @@ role Role {
 
     } elsif "{self.plugin-directory($pid)}/".IO ~~ :d  {
 
-      self.console("plugin {self.plugin-directory($pid)} installed locally, nothing to do here");
+      self.console-with-prefix("plugin {self.plugin-directory($pid)} installed locally, nothing to do here");
 
     } else {
 
@@ -146,14 +146,14 @@ role Role {
 
         my $inst-v = Version.new(%plg-meta<version>);
 
-        self.console("uninstall plugin {$pid} version {$inst-v} from directory {self.plugin-directory($pid)}");
+        self.console-with-prefix("uninstall plugin {$pid} version {$inst-v} from directory {self.plugin-directory($pid)}");
 
         self.plugin-remove($pid);
 
 
       } else {
 
-        self.console("plugin {$pid} is not installed, cleaning plugin data just in case from directory {self.plugin-directory($pid)}");
+        self.console-with-prefix("plugin {$pid} is not installed, cleaning plugin data just in case from directory {self.plugin-directory($pid)}");
 
         self.plugin-remove($pid);
 
@@ -163,7 +163,7 @@ role Role {
 
     } elsif "{self.plugin-directory($pid)}/".IO ~~ :d  {
 
-        self.console("uninstall locally installed plugin {$pid} from directory {self.plugin-directory($pid)}");
+        self.console-with-prefix("uninstall locally installed plugin {$pid} from directory {self.plugin-directory($pid)}");
 
         self.plugin-remove($pid);
 
@@ -194,14 +194,14 @@ role Role {
         my $inst-v = Version.new(%plg-meta<version>);
 
         if $plg-canonical-v > $inst-v {
-          self.console("plugin {$pid} version {$inst-v} (next available version is {$plg-canonical-v}) installed at directory {self.plugin-directory($pid)}");
+          self.console-with-prefix("plugin {$pid} version {$inst-v} (next available version is {$plg-canonical-v}) installed at directory {self.plugin-directory($pid)}");
         } else {
-          self.console("plugin {$pid} version {$inst-v} (uptodate) installed at directory {self.plugin-directory($pid)}");
+          self.console-with-prefix("plugin {$pid} version {$inst-v} (uptodate) installed at directory {self.plugin-directory($pid)}");
         }
 
       } else {
 
-        self.console("plugin {$pid} is not installed (next available version is {$plg-canonical-v})");
+        self.console-with-prefix("plugin {$pid} is not installed (next available version is {$plg-canonical-v})");
 
       }
 
@@ -209,7 +209,7 @@ role Role {
 
     } elsif "{self.plugin-directory($pid)}/".IO ~~ :d  {
 
-        self.console("plugin {$pid} installed locally at directory {self.plugin-directory($pid)}");
+        self.console-with-prefix("plugin {$pid} installed locally at directory {self.plugin-directory($pid)}");
 
     } else {
 
@@ -340,7 +340,7 @@ role Role {
       $plg-name ~~ /^ <[ a..zA..Z \d \- \. \_ ]> + $/ or die "plugin name parameter does not meet naming requirements - " ~
       '^ <[ a..zA..Z \d \- \. \_ ]> + $'.perl;
 
-      self.console("upload {$plg-name}\@{$plg-v}");
+      self.console-with-prefix("upload {$plg-name}\@{$plg-v}");
 
       self!log("sparrow.json validated", "$dir/sparrow.json");
 
@@ -352,11 +352,11 @@ role Role {
 
       if %args<force> && self!target-exists("plugins/{$plg-name}-v{$repository-version}.tar.gz") {
 
-        self.console("force is enabled, override current plugin plugins/{$plg-name}-v{$repository-version}.tar.gz");
+        self.console-with-prefix("force is enabled, override current plugin plugins/{$plg-name}-v{$repository-version}.tar.gz");
   
       } elsif self!target-exists("plugins/{$plg-name}-v{$repository-version}.tar.gz") {
 
-        self.console("plugin with this version exists, bump a version an upload again");
+        self.console-with-prefix("plugin with this version exists, bump a version an upload again");
 
         return
 

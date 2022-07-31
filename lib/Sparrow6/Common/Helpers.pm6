@@ -17,7 +17,9 @@ role Role {
 
   };
 
-  method console ($message) {
+  method console-with-prefix ($message) {
+
+    return if %*ENV<SP6_FORMAT_TERSE>;
 
     my $header = $.name;
 
@@ -151,7 +153,7 @@ role Role {
 
       $what = "$0";
 
-      self.console("run thing $what");
+      self.console-with-prefix("run thing $what");
 
       if $thing ~~ /'@' ( .* )  $$/ {
 

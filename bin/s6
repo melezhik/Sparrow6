@@ -65,41 +65,41 @@ sub MAIN (
 
   if $repo-init {
 
-    $repo-api.console("repo initialization");
+    $repo-api.console-with-prefix("repo initialization");
     $repo-api.repo-init($thing);
 
   } elsif $repo-info {
 
-    $repo-api.console("repo information");
+    $repo-api.console-with-prefix("repo information");
     $repo-api.repo-info();
 
   } elsif $upload {
 
-    $repo-api.console("upload plugin");
+    $repo-api.console-with-prefix("upload plugin");
 
     $repo-api.plugin-upload( %( force => $force ) );
 
   } elsif $install && $thing {
 
-    $repo-api.console("install plugin $thing");
+    $repo-api.console-with-prefix("install plugin $thing");
 
     $repo-api.plugin-install($thing, %( force => $force, verbose => $verbose ));
 
   } elsif $uninstall && $thing {
 
-    $repo-api.console("uninstall plugin $thing");
+    $repo-api.console-with-prefix("uninstall plugin $thing");
 
     $repo-api.plugin-uninstall($thing, %( verbose => $verbose ));
 
   } elsif $plg-info && $thing {
 
-    $repo-api.console("plugin $thing info");
+    $repo-api.console-with-prefix("plugin $thing info");
 
     $repo-api.plugin-info($thing, %( verbose => $verbose ));
 
   } elsif $task-run && $thing {
 
-    $sparrow-task-cli.console("run sparrow task $thing");
+    $sparrow-task-cli.console-with-prefix("run sparrow task $thing");
 
     for $thing.split(/ "+" /) -> $i {
       $sparrow-task-cli.task-run($i);
@@ -107,13 +107,13 @@ sub MAIN (
 
   } elsif $rt-run && $thing {
 
-    $raku-task-cli.console("run raku task $thing");
+    $raku-task-cli.console-with-prefix("run raku task $thing");
 
     $raku-task-cli.task-run($thing);
 
   } elsif $module-run && $thing {
 
-    $task-cli.console("run module $thing");
+    $task-cli.console-with-prefix("run module $thing");
 
     for $thing.split(/ "+" /) -> $i {
       $task-cli.module-run($i);
@@ -121,7 +121,7 @@ sub MAIN (
 
   } elsif $plg-run && $thing {
 
-    $task-cli.console("run plg $thing");
+    $task-cli.console-with-prefix("run plg $thing");
 
     for $thing.split(/ "+" /) -> $i {
       $task-cli.plg-run($i);
@@ -129,65 +129,65 @@ sub MAIN (
 
   } elsif $plg-man && $thing {
 
-    $repo-api.console("man plg $thing");
+    $repo-api.console-with-prefix("man plg $thing");
 
     $repo-api.plugin-man($thing);
 
   } elsif $module-run && $thing {
 
-    $task-cli.console("run module $thing");
+    $task-cli.console-with-prefix("run module $thing");
 
   } elsif $rt-set && $thing {
 
-    $raku-task-cli.console("set raku task $thing");
+    $raku-task-cli.console-with-prefix("set raku task $thing");
 
     $raku-task-cli.task-set($thing);
 
   } elsif $task-cat && $thing {
 
-    $sparrow-task-cli.console("show sparrow task $thing");
+    $sparrow-task-cli.console-with-prefix("show sparrow task $thing");
 
     $sparrow-task-cli.task-cat($thing);
 
   } elsif $rt-cat && $thing {
 
-    $raku-task-cli.console("show raku task $thing");
+    $raku-task-cli.console-with-prefix("show raku task $thing");
 
     $raku-task-cli.task-cat($thing);
 
   } elsif $task-del && $thing {
 
-    $sparrow-task-cli.console("delete sparrow task $thing");
+    $sparrow-task-cli.console-with-prefix("delete sparrow task $thing");
 
     $sparrow-task-cli.task-del($thing);
 
   } elsif $rt-del && $thing {
 
-    $raku-task-cli.console("delete raku task $thing");
+    $raku-task-cli.console-with-prefix("delete raku task $thing");
 
     $raku-task-cli.task-del($thing);
 
   } elsif $task-list {
 
-    $sparrow-task-cli.console("list sparrow tasks");
+    $sparrow-task-cli.console-with-prefix("list sparrow tasks");
 
     $sparrow-task-cli.task-list($thing||'.');
 
   } elsif $rt-list {
 
-    $raku-task-cli.console("list raku tasks");
+    $raku-task-cli.console-with-prefix("list raku tasks");
 
     $raku-task-cli.task-list;
 
   } elsif $index-update {
 
-    $repo-api.console("update local index");
+    $repo-api.console-with-prefix("update local index");
 
     $repo-api.index-update();
 
   } elsif $list {
 
-    $repo-api.console("installed plugins");
+    $repo-api.console-with-prefix("installed plugins");
 
     for $repo-api.installed-plugins() -> $i {
       say "{$i[0]} ... $i[1] ... $i[2]"
@@ -195,7 +195,7 @@ sub MAIN (
 
   } elsif $search {
 
-    $repo-api.console("search plugins");
+    $repo-api.console-with-prefix("search plugins");
     for $repo-api.search-plugins($thing) -> $i {
       if $i[1].defined {
         say "{$i[0]} ... {$i[1]} ... {$i[2]}"
