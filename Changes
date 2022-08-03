@@ -2,12 +2,14 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.38 2022-08-03T02:38:00Z
+
     SP6_DUMP_TASK_CODE environment variable allows to
     dump code of Sparrow tasks automatically
     ( useful for r3tool )
 
     Improvement: Reports get more clear
-    and understandable 
+    and understandable. First iteration. 
 
 0.0.37 2022-07-11T21:35:04Z
 
