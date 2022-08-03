@@ -91,6 +91,10 @@ role Role {
 
       self!log("perl task cmd deployed", $cmd);
 
+      self.console-header("task run: {$path.IO.basename} - {self.name}");
+
+      self.dump-code($path) if %*ENV<SP6_DUMP_TASK_CODE> and self.code-dumpable;
+
       my $bash-cmd = self!run-command($cmd);
 
       self!run-command-async($cmd);

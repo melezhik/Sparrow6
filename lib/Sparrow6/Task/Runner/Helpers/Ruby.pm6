@@ -89,6 +89,10 @@ role Role {
 
       self!log("ruby task cmd deployed", $cmd);
 
+      self.console-header("task run: {$path.IO.basename} - {self.name}");
+
+      self.dump-code($path) if %*ENV<SP6_DUMP_TASK_CODE> and self.code-dumpable;
+
       self!run-command-async($cmd);
 
   }
