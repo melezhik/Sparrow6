@@ -72,7 +72,7 @@ class Api
     $.root = "$.root".IO.absolute;
 
     unless $.config {
-      $.config = "{$.root}/config.yaml";
+      $.config = "{$.root}/config.raku".IO ~~ :e ?? "{$.root}/config.raku" !!  "{$.root}/config.yaml";
     }
 
     if $*DISTRO.is-win {
@@ -105,7 +105,7 @@ class Api
     if $.config.IO ~~ :e {
 
       self!log("load plugin configuration file",$.config);
-      my $plugin-config = load-yaml(slurp $.config);
+      my $plugin-config = $.config ~~ / '.raku' $$/ ?? EVALFILE($.config) !! load-yaml(slurp $.config);
       self!log("parse plugin configuration file",$plugin-config.perl);
       self!log("input parameters",$.parameters.perl);
       self.task-config = merge-hash $plugin-config, $.parameters, :no-append-array;

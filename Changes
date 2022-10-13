@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Tasks - Alternative config format support (config.raku)
+
 0.0.38 2022-08-03T02:38:00Z
 
     SP6_DUMP_TASK_CODE environment variable allows to
