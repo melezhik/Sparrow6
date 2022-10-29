@@ -6,6 +6,6 @@
 
 task-run "run cli-weather", "weather", %(
   args => [
-    "Moon",
+    ["-h"],
   ]
 );
