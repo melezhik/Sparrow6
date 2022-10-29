@@ -2,7 +2,7 @@
 
 %(
   ci => %(
-    skip => "broken,should-fail"
+    skip => "sudo,broken,should-fail"
   ),
   default => %(
     skip => "sudo,windows,broken,should-fail"
