@@ -8,7 +8,7 @@ tasks:
       set -x
       s6 --index-update
       cd source 
-      tomty --all --show-failed --color 
+      tomty --profile=ci --all --show-failed --color 
     depends:
       -
         name: install-zef-deps
