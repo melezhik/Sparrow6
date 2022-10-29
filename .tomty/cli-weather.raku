@@ -4,7 +4,7 @@
 )
 =end tomty 
 
-task-run "run cli-weather", "cli-weather", %(
+task-run "run cli-weather", "weather", %(
   args => [
     [ "version" ],
   ]
