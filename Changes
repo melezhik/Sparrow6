@@ -3,6 +3,7 @@ Revision history for Sparrow6
 {{$NEXT}}
 
     Tasks - Alternative config format support (config.raku)
+    Tasks - binary tasks protocol support (experimental)
 
 0.0.38 2022-08-03T02:38:00Z
 

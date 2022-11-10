@@ -76,7 +76,9 @@ role Role {
     $fh.say("source " ~  $.cache-dir ~ '/glue.bash');
     $fh.say("source " ~  $.cache-dir ~ '/sparrow6lib.bash');
     $fh.say("source " ~  $.cache-dir ~ '/variables.bash');
-    $fh.say("source $path");
+    # if run something foo/bar/task as binnary VS run foo/bar/task.bash
+    # as Bash script
+    $fh.say($path ~~ /task $$/ ?? $path !! "source $path");
     $fh.close;
 
     self!log("bash run cmd", "bash {$.cache-dir}/cmd.bash");
@@ -97,13 +99,13 @@ role Role {
 
       my $fh = open $.cache-dir ~ '/glue.bash', :w;
       $fh.say("root_dir=", $.root.IO.absolute);
-      $fh.say("os=", $.os);
+      $fh.say("export os=", $.os);
       $fh.say("# project_root_directory is deprecated");
       $fh.say("project_root_dir=", $.root.IO.absolute);
       $fh.say("task_dir=", $path.IO.dirname.IO.absolute);
       $fh.say("# test_root_dir is deprecated");
       $fh.say("test_root_dir=", $.cache-root-dir);
-      $fh.say("cache_root_dir=", $.cache-root-dir);
+      $fh.say("export cache_root_dir=", $.cache-root-dir);
       $fh.say("cache_dir=", $.cache-dir );
       $fh.say("stdout_file=", $stdout-file );
       $fh.close;

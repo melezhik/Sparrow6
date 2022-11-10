@@ -395,6 +395,26 @@ class Api
 
       self!reset-cache-dir();
 
+     } elsif "$root/task".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-bash-task("$root/task");
+
+      self!run-task-check($root);
+
+      if  "$root/test.raku".IO ~~ :e and $.do-test {
+
+        self!log("execute embeded test","$root/test.raku");
+
+        EVALFILE "$root/test.raku";
+
+      }
+
+      self!reset-cache-dir();
+
     } elsif "$root/task.rb".IO ~~ :e {
 
       self!set-cache-dir();
