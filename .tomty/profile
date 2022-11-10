@@ -1,6 +1,9 @@
 #!perl6
 
 %(
+  ci => %(
+    skip => "sudo,broken,should-fail"
+  ),
   default => %(
     skip => "sudo,windows,broken,should-fail"
   ),

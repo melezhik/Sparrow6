@@ -97,7 +97,7 @@ These features are almost done, just list them here
 - Sparrowdo - cwd cli support ( do we need it? )
 - Sparrowdo - vagrant support ( do we need it ? )
 - Sparrowdo - git ( Sparrlets support, do we need it ? )
-- Sparrowdo - `var=name=value` command line support
++ Sparrowdo - `var=name=value` command line support (done via --tags)
 - Sparrowdo - `module_run`, `task_run` cli options support
 - Deprecate set_stdout (???), hook stdout should contribute to task stdout (???)
 - Don't allow generators/codes if check failures (???)
@@ -123,21 +123,20 @@ These features are almost done, just list them here
 - s6 cli - save / restore tasks
 - Task descriptions (task.txt)
 - dump_streams() implimentation for Ruby, Python, Powershell
-- Windows support ( run stories, run hooks )
++ Windows support ( run stories, run hooks )
 - Catch stderr for hooks/stories (?)
 - Don't strip comments from one-line code and generator expressions
 
 
 # Other tools support
 
-- Switch Sparky to Updated Sparrowdo version ( done partly, need to check )
++ Switch Sparky to Updated Sparrowdo version ( done partly, need to check )
 - Port Sparrowform to Sparrow6
 - Make Old Sparrowhub plugins compatible with Sparrow6
 
 
 # Breaking changes
 
-- SparrowHub is removed
 - truncating to the `match_l` is removed, we reports check results as is, even for really long matched strings (examples/match-length.pl6)
 - `:blank` is deprecated, you should use regexp: `^^ \s* $$`  instead
 - `suite.ini`, `suite.json` are not supported
