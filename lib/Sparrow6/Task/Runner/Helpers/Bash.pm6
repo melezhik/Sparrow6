@@ -195,8 +195,8 @@ role Role {
 
       if $line ~~ /task":" \s+ (\S+)/ {
         my $task = "$0";
-        $task-vars ~~ s/'task_var_json_begin'//;
-        $task-vars ~~ s/'task_var_json_end'//;
+        $task-vars ~~ s/'task_var_json_begin'// if $task-vars;
+        $task-vars ~~ s/'task_var_json_end'// if $task-vars;
         self.task-vars = %task-vars || from-json($task-vars||'{}');
         self!run-task("{$.root}/tasks/$task");
         %task-vars = %();
