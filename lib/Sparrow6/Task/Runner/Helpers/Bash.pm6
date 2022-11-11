@@ -83,7 +83,7 @@ role Role {
       if "{$path}.bin".IO !~~ :e and ! %*ENV<SP6_GO_NO_COMPILE> {
         my $dirname = $path.IO.dirname;
         my $basename = $path.IO.basename;
-        $fh.say("rm -rf {$path}.bin && cd {$dirname} && rm -rf go.mod &&  go mod init sparrow/task && go mod tidy && go build -o {$path}.bin {$path}");
+        $fh.say("rm -rf {$path}.bin && cd {$dirname} && rm -rf go.mod &&  go mod init sparrow/task && go get github.com/melezhik/sparrowgo@HEAD && go mod tidy && go build -o {$path}.bin {$path}");
         $fh.say("{$path}.bin");
       } else {
         $fh.say("{$path}.bin");
