@@ -6,7 +6,7 @@ use v6;
 
 unit module Sparrow6::Task::Repository;
 
-use JSON::Tiny;
+use JSON::Fast;
 
 use Sparrow6::Common::Helpers;
 use Sparrow6::Task::Repository::Helpers::Common;

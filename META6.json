@@ -10,7 +10,7 @@
     "File::Directory::Tree",
     "Hash::Merge:ver<1.0.0>",
     "YAMLish",
-    "JSON::Tiny",
+    "JSON::Fast",
     "Data::Dump",
     "Terminal::ANSIColor"
   ],

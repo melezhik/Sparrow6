@@ -1,6 +1,6 @@
 unit module Sparrow6::Task::Repository::Helpers::Plugin;
 
-use JSON::Tiny;
+use JSON::Fast;
 
 use File::Directory::Tree;
 

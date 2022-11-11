@@ -7,7 +7,7 @@ unit module Sparrow6::Task::Check;
 use Sparrow6::Common::Helpers;
 use Sparrow6::Task::Check::Context;
 
-use JSON::Tiny;
+use JSON::Fast;
 
 class Api 
 

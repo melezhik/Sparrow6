@@ -2,7 +2,7 @@
 
 unit module Sparrow6::Task::Runner::Helpers::Common;
 
-use JSON::Tiny;
+use JSON::Fast;
 
 use Terminal::ANSIColor;
 

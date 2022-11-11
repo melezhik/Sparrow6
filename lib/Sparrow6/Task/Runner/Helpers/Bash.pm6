@@ -1,6 +1,7 @@
 #!perl6
 
 unit module Sparrow6::Task::Runner::Helpers::Bash;
+use JSON::Fast;
 
 role Role {
 
@@ -76,9 +77,9 @@ role Role {
     $fh.say("source " ~  $.cache-dir ~ '/glue.bash');
     $fh.say("source " ~  $.cache-dir ~ '/sparrow6lib.bash');
     $fh.say("source " ~  $.cache-dir ~ '/variables.bash');
-    # if run something foo/bar/task as binnary VS run foo/bar/task.bash
-    # as Bash script
-    $fh.say($path ~~ /task $$/ ?? $path !! "source $path");
+    # run something foo/bar/(task|hook) as binary VS 
+    # run foo/bar/(task|task).bash as Bash script
+    $fh.say($path ~~ /(task || hook) $$/ ?? $path !! "source $path");
     $fh.close;
 
     self!log("bash run cmd", "bash {$.cache-dir}/cmd.bash");
@@ -106,7 +107,7 @@ role Role {
       $fh.say("# test_root_dir is deprecated");
       $fh.say("test_root_dir=", $.cache-root-dir);
       $fh.say("export cache_root_dir=", $.cache-root-dir);
-      $fh.say("cache_dir=", $.cache-dir );
+      $fh.say("export cache_dir=", $.cache-dir );
       $fh.say("stdout_file=", $stdout-file );
       $fh.close;
 
@@ -145,6 +146,7 @@ role Role {
     my $bash-cmd = self!run-command($cmd);
 
     my %task-vars;
+    my $task-vars;
 
     for $bash-cmd.out.lines -> $line {
       self!log("stdout",$line);
@@ -164,16 +166,32 @@ role Role {
         self!log("ingnore task errors","enabled");
       }
 
+      # now bash tasks could be used to run binaries (golang for example)
+      # these binaries could produced structured json output
+      # not just simple (task_var_bash: name value) in a Bash way
+      # so a relevant parsing added here: 
+
+      if $line ~~ /'task_var_json_begin' .* / ff $line ~~ /'task_var_json_end' .*/ {
+        $task-vars ~= $line;
+        next;
+      }
+
+      # standard "Bash" way variables 
       if $line ~~ /'task_var_bash:' \s+ (\S+) \s+ (.*)/ {
         %task-vars{"$0"}="$1";
         next;
       }
 
       if $line ~~ /task":" \s+ (\S+)/ {
-        self.task-vars = %task-vars;
-        self!run-task("{$.root}/tasks/$0");
+        my $task = "$0";
+        $task-vars ~~ s/'task_var_json_begin'//;
+        $task-vars ~~ s/'task_var_json_end'//;
+        self.task-vars = %task-vars || from-json($task-vars||'{}');
+        self!run-task("{$.root}/tasks/$task");
         %task-vars = %();
+        $task-vars = "";
       }
+
     }
 
     self!handle-hook-status($bash-cmd);

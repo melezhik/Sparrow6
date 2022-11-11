@@ -1,7 +1,7 @@
 #!perl6
 
 unit module Sparrow6::Task::Runner::Helpers::Perl;
-use JSON::Tiny;
+use JSON::Fast;
 
 role Role {
 

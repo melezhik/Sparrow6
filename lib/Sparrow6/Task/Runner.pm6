@@ -8,7 +8,7 @@ use File::Directory::Tree;
 use Hash::Merge:ver<1.0.0>;
 
 use YAMLish;
-use JSON::Tiny;
+use JSON::Fast;
 
 use Sparrow6::Common::Helpers;
 use Sparrow6::Common::Config;
@@ -280,6 +280,16 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-bash-hook("$root/hook.bash");
+
+      self!reset-cache-dir();
+
+    } elsif "$root/hook".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-bash-hook("$root/hook");
 
       self!reset-cache-dir();
 
