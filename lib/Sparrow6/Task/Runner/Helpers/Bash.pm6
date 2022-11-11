@@ -81,7 +81,10 @@ role Role {
     # run Bash tasks as scripts
     if $path ~~ /'.go' $$/ {
       if "{$path}.bin".IO !~~ :e and ! %*ENV<SP6_GO_NO_COMPILE> {
-        $fh.say("go build -o {$path}.bin {$path} && {$path}.bin");
+        my $dirname = $path.IO.dirname;
+        my $basename = $path.IO.basename;
+        $fh.say("rm -rf {$path}.bin && cd {$dirname} && rm -rf go.mod &&  go mod init sparrow/task && go mod tidy && go build -o {$path}.bin {$path}");
+        $fh.say("{$path}.bin");
       } else {
         $fh.say("{$path}.bin");
       }
