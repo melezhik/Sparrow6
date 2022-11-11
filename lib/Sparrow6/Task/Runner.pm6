@@ -283,13 +283,13 @@ class Api
 
       self!reset-cache-dir();
 
-    } elsif "$root/hook".IO ~~ :e {
+    } elsif "$root/hook.go".IO ~~ :e {
 
       self!set-cache-dir();
 
       self!save-task-vars($.cache-dir);
 
-      self!run-bash-hook("$root/hook");
+      self!run-bash-hook("$root/hook.go");
 
       self!reset-cache-dir();
 
@@ -405,13 +405,13 @@ class Api
 
       self!reset-cache-dir();
 
-     } elsif "$root/task".IO ~~ :e {
+     } elsif "$root/task.go".IO ~~ :e {
 
       self!set-cache-dir();
 
       self!save-task-vars($.cache-dir);
 
-      self!run-bash-task("$root/task");
+      self!run-bash-task("$root/task.go");
 
       self!run-task-check($root);
 

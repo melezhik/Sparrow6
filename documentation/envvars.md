@@ -55,8 +55,11 @@ For example:
 - SP6_CARTON_OFF
 
 Don't use Carton to install CPAN dependencies, useful when one
-install CPAN modules though others means
+installs CPAN modules though others means
 
+- SP6_GO_NO_COMPILE
+
+Don't compile golang tasks. Useful when has prebuilt go tasks binaries (task.go.bin/hook.go.bin)
 
 - SP6_TAR_PATH
 

@@ -77,9 +77,17 @@ role Role {
     $fh.say("source " ~  $.cache-dir ~ '/glue.bash');
     $fh.say("source " ~  $.cache-dir ~ '/sparrow6lib.bash');
     $fh.say("source " ~  $.cache-dir ~ '/variables.bash');
-    # run something foo/bar/(task|hook) as binary VS 
-    # run foo/bar/(task|task).bash as Bash script
-    $fh.say($path ~~ /(task || hook) $$/ ?? $path !! "source $path");
+    # run Go tasks as binaries
+    # run Bash tasks as scripts
+    if $path ~~ /'.go' $$/ {
+      if "{$path}.bin".IO !~~ :e and ! %*ENV<SP6_GO_NO_COMPILE> {
+        $fh.say("go build -o {$path}.bin {$path} && {$path}.bin");
+      } else {
+        $fh.say("{$path}.bin");
+      }
+    } else {
+      $fh.say("source $path");
+    }  
     $fh.close;
 
     self!log("bash run cmd", "bash {$.cache-dir}/cmd.bash");
