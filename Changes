@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.40 2022-11-29T14:50:00Z
+
+    License added
+
 0.0.39 2022-10-28T23:08:00Z
 
     Tasks - Alternative config format support (config.raku)
