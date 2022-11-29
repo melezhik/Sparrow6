@@ -1,4 +1,0 @@
-language: minimal
-
-script:
-  - curl -d thing=https://github.com/melezhik/Sparrow6 http://rakudist.raku.org/ci -s | bash

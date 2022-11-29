@@ -38,10 +38,6 @@ using just an Nginx web server.
 
     zef install Sparrow6
 
-# Build Status
-
-[![Build Status](https://travis-ci.org/melezhik/Sparrow6.svg?branch=master)](https://travis-ci.org/melezhik/Sparrow6)
-
 # Supported languages
 
 You can write underlying Sparrow tasks using following languages:
@@ -52,6 +48,7 @@ You can write underlying Sparrow tasks using following languages:
 * Python
 * Bash
 * Powershell
+* [Golang](https://github.com/melezhik/sparrowgo)
 
 All the languages have a _unified_ Sparrow API easing script development, see Sparrow development guide.
 

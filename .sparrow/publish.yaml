@@ -8,7 +8,7 @@ tasks:
     default: true
     language: Raku
     init: |
-      if config()<tasks><git-commit><state><comment> ~~ /'ci: fez upload'/ {
+      if config()<tasks><git-commit><state><comment> ~~ /'ci: release'/ {
         run_task "upload"
       }
     subtasks:
@@ -22,6 +22,7 @@ tasks:
         HERE
         cd source/
         zef install --/test fez
+        head Changes
         tom --clean
         fez upload
     depends:
@@ -30,4 +31,4 @@ tasks:
   - name: git-commit
     plugin: git-commit-data
     config:
-      dir: source 
+      dir: source

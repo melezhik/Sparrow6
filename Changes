@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.41 2022-11-29T17:40:00Z
+
+    Mentioning Golang support
+    Remove travis badge 
+
 0.0.40 2022-11-29T15:40:00Z
 
     License added
