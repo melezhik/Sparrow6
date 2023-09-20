@@ -13,7 +13,7 @@ use JSON::Fast;
 use Sparrow6::Common::Helpers;
 use Sparrow6::Common::Config;
 use Sparrow6::Task::Runner::Helpers::Common;
-use Sparrow6::Task::Runner::Helpers::Perl6;
+use Sparrow6::Task::Runner::Helpers::Raku;
 use Sparrow6::Task::Runner::Helpers::Perl;
 use Sparrow6::Task::Runner::Helpers::Bash;
 use Sparrow6::Task::Runner::Helpers::Ruby;
@@ -27,7 +27,7 @@ class Api
 
   does Sparrow6::Common::Helpers::Role
   does Sparrow6::Task::Runner::Helpers::Common::Role
-  does Sparrow6::Task::Runner::Helpers::Perl6::Role
+  does Sparrow6::Task::Runner::Helpers::Raku::Role
   does Sparrow6::Task::Runner::Helpers::Perl::Role
   does Sparrow6::Task::Runner::Helpers::Bash::Role
   does Sparrow6::Task::Runner::Helpers::Ruby::Role

@@ -1,17 +1,18 @@
-#!perl6
+#!raku
 
-unit module Sparrow6::Task::Runner::Helpers::Perl6;
+unit module Sparrow6::Task::Runner::Helpers::Raku;
+
 use JSON::Fast;
 
 role Role {
 
   method !make-sparrow6-perl6-lib ($path) {
 
-      my $fh = open $.cache-dir ~ '/sparrow6lib.pm', :w;
-      $fh.say(slurp %?RESOURCES<sparrow6lib.pm6>.Str);
+      my $fh = open $.cache-dir ~ '/sparrow6lib.rakumod', :w;
+      $fh.say(slurp %?RESOURCES<sparrow6lib.rakumod>.Str);
       $fh.close;
 
-      self!log("perl6 lib deployed","{$.cache-dir}/sparrow6lib.pm");
+      self!log("perl6 lib deployed","{$.cache-dir}/sparrow6lib.rakumod");
 
   }
 
@@ -21,7 +22,7 @@ role Role {
 
       self!make-sparrow6-common-lib($path);
 
-      self!make-perl6-glue($path);
+      self!make-raku-glue($path);
 
       self!make-sparrow6-perl6-lib($path);
 
@@ -44,7 +45,7 @@ role Role {
   }
 
 
-  method !make-perl6-glue ($path) {
+  method !make-raku-glue ($path) {
 
       my $stdout-file = $.cache-dir ~ '/stdout';
 
@@ -53,7 +54,7 @@ role Role {
         self!log("remove stdout file", $stdout-file);
       }
 
-      my $fh = open $.cache-dir ~ '/glue.pm6', :w;
+      my $fh = open $.cache-dir ~ '/glue.rakumod', :w;
       $fh.say("unit module glue;");
       $fh.say('sub root_dir () is export { q{' ~ $.root.IO.absolute ~ "} };" );
       $fh.say('sub os () is export { q{' ~ $.os ~ "} };" );
@@ -67,7 +68,7 @@ role Role {
       $fh.say('sub stdout_file () is export { q{', $stdout-file, "} };");
       $fh.close;
 
-      self!log("perl6 glue deployed", "{$.cache-dir}/glue.pm");
+      self!log("raku glue deployed", "{$.cache-dir}/glue.rakumod");
 
   }
 
