@@ -6,7 +6,7 @@ use JSON::Fast;
 
 role Role {
 
-  method !make-sparrow6-perl6-lib ($path) {
+  method !make-sparrow6-raku-lib ($path) {
 
       my $fh = open $.cache-dir ~ '/sparrow6lib.rakumod', :w;
       $fh.say(slurp %?RESOURCES<sparrow6lib.rakumod>.Str);
@@ -24,7 +24,7 @@ role Role {
 
       self!make-raku-glue($path);
 
-      self!make-sparrow6-perl6-lib($path);
+      self!make-sparrow6-raku-lib($path);
 
   }
 
