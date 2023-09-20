@@ -46,7 +46,7 @@ tasks:
   - name: install-powershell
     language: Bash
     config:
-      distro: https://github.com/PowerShell/PowerShell/releases/download/v7.3.7/powershell-7.3.7-linux-arm-x64.tar.gz
+      distro: https://github.com/PowerShell/PowerShell/releases/download/v7.3.7/powershell-7.3.7-linux-arm64.tar.gz
     code: |
       # install the requirements
       sudo apk add --wait 100 --no-cache \
