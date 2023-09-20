@@ -81,6 +81,8 @@ tasks:
       # Create the symbolic link that points to pwsh
       sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
-      pwsh --version
+      sudo chmod a+x /usr/bin/pwsh
+
+      /usr/bin/pwsh --version
 
 followup_job: .sparrow/publish.yaml
