@@ -1,3 +1,6 @@
+image:
+  - melezhik/sparrow:ubuntu_arm
+    
 tasks:
   -
     name: test
@@ -15,8 +18,6 @@ tasks:
       -
         name: install-deps
       -
-        name: install-carton
-      -
         name: install-powershell
   -
     name: install-zef-deps
@@ -31,58 +32,26 @@ tasks:
     language: Bash
     code: |
       set -e
-      sudo apk add --wait 100 \
-      ruby-dev ruby-bundler \
-      python3 py3-pip python3-dev py3-pytest \
-      perl perl-utils
-  -
-    name: install-carton
-    language: Bash
-    code: |
-      set -e
-      sudo apk add --wait 100 perl-dev perl-app-cpanminus
-      sudo cpanm -nv Carton 
+      sudo apt-get update;
+      sudo apt-get install -yq ruby-dev ruby-bundler \
+      python3-pip python3-dev python3-pytest \
+      perlutil carton
 
   - name: install-powershell
     language: Bash
-    config:
-      distro: https://github.com/PowerShell/PowerShell/releases/download/v7.3.7/powershell-7.3.7-linux-arm64.tar.gz
     code: |
-      # install the requirements
-      sudo apk add --wait 100 --no-cache \
-          ca-certificates \
-          less \
-          ncurses-terminfo-base \
-          krb5-libs \
-          libgcc \
-          libintl \
-          libssl1.1 \
-          libstdc++ \
-          tzdata \
-          userspace-rcu \
-          zlib \
-          icu-libs \
-          curl
-
-      sudo apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --wait 100 --no-cache lttng-ust
-
-      # Download the powershell '.tar.gz' archive
-      curl -L $(config distro) -o /tmp/powershell.tar.gz
-
-      # Create the target folder where powershell will be placed
-      sudo mkdir -p /opt/microsoft/powershell/7
-
-      # Expand powershell to the target folder
-      sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
-
-      # Set execute permissions
-      sudo chmod +x /opt/microsoft/powershell/7/pwsh
-
-      # Create the symbolic link that points to pwsh
-      sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
-
-      sudo chmod a+x /usr/bin/pwsh
-
-      /usr/bin/pwsh --version
+      # Install pre-requisite packages.
+      sudo apt-get install -y wget apt-transport-https software-properties-common
+      # Download the Microsoft repository GPG keys
+      wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
+      # Register the Microsoft repository GPG keys
+      sudo dpkg -i packages-microsoft-prod.deb
+      # Delete the the Microsoft repository GPG keys file
+      rm packages-microsoft-prod.deb
+      # Update the list of packages after we added packages.microsoft.com
+      sudo apt-get update
+      # Install PowerShell
+      sudo apt-get install -y powershell
+      pwsh --version
 
 followup_job: .sparrow/publish.yaml
