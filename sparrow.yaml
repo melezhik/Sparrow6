@@ -39,19 +39,35 @@ tasks:
 
   - name: install-powershell
     language: Bash
+    config:
+      distr: https://github.com/PowerShell/PowerShell/releases/download/v7.3.7/powershell-7.3.7-linux-arm64.tar.gz
     code: |
-      # Install pre-requisite packages.
-      sudo apt-get install -y wget apt-transport-https software-properties-common
-      # Download the Microsoft repository GPG keys
-      wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
-      # Register the Microsoft repository GPG keys
-      sudo dpkg -i packages-microsoft-prod.deb
-      # Delete the the Microsoft repository GPG keys file
-      rm packages-microsoft-prod.deb
-      # Update the list of packages after we added packages.microsoft.com
-      sudo apt-get update
-      # Install PowerShell
-      sudo apt-get install -y powershell
+      sudo apt-get install -y \
+      libc6 \
+      libgcc1 \
+      libgcc-s1 \
+      libgssapi-krb5-2 \
+      libicu70 \
+      liblttng-ust1 \
+      libssl3 \
+      libstdc++6 \
+      libunwind8 \
+      zlib1g
+      
+      # Download the powershell '.tar.gz' archive
+      curl -L -o /tmp/powershell.tar.gz $(config distr)
+      
+      # Create the target folder where powershell will be placed
+      sudo mkdir -p /opt/microsoft/powershell/7
+      
+      # Expand powershell to the target folder
+      sudo tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
+      
+      # Set execute permissions
+      sudo chmod +x /opt/microsoft/powershell/7/pwsh
+      
+      # Create the symbolic link that points to pwsh
+      sudo ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
       pwsh --version
 
 followup_job: .sparrow/publish.yaml
