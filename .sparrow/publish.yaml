@@ -1,5 +1,5 @@
 image:
-  - melezhik/sparrow:debian
+  - melezhik/sparrow:debian_arm
 
 secrets:
   - FEZ_TOKEN
