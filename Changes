@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.42 2023-09-28T08:00:00Z
+
+    Rename internal pm/pm6 files to rakumod
+    Migrate sparrowci to arm
+
 0.0.41 2022-11-29T17:40:00Z
 
     Mentioning Golang support
