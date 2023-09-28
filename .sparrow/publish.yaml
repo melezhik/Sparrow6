@@ -8,7 +8,7 @@ tasks:
     default: true
     language: Raku
     init: |
-      if config()<tasks><git-commit><state><comment> ~~ /'ci: release'/ {
+      if config()<tasks><git-commit><state><comment> ~~ /'release!'/ {
         run_task "upload"
       }
     subtasks:
