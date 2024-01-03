@@ -42,6 +42,7 @@ tasks:
     config:
       distr: https://github.com/PowerShell/PowerShell/releases/download/v7.3.7/powershell-7.3.7-linux-arm64.tar.gz
     code: |
+      export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
       sudo apt-get install -y \
       libc6 \
       libgcc1 \
