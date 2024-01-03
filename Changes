@@ -2,8 +2,9 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-    Fix for 
-    https://github.com/melezhik/sparky/issues/60
+0.0.43 2024-01-03T12:00:00Z
+
+    Fix for https://github.com/melezhik/sparky/issues/60
     Rename pm6 to rakumod
 
 0.0.42 2023-09-28T08:00:00Z
