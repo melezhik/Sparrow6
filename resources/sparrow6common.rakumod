@@ -1,6 +1,6 @@
 unit module sparrow6common;
 
-use JSON::Tiny;
+use JSON::Fast;
 
 sub json-var() is export {
 
