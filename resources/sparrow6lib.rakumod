@@ -4,7 +4,7 @@ use v6;
 
 unit module sparrow6lib;
 
-use JSON::Tiny;
+use JSON::Fast;
 use Data::Dump;
 
 use glue;
