@@ -51,9 +51,9 @@ multi sub ssh ( $command, %args ) is export {
   my $bash-cmd;
 
   if %args<create>:exists {
-    $bash-cmd = "if ! test -f %args<create> ; then set -x; $ssh-run-cmd ; else echo skip due to %args<create> exists; fi"    
+    $bash-cmd = "if ! test -f %args<create> ; then $ssh-run-cmd ; else echo skip due to %args<create> exists; fi"
   } else {
-    $bash-cmd = "set -x; $ssh-run-cmd"
+    $bash-cmd = "$ssh-run-cmd"
   }
 
 
@@ -122,9 +122,9 @@ sub scp ( %args ) is export {
   my $bash-cmd;
 
   if %args<create>:exists {
-    $bash-cmd = "if ! test -f %args<create> ; then set -x; $scp-run-cmd ; else echo skip due to %args<create> exists; fi"    
+    $bash-cmd = "if ! test -f %args<create> ; then $scp-run-cmd ; else echo skip due to %args<create> exists; fi"
   } else {
-    $bash-cmd = "set -x; $scp-run-cmd"
+    $bash-cmd = "$scp-run-cmd"
   }
 
   bash $bash-cmd, %(
