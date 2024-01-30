@@ -9,7 +9,7 @@ role Role {
   method !make-sparrow6-raku-lib ($path) {
 
       my $fh = open $.cache-dir ~ '/sparrow6lib.rakumod', :w;
-      $fh.say(slurp %?RESOURCES<sparrow6lib.rakumod>.Str);
+      $fh.say(slurp %?RESOURCES<sparrow6lib.rakumod>);
       $fh.close;
 
       self!log("perl6 lib deployed","{$.cache-dir}/sparrow6lib.rakumod");

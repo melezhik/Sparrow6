@@ -31,7 +31,7 @@ return 'windows' if $*DISTRO.is-win;
 
 return $os if $os;
 
-my $script = slurp %?RESOURCES<os-resolver.sh>.Str;
+my $script = slurp %?RESOURCES<os-resolver.sh>;
 
 $os = qqx{$script};
 
@@ -45,6 +45,6 @@ sub target_os is export {
 }
 
 sub os-resolver is export {
-  slurp %?RESOURCES<os-resolver.sh>.Str;
+  slurp %?RESOURCES<os-resolver.sh>;
 }
 

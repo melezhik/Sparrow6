@@ -44,7 +44,7 @@ role Role {
   method !make-sparrow6-common-lib ($path) {
 
     my $fh = open $.cache-dir ~ '/sparrow6common.rakumod', :w;
-    $fh.say(slurp %?RESOURCES<sparrow6common.rakumod>.Str);
+    $fh.say(slurp %?RESOURCES<sparrow6common.rakumod>);
     $fh.close;
 
     self!log("common lib deployed", "{$.cache-dir}/sparrow6common.rakumod");
