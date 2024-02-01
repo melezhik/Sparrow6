@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.44 2024-02-01T10:00:00Z
+
+    DSL - disable default debug flag for ssh function 
+    Don't use Distribution::Resource Str method
+
 0.0.43 2024-01-03T12:00:00Z
 
     Fix for https://github.com/melezhik/sparky/issues/60
