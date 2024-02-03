@@ -16,9 +16,7 @@ tasks:
       -
         name: install-zef-deps
       -
-        name: install-deps
-      -
-        name: install-powershell
+        name: install-system-deps
   -
     name: install-zef-deps
     language: Bash
@@ -28,34 +26,30 @@ tasks:
       zef install . --/test
 
   -
-    name: install-deps
-    language: Bash
-    code: |
-      set -e
-      sudo apt-get  -o DPkg::Lock::Timeout=420 update
-      sudo apt-get  -o DPkg::Lock::Timeout=420 install -yq ruby-dev ruby-bundler \
-      python3-pip python3-dev python3-pytest \
-      carton cpanminus
-
-  - name: install-powershell
+    name: install-system-deps
     language: Bash
     config:
       distr: https://github.com/PowerShell/PowerShell/releases/download/v7.3.7/powershell-7.3.7-linux-arm64.tar.gz
     code: |
       set -e
+
       export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-      sudo apt-get  -o DPkg::Lock::Timeout=420 update  -yq
-      sudo apt-get  -o DPkg::Lock::Timeout=420 install -y \
-      libc6 \
-      libgcc1 \
-      libgcc-s1 \
-      libgssapi-krb5-2 \
-      libicu70 \
-      liblttng-ust1 \
-      libssl3 \
-      libstdc++6 \
-      libunwind8 \
-      zlib1g
+
+      sudo apt-get update -yq
+      sudo apt-get install -yq \
+        ruby-dev ruby-bundler \
+        python3-pip python3-dev python3-pytest \
+        carton cpanminus \
+        libc6 \
+        libgcc1 \
+        libgcc-s1 \
+        libgssapi-krb5-2 \
+        libicu70 \
+        liblttng-ust1 \
+        libssl3 \
+        libstdc++6 \
+        libunwind8 \
+        zlib1g
       
       # Download the powershell '.tar.gz' archive
       curl -L -o /tmp/powershell.tar.gz $(config distr)
