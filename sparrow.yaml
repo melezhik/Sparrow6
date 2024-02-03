@@ -32,8 +32,8 @@ tasks:
     language: Bash
     code: |
       set -e
-      sudo apt-get  -o DPkg::Lock::Timeout=120 update
-      sudo apt-get  -o DPkg::Lock::Timeout=120 install -yq ruby-dev ruby-bundler \
+      sudo apt-get  -o DPkg::Lock::Timeout=220 update
+      sudo apt-get  -o DPkg::Lock::Timeout=220 install -yq ruby-dev ruby-bundler \
       python3-pip python3-dev python3-pytest \
       carton cpanminus
 
@@ -44,8 +44,8 @@ tasks:
     code: |
       set -e
       export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-      sudo apt-get  -o DPkg::Lock::Timeout=120 update  -yq
-      sudo apt-get  -o DPkg::Lock::Timeout=120 install -y \
+      sudo apt-get  -o DPkg::Lock::Timeout=220 update  -yq
+      sudo apt-get  -o DPkg::Lock::Timeout=220 install -y \
       libc6 \
       libgcc1 \
       libgcc-s1 \
