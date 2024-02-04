@@ -258,13 +258,13 @@ In Bash you can use alternative notation to access subtask parameters:
 
     tasks/hello-world/task.bash
 
-      echo $he say $hello world
+      echo $he says $hello world
 
 Compare with:
 
     tasks/hello-world/task.bash
 
-      echo $(task_var he) say $(task_var hello) world
+      echo $(task_var he) says $(task_var hello) world
 
 You can call subtask from other subtask using a subtask's hooks. 
 
