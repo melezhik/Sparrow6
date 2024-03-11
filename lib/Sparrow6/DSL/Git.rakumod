@@ -18,27 +18,32 @@ multi sub git-scm ( $source, %args? ) is export {
   @git-ssh-opts.push: "-o StrictHostKeyChecking=no" if %args<accept-hostkey> == True;
 
   my %bash-args = Hash.new;
-  %bash-args<description> = "git checkout $source";
   %bash-args<user> = %args<user> if %args<user>;
   %bash-args<debug> = 1 if %args<debug>;
   %bash-args<envvars><GIT_SSH_COMMAND> = '"' ~ ( join ' ', @git-ssh-opts ) ~ '"';
 
+  %bash-args<description> = "git clone $source .";
+
   bash qq:to/HERE/, %bash-args;
     set -e;
     $cd-cmd &&
-    if test -d .git; then
-      git pull
-    else
+    if ! test -d .git; then
       git clone $source .
     fi
   HERE
 
-  if %args<branch> {
-    %bash-args<description> = "git checkout remote branch " ~ %args<branch>;
+  %bash-args<description> = "git checkout {%args<branch>}";
+  bash qq:to/HERE/, %bash-args;
+    set -e;
+    $cd-cmd
+    git checkout %args<branch>
+  HERE
+
+  if %args<branch> and %args<branch>.split("/")[0] ne "tags" {
+    %bash-args<description> = "git pull";
     bash qq:to/HERE/, %bash-args;
       set -e;
       $cd-cmd
-      git checkout %args<branch>
       git pull
     HERE
   }
