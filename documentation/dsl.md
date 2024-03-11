@@ -389,6 +389,9 @@ Examples:
     # checkout a branch
     git-scm 'https://github.com/melezhik/sparrow.git', %( branch => 'dev/foo-bar' );
 
+    # checkout from tag
+    git-scm 'https://github.com/melezhik/sparrow.git',%( branch => "tags/experimental")
+
     # enable debug
     git-scm 'https://github.com/melezhik/sparrow.git', %( to => '/tmp/foo', debug => True );
 

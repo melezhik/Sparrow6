@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Git DSL - tags support
+
 0.0.44 2024-02-01T10:00:00Z
 
     DSL - disable default debug flag for ssh function 
