@@ -4,6 +4,7 @@ unit module Sparrow6::DSL::Common;
 
 use Sparrow6::Task::Repository;
 use Sparrow6::Task::Runner;
+use Base64;
 
 multi sub task-run(Str $desc, Str $plugin, %parameters = %()) is export(:DEFAULT) {
 
@@ -116,15 +117,22 @@ sub tags () is export(:DEFAULT) {
 }
 
 sub parse-tags ($tags) is export(:DEFAULT) {
-
   my %tags = %();
-
   for $tags.split(",") -> $i {
-    if $i ~~ /(\S+) '=' (.*) $$/ {
-       %tags{"$0"} = "$1"
-   } else {
-      %tags{$i} = True
+    my $pair = $i;
+    #say "tag>> parse pair: $pair";
+    # decode string if it's in base64
+    if $pair ~~ /^[<[A..Za..z0..9+/]> ** 4]* [<[A..Za..z0..9+/]> ** 3 "=" | <[A..Za..z0..9+/]> ** 2 "=="]? $/ {
+      $pair = Buf.new(decode-base64($pair,:bin)).decode();
     }
+    #say "tag>> effective pair: $pair";
+    if $pair ~~ /(\S+) '=' (.*) $$/ {
+      my $val = "$1";
+      my $var = "$0";
+      %tags{$var} = $val;
+   } else {
+      %tags{$pair} = True
+   }
   }
 
   %tags;
