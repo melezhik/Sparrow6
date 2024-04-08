@@ -12,7 +12,8 @@
     "YAMLish",
     "JSON::Fast",
     "Data::Dump",
-    "Terminal::ANSIColor"
+    "Terminal::ANSIColor",
+    "Base64"
   ],
   "description": "Sparrow is a Raku based automation framework",
   "license": "Artistic-2.0",
