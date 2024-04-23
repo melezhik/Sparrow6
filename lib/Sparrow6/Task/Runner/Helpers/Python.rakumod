@@ -9,7 +9,7 @@ role Role {
   method !make-sparrow6-python-lib ($path) {
 
       my $fh = open $.cache-dir ~ '/sparrow6lib.py', :w;
-      $fh.say(slurp %?RESOURCES<sparrow6lib.py>.Str);
+      $fh.say(slurp %?RESOURCES<sparrow6lib.py>);
       $fh.close;
 
       self!log("python lib deployed","{$.cache-dir}/sparrow6lib.py");

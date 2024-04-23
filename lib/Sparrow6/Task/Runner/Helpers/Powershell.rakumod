@@ -11,7 +11,7 @@ role Role {
       mkdir $.cache-dir ~ '/sparrow6lib';
 
       my $fh = open $.cache-dir ~ '/sparrow6lib/sparrow6lib.psm1', :w;
-      $fh.say(slurp %?RESOURCES<sparrow6lib.ps1>.Str);
+      $fh.say(slurp %?RESOURCES<sparrow6lib.ps1>);
       $fh.close;
 
       self!log("powershell lib deployed","{$.cache-dir}/sparrow6lib/sparrow6lib.psm1");
