@@ -7,6 +7,17 @@ Revision history for Sparrow6
     gets converted into Array
     foo=[1,2]
 
+0.0.47 2024-04-25T22:10:00Z
+
+    Don't use Distribution::Resource Str method 
+    in other places as well
+
+0.0.46 2024-04-09T12:50:00Z
+
+    tags() - Support of ,= symbols
+    serialization to allow
+    pass values containing thouse ones
+
 0.0.45 2024-03-08T11:50:00Z
 
     Git DSL - tags support

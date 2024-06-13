@@ -9,7 +9,7 @@ role Role {
   method !make-sparrow6-ruby-lib ($path) {
 
       my $fh = open $.cache-dir ~ '/sparrow6lib.rb', :w;
-      $fh.say(slurp %?RESOURCES<sparrow6lib.rb>.Str);
+      $fh.say(slurp %?RESOURCES<sparrow6lib.rb>);
       $fh.close;
 
       self!log("ruby lib deployed","{$.cache-dir}/sparrow6lib.rb");
