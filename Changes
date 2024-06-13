@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    tags() - Array support,
+    so that `foo=1,foo=2,..` 
+    gets converted into Array
+    foo=[1,2]
+
 0.0.45 2024-03-08T11:50:00Z
 
     Git DSL - tags support

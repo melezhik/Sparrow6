@@ -127,7 +127,18 @@ sub parse-tags ($tags) is export(:DEFAULT) {
       my $val = "$1".
         subst(/"___comma___"/,",",:g).
         subst(/"___eq___"/,"=",:g);
-      %tags{$var} = $val;
+      if %tags{$var} {
+        if %tags{$var}.isa(List) {
+           say "tag>> append to list $var.append[$val]" if %*ENV<SP6_TAG_DEBUG>;
+           %tags{$var}.push($val) # append to Array
+        } else {
+          say "tag>> set list $var=[%tags{$var}, $val]" if %*ENV<SP6_TAG_DEBUG>;
+          %tags{$var} = [ %tags{$var}, $val ] # convert `foo=1,foo=2,..` into Array
+        } 
+      } else {
+        say "tag>> scalar $var=$val" if %*ENV<SP6_TAG_DEBUG>;
+        %tags{$var} = $val;
+      }
    } else {
       %tags{$pair} = True
    }
