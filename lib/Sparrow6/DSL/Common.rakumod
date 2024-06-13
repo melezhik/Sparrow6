@@ -111,11 +111,11 @@ multi sub task_run(%args) is export {
 }
 
 
-sub tags () is export(:DEFAULT) {
-  %*ENV<SP6_TAGS> ?? parse-tags(%*ENV<SP6_TAGS>) !! %();
+sub tags (:$array = False) is export(:DEFAULT) {
+  %*ENV<SP6_TAGS> ?? parse-tags(%*ENV<SP6_TAGS>,:array($array)) !! %();
 }
 
-sub parse-tags ($tags) is export(:DEFAULT) {
+sub parse-tags ($tags,:$array = False) is export(:DEFAULT) {
   my %tags = %();
   for $tags.split(",") -> $i {
     my $pair = $i;
@@ -127,7 +127,7 @@ sub parse-tags ($tags) is export(:DEFAULT) {
       my $val = "$1".
         subst(/"___comma___"/,",",:g).
         subst(/"___eq___"/,"=",:g);
-      if %tags{$var} {
+      if %tags{$var} && $array { # array support 
         if %tags{$var}.isa(List) {
            say "tag>> append to list $var.append[$val]" if %*ENV<SP6_TAG_DEBUG>;
            %tags{$var}.push($val) # append to Array
