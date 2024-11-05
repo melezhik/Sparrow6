@@ -1,11 +1,7 @@
----
-title: Go pipelines with Raku interfaces 
-published: true
-description: How to write pipelines on Golang with interfaces in Raku
-tags: Rakulang, Golang, CICD
-# cover_image: https://direct_url_to_image.jpg
-# Use a ratio of 100:42 for best results.
-# published_at: 2024-11-05 20:09 +0000
+# Go pipelines with Raku interfaces
+
+TLDR; How to write pipelines on Golang with interfaces in Raku
+
 ---
 
 So, let's say you're golang developer and want pure Go to write some CICD task:
