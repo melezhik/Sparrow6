@@ -69,7 +69,7 @@ All we've done here is utilized Sparrowgo package that "convert" golang task int
 
 ---
 
-Finally this os how our pipeline will look like, now it's Raku part:
+Finally this how our pipeline will look like, now it's Raku part:
 
 ```
 #!raku
