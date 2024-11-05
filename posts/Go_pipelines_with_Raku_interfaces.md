@@ -1,6 +1,6 @@
 # Go pipelines with Raku interfaces
 
-TLDR; How to write pipelines on Golang with interfaces in Raku
+TL;DR How to write pipelines on Golang with interfaces in Raku
 
 ---
 
