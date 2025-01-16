@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 use v6;
 
@@ -52,7 +52,7 @@ class Api
   method !run-code (Str $code is copy) { 
 
     my %lang-to-extension = %(
-      perl6 => "pl6",
+      raku => "pl6",
       raku => "raku",
       perl => "pl",
       bash => "bash",
@@ -342,9 +342,9 @@ class Api
 
             $status = True if $status-string eq 'true';  # from ruby conversion
 
-            $status = False if $status-string eq 'False'; # from python/perl6/powershell conversion
+            $status = False if $status-string eq 'False'; # from python/raku/powershell conversion
 
-            $status = True if $status-string eq 'True';  # form python/perl6/powershell conversion
+            $status = True if $status-string eq 'True';  # form python/raku/powershell conversion
 
             self!add-result({ status => $status , message => "<$message>" });
 

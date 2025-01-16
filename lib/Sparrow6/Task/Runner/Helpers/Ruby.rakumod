@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 unit module Sparrow6::Task::Runner::Helpers::Ruby;
 use JSON::Fast;

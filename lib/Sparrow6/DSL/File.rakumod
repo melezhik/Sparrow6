@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 use v6;
 
@@ -30,7 +30,7 @@ sub file-create ( $target, %opts? ) is export {
 # only for back compatibility
 # in Sparrow6
 # you can just use method `copy` instead
-# https://docs.perl6.org/routine/copy
+# https://docs.raku.org/routine/copy
 
 sub copy-local-file ($from, $to) is export {
   copy $from, $to

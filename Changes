@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    internal code: perl6 -> raku
+    renaming
+
+    show stdout/stderr when hook
+    fails
+
 0.0.49 2024-06-13T18:40:00Z
 
     tags() should be called

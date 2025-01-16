@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 unit module Sparrow6::Task::Runner::Helpers::Common;
 
@@ -229,32 +229,37 @@ role Role {
   
     my $st = $cmd.exitcode;
 
+    #$cmd.out.flush();
+    #$cmd.err.flush();
+
+    my @stdout = $cmd.out.slurp(:close).lines();
+    my @stderr = $cmd.err.slurp(:close).lines();
+
     if $st != 0 {
       self.console-wo-prefix("hook exit status: $st");
       self.console-wo-prefix("hook {self.name} FAILED");
-
-      if $cmd.out.lines {
-        self.console-header("out");
-        for $cmd.out.lines -> $line {
+      if @stdout {
+        self.console-header("hook stdout");
+        for @stdout -> $line {
           self.console-wo-prefix($line);
         }
       }
 
-      if $cmd.err.lines {
-        self.console-header("stderr");
-        for $cmd.err.lines -> $line {
+      if @stderr {
+        self.console-header("hook stderr");
+        for @stderr -> $line {
           self.console-wo-prefix($line);
         }
       }
 
-      $cmd.out.close().^name; # we don't want to sink here
+      #$cmd.out.close().^name; # we don't want to sink here
       exit(101);
     } else {
       $cmd.out.close();
+      $cmd.err.close();
     }
 
   }
-
 
 
   method !get-state {

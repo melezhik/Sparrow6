@@ -12,13 +12,13 @@ role Role {
       $fh.say(slurp %?RESOURCES<sparrow6lib.rakumod>);
       $fh.close;
 
-      self!log("perl6 lib deployed","{$.cache-dir}/sparrow6lib.rakumod");
+      self!log("raku lib deployed","{$.cache-dir}/sparrow6lib.rakumod");
 
   }
 
-  method !deploy-perl6-helpers ($path) {
+  method !deploy-raku-helpers ($path) {
 
-      self!log("deploy perl6 helpers","start");
+      self!log("deploy raku helpers","start");
 
       self!make-sparrow6-common-lib($path);
 
@@ -28,17 +28,17 @@ role Role {
 
   }
 
-  method !deploy-perl6-run-cmd ($path) {
+  method !deploy-raku-run-cmd ($path) {
 
       unlink "{$.root}/lib/.precomp" if "{$.root}/lib/.precomp".IO ~~ :d;
 
       my $cmd = $*DISTRO.is-win
       ??
-      "cmd.exe /c perl6 -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path"
+      "cmd.exe /c raku -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path"
       !!
-      "perl6 -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path";
+      "raku -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path";
 
-      self!log("perl6 run cmd", $cmd);
+      self!log("raku run cmd", $cmd);
 
       return $cmd;
 
@@ -72,15 +72,15 @@ role Role {
 
   }
 
-  method !run-perl6-task ($path) {
+  method !run-raku-task ($path) {
 
-      self!log("run perl6 task", $path);
+      self!log("run raku task", $path);
 
-      self!deploy-perl6-helpers($path);
+      self!deploy-raku-helpers($path);
 
-      my $cmd = self!deploy-perl6-run-cmd($path);
+      my $cmd = self!deploy-raku-run-cmd($path);
 
-      self!log("perl6 task cmd deployed", $cmd);
+      self!log("raku task cmd deployed", $cmd);
 
       self.console-header("task run: {$path.IO.basename} - {self.name}");
 
@@ -91,21 +91,22 @@ role Role {
 
   }
 
-  method !run-perl6-hook ($path) {
+  method !run-raku-hook ($path) {
 
-    self!log("run perl6 hook", $path);
+    self!log("run raku hook", $path);
 
-    self!deploy-perl6-helpers($path);
+    self!deploy-raku-helpers($path);
 
-    my $cmd-path = self!deploy-perl6-run-cmd($path);
+    my $cmd-path = self!deploy-raku-run-cmd($path);
 
-    self!log("perl6 hook cmd deployed", $cmd-path );
+    self!log("raku hook cmd deployed", $cmd-path );
 
     my $bash-cmd = self!run-command($cmd-path);
 
     my $task-vars;
 
     for $bash-cmd.out.lines -> $line {
+
       self!log("stdout",$line);
 
       if $line ~~ / 'ignore_task_error:' / {

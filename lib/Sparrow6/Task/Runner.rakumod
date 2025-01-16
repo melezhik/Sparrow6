@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 use v6;
 
@@ -249,7 +249,7 @@ class Api
 
       self!save-task-vars($.cache-dir);
 
-      self!run-perl6-hook("$root/hook.raku");
+      self!run-raku-hook("$root/hook.raku");
 
       self!reset-cache-dir();
 
@@ -259,7 +259,7 @@ class Api
 
       self!save-task-vars($.cache-dir);
 
-      self!run-perl6-hook("$root/hook.pl6");
+      self!run-raku-hook("$root/hook.pl6");
 
       self!reset-cache-dir();
 
@@ -331,7 +331,7 @@ class Api
 
       self!save-task-vars($.cache-dir);
 
-      self!run-perl6-task("$root/task.raku");
+      self!run-raku-task("$root/task.raku");
 
       self!run-task-check($root);
 
@@ -351,7 +351,7 @@ class Api
 
       self!save-task-vars($.cache-dir);
 
-      self!run-perl6-task("$root/task.pl6");
+      self!run-raku-task("$root/task.pl6");
 
       self!run-task-check($root);
 
