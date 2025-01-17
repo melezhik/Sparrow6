@@ -53,7 +53,7 @@ class Api
 
     my %lang-to-extension = %(
       raku => "pl6",
-      raku => "raku",
+      perl6 => "raku",
       perl => "pl",
       bash => "bash",
       ruby => "rb",
