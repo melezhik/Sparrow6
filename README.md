@@ -1,6 +1,6 @@
 # Sparrow
 
-[![SparrowCI](https://ci.sparrowhub.io/project/gh-melezhik-Sparrow6/badge?v=1)](https://ci.sparrowhub.io)
+![SparkyCI](https://sparky.sparrowhub.io/badge/gh-melezhik-Sparrow6?foo=bar)
 
 Sparrow is a Raku based automation framework. It's written on Raku and has Raku API.
 
