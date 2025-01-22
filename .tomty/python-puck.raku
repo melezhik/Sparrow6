@@ -1,6 +1,6 @@
 =begin tomty 
 %(
-  tag => [ "plugin", "python" ]
+  tag => [ "plugin", "python", "broken" ]
 )
 =end tomty 
 
