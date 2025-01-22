@@ -9,3 +9,9 @@ task-run "run python httpx help", "python-httpx", %(
     [ "help" ],
   ]
 );
+
+task-run "run python httpx get https://raku.org", "python-httpx", %(
+  args => [
+    "https://raku.org",
+  ]
+);
