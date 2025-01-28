@@ -181,6 +181,8 @@ class Api
         }
     } elsif $check-type eq 'regexp' {
 
+        my %success-streams = %();
+
         for self.current-context.context -> $ln {
 
            my $matched = $ln<data>.comb(/<mymatch=$pattern>/,:match)>>.<mymatch>;
@@ -188,7 +190,7 @@ class Api
            if $matched {
 
                 $status = True;
-
+                %success-streams{$ln<stream-id>||"default"} = "OK";
                 if $matched>>.Slip>>.Str {
                   my @c = $matched>>.Slip>>.Str;
                   @captures.push:  %( stream-id => $ln<stream-id>, data => [ @c ] );
@@ -203,17 +205,30 @@ class Api
               push @new-context, $ln;
           }
         }
+        ## don't apply negation logic 
+        ## unless all streams has unwanted match
+
+        if $negate  {
+
+          self!log("CHECK LINE(data), negate is on, streams keys:", self.current-context.streams.keys.sort) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+          self!log("CHECK LINE(data), negate is on, success-streams keys:", %success-streams.keys.sort) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+
+          if self.current-context.streams.keys.elems == 0 {
+                self!log("CHECK LINE(case1), negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+                $status = !$status;
+          } elsif self.current-context.streams.keys.elems == %success-streams.keys.elems {
+                $status = !$status;
+                self!log("CHECK LINE(case3), negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+          } else {
+                $status = True if $status == False;
+                self!log("CHECK LINE(case4), negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+          }
+        }
     }else {
         die "unknown check type: $check-type";
     }
 
     self!log("CHECK LINE [$pattern]) effective status", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-
-    # revert status is negate is on
-    if $negate {
-      $status = !$status;
-      self!log("CHECK LINE, negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-    }
 
     $!last-check-status = $status;
 
@@ -323,7 +338,6 @@ class Api
           } else {
             die "nested contexts are forbidden";
           }
-
       
         } elsif $l ~~ / ^^ \s* 'between:' \s+ '{' (.*?) '}' \s+ '{' (.*?) '}'  $$ / {
 

@@ -98,8 +98,8 @@ class Sequence
       self.streams = %new-streams;
 
       self!log("current stream",self.streams.keys.perl);
-      self.context = @new-context;
 
+      self.context = @new-context;
 
       self!log("output context:", Dump(self.context));
 

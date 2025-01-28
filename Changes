@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.53 2025-01-29T02:30:00Z
+
+    Allow negations within
+    ranges and sequences
+
 0.0.52 2025-01-28T13:20:00Z
 
     Add debug info for

@@ -2,8 +2,8 @@ note: negations in blocks
 
 begin:
 A
-B
 !regexp: D
+B
 C
 end:
 

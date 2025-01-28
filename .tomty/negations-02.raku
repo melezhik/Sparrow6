@@ -2,7 +2,7 @@
 
 =begin tomty 
 %(
-  tag => [ "negation", "broken" ]
+  tag => [ "negation" ]
 )
 =end tomty
 
