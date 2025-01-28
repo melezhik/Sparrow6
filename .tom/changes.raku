@@ -1,3 +1,3 @@
-#!perl6
+#!raku
 
 bash "head Changes";

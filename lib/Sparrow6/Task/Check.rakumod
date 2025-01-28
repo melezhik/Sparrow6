@@ -128,11 +128,11 @@ class Api
     self!handle-simple($line, 'default');
   }
 
-  method !handle-regexp (Str $line) {
-    self!handle-simple($line, 'regexp');
+  method !handle-regexp (Str $line, Bool $negate = False) {
+    self!handle-simple($line, 'regexp',$negate);
   }
 
-  method !handle-simple (Str $l is copy, Str $check-type) {
+  method !handle-simple (Str $l is copy, Str $check-type, Bool $negate = False) {
   
     # remove spaces in the beginning and in the end
     $l ~~ s/ \s+ $$ //;
@@ -140,15 +140,17 @@ class Api
 
     my $time = time;
 
-    self!check-line($l, $check-type, self.current-context.check-message($l));
+    my $negate-str = $negate ?? "!" !! "";
 
-    say "handle-simple($check-type) last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
+    self!check-line($l, $check-type, self.current-context.check-message($l), $negate);
+
+    say "handle-simple({$negate-str}{$check-type}) last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
   
-    self!log("$check-type check DONE", $l) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+    self!log("{$negate-str} $check-type check DONE", $l) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
   }
 
-  method !check-line ( Str $pattern, Str $check-type, Str $message ) {
+  method !check-line ( Str $pattern, Str $check-type, Str $message, Bool $negate = False ) {
 
     my $status = False;
 
@@ -203,6 +205,9 @@ class Api
     }else {
         die "unknown check type: $check-type";
     }
+
+    # revert status is negate is on
+    $status =! $status if $negate;
 
     $!last-check-status = $status;
 
@@ -380,6 +385,12 @@ class Api
             my $re = $0;
 
             self!handle-regexp($re.Str);
+
+        } elsif $l ~~ /^^ \s* '!regexp:' \s* (.*) / { # `!regexp' line
+
+            my $re = $0;
+
+            self!handle-regexp($re.Str,True);
 
         } else { # `plain string' line
 
