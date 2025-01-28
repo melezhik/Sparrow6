@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.51 2025-01-28T10:50:00Z
+
+    Feature: task checks:
+    negations!
+
     cleanup - rm old files
 
 0.0.50 2025-01-17T10:55:00Z
