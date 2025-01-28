@@ -1016,7 +1016,7 @@ This is short example for Ruby language:
 # Negations
 
 Negations are reverse matches, they work the same way as regular expressions 
-but with revese logic - if text matches, the check fails.
+but with reverse logic - if text matches - check fails.
 
 Here are some examples:
 
