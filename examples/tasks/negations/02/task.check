@@ -18,3 +18,8 @@ between: {'['} {']'}
   B
   !regexp: D
 end: 
+
+within: "A B" 
+!regexp: F
+C
+end:

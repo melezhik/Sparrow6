@@ -1026,6 +1026,8 @@ task.bash
 echo "OK"
 echo "Hello"
 echo "done"
+
+echo "A B C D"
 ```
 
 task.check
@@ -1049,6 +1051,11 @@ between: {OK} {done}
   !regexp: HELLO
   Hello
 end:
+
+within: "A B"
+!regexp: F
+C
+end:
 ```
 
 
@@ -1067,6 +1074,8 @@ stdout match <!Ok> True
 # between: {OK} {done}
 stdout match (r) <!HELLO> True
 stdout match (r) <Hello> True
+stdout match (w) <!F> True
+stdout match (w) <C> True
 ```
 
 # Streams

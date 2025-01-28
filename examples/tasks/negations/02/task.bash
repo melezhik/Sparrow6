@@ -10,3 +10,6 @@ echo "A"
 echo "B"
 echo "D"
 echo "]"
+
+echo "A B C D"
+
