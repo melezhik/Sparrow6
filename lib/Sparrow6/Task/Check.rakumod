@@ -207,8 +207,13 @@ class Api
         die "unknown check type: $check-type";
     }
 
+    self!log("CHECK LINE [$pattern]) effective status", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+
     # revert status is negate is on
-    $status =! $status if $negate;
+    if $negate {
+      $status = !$status;
+      self!log("CHECK LINE, negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+    }
 
     $!last-check-status = $status;
 

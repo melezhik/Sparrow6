@@ -1,0 +1,20 @@
+note: negations in blocks
+
+begin:
+A
+B
+!regexp: D
+C
+end:
+
+
+note: negations for single strings
+!regexp: Ok
+
+note: negations inside ranges
+note: between: {'['} {']'}
+between: {'['} {']'}
+  A
+  B
+  !regexp: D
+end: 

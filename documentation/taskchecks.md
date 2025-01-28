@@ -1069,6 +1069,57 @@ stdout match (r) <!HELLO> True
 stdout match (r) <Hello> True
 ```
 
+## Caveat when use negations with sequence and range expressions
+
+
+Negations do not work as expected when used for _multiple_ sequence and range expressions,
+only apply them for single range and sequential output
+
+Example:
+
+task.bash
+
+```
+echo "["
+echo "A"
+echo "B"
+echo "C"
+echo "]"
+
+
+echo "["
+echo "A"
+echo "B"
+echo "D"
+echo "]"
+```
+
+This output will fail under following task.check, even though
+there is at least one sequence and range blocks (`[` ... `]` ) containing ABC!DC
+
+```
+note: negations in blocks
+
+begin:
+A
+B
+!regexp: D
+C
+end:
+
+
+note: negations for single strings
+!regexp: Ok
+
+note: negations inside ranges
+note: between: {'['} {']'}
+between: {'['} {']'}
+  A
+  B
+  !regexp: D
+end:
+```
+
 # Streams
 
 Streams are captures grouped by logical blocks within search context.
