@@ -1013,6 +1013,61 @@ This is short example for Ruby language:
         puts "assert: #{capture()[0] == 10}, you've got 10!"  
     CODE
 
+# Negations
+
+Negations are reverse matches, they work the same way as regular expressions 
+but with revese logic - if text matches, the check fails.
+
+Here are some examples:
+
+task.bash
+
+```
+echo "OK"
+echo "Hello"
+echo "done"
+```
+
+task.check
+
+```
+note: negations in blocks
+
+begin:
+regexp: OK
+!regexp: ok
+Hello
+done
+end:
+
+note: negations for single strings
+!regexp: Ok
+
+note: negations inside ranges
+note: between: {OK} {done}
+between: {OK} {done}
+  !regexp: HELLO
+  Hello
+end:
+```
+
+
+output:
+
+```
+[task check]
+# negations in blocks
+stdout match (s) <OK> True
+stdout match (s) <!ok> True
+stdout match (s) <Hello> True
+stdout match (s) <done> True
+# negations for sinle strings
+stdout match <!Ok> True
+# negations inside ranges
+# between: {OK} {done}
+stdout match (r) <!HELLO> True
+stdout match (r) <Hello> True
+```
 
 # Streams
 

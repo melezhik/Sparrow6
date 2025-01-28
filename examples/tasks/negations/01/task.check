@@ -8,7 +8,7 @@ done
 end:
 
 
-note: negations for sinle strings
+note: negations for single strings
 !regexp: Ok
 
 note: negations inside ranges
