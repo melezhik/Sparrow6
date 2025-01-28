@@ -1,0 +1,19 @@
+note: negations in blocks
+
+begin:
+regexp: OK
+!regexp: ok
+Hello
+done
+end:
+
+
+note: negations for sinle strings
+!regexp: Ok
+
+note: negations inside ranges
+note: between: {OK} {done}
+between: {OK} {done}
+  !regexp: HELLO
+  Hello
+end: 

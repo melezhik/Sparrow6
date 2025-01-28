@@ -135,6 +135,7 @@ class Api
   method !handle-simple (Str $l is copy, Str $check-type, Bool $negate = False) {
   
     # remove spaces in the beginning and in the end
+
     $l ~~ s/ \s+ $$ //;
     $l ~~ s/^^ \s+//;
 
@@ -142,7 +143,7 @@ class Api
 
     my $negate-str = $negate ?? "!" !! "";
 
-    self!check-line($l, $check-type, self.current-context.check-message($l), $negate);
+    self!check-line($l, $check-type, self.current-context.check-message("{$negate-str}{$l}"), $negate);
 
     say "handle-simple({$negate-str}{$check-type}) last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
   
