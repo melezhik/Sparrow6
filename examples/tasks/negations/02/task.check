@@ -1,17 +1,17 @@
-#note: negations in blocks
+note: negations in blocks
 
-#begin:
-#A
-#!regexp: D
-#B
-#C
-#end:
+begin:
+A
+!regexp: D
+B
+C
+end:
 
 
-#note: negations for single strings
-#!regexp: Ok
+note: negations for single strings
+!regexp: Ok
 
-note: negations inside ranges, example 1
+note: negations inside ranges, example #1
 note: between: {'['} {']'}
 between: {'['} {']'}
   A
@@ -20,12 +20,13 @@ between: {'['} {']'}
   C
 end: 
 
-#within: "A B" 
-#!regexp: F
-#C
-#end:
+note: negations inside within, example #2
+within: "A B" 
+!regexp: F
+C
+end:
 
-note: negations inside ranges, example 2
+note: negations inside ranges, example #3
 note: between: {'['} {']'}
 between: {'['} {']'}
   !regexp: D
@@ -33,6 +34,6 @@ between: {'['} {']'}
   A
 end:
 
-#begin:
-#!regexp: H
-#end:
+begin:
+!regexp: H
+end:

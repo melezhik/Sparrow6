@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.54 2025-01-29T17:58:00Z
+
+    Negation checks logic
+    fixes (mostly for ranges 
+    and blocks)
+
 0.0.53 2025-01-29T02:30:00Z
 
     Allow negations within

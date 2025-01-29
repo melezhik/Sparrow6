@@ -1,14 +1,17 @@
-note: negations in blocks
+note: negations in blocks, exmaple #1
 
 begin:
 regexp: OK
 !regexp: ok
+!regexp: kO
+!regexp: oo
+!regexp: kk
 Hello
 done
 end:
 
 
-note: negations for single strings
+note: negations for single strings, example #2
 !regexp: Ok
 
 note: negations inside ranges

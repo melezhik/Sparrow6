@@ -207,72 +207,21 @@ class Api
               push @new-context, $ln;
 
           } elsif $matched && $negate == True {
-              %success-streams{$ln<stream-id>||"default"} = "OK";
-              if self.current-context.just-started == True &&
-                 %success-streams.keys.elems == self.current-context.initial-streams-cnt {
-                 $status = False 
-              } elsif self.current-context.just-started == False &&
-                %success-streams.keys.elems == self.current-context.streams.keys.elems {
-                  $status = False
+              self!log("CHECK LINE(negate=on)", "calculate decision") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+              if self.current-context.isa(Sparrow6::Task::Check::Context::Default) {
+                  $status = False 
+              } else {
+                %success-streams{$ln<stream-id>||"default"} = "OK";
+                if self.current-context.just-started == True &&
+                  %success-streams.keys.elems == self.current-context.initial-streams-cnt {
+                  $status = False 
+                } elsif self.current-context.just-started == False &&
+                  %success-streams.keys.elems == self.current-context.streams.keys.elems {
+                    $status = False
+                }
               }
           }
         }
-
-        if $negate  {
-
-        #   self!log("###################################",">") if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #   self!log("CHECK LINE(negate=on)", "calculate decision") if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #   self!log("CHECK LINE(negate=on,data), success-streams.keys.elems", %success-streams.keys.elems) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #   self!log("CHECK LINE(negate=on,data), current-context.streams.keys.elems", self.current-context.streams.keys.elems) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #   self!log("CHECK LINE(negate=on,data), current status", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #   self!log("###################################","<") if %*ENV<SP6_DEBUG_TASK_CHECK>;
-
-        #   if self.current-context.isa(Sparrow6::Task::Check::Context::Range) {
-        #     self!log(
-        #       "CHECK LINE(Sparrow6::Task::Check::Context::Range), initial-streams-cnt", 
-        #       self.current-context.initial-streams-cnt
-        #     ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #     self!log(
-        #       "CHECK LINE(Sparrow6::Task::Check::Context::Range), just-started", 
-        #       self.current-context.just-started
-        #     ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #     if self.current-context.initial-streams-cnt > 0 && 
-        #        self.current-context.just-started == True  &&
-        #        self.current-context.initial-streams-cnt == %success-streams.keys.elems {
-        #       $status = $status == True ?? False !! True;
-        #       self!log("CHECK LINE(case1), set status to", $status) 
-        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #     } elsif self.current-context.initial-streams-cnt == 0 &&
-        #             self.current-context.just-started == True {
-        #       $status = False;
-        #       self!log("CHECK LINE(case2), set status to", $status) 
-        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
-
-        #     } elsif self.current-context.just-started == False && 
-        #           self.current-context.streams.keys.elems > 0 &&
-        #           self.current-context.streams.keys.elems ==  %success-streams.keys.elems {
-        #       $status = !$status;
-        #       self!log("CHECK LINE(case3), set status to", $status) 
-        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
-
-        #     } elsif self.current-context.just-started == False &&
-        #           self.current-context.streams.keys.elems > 0 &&
-        #           self.current-context.streams.keys.elems >  %success-streams.keys.elems {
-        #       $status = True;
-        #       self!log("CHECK LINE(case4), set status to", $status) 
-        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
-
-        #     } elsif self.current-context.just-started == False &&
-        #           self.current-context.streams.keys.elems == 0 {
-        #       $status = False;
-        #       self!log("CHECK LINE(case5), set status to", $status) 
-        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #     } else {
-        #       self!log("CHECK LINE(case9), set status to", $status) 
-        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
-        #     }        
-        # }
-      }  
     } else {
         die "unknown check type: $check-type";
     }

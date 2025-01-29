@@ -21,6 +21,7 @@ class Default
     has Array %.streams is rw;
     has Bool $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
     has Str $.name = "default-context";
+    has Bool $.just-started is rw = True;
 
     method change-context (@data) {
 
