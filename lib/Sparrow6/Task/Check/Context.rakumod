@@ -49,8 +49,11 @@ class Sequence
     has Array %.streams is rw;
     has Bool $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
     has Str $.name = "sequence-context";
+    has Bool $.just-started is rw = True;
 
     method change-context (@data) {
+
+      self.just-started = False;
 
       my @new-context;
       my %new-streams;
@@ -130,6 +133,8 @@ class Range
     has Bool $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
     has Bool $.streams-allowed is rw;
     has Str $.name = "range-context";
+    has Int $.initial-streams-cnt is rw = 0;
+    has Bool $.just-started is rw = True;
  
     method TWEAK() {
 
@@ -140,6 +145,8 @@ class Range
       my $i = 0;
 
       my $stream-id = 0;
+
+      my %seen;
 
       if ! self.end.defined {
 
@@ -166,6 +173,7 @@ class Range
           $stream-id++ if $d ~~ /<$pattern1>/;
   
           if $d ~~ /<$pattern1>/ ^fff^ $d ~~ /<$pattern2>/ {
+              %seen{$stream-id} = "ok";
               push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id );
           }
   
@@ -175,6 +183,7 @@ class Range
   
       }
 
+      self.initial-streams-cnt = %seen.keys.elems;
 
       self!log("Start context:", Dump(self.context)) if %*ENV<SP6_DEBUG_STREAM>;
 
@@ -183,6 +192,8 @@ class Range
     method change-context (@data) {
 
       my $time = time; 
+
+      self.just-started = False;
 
       return if ! self.streams-allowed;
 

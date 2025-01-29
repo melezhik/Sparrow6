@@ -1,25 +1,38 @@
-note: negations in blocks
+#note: negations in blocks
 
-begin:
-A
-!regexp: D
-B
-C
-end:
+#begin:
+#A
+#!regexp: D
+#B
+#C
+#end:
 
 
-note: negations for single strings
-!regexp: Ok
+#note: negations for single strings
+#!regexp: Ok
 
-note: negations inside ranges
+note: negations inside ranges, example 1
 note: between: {'['} {']'}
 between: {'['} {']'}
   A
   B
   !regexp: D
+  C
 end: 
 
-within: "A B" 
-!regexp: F
-C
+#within: "A B" 
+#!regexp: F
+#C
+#end:
+
+note: negations inside ranges, example 2
+note: between: {'['} {']'}
+between: {'['} {']'}
+  !regexp: D
+  !regexp: D
+  A
 end:
+
+#begin:
+#!regexp: H
+#end:

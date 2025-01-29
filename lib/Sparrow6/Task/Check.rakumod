@@ -153,7 +153,9 @@ class Api
 
   method !check-line ( Str $pattern, Str $check-type, Str $message, Bool $negate = False ) {
 
-    my $status = False;
+    my $status = $negate ?? True !! False;
+
+    self!log("CHECK LINE, default status", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     my @captures = Array.new;
 
@@ -187,10 +189,10 @@ class Api
 
            my $matched = $ln<data>.comb(/<mymatch=$pattern>/,:match)>>.<mymatch>;
  
-           if $matched {
-
+           if $matched && $negate != True {
+                # only accumulate data for new context
+                # if working in postive ( none negate mode )
                 $status = True;
-                %success-streams{$ln<stream-id>||"default"} = "OK";
                 if $matched>>.Slip>>.Str {
                   my @c = $matched>>.Slip>>.Str;
                   @captures.push:  %( stream-id => $ln<stream-id>, data => [ @c ] );
@@ -203,28 +205,75 @@ class Api
               @!succeeded.push: $ln<data>;
               $!last-match-line = $ln<data>;
               push @new-context, $ln;
+
+          } elsif $matched && $negate == True {
+              %success-streams{$ln<stream-id>||"default"} = "OK";
+              if self.current-context.just-started == True &&
+                 %success-streams.keys.elems == self.current-context.initial-streams-cnt {
+                 $status = False 
+              } elsif self.current-context.just-started == False &&
+                %success-streams.keys.elems == self.current-context.streams.keys.elems {
+                  $status = False
+              }
           }
         }
-        ## don't apply negation logic 
-        ## unless all streams has unwanted match
 
         if $negate  {
 
-          self!log("CHECK LINE(data), negate is on, streams keys:", self.current-context.streams.keys.sort) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-          self!log("CHECK LINE(data), negate is on, success-streams keys:", %success-streams.keys.sort) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #   self!log("###################################",">") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #   self!log("CHECK LINE(negate=on)", "calculate decision") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #   self!log("CHECK LINE(negate=on,data), success-streams.keys.elems", %success-streams.keys.elems) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #   self!log("CHECK LINE(negate=on,data), current-context.streams.keys.elems", self.current-context.streams.keys.elems) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #   self!log("CHECK LINE(negate=on,data), current status", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #   self!log("###################################","<") if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
-          if self.current-context.streams.keys.elems == 0 {
-                self!log("CHECK LINE(case1), negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-                $status = !$status;
-          } elsif self.current-context.streams.keys.elems == %success-streams.keys.elems {
-                $status = !$status;
-                self!log("CHECK LINE(case3), negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-          } else {
-                $status = True if $status == False;
-                self!log("CHECK LINE(case4), negate is on, revert status to", $status) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-          }
-        }
-    }else {
+        #   if self.current-context.isa(Sparrow6::Task::Check::Context::Range) {
+        #     self!log(
+        #       "CHECK LINE(Sparrow6::Task::Check::Context::Range), initial-streams-cnt", 
+        #       self.current-context.initial-streams-cnt
+        #     ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #     self!log(
+        #       "CHECK LINE(Sparrow6::Task::Check::Context::Range), just-started", 
+        #       self.current-context.just-started
+        #     ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #     if self.current-context.initial-streams-cnt > 0 && 
+        #        self.current-context.just-started == True  &&
+        #        self.current-context.initial-streams-cnt == %success-streams.keys.elems {
+        #       $status = $status == True ?? False !! True;
+        #       self!log("CHECK LINE(case1), set status to", $status) 
+        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #     } elsif self.current-context.initial-streams-cnt == 0 &&
+        #             self.current-context.just-started == True {
+        #       $status = False;
+        #       self!log("CHECK LINE(case2), set status to", $status) 
+        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
+
+        #     } elsif self.current-context.just-started == False && 
+        #           self.current-context.streams.keys.elems > 0 &&
+        #           self.current-context.streams.keys.elems ==  %success-streams.keys.elems {
+        #       $status = !$status;
+        #       self!log("CHECK LINE(case3), set status to", $status) 
+        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
+
+        #     } elsif self.current-context.just-started == False &&
+        #           self.current-context.streams.keys.elems > 0 &&
+        #           self.current-context.streams.keys.elems >  %success-streams.keys.elems {
+        #       $status = True;
+        #       self!log("CHECK LINE(case4), set status to", $status) 
+        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
+
+        #     } elsif self.current-context.just-started == False &&
+        #           self.current-context.streams.keys.elems == 0 {
+        #       $status = False;
+        #       self!log("CHECK LINE(case5), set status to", $status) 
+        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #     } else {
+        #       self!log("CHECK LINE(case9), set status to", $status) 
+        #       if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        #     }        
+        # }
+      }  
+    } else {
         die "unknown check type: $check-type";
     }
 
