@@ -1146,6 +1146,21 @@ the second "OK" line (at the index number 2), and then to the line with index nu
 
 Additional negation checks make it sure that there is no "OK2" line after the first "HELLO" line, and there is no "OK3" line after the second "OK" line.
 
+---
+
+One can use SLN in ranges:
+
+```
+note: between 10th and 20nd line
+between: :10 :20
+```
+
+And in within expressions:
+
+```
+note: within line number 33
+within: :33:
+```
 
 # Streams
 

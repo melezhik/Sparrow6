@@ -150,13 +150,19 @@ class Range
 
       if ! self.end.defined {
 
+        my $pattern = self.start;
+  
         for self.data -> $d {
           
           $i++;
   
-          my $pattern = self.start;
-  
-          if $d ~~ /<$pattern>/ {
+          if $pattern ~~ /^^ ":" (\d+) ":" $$/ {
+              my $n = Int("{$0}");
+              if $n == $i - 1 {
+                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i - 1 );
+                 last; 
+              }
+          } elsif $d ~~ /<$pattern>/ {
              $stream-id++;
              push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i - 1 );
           }
@@ -165,18 +171,51 @@ class Range
   
       } else {
 
+        my $start_ind = -1;
+        my $stop_ind = -1;
+
+        my $pattern1 = self.start;
+        my $pattern2 = self.end;
+
+        my $i = 0;
+
+        if $pattern1 ~~ /^^ ":" (\d+) ":" $$/ {
+            $start_ind = Int("{$0}");
+        } 
+        if $pattern2 ~~ /^^ ":" (\d+) ":" $$/ {
+            $stop_ind = Int("{$0}");
+        }
+
         for self.data -> $d {
-  
-          my $pattern1 = self.start;
-          my $pattern2 = self.end;
-    
-          $stream-id++ if $d ~~ /<$pattern1>/;
-  
-          if $d ~~ /<$pattern1>/ ^fff^ $d ~~ /<$pattern2>/ {
-              %seen{$stream-id} = "ok";
-              push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+
+          # boundary conditions  
+          if $start_ind != -1 {
+            $stream-id++ if $start_ind == $i;
+          }  else {
+            $stream-id++ if $d ~~ /<$pattern1>/;
           }
-  
+
+          if $start_ind =! -1 and $stop_ind == -1 {
+            if $i > $start_ind ^fff^ $d ~~ /<$pattern2>/ {
+                %seen{$stream-id} = "ok";
+                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+            }
+          } elsif $start_ind == -1 and $stop_ind != -1  {
+            if $d ~~ /<$pattern1>/ ^fff^ $i <= $stop_ind  {
+                %seen{$stream-id} = "ok";
+                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+            }
+          } elsif $start_ind =! -1 and $stop_ind != -1 {
+            if $i > $start_ind ^fff^ $i <= $stop_ind  {
+                %seen{$stream-id} = "ok";
+                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+            }
+          } else {
+            if $d ~~ /<$pattern1>/ ^fff^ $d ~~ /<$pattern2>/ {
+                %seen{$stream-id} = "ok";
+                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+            }
+          }
           $i++;
   
         }
