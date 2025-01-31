@@ -166,20 +166,32 @@ class Api
     my @new-context;
 
     if $check-type eq 'default' {
-
         for self.current-context.context -> $ln {
-
-            my $st = $pattern eq ":any:" ?? True !! index($ln<data>,$pattern);
-
-            if $st.defined {
+            if $pattern eq ":any:" {
                 $status = True;
                 $!last-match-line = $ln<data>;
                 @!succeeded.push: $ln<data>;
                 $ln<captures> = [ $ln<data> ]; 
                 push @new-context, $ln;
-                @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ] ) ;
+                @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index>  ) ;
+            } elsif $pattern ~~ /^^ ":" (\d+) ":" $$/ {
+              my $n = Int("{$0}");
+              if $n == $ln<index> {
+                $status = True;
+                $!last-match-line = $ln<data>;
+                @!succeeded.push: $ln<data>;
+                $ln<captures> = [ $ln<data> ]; 
+                push @new-context, $ln;
+                @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index> ) ;
+              } 
+            } elsif defined(index($ln<data>,$pattern)) {
+                $status = True;
+                $!last-match-line = $ln<data>;
+                @!succeeded.push: $ln<data>;
+                $ln<captures> = [ $ln<data> ]; 
+                push @new-context, $ln;
+                @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index>  ) ;
             }
-            
         }
     } elsif $check-type eq 'regexp' {
 

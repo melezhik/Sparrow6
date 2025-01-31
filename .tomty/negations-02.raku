@@ -9,7 +9,7 @@
 use Sparrow6::Task::Runner;
 
 Sparrow6::Task::Runner::Api.new(
-  name  => "hello",
+  name  => "negations-02",
   root  => "examples/tasks/negations",
   task => "02",
   do-test => True,

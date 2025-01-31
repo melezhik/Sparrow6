@@ -1078,6 +1078,69 @@ stdout match (w) <!F> True
 stdout match (w) <C> True
 ```
 
+# Search by line numbers AKA SLN search
+
+Sometime it makes a sence to search by line number of text output. 
+
+Conside this example:
+
+task.bash
+
+```
+echo OK
+echo HELLO
+echo OK
+echo DONE
+echo BYE!
+```
+
+task.check
+
+```
+OK
+
+code: <<RAKU
+!raku
+use Data::Dump;
+for captures-full() -> $s {
+  say $s;
+}
+RAKU
+
+
+begin:
+HELLO
+!regexp: OK2
+:2:
+!regexp: OK3
+:3:
+BYE!
+end:
+```
+
+output
+
+```
+[task stdout]
+12:41:34 :: OK
+12:41:34 :: HELLO
+12:41:34 :: OK
+12:41:34 :: DONE
+12:41:34 :: BYE!
+[task check]
+stdout match <OK> True
+# [{data => [OK], index => 0, stream-id => (Any)} {data => [OK], index => 2, stream-id => (Any)}]
+```
+
+The search starts with "OK" lines check that find two lines. The first is at the index 0, 
+and the second at the index 2.
+
+Next sequential search begins with "HELLO" line (the one and only here), then references to 
+the second "OK" line (at the index number 2), and then to the line with index number 3 (which happens to be a "DONE" line), that all results in effective search of `HELLO->OK->DONE->BYE!` sequential block.
+
+Additional negation checks make it sure that there is no "OK2" line after the first "HELLO" line, and there is no "OK3" line after the second "OK" line.
+
+
 # Streams
 
 Streams are captures grouped by logical blocks within search context.

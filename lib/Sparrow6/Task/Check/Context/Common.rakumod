@@ -10,9 +10,9 @@ role Role {
       # one directional linked list 
       for 1 .. $.data.elems  -> $i {
         if $i < $.data.elems {
-          push self.context, %( data => $.data[$i-1], 'next' => $i )
+          push self.context, %( data => $.data[$i-1], 'next' => $i, index => $i-1  )
         } else {
-          push self.context, %( data => $.data[$i-1], 'next' => Nil )
+          push self.context, %( data => $.data[$i-1], 'next' => Nil, index => $i-1 )
         }
       }
 

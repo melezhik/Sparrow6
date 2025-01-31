@@ -100,6 +100,15 @@ sub captures () is export {
 
 }
 
+sub captures-full () is export {
+
+  return $captures if $captures.defined;
+
+  my $json = from-json slurp "{cache_root_dir()}/captures.json";
+
+  return $json;
+
+}
 
 sub capture () is export {
   captures()[0];

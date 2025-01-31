@@ -1,0 +1,19 @@
+OK
+
+code: <<RAKU
+!raku
+use Data::Dump;
+for captures-full() -> $s {
+  say $s;
+}
+RAKU
+
+
+begin:
+HELLO
+!regexp: OK2
+:2:
+!regexp: OK3
+:3:
+BYE!
+end:
