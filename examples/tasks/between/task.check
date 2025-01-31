@@ -1,34 +1,27 @@
+note: between: {start} {end}
 between: {start} {end}
 
 regexp: (\d+)
 
-generator: print 'assert: ', ( scalar @{captures()} == 11 ), ' 11 numbers between start ... end';
-
-#code: <<CODE
-
-#for my $s (@{stream()}){                
-#    for my $i (@{$s}){                  
-#        print 'assert: ',"# $i\n";                 
-#    }                                   
-#    print 'assert: ',"#---\n\n"                    
-#}
-
-#CODE
+code: <<RAKU
+!raku
+use Data::Dump;
+say captures();
+say Dump(streams());
+RAKU
 
 
-generator: print 'assert: ',( captures->[0]->[0] == 0 ), ' first number is 0';
-generator: print 'assert: ',( captures->[1]->[0] == 3 ), ' second number is 3';
-generator: print 'assert: ',( captures->[2]->[0] == 4 ), ' third number is 4';
-generator: print 'assert: ',( captures->[3]->[0] == 5 ), ' forth number is 5';
+generator: <<RAKU
+!raku
+say "assert: ", captures().elems == 12 ?? 1 !! 0, " 12 captures";
+say "assert: ", captures()[0][0] == 100 ?? 1 !! 0, " first cap is 100";
+say "assert: ", captures()[11][0] == 12 ?? 1 !! 0, " last cap is 12";
 
-generator: print 'assert: ',( captures->[4]->[0] == 6 ), ' fith number is 6';
-generator: print 'assert: ',( captures->[5]->[0] == 7 ), ' six number is 7';
-generator: print 'assert: ',( captures->[6]->[0] == 8 ), ' seven number is 8';
-generator: print 'assert: ',( captures->[7]->[0] == 9 ), ' eight number is 9';
+RAKU
 
 end:
 
-code: print "context reset"
+note: context reset
 
 regexp: (\d+)
 

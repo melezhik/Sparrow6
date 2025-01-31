@@ -1,16 +1,47 @@
-between: {'foo'} {'foo'}
+note: between: {'{'} {'}'}
+between: {'{'} {'}'}
+  note: regexp: (\S+)
   regexp: (\S+)
 end:
 
+code: <<RAKU
+!raku
+use Data::Dump;
+say Dump(streams_array());
+#dump_streams();
+RAKU
+
 generator: <<CODE
-!perl6
-  say "assert: {streams_array()[0][0][0] eq "1"}  streams_array()[0][0][0] == 1";
-  say "assert: {streams_array()[1][1][0] eq  "b"} streams_array()[1][1][0] == b";
-  say "assert: {streams_array()[2][2][0] eq "cc"} streams_array()[2][2][0] == cc";
+!raku
+  say "note: streams_array()[0][0][0] = ", streams_array()[0][0][0];
+  say "assert: ", streams_array()[0][0][0] eq '{' ?? 1 !! 0,  " streams_array()[0][0][0] == \{";
+
+  say "note: streams_array()[0][1][0] = ", streams_array()[0][1][0];
+  say "assert: ", streams_array()[0][1][0] eq '1' ?? 1 !! 0,  " streams_array()[0][1][0] == 1";
+
+  say "note: streams_array()[0][2][0] = ", streams_array()[0][2][0];
+  say "assert: ", streams_array()[0][2][0] eq '2' ?? 1 !! 0,  " streams_array()[0][2][0] == 2";
+
+  say "note: streams_array()[0][3][0] = ", streams_array()[0][3][0];
+  say "assert: ", streams_array()[0][3][0] eq '3' ?? 1 !! 0,  " streams_array()[0][2][0] == 3";
+
 CODE
 
-code: <<CODE
-!perl6
-  say streams_array().perl;
-  dump_streams();
+
+generator: <<CODE
+!raku
+  say "note: streams_array()[1][0][0] = ", streams_array()[1][0][0];
+  say "assert: ", streams_array()[1][0][0] eq '{' ?? 1 !! 0,  " streams_array()[1][0][0] == \{";
+
+  say "note: streams_array()[1][1][0] = ", streams_array()[1][1][0];
+  say "assert: ", streams_array()[1][1][0] eq 'a' ?? 1 !! 0,  " streams_array()[1][1][0] == a";
+
+  say "note: streams_array()[1][2][0] = ", streams_array()[1][2][0];
+  say "assert: ", streams_array()[1][2][0] eq 'b' ?? 1 !! 0,  " streams_array()[0][2][0] == b";
+
+  say "note: streams_array()[1][3][0] = ", streams_array()[1][3][0];
+  say "assert: ", streams_array()[1][3][0] eq 'c' ?? 1 !! 0,  " streams_array()[0][2][0] == c";
+
 CODE
+
+end:

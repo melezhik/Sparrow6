@@ -1,17 +1,21 @@
-say q:to/HERE/;
+echo "
+
   {
-    1
-    2
-    3
+    A
+    B
+    C
   }
+
   {
     a
     b
     c
   }
+
   {
     aa
     bb
     cc
   }
-HERE
+
+"

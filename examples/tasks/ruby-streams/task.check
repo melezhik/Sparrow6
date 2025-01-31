@@ -1,11 +1,20 @@
-between: {'foo'} {'foo'}
-regexp: (\S+)
-end:
+note: between: {'{'} {'}'}
+between: {'{'} {'}'}
+  note: regexp: (\S+)
+  regexp: (\S+)
+code: <<CODE
+!ruby
+  require 'pp'
+  PP.pp(streams_array());
+CODE
 
 generator: <<CODE
 !ruby
-  #puts streams_array().inspect
-  puts "assert: #{streams_array()[0][0][0].eql? "1"} streams_array()[0][0][0] == 1"
-  puts "assert: #{streams_array()[1][1][0].eql? "b"} streams_array()[1][1][0] == b"
-  puts "assert: #{streams_array()[2][2][0].eql? "cc"} streams_array()[2][2][0] == cc"
+ check = [[["{"], ["A"], ["B"], ["C"], ["}"]], [["{"], ["a"], ["b"], ["c"], ["}"]], [["{"], ["aa"], ["bb"], ["cc"], ["}"]]] 
+ if streams_array().eql? check
+ then
+  puts "assert: 1 results correct"
+ else
+  puts "assert: 0 results correct"
+ end
 CODE

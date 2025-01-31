@@ -1,4 +1,4 @@
-print "
+echo "
 start 100 end
 
 start
@@ -21,7 +21,7 @@ end
     1
     2
     73
-";
+"
 
 
 

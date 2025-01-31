@@ -200,7 +200,7 @@ class Range
           # boundary conditions  
 
           if $start_ind != -1 {
-            $stream-id++ if $start_ind == $i;
+            $stream-id++ if $start_ind > $i;
           }  else {
             $stream-id++ if $d ~~ /<$pattern1>/;
           }
