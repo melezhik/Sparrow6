@@ -3,6 +3,8 @@ Revision history for Sparrow6
 {{$NEXT}}
 
     Feature: SLN search
+    Fix: fix range context
+    calculation (fff)
 
 0.0.54 2025-01-29T17:58:00Z
 

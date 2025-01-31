@@ -352,7 +352,6 @@ class Api
         } elsif $l ~~ / ^^ \s* 'between:' \s+ '{' (.*?) '}' \s+ '{' (.*?) '}'  $$ / {
 
           die "nested contexts are forbidden" unless self.current-context.^name eq "Sparrow6::Task::Check::Context::Default";
-
           self.current-context = Sparrow6::Task::Check::Context::Range.new( data => self.data, start => "$0", end => "$1"  );
 
         } elsif $l ~~ / ^^ \s* 'begin:' \s* $$ / {

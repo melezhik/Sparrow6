@@ -3,6 +3,7 @@
 use v6;
 
 unit module Sparrow6::Task::Check::Context::Common;
+use Data::Dump;
 
 role Role {
 
@@ -16,7 +17,7 @@ role Role {
         }
       }
 
-      self!log("start context:", self.context.perl) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+      self!log("Initial context data", Dump(self.context)) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     }
 

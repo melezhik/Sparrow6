@@ -1148,18 +1148,27 @@ Additional negation checks make it sure that there is no "OK2" line after the fi
 
 ---
 
-One can use SLN in ranges:
+
+You can use SLN in ranges, sequential blocks and  within expressions:
+
 
 ```
-note: between 10th and 20nd line
-between: { :10: } { :20: }
+note: search everyhting between 1st and 3d lines
+between: { :1: } { :3: }
+    regexp: .*
+end:
 ```
 
-And in within expressions:
-
 ```
-note: within line number 33
+note: start sequence from 2nd line
+begin:
+    :2:
+    hello2
+end:
+```
+note: search within line number 33
 within: :33:
+end:
 ```
 
 # Streams

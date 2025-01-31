@@ -1,0 +1,6 @@
+echo "OK"
+echo "{"
+echo "hello"
+echo "hello2"
+echo "}"
+echo "done"

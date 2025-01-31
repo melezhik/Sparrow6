@@ -1,0 +1,23 @@
+between: { :1: } { :3: }
+hello
+end:
+
+code: <<RAKU
+!raku
+say matched();
+RAKU
+
+
+begin: 
+:2:
+hello2
+end:
+
+
+within: :3:
+end:
+
+code: <<RAKU
+!raku
+say matched();
+RAKU

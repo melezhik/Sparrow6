@@ -42,7 +42,6 @@ class Sequence
   does Sparrow6::Task::Check::Context::Common::Role
   does Sparrow6::Common::Helpers::Role
 
-
 {
 
     has Array $.data;
@@ -124,6 +123,7 @@ class Range
 
 {
 
+
     has Array $.data;
     has Hash @.context is rw;
     has Array %.streams is rw;
@@ -140,6 +140,8 @@ class Range
 
       self.streams-allowed = True;
 
+      self!log("Start context", "Range") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+      
       my @new-context;
 
       my $i = 0;
@@ -152,6 +154,8 @@ class Range
 
         my $pattern = self.start;
   
+        self!log("Range pattern", "<$pattern>") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+
         for self.data -> $d {
           
           $i++;
@@ -177,7 +181,7 @@ class Range
         my $pattern1 = self.start;
         my $pattern2 = self.end;
 
-        my $i = 0;
+        my $i = -1;
 
         if $pattern1 ~~ /":" (\d+) ":"/ {
             $start_ind = Int("{$0}");
@@ -186,48 +190,58 @@ class Range
             $stop_ind = Int("{$0}");
         }
 
-        #say "[$pattern1]";
-        #say "[$pattern2]";
+        self!log("Range pattern1", "<$pattern1>") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        self!log("Range pattern2", "<$pattern2>") if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
         for self.data -> $d {
 
+          $i++;
+
           # boundary conditions  
+
           if $start_ind != -1 {
             $stream-id++ if $start_ind == $i;
           }  else {
             $stream-id++ if $d ~~ /<$pattern1>/;
           }
 
-          if $start_ind != -1 and $stop_ind == -1 {
-            #say "cas1";
-            if $i > $start_ind ^fff^ $d ~~ /<$pattern2>/ {
-            #say "cas2";
-                %seen{$stream-id} = "ok";
-                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
-            }
-          } elsif $start_ind == -1 and $stop_ind != -1  {
-            #say "cas3";
-            if $d ~~ /<$pattern1>/ ^fff^ $i <= $stop_ind  {
-            #say "cas4";
-                %seen{$stream-id} = "ok";
-                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
-            }
-          } elsif $start_ind != -1 and $stop_ind != -1 {
-            #say "cas5";
-            if $i > $start_ind ^fff^ $i <= $stop_ind  {
-            #say "cas6";
-                %seen{$stream-id} = "ok";
-                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
-            }
-          } else {
-            #say "cas7";
-            if $d ~~ /<$pattern1>/ ^fff^ $d ~~ /<$pattern2>/ {
-            #say "cas8";
-                %seen{$stream-id} = "ok";
-                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
-            }
+          if $start_ind == -1 and $stop_ind == -1 and $d ~~ /<$pattern1>/ fff $d ~~ /<$pattern2>/ {
+              self!log("Range", "cas8") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+              %seen{$stream-id} = "ok";
+              push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+              next;
           }
-          $i++;
+
+          if $start_ind != -1 and $stop_ind == -1 {
+            self!log("Range", "cas1") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+            if $i > $start_ind fff $d ~~ /<$pattern2>/ {
+                self!log("Range", "cas2") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+                %seen{$stream-id} = "ok";
+                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+            }
+            next;
+          } 
+          if $start_ind == -1 and $stop_ind != -1  {
+            self!log("Range", "cas3") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+            if $d ~~ /<$pattern1>/ fff $i <= $stop_ind  {
+                self!log("Range", "cas4") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+                %seen{$stream-id} = "ok";
+                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+            }
+            next;
+          } 
+          if $start_ind != -1 and $stop_ind != -1 {
+            self!log("Range", "cas5") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+            self!log("Range start_ind", $start_ind) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+            self!log("Range stop_ind", $stop_ind) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+            self!log("Range index", $i) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+            if $i > $start_ind fff $i < $stop_ind  {
+                self!log("Range", "cas6") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+                %seen{$stream-id} = "ok";
+                push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+            }
+            next
+          } 
   
         }
   
@@ -235,7 +249,7 @@ class Range
 
       self.initial-streams-cnt = %seen.keys.elems;
 
-      self!log("Start context:", Dump(self.context)) if %*ENV<SP6_DEBUG_STREAM>;
+      self!log("Initial context data", Dump(self.context)) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     }  
 
