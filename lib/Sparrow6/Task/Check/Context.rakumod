@@ -179,12 +179,15 @@ class Range
 
         my $i = 0;
 
-        if $pattern1 ~~ /^^ ":" (\d+) ":" $$/ {
+        if $pattern1 ~~ /":" (\d+) ":"/ {
             $start_ind = Int("{$0}");
         } 
-        if $pattern2 ~~ /^^ ":" (\d+) ":" $$/ {
+        if $pattern2 ~~ /":" (\d+) ":"/ {
             $stop_ind = Int("{$0}");
         }
+
+        #say "[$pattern1]";
+        #say "[$pattern2]";
 
         for self.data -> $d {
 
@@ -195,23 +198,31 @@ class Range
             $stream-id++ if $d ~~ /<$pattern1>/;
           }
 
-          if $start_ind =! -1 and $stop_ind == -1 {
+          if $start_ind != -1 and $stop_ind == -1 {
+            #say "cas1";
             if $i > $start_ind ^fff^ $d ~~ /<$pattern2>/ {
+            #say "cas2";
                 %seen{$stream-id} = "ok";
                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
             }
           } elsif $start_ind == -1 and $stop_ind != -1  {
+            #say "cas3";
             if $d ~~ /<$pattern1>/ ^fff^ $i <= $stop_ind  {
+            #say "cas4";
                 %seen{$stream-id} = "ok";
                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
             }
-          } elsif $start_ind =! -1 and $stop_ind != -1 {
+          } elsif $start_ind != -1 and $stop_ind != -1 {
+            #say "cas5";
             if $i > $start_ind ^fff^ $i <= $stop_ind  {
+            #say "cas6";
                 %seen{$stream-id} = "ok";
                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
             }
           } else {
+            #say "cas7";
             if $d ~~ /<$pattern1>/ ^fff^ $d ~~ /<$pattern2>/ {
+            #say "cas8";
                 %seen{$stream-id} = "ok";
                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
             }

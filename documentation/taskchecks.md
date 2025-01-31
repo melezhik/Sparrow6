@@ -1152,7 +1152,7 @@ One can use SLN in ranges:
 
 ```
 note: between 10th and 20nd line
-between: :10 :20
+between: { :10: } { :20: }
 ```
 
 And in within expressions:
