@@ -1122,14 +1122,20 @@ output
 
 ```
 [task stdout]
-12:41:34 :: OK
-12:41:34 :: HELLO
-12:41:34 :: OK
-12:41:34 :: DONE
-12:41:34 :: BYE!
+13:02:02 :: OK
+13:02:02 :: HELLO
+13:02:02 :: OK
+13:02:02 :: DONE
+13:02:02 :: BYE!
 [task check]
 stdout match <OK> True
 # [{data => [OK], index => 0, stream-id => (Any)} {data => [OK], index => 2, stream-id => (Any)}]
+stdout match (s) <HELLO> True
+stdout match (s) <!OK2> True
+stdout match (s) <:2:> True
+stdout match (s) <!OK3> True
+stdout match (s) <:3:> True
+stdout match (s) <BYE!> True
 ```
 
 The search starts with "OK" lines check that find two lines. The first is at the index 0, 
