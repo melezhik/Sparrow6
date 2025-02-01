@@ -37,7 +37,7 @@ generator: <<OK
 !raku
   use NginxParser;
   my $line = captures-full()[0];
-  say "note: parse-server [%ind%] line: $line<index> data: {$line<data>.subst('#','//')}";
+  #say "note: parse-server [%ind%] line: $line<index> data: {$line<data>.subst('#','//')}";
   my $stack = get_state()<nginx><servers>{%ind%}<stack>;
   my $s_full = get_state();
   my $data = $line<data>;
@@ -47,7 +47,7 @@ generator: <<OK
     $s_full<nginx><servers>{%ind%}<stack> = $stack;
     update_state($s_full);
     if $stack == 0 {
-      say "note: end";
+      say "note: end, index ", $line<index>;
     } else {
       say "generator: <<RAKU";
       say "!raku";
