@@ -5,6 +5,7 @@ end:
 code: <<RAKU
 !raku
 say matched();
+dump_streams();
 RAKU
 
 
