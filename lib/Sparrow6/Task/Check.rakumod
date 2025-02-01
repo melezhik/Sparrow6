@@ -167,6 +167,7 @@ class Api
 
     if $check-type eq 'default' {
         for self.current-context.context -> $ln {
+            #say "check $ln<data>";
             if $pattern eq ":any:" {
                 $status = True;
                 $!last-match-line = $ln<data>;
@@ -207,10 +208,10 @@ class Api
                 $status = True;
                 if $matched>>.Slip>>.Str {
                   my @c = $matched>>.Slip>>.Str;
-                  @captures.push:  %( stream-id => $ln<stream-id>, data => [ @c ] );
+                  @captures.push:  %( stream-id => $ln<stream-id>, data => [ @c ], index => $ln<index> );
                   $ln<captures> = [ @c ]; 
                 } else {
-                  @captures.push: %( stream-id => $ln<stream-id>, data => [ $ln<data> ] );
+                  @captures.push: %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index> );
                   $ln<captures> = [ $ln<data> ]; 
                 }
 

@@ -2,6 +2,9 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Add missing indexes
+    for LNS search
+
 0.0.55 2025-02-01T11:50:00Z
 
     Feature: SLN search
