@@ -200,7 +200,7 @@ class Range
           # boundary conditions  
 
           if $start_ind != -1 {
-            $stream-id++ if $start_ind > $i;
+            $stream-id++ if $i == $start_ind;
           }  else {
             $stream-id++ if $d ~~ /<$pattern1>/;
           }
@@ -214,7 +214,7 @@ class Range
 
           if $start_ind != -1 and $stop_ind == -1 {
             self!log("Range", "cas1") if %*ENV<SP6_DEBUG_TASK_CHECK>;
-            if $i > $start_ind fff $d ~~ /<$pattern2>/ {
+            if $i >= $start_ind fff $d ~~ /<$pattern2>/ {
                 self!log("Range", "cas2") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                 %seen{$stream-id} = "ok";
                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
@@ -235,7 +235,7 @@ class Range
             self!log("Range start_ind", $start_ind) if %*ENV<SP6_DEBUG_TASK_CHECK>;
             self!log("Range stop_ind", $stop_ind) if %*ENV<SP6_DEBUG_TASK_CHECK>;
             self!log("Range index", $i) if %*ENV<SP6_DEBUG_TASK_CHECK>;
-            if $i > $start_ind fff $i < $stop_ind  {
+            if $i >= $start_ind fff $i <= $stop_ind  {
                 self!log("Range", "cas6") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                 %seen{$stream-id} = "ok";
                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
