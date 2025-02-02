@@ -41,3 +41,23 @@ if matched().elems {
 }
 RAKU
 
+between: { '/var/log/mariadb/mariadb.log' \s+ '{' \s* $$ } { ^^ \s* '}'  \s* $$}
+  note: look up /var/log/mariadb/mariadb.log rotate parameter
+  regexp: ^^ \s* rotate \s+ (\d+) \s* $$
+end:
+
+generator: <<RAKU
+!raku
+#say "note: ", captures-full();
+if matched().elems {
+  my $num = captures[0][0];
+  say "note: rotate param found, value = $num";
+  if $num > 1 {
+    say "assert: 1 rotate > 1"
+  } else {
+    say "assert: 0 rotate > 1"
+  }
+} else {
+  say "note: rotate param not found";
+}
+RAKU
