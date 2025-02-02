@@ -1,0 +1,43 @@
+note: =============================================
+
+between: { '/var/log/mariadb/mariadb.log' \s+ '{' \s* $$ } { ^^ \s* '}'  \s* $$}
+  note: look up /var/log/mariadb/mariadb.log postrotate section
+  postrotate
+end:
+
+generator: <<RAKU
+!raku
+#say "note: ", captures-full();
+if matched().elems {
+  my $start = captures-full()[0]<index>;
+  say "note: postrotate section found";
+  #say "note: \{ :{$start}: \} \{ endscript \}";
+  say "between: \{ :{$start}: \} \{ endscript \}";
+  say "note: look up mysqladmin flush-logs";
+  say "/usr/bin/mysqladmin flush-logs";
+  say "end:";
+}
+RAKU
+
+
+between: { '/var/log/logstash-forwarder/*.err' \s+ '{' \s* $$ } { ^^ \s* '}'  \s* $$}
+  note: look up /var/log/logstash-forwarder/*.err postrotate section
+  postrotate
+end:
+
+note: =============================================
+
+generator: <<RAKU
+!raku
+#say "note: ", captures-full();
+if matched().elems {
+  my $start = captures-full()[0]<index>;
+  say "note: postrotate section found";
+  #say "note: \{ :{$start}: \} \{ endscript \}";
+  say "between: \{ :{$start}: \} \{ endscript \}";
+  say "note: look up logstash-forwarder/*.err restart command";
+  say "service logstash-forwarder restart";
+  say "end:";
+}
+RAKU
+

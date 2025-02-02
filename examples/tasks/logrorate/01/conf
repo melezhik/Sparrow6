@@ -1,0 +1,43 @@
+/var/log/mariadb/mariadb.log {
+        create 640 mysql mysql
+        notifempty
+        daily
+        rotate 3
+        missingok
+        compress
+    postrotate
+        # just if mysqld is really running
+        if test -x /usr/bin/mysqladmin && \
+           /usr/bin/mysqladmin ping &>/dev/null
+        then
+           /usr/bin/mysqladmin flush-logs
+        fi
+    endscript
+}
+
+/var/log/logstash-forwarder/*.log {
+    rotate 30
+    size=10M
+    missingok
+    notifempty
+    daily
+    compress
+    maxage 30
+    postrotate
+        (/usr/bin/systemctl restart logstash-forwarder || /sbin/service logstash-forwarder restart) > /dev/null 2>&1
+    endscript
+}
+
+/var/log/logstash-forwarder/*.err {
+    rotate 30
+    size=10M
+    missingok
+    notifempty
+    daily
+    compress
+    maxage 30
+    postrotate
+        (/usr/bin/systemctl restart logstash-forwarder || /sbin/service logstash-forwarder restart) > /dev/null 2>&1
+    endscript
+}
+
