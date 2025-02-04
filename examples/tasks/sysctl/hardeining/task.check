@@ -1,0 +1,18 @@
+note: harden sysctl.conf
+note: rules taken from https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/
+
+note:
+note: Disable IP packet forwarding
+note:
+
+regexp: ^^ "net.ipv4.ip_forward" \s* "=" \s* 0 \s* $$
+!regexp: ^^ "net.ipv4.ip_forward" \s* "=" \s* 1 \s* $$
+
+
+note:
+note: Do not accept source routing
+note:
+
+regexp: ^^ "net.ipv4.conf.default.accept_source_route" \s* "=" \s* 0 \s* $$
+!regexp: ^^ "net.ipv4.conf.default.accept_source_route" \s* "=" \s* 1 \s* $$
+
