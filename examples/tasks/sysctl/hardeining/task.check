@@ -1,4 +1,4 @@
-note: harden sysctl.conf
+note: Harden sysctl.conf
 note: Rules taken from https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/
 
 note:
