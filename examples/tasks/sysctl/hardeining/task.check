@@ -1,5 +1,5 @@
 note: harden sysctl.conf
-note: rules taken from https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/
+note: Rules taken from https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/
 
 note:
 note: Disable IP packet forwarding
@@ -22,7 +22,6 @@ note:
 
 regexp: ^^ "kernel.sysrq" \s* "=" \s* 0 \s* $$
  
-
 note:
 note: Controls whether core dumps will append the PID to the core filename
 note: Useful for debugging multi-threaded applications
@@ -127,13 +126,13 @@ note:
 regexp: ^^ "net.ipv6.conf.default.accept_ra_defrtr" \s* "=" \s* 0 \s* $$
  
 note:
-note:router advertisements can cause the system to assign a global unicast address to an interface
+note: Router advertisements can cause the system to assign a global unicast address to an interface
 note:
 
 regexp: ^^ "net.ipv6.conf.default.autoconf" \s* "=" \s* 0 \s* $$
  
 note:
-note:how many neighbor solicitations to send out per address?
+note: How many neighbor solicitations to send out per address?
 note:
 
 regexp: ^^ "net.ipv6.conf.default.dad_transmits" \s* "=" \s* 0 \s* $$
@@ -177,19 +176,19 @@ note:
 #net.ipv4.tcp_window_scaling = 1
  
 note:
-note: increase system file descriptor limit    
+note: Increase system file descriptor limit    
 note:
 
 regexp: ^^ "fs.file-max" \s* "=" \s* 65536 \s* $$
  
 note:
-note:Allow for more PIDs 
+note: Allow for more PIDs 
 note:
 
 regexp: ^^ "kernel.pid_max" \s* "=" \s* 65536 \s* $$
  
 note:
-note:Increase system IP port limits
+note: Increase system IP port limits
 note:
 
 regexp: ^^ "net.ipv4.ip_local_port_range" \s* "=" \s* "2000 65000" \s* $$
