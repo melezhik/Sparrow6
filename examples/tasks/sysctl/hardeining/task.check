@@ -36,8 +36,22 @@ note: Turn on SYN-flood protections
 note:
 
 regexp: ^^ "net.ipv4.tcp_syncookies" \s* "=" \s* 1 \s* $$
-regexp: ^^ "net.ipv4.tcp_synack_retries" \s* "=" \s* 5 \s* $$
- 
+regexp: ^^ "net.ipv4.tcp_synack_retries" \s* "=" \s* (\d+) \s* $$
+generator: <<RAKU
+!raku
+if matched().elems {
+  my $v = capture()[];
+  say "note: net.ipv4.tcp_synack_retries={$v}";
+  if $v >= 3 && $v <= 5 {
+     say "assert: 1 net.ipv4.tcp_synack_retries in [3..5] range"
+  } else {
+     say "assert: 0 net.ipv4.tcp_synack_retries in [3..5] range"
+  }
+} else {
+  say "note: net.ipv4.tcp_synack_retries setting not found"
+}
+RAKU
+
 note:
 note: IPv4 networking start
 note:
