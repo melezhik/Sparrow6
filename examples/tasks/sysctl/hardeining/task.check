@@ -16,3 +16,186 @@ note:
 regexp: ^^ "net.ipv4.conf.default.accept_source_route" \s* "=" \s* 0 \s* $$
 !regexp: ^^ "net.ipv4.conf.default.accept_source_route" \s* "=" \s* 1 \s* $$
 
+note:
+note: Controls the System Request debugging functionality of the kernel
+note:
+
+regexp: ^^ "kernel.sysrq" \s* "=" \s* 0 \s* $$
+ 
+
+note:
+note: Controls whether core dumps will append the PID to the core filename
+note: Useful for debugging multi-threaded applications
+note:
+
+
+regexp: ^^ "kernel.core_uses_pid" \s* "=" \s* 1 \s* $$
+ 
+note:
+note: Controls the use of TCP syncookies
+note: Turn on SYN-flood protections
+note:
+
+regexp: ^^ "net.ipv4.tcp_syncookies" \s* "=" \s* 1 \s* $$
+regexp: ^^ "net.ipv4.tcp_synack_retries" \s* "=" \s* 5 \s* $$
+ 
+note:
+note: IPv4 networking start
+note:
+
+note: Send redirects, if router, but this is just server
+note: So no routing allowed 
+note:
+
+regexp: ^^ "net.ipv4.conf.all.send_redirects" \s* "=" \s* 0 \s* $$
+regexp: ^^ "net.ipv4.conf.default.send_redirects" \s* "=" \s* 0 \s* $$
+ 
+note:
+note: Accept packets with SRR option? No
+note:
+
+regexp: ^^ "net.ipv4.conf.all.accept_source_route" \s* "=" \s* 0 \s* $$
+ 
+note:
+note: Accept Redirects? No, this is not router
+note:
+
+regexp: ^^ "net.ipv4.conf.all.accept_redirects" \s* "=" \s* 0 \s* $$
+regexp: ^^ "net.ipv4.conf.all.secure_redirects" \s* "=" \s* 0 \s* $$
+ 
+note:
+note: Log packets with impossible addresses to kernel log? yes
+note:
+
+regexp: ^^ "net.ipv4.conf.all.log_martians" \s* "=" \s* 1 \s* $$
+regexp: ^^ "net.ipv4.conf.default.accept_source_route" \s* "=" \s* 0 \s* $$
+regexp: ^^ "net.ipv4.conf.default.accept_redirects" \s* "=" \s* 0 \s* $$
+regexp: ^^ "net.ipv4.conf.default.secure_redirects" \s* "=" \s* 0 \s* $$
+ 
+
+note:
+note: Ignore all ICMP ECHO and TIMESTAMP requests sent to it via broadcast/multicast
+note:
+
+regexp: ^^ "net.ipv4.icmp_echo_ignore_broadcasts" \s* "=" \s* 1 \s* $$
+ 
+note:
+note: Prevent against the common 'syn flood attack'
+note:
+
+regexp: ^^ "net.ipv4.tcp_syncookies" \s* "=" \s* 1 \s* $$
+ 
+note:
+note: Enable source validation by reversed path, as specified in RFC1812
+note:
+
+regexp: ^^ "net.ipv4.conf.all.rp_filter" \s* "=" \s* 1 \s* $$
+
+note:
+note: Controls source route verification
+note:
+
+regexp: ^^ "net.ipv4.conf.default.rp_filter" \s* "=" \s* 1 \s* $$ 
+ 
+note:
+note: IPv6 networking start
+note:
+
+note:
+note: Number of Router Solicitations to send until assuming no routers are present.
+note: This is host and not router
+note:
+
+regexp: ^^ "net.ipv6.conf.default.router_solicitations" \s* "=" \s* 0 \s* $$
+ 
+note:
+note: Accept Router Preference in RA?
+note:
+
+regexp: ^^ "net.ipv6.conf.default.accept_ra_rtr_pref" \s* "=" \s* 0 \s* $$
+ 
+note:
+note: Learn Prefix Information in Router Advertisement
+note:
+
+regexp: ^^ "net.ipv6.conf.default.accept_ra_pinfo" \s* "=" \s* 0 \s* $$
+ 
+note:
+note: Setting controls whether the system will accept Hop Limit settings from a router advertisement
+note:
+
+regexp: ^^ "net.ipv6.conf.default.accept_ra_defrtr" \s* "=" \s* 0 \s* $$
+ 
+note:
+note:router advertisements can cause the system to assign a global unicast address to an interface
+note:
+
+regexp: ^^ "net.ipv6.conf.default.autoconf" \s* "=" \s* 0 \s* $$
+ 
+note:
+note:how many neighbor solicitations to send out per address?
+note:
+
+regexp: ^^ "net.ipv6.conf.default.dad_transmits" \s* "=" \s* 0 \s* $$
+ 
+note:
+note: How many global unicast IPv6 addresses can be assigned to each interface?
+note:
+
+regexp: ^^ "net.ipv6.conf.default.max_addresses" \s* "=" \s* 1 \s* $$
+ 
+note:
+note: IPv6 networking ends
+note:
+ 
+#note:
+#note: Enable ExecShield protection
+#note:
+
+#note:
+#note: Set value to 1 or 2 (recommended) 
+#note:
+
+#kernel.exec-shield = 2
+#kernel.randomize_va_space=2
+ 
+#note:
+#note: TCP and memory optimization 
+#note: increase TCP max buffer size setable using setsockopt()
+#note:
+
+#net.ipv4.tcp_rmem = 4096 87380 8388608
+#net.ipv4.tcp_wmem = 4096 87380 8388608
+ 
+#note:
+#note: increase Linux auto tuning TCP buffer limits
+#note:
+
+#net.core.rmem_max = 8388608
+#net.core.wmem_max = 8388608
+#net.core.netdev_max_backlog = 5000
+#net.ipv4.tcp_window_scaling = 1
+ 
+note:
+note: increase system file descriptor limit    
+note:
+
+regexp: ^^ "fs.file-max" \s* "=" \s* 65536 \s* $$
+ 
+note:
+note:Allow for more PIDs 
+note:
+
+regexp: ^^ "kernel.pid_max" \s* "=" \s* 65536 \s* $$
+ 
+note:
+note:Increase system IP port limits
+note:
+
+regexp: ^^ "net.ipv4.ip_local_port_range" \s* "=" \s* "2000 65000" \s* $$
+ 
+note:
+note: RFC 1337 fix
+note:
+
+regexp: ^^ "net.ipv4.tcp_rfc1337" \s* "=" \s* 1 \s* $$
