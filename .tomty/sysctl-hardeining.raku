@@ -1,4 +1,10 @@
-#!perl6 
+#!raku
+
+=begin tomty 
+%(
+  tag => [ "should-fail" ]
+)
+=end tomty 
 
 use Sparrow6::Task::Runner;
 
