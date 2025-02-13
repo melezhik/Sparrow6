@@ -1,8 +1,17 @@
 unit module Sparrow6::Task::Repository::Helpers::Index;
+use Sparrow6::Task::Repository::Helpers::Init;
 
 role Role {
 
   method index-update () {
+
+    my $url = $.url;
+
+    if $url ~~ s/^ 'file://' // {
+      # automatically populate file based
+      # repo if not exists
+      self.repo-init($url) unless $url.IO ~~ :d
+    }
 
     self.get-resource("api/v1/index","{$.sparrow-root}/index");
 

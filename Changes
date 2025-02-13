@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.57 2025-13-02T23:49:00Z
+
+    Automatically populate 
+    file based repo if not exists
+
 0.0.56 2025-03-01T23:10:00Z
 
     Add missing indexes
