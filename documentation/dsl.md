@@ -263,11 +263,46 @@ Sparrowdo copies all files located at `data/` to a remote server, so you can cop
 
 ## Templates
 
-Templates are files gets populated from templates sources in [Template-Toolkit](http://template-toolkit.org/) format.
+Two templates engines are supported now:
+
+* [Template6](https://raku.land/zef:raku-community-modules/Template6)
+
+Target files are redered from templates in [Template6](https://raku.land/zef:raku-community-modules/Template6) format.
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| template-create | create template | `template-create($path,%args)`| [templater](https://github.com/melezhik/sparrow-plugins/tree/master/templater) | 
+| template6-create | renders files from template | `template6-create($path,%args)`| [templater](https://github.com/melezhik/sparrow-plugins/tree/master/template6) | 
+| template6        | alias for template6-create | * | * |
+
+Examples:
+
+    my %state = task-run "deploy server config", "template6", %(
+    vars => %(
+      :80port,
+      :use_tls,
+      :database_name<Products>,
+    ),
+    :target</etc/server.conf>,
+    :template_dir<server_templates>,
+    :template<server_config>,
+    :dry_run, 
+    );
+
+    say %state<status>;
+
+    # 1 - target first time created
+    # 0 - target has not changed
+    # 2 - target has changed
+
+
+* [Perl Template Toolkit](http://template-toolkit.org/)
+
+
+Target files are redered from templates in [Template-Toolkit](http://template-toolkit.org/) format.
+
+| function | description | usage | Sparrow6 plugin |
+| -------- | ----------- | ----- | --------------- |
+| template-create | renders file from template | `template-create($path,%args)`| [templater](https://github.com/melezhik/sparrow-plugins/tree/master/templater) | 
 | template        | alias for template-create | * | * |
 
 Examples:
