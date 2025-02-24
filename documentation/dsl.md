@@ -276,24 +276,25 @@ Target files are redered from templates in [Template6](https://raku.land/zef:rak
 
 Examples:
 
-    my %state = task-run "deploy server config", "template6", %(
-    vars => %(
-      :80port,
-      :use_tls,
-      :database_name<Products>,
-    ),
-    :target</etc/server.conf>,
-    :template_dir<server_templates>,
-    :template<server_config>,
-    :dry_run, 
-    );
+```
+my %state = task-run "deploy server config", "template6", %(
+  vars => %(
+    :80port,
+    :use_tls,
+    :database_name<Products>,
+  ),
+  :target</etc/server.conf>,
+  :template_dir<server_templates>,
+  :template<server_config>,
+  :dry_run, 
+);
 
-    say %state<status>;
+say %state<status>;
 
-    # 1 - target first time created
-    # 0 - target has not changed
-    # 2 - target has changed
-
+# 1 - target first time created
+# 0 - target has not changed
+# 2 - target has changed
+```
 
 * [Perl Template Toolkit](http://template-toolkit.org/)
 
