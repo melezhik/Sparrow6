@@ -20,6 +20,7 @@ use Sparrow6::DSL::Service;
 use Sparrow6::DSL::Ssh;
 use Sparrow6::DSL::Systemd;
 use Sparrow6::DSL::Template;
+use Sparrow6::DSL::Template6;
 use Sparrow6::DSL::User;
 use Sparrow6::DSL::Zef;
 

@@ -36,6 +36,7 @@
     "Sparrow6::DSL::Ssh": "lib/Sparrow6/DSL/Ssh.rakumod",
     "Sparrow6::DSL::Systemd": "lib/Sparrow6/DSL/Systemd.rakumod",
     "Sparrow6::DSL::Template": "lib/Sparrow6/DSL/Template.rakumod",
+    "Sparrow6::DSL::Template6": "lib/Sparrow6/DSL/Template6.rakumod",
     "Sparrow6::DSL::User": "lib/Sparrow6/DSL/User.rakumod",
     "Sparrow6::DSL::Zef": "lib/Sparrow6/DSL/Zef.rakumod",
     "Sparrow6::RakuTask": "lib/Sparrow6/RakuTask.rakumod",
