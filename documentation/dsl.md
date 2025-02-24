@@ -277,15 +277,21 @@ Target files are redered from templates in [Template6](https://raku.land/zef:rak
 Examples:
 
 ```
+#
+# build /var/data/animals.txt from template examples/templates/animals.tt
+#
+# Hello, my name is [% name %]!
+# I speak [% language %]
+#
+
 my %state = task-run "deploy server config", "template6", %(
   vars => %(
-    :80port,
-    :use_tls,
-    :database_name<Products>,
+    :name<red fox>,
+    :language<English>,
   ),
-  :target</etc/server.conf>,
-  :template_dir<server_templates>,
-  :template<server_config>,
+  :target</var/data/animals.txt>,
+  :template_dir<examples/templates>,
+  :template<animals>,
   :dry_run, 
 );
 
@@ -310,12 +316,12 @@ Target files are redered from templates in [Template-Toolkit](http://template-to
 
 Examples:
 
-    # build /var/data/animals.txt from template
-
-    $ cat examples/templates/animals.tmpl
-
-    Hello, my name is [% name %]!
-    I speak [% language %]
+    #
+    # build /var/data/animals.txt from template examples/templates/animals.tmpl
+    #
+    # Hello, my name is [% name %]!
+    # I speak [% language %]
+    #
 
     template-create '/var/data/animals.txt', %(
       source => ( slurp 'examples/templates/animals.tmpl' ),
