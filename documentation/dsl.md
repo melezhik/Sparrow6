@@ -271,7 +271,7 @@ Target files are redered from templates in [Template6](https://raku.land/zef:rak
 
 | function | description | usage | Sparrow6 plugin |
 | -------- | ----------- | ----- | --------------- |
-| template6-create | renders files from template | `template6-create($path,%args)`| [templater](https://github.com/melezhik/sparrow-plugins/tree/master/template6) | 
+| template6-create | renders files from template | `template6-create($path,%args)`| [template6](https://github.com/melezhik/sparrow-plugins/tree/master/template6) | 
 | template6        | alias for template6-create | * | * |
 
 Examples:
