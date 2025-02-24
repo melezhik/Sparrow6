@@ -21,7 +21,7 @@ my %state = task-run "deploy server config", "template6", %(
 say %state<status>;
 
 
-template6-create "foo/server2.conf", %(
+template6 "foo/server2.conf", %(
  vars => %(
   :name<Sparrow2>,
   :language<Raku>,

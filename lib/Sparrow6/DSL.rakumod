@@ -69,6 +69,8 @@ BEGIN for <
 &systemd-service
 &template
 &template-create
+&template6
+&template6-create
 &ssh
 &scp
 &target_os

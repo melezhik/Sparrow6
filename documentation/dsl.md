@@ -296,6 +296,8 @@ say %state<status>;
 # 2 - target has changed
 ```
 
+NOTE: Template6 is recommened engine, as Perl Template Toolkit could be deprecated in the future
+
 * [Perl Template Toolkit](http://template-toolkit.org/)
 
 
