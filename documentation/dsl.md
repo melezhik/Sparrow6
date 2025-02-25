@@ -284,7 +284,7 @@ Examples:
 # I speak [% language %]
 #
 
-my %state = task-run "deploy server config", "template6", %(
+my %state = template6, %(
   vars => %(
     :name<red fox>,
     :language<English>,

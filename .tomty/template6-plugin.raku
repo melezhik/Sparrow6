@@ -21,7 +21,7 @@ my %state = task-run "deploy server config", "template6", %(
 say %state<status>;
 
 
-template6 "foo/server2.conf", %(
+my %state2 = template6 "foo/server2.conf", %(
  vars => %(
   :name<Sparrow2>,
   :language<Raku>,
@@ -30,5 +30,7 @@ template6 "foo/server2.conf", %(
  :template_dir<examples>,
  :template<greetings>,
 );
+
+say %state2<status>;
 
 directory-delete "foo";
