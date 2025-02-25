@@ -284,12 +284,11 @@ Examples:
 # I speak [% language %]
 #
 
-my %state = template6, %(
+my %state = template6 "/var/data/animals.txt", %(
   vars => %(
     :name<red fox>,
     :language<English>,
   ),
-  :target</var/data/animals.txt>,
   :template_dir<examples/templates>,
   :template<animals>,
   :dry_run, 

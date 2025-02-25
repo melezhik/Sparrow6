@@ -13,7 +13,6 @@ my %state = task-run "deploy server config", "template6", %(
   :name<Sparrow>,
   :language<Raku>,
  ),
- :target<foo/server.conf>,
  :template_dir<examples>,
  :template<greetings>,
 );
@@ -26,7 +25,6 @@ my %state2 = template6 "foo/server2.conf", %(
   :name<Sparrow2>,
   :language<Raku>,
  ),
- :target<foo/server2.conf>,
  :template_dir<examples>,
  :template<greetings>,
 );
