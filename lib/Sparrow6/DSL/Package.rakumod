@@ -6,7 +6,7 @@ use Sparrow6::DSL::Common;
 
 multi sub package-install ( @list ) is export {
 
-    task-run "install package(s): {@list.perl}", "package-generic", %(
+    task-run "install package(s): {@list.raku}", "package-generic", %(
       list        => (join ' ', @list),
       action      => 'install',
     );
@@ -15,7 +15,7 @@ multi sub package-install ( @list ) is export {
 
 multi sub package-install ( %list ) is export {
 
-    task-run "install package(s): {%list.perl}", "package-generic", %(
+    task-run "install package(s): {%list.raku}", "package-generic", %(
       list        => %list,
       action      => 'install',
     );
@@ -24,11 +24,10 @@ multi sub package-install ( %list ) is export {
 
 multi sub package-install ( $list ) is export {
 
-    task-run "install package(s): $list.perl", "package-generic", %(
+    task-run "install package(s): {$list.raku}", "package-generic", %(
         list        => $list,
         action      => 'install'
     );
 
 }
 
- 
