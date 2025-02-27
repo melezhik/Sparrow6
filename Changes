@@ -2,15 +2,17 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-0.0.58 2025-24-02T22:45:00Z
-
-    Add Template6 to DSL
+0.0.59 2025-27-02T16:45:00Z
 
     Fix minor interpolation bug
     in package-install DSL
 
     Switch systemd DSL to
     template6
+
+0.0.58 2025-24-02T22:45:00Z
+
+    Add Template6 to DSL
 
 0.0.57 2025-13-02T23:49:00Z
 
