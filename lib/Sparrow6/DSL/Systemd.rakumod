@@ -11,8 +11,7 @@ sub systemd-service( $name, %opts? ) is export {
 
     my %params = %opts;
 
-    my $templ = "
-[Unit]
+    my $templ = "[Unit]
 Description=[% name %]
 After=network.target
 
