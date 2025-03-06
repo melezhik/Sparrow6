@@ -2,7 +2,7 @@
 
 =begin tomty 
 %(
-  tag => [ "replace", "experimental" ]
+  tag => [ "replace" ]
 )
 =end tomty
 
