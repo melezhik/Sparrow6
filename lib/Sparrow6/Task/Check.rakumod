@@ -291,7 +291,7 @@ class Api
     self!log("STREAMS array saved", $.cache-root-dir ~ '/streams-array.json' ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     if self.check-mode eq "soft" {
-      if $status = False {
+      if $status == False {
         self!add-result({ status => True , message => "~ $message" });
       } else {
         self!add-result({ status => $status , message => $message });
