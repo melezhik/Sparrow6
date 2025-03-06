@@ -29,6 +29,7 @@ class Api
   has Bool $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
   has $.tr;
   has $.current-context is rw;
+  has $.check-mode is rw  = "hard";
 
   method TWEAK() {
 
@@ -289,9 +290,18 @@ class Api
 
     self!log("STREAMS array saved", $.cache-root-dir ~ '/streams-array.json' ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
-    self!add-result({ status => $status , message => $message });
+    if self.check_mode eq "soft" {
+      if $status = False {
+        self!add-result({ status => True , message => "~ $message" });
+      } else {
+        self!add-result({ status => $status , message => $message });
+      }
+    } else {
+      self!add-result({ status => $status , message => $message });
+    }
 
     return $status;
+
   }
     
   method validate (@check-list) {
@@ -350,6 +360,10 @@ class Api
             die "nested contexts are forbidden";
           }
       
+        } elsif $l ~~ / ^^ \s* 'check_mode_soft:'/ {
+          self.check_mode = "soft";
+        } elsif $l ~~ / ^^ \s* 'check_mode_hard:'/ {
+          self.check_mode = "hard";
         } elsif $l ~~ / ^^ \s* 'between:' \s+ '{' (.*?) '}' \s+ '{' (.*?) '}'  $$ / {
 
           die "nested contexts are forbidden" unless self.current-context.^name eq "Sparrow6::Task::Check::Context::Default";

@@ -157,3 +157,22 @@ sub update_state (%state) is export {
 }
 
 
+sub replace ($path,$ln,$data) is export {
+
+  my @data;
+  my $i = 0;
+
+  for $path.IO.lines -> $l {
+    if $i == $ln {
+      @data.push($data)
+    } else {
+      @data.push($l)
+    }
+    $i++;
+  }
+
+  spurt $path, @data.join("\n");
+
+  return;
+
+}
