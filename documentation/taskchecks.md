@@ -385,7 +385,9 @@ But also see streams, that accumulated captures within search context.
 
 # Soft checks
 
-Soft checks is special form of regexp expression, so when a check fails it does not result in overall test failure, mostly soft checks are used together with generator/code expressions so main flow continues even though some checks fail along  the road, here is an example:
+Soft checks is a special form of regexp expressions, so when a check fails it does not result in overall test failure. 
+
+Mostly soft checks are used together with generator/code expressions so main flow continues even though some checks fail along  the road, here is an example:
 
 Input:
 
