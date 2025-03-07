@@ -1474,7 +1474,7 @@ stdout match (r) <HELLO \s+ (\d+)> True
 # DONE
 ```
 
-Pay attention that soft check is used here to let main flow continues even though if
+Pay attention that [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) is used here to let main flow continues even though if
 range search fails 
 
 # Examples
