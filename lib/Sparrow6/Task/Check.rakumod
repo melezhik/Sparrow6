@@ -129,11 +129,11 @@ class Api
     self!handle-simple($line, 'default');
   }
 
-  method !handle-regexp (Str $line, Bool $negate = False) {
-    self!handle-simple($line, 'regexp',$negate);
+  method !handle-regexp (Str $line, Bool $negate = False, Bool $soft-check = False) {
+    self!handle-simple($line, 'regexp',$negate,$soft-check);
   }
 
-  method !handle-simple (Str $l is copy, Str $check-type, Bool $negate = False) {
+  method !handle-simple (Str $l is copy, Str $check-type, Bool $negate = False, Bool $soft-check = False ) {
   
     # remove spaces in the beginning and in the end
 
@@ -144,7 +144,7 @@ class Api
 
     my $negate-str = $negate ?? "!" !! "";
 
-    self!check-line($l, $check-type, self.current-context.check-message("{$negate-str}{$l}"), $negate);
+    self!check-line($l, $check-type, self.current-context.check-message("{$negate-str}{$l}"), $negate, $soft-check);
 
     say "handle-simple({$negate-str}{$check-type}) last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
   
@@ -152,7 +152,7 @@ class Api
 
   }
 
-  method !check-line ( Str $pattern, Str $check-type, Str $message, Bool $negate = False ) {
+  method !check-line ( Str $pattern, Str $check-type, Str $message, Bool $negate = False, Bool $soft-check = False ) {
 
     my $status = $negate ?? True !! False;
 
@@ -256,7 +256,6 @@ class Api
          self.current-context.disable-streams();
          self.current-context.streams = %();
       } 
-
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {
         self.current-context.context = ();
         self.current-context.streams = %();
@@ -290,10 +289,13 @@ class Api
 
     self!log("STREAMS array saved", $.cache-root-dir ~ '/streams-array.json' ) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
-    if self.check-mode eq "soft" {
+
+    if $soft-check {
       if $status == False {
-        self!add-result({ status => True , message => "~ $message" });
+        #say "KKKK1";
+        self!add-result({ status => True , message => $message, :soft-fail });
       } else {
+        #say "KKKK2";
         self!add-result({ status => $status , message => $message });
       }
     } else {
@@ -358,12 +360,7 @@ class Api
             self.current-context = Sparrow6::Task::Check::Context::Range.new( data => self.data, start => $start );
           } else {
             die "nested contexts are forbidden";
-          }
-      
-        } elsif $l ~~ / ^^ \s* 'check_mode_soft:'/ {
-          self.check-mode = "soft";
-        } elsif $l ~~ / ^^ \s* 'check_mode_hard:'/ {
-          self.check-mode = "hard";
+          }      
         } elsif $l ~~ / ^^ \s* 'between:' \s+ '{' (.*?) '}' \s+ '{' (.*?) '}'  $$ / {
 
           die "nested contexts are forbidden" unless self.current-context.^name eq "Sparrow6::Task::Check::Context::Default";
@@ -429,6 +426,12 @@ class Api
             my $re = $0;
 
             self!handle-regexp($re.Str);
+
+        } elsif $l ~~ /^^ \s* '~regexp:' \s* (.*) / { # `regexp' line
+
+            my $re = $0;
+
+            self!handle-regexp($re.Str,False,True);
 
         } elsif $l ~~ /^^ \s* '!regexp:' \s* (.*) / { # `!regexp' line
 

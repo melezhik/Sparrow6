@@ -17,12 +17,14 @@ role Role {
   method !check-log (%data) {
 
     my $message = %data<message>;
-    my $status = %data<status>;
+    my $status = %data<soft-fail> ?? False !! %data<status>;
 
     if %data<type> eq "check" and %data<status>:exists {
-      my $status-str = %data<status>.Str;
+      #say %data.raku;
+      my $status-str = %data<soft-fail> ?? "~FAIL" !! %data<status>.Str;
       if %*ENV<SP6_FORMAT_COLOR> {
         if $status eq True {
+          #say "KKKKKKKKK";
           say $message, " ", $status-str.&colored('cyan')
         } elsif $status eq False {
           say $message, " ", $status-str.&colored('red')

@@ -1385,7 +1385,65 @@ Hash representation of streams data. Hash keys - unique stream identeficators.
 * dump_streams()
 
 Dump streams in human readable format, useful for debugging.
-        
+
+# Expetimental features
+
+## Replace
+
+Repalce allows to update file in runtime during check is performed
+
+Following example search HELLO and digits within OK .. DONE range and then 
+increment found digit and update original file: 
+
+Input:
+
+```
+cat << HERE > $cache_root_dir/file.txt
+OK
+HELLO 1
+DONE
+HERE
+
+cat $cache_root_dir/file.txt
+```
+
+DSL code:
+
+```
+between: {OK} {DONE}
+    ~regexp: HELLO \s+ (\d+)
+end:
+
+code: <<RAKU
+!raku
+if matched() {
+    my $ln = captures-full()[0]<index>;
+    my $num = capture()[0].Int;
+    $num++;
+    replace("{cache_root_dir()}/file.txt",$ln,"BYE $num");
+}
+RAKU
+
+code: <<BASH
+!bash
+cat $cache_root_dir/file.txt
+BASH
+```
+
+Output:
+
+```
+[task stdout]
+10:42:58 :: OK
+10:42:58 :: HELLO 1
+10:42:58 :: DONE
+[task check]
+stdout match (r) <HELLO \s+ (\d+)> True
+# OK
+# BYE 2
+# DONE
+```
+
 # Examples
 
 * Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder

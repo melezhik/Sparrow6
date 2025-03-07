@@ -26,7 +26,13 @@ role Role {
 
       for $tc.results -> $r {
         if $r<type> eq "check-expression" {
-          self!check-log(%( message => $r<message>, status => $r<status>, type => "check" ));
+          #say $r.raku;
+          self!check-log(%( 
+            message => $r<message>, 
+            status => $r<status>, 
+            type => "check", 
+            :soft-fail($r<soft-fail> || False )
+          ));
           if ! $r<status> {
             if ! $.ignore-task-check-error {
               self!log("mark check-pass as False",$root);
