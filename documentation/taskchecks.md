@@ -1165,7 +1165,7 @@ begin:
     :2:
     hello2
 end:
-```
+
 note: search within line number 33
 within: :33:
 end:
@@ -1408,7 +1408,6 @@ cat $cache_root_dir/file.txt
 ```
 
 DSL code:
-
 ```
 between: {OK} {DONE}
     ~regexp: HELLO \s+ (\d+)
@@ -1429,9 +1428,7 @@ code: <<BASH
 cat $cache_root_dir/file.txt
 BASH
 ```
-
 Output:
-
 ```
 [task stdout]
 10:42:58 :: OK
@@ -1443,7 +1440,6 @@ stdout match (r) <HELLO \s+ (\d+)> True
 # BYE 2
 # DONE
 ```
-
 # Examples
 
 * Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder
