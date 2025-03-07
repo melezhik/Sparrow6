@@ -1386,7 +1386,7 @@ Hash representation of streams data. Hash keys - unique stream identeficators.
 
 Dump streams in human readable format, useful for debugging.
 
-# Expetimental features
+# Experimental features
 
 ## Replace
 
