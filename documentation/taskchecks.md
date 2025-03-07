@@ -383,6 +383,37 @@ That allows you to write tests in Perl5 Test::More `cmp_ok` way.
 Matched data and captures are reset for every check step, meaning that the related functions return data for the _last_ check step.
 But also see streams, that accumulated captures within search context.
 
+# Soft checks
+
+Soft checks is special form of regexp expression, so when a check fails it does not result in overall test failure, mostly soft checks are used together with generator/code expressions so main flow continues even though some checks fail along  the road, here is an example:
+
+Input:
+
+```
+My name is Alexey
+```
+
+DSL:
+
+```
+~regexp: "My name is" \s+ (\S+) \s+ (\S+)
+
+code: <<RAKU
+!raku
+if matched() {
+    my $firstname = capture()[0];
+    my $lastname = capture()[1];
+    say "Hi Mr $firstname $lastname";
+} else {
+   say "We need to know your firstname and lastname to greet you ...";
+}
+RAKU
+```
+
+So, use tilda before `regexp:` to make a _soft_ check. 
+
+Another common senario is to use soft checks together with replace feature.
+
 # Comments, blank lines and here documents
 
 Comments and blank lines are skipped by parser during checks execution, 
@@ -1440,6 +1471,10 @@ stdout match (r) <HELLO \s+ (\d+)> True
 # BYE 2
 # DONE
 ```
+
+Pay attention that soft check is used here to let main flow continues even though if
+range search fails 
+
 # Examples
 
 * Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder
