@@ -1,0 +1,31 @@
+between: {A} {A}
+B
+C
+
+generator: <<RAKU
+!raku
+say "assert: ", streams_array()<>.elems == 2 ?? 1 !! 0 , " streams array: found 2 streams (real value {streams_array()<>.elems})";
+say "assert: ", streams().keys.elems == 2 ?? 1 !! 0 , " streams keys: found 2 streams (real value {streams().keys.elems})";
+RAKU
+note: =============== narrow down to DD ====================
+
+DD
+
+
+generator: <<RAKU
+!raku
+say "assert: ", streams_array()<>.elems == 1 ?? 1 !! 0 , " streams array: found 1 stream (real value {streams_array()<>.elems})";
+say "assert: ", streams().keys.elems == 1 ?? 1 !! 0 , " streams keys: found 1 stream (real value {streams().keys.elems})";
+RAKU
+
+note: =============== narrow down to DDD ====================
+~regexp: DDD
+
+generator: <<RAKU
+!raku
+say "assert: ", matched().elems == 0 ?? 1 !! 0 , " matched: found 0 matched (real value {matched().elems})";
+say "assert: ", streams_array()<>.elems == 0 ?? 1 !! 0 , " streams array: found 0 stream (real value {streams_array()<>.elems})";
+say "assert: ", streams().keys.elems == 0 ?? 1 !! 0 , " streams keys: found 0 stream (real value {streams().keys.elems})";
+RAKU
+
+end:
