@@ -127,6 +127,7 @@ class Range
     has Array $.data;
     has Hash @.context is rw;
     has Array %.streams is rw;
+    has Bool %.streams-keys is rw;
     has Hash $.failed-streams is rw;
     has Str $.start is required;
     has Str $.end;
@@ -135,6 +136,7 @@ class Range
     has Str $.name = "range-context";
     has Int $.initial-streams-cnt is rw = 0;
     has Bool $.just-started is rw = True;
+    has Bool $.zoom-mode is rw = False;
  
     method TWEAK() {
 
@@ -257,6 +259,11 @@ class Range
 
       self!log("Initial context data", Dump(self.context)) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
+      for self.context -> $i {
+        self.streams-keys{$i<stream-id>} = True;
+      }
+
+      self!log("streams-keys", Dump(self.streams-keys)) if %*ENV<SP6_DEBUG_TASK_CHECK>;
     }  
 
     method change-context (@data) {
@@ -277,6 +284,7 @@ class Range
 
         if self.streams{$stream-id}:exists {
           %succeed-streams{$stream-id} = self.streams{$stream-id}; 
+          #say  %succeed-streams{$stream-id}.raku;
           push %succeed-streams{$stream-id}, $i;
           self!log("update succeed stream", $stream-id) if %*ENV<SP6_DEBUG_STREAM>;
         } else {
@@ -289,7 +297,7 @@ class Range
       }
 
 
-      for self.streams.keys -> $stream-id {
+      for self.streams-keys.keys -> $stream-id {
         
           unless %succeed-streams{$stream-id}:exists {
             self!log("mark failed stream:", $stream-id) if %*ENV<SP6_DEBUG_STREAM>;
@@ -307,6 +315,7 @@ class Range
 
       self.streams = %new-streams;
 
+      self!log("failed-streams",Dump(self.failed-streams)) if %*ENV<SP6_DEBUG_STREAM>;
       self!log("current stream",Dump(self.streams)) if %*ENV<SP6_DEBUG_STREAM>;
 
       say "change-context last: {time - $time} sec" if %*ENV<SP6_PROFILE>;

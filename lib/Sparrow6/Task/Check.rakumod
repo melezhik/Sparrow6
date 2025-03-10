@@ -199,9 +199,21 @@ class Api
 
         my %success-streams = %();
 
-        for self.current-context.context -> $ln {
+        my $zoom-mode  = self.current-context.WHAT === Sparrow6::Task::Check::Context::Range && self.current-context.zoom-mode;
 
-           my $matched = $ln<data>.comb(/<mymatch=$pattern>/,:match)>>.<mymatch>;
+        for self.current-context.context -> $ln {
+           my $data = $ln<data>;
+           if $zoom-mode { # in zoom mode use first capture found
+                           # found during previous match
+               for self.captures().grep({ $_<index> == $ln<index>}) -> $c {
+                   $data = $c<data>[0]
+               }
+           }
+
+           #say "zoom-mode: $zoom-mode";
+           #say "effective matched data: $data";
+
+           my $matched = $data.comb(/<mymatch=$pattern>/,:match)>>.<mymatch>;
  
            if $matched && $negate != True {
                 # only accumulate data for new context
@@ -264,7 +276,7 @@ class Api
     }
 
     self.current-context.change-context(@new-context) if @new-context;
-
+    #say  @new-context.raku;
     if $.debug {
         say "STATUS:",  $status.perl;
         say "CAPTURES:", @captures.perl;
@@ -357,7 +369,11 @@ class Api
           my $start = "$0";
 
           if self.current-context.^name eq "Sparrow6::Task::Check::Context::Default" {
-            self.current-context = Sparrow6::Task::Check::Context::Range.new( data => self.data, start => $start );
+            self.current-context = Sparrow6::Task::Check::Context::Range.new(
+              data => self.data,
+              start => $start,
+              :zoom-mode, # enable zoom mode by default \
+            );
           } else {
             die "nested contexts are forbidden";
           }      

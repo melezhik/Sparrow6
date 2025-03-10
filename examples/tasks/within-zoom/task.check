@@ -1,0 +1,17 @@
+within: "hello" (.*) $$
+
+regexp: ( "is" \s+ \S+ )
+
+code: <<RAKU
+!raku
+#say captures().raku; 
+#say matched().raku;
+dump_streams();
+RAKU
+
+regexp: ( "Sparr" )
+
+code: <<RAKU
+!raku
+dump_streams();
+RAKU
