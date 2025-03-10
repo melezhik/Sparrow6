@@ -39,7 +39,7 @@ between: {foo} {bar}
   
     $i = $streams[0][2][0];
   
-    print "assert: ", $i eq '1' ? 1 : 0 , " stream[1,2,0] == $i \n";
+    print "assert: ", $i ~~ /^^ \s+ 111 \s* $$/ ? 1 : 0 , " stream[1,2,0] == $i \n";
 
     print "note: start stream end ...\n";
   
