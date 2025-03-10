@@ -317,7 +317,12 @@ class Range
 
       self!log("failed-streams",Dump(self.failed-streams)) if %*ENV<SP6_DEBUG_STREAM>;
       self!log("current stream",Dump(self.streams)) if %*ENV<SP6_DEBUG_STREAM>;
-
+      my @new-context;
+      for self.context -> $i {
+        @new-context.push($i) if self.streams{$i<stream-id>}:exists;
+      }
+      self.context = @new-context;
+      self!log("output context:", Dump(self.context));
       say "change-context last: {time - $time} sec" if %*ENV<SP6_PROFILE>;
 
     }  
