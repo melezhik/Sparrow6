@@ -169,11 +169,12 @@ class Api
     if $check-type eq 'default' {
         for self.current-context.context -> $ln {
             #say "check $ln<data>";
+            my $ln-clone = $ln.clone;
             if $pattern eq ":any:" {
                 $status = True;
                 $!last-match-line = $ln<data>;
                 @!succeeded.push: $ln<data>;
-                $ln<captures> = [ $ln<data> ]; 
+                $ln-clone<captures> = [ $ln<data> ]; 
                 push @new-context, $ln;
                 @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index>  ) ;
             } elsif $pattern ~~ /^^ ":" (\d+) ":" $$/ {
@@ -182,7 +183,7 @@ class Api
                 $status = True;
                 $!last-match-line = $ln<data>;
                 @!succeeded.push: $ln<data>;
-                $ln<captures> = [ $ln<data> ]; 
+                $ln-clone<captures> = [ $ln<data> ]; 
                 push @new-context, $ln;
                 @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index> ) ;
               } 
@@ -190,8 +191,8 @@ class Api
                 $status = True;
                 $!last-match-line = $ln<data>;
                 @!succeeded.push: $ln<data>;
-                $ln<captures> = [ $ln<data> ]; 
-                push @new-context, $ln;
+                $ln-clone<captures> = [ $ln<data> ]; 
+                push @new-context, $ln-clone;
                 @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index>  ) ;
             }
         }
@@ -202,6 +203,7 @@ class Api
         my $zoom-mode  = self.current-context.WHAT === Sparrow6::Task::Check::Context::Range && self.current-context.zoom-mode;
 
         for self.current-context.context -> $ln {
+           my $ln-clone = $ln.clone; 
            my $data = $ln<data>;
            if $zoom-mode { # in zoom mode use first capture found
                            # found during previous match
@@ -222,15 +224,15 @@ class Api
                 if $matched>>.Slip>>.Str {
                   my @c = $matched>>.Slip>>.Str;
                   @captures.push:  %( stream-id => $ln<stream-id>, data => [ @c ], index => $ln<index> );
-                  $ln<captures> = [ @c ]; 
+                  $ln-clone<captures> = [ @c ]; 
                 } else {
                   @captures.push: %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index> );
-                  $ln<captures> = [ $ln<data> ]; 
+                  $ln-clone<captures> = [ $ln<data> ]; 
                 }
 
               @!succeeded.push: $ln<data>;
               $!last-match-line = $ln<data>;
-              push @new-context, $ln;
+              push @new-context, $ln-clone;
 
           } elsif $matched && $negate == True {
               self!log("CHECK LINE(negate=on)", "calculate decision") if %*ENV<SP6_DEBUG_TASK_CHECK>;
