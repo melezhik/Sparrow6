@@ -5,3 +5,4 @@ Sparrow6-*
 .cache
 log.txt
 .sparrowdo
+raku-lib/
