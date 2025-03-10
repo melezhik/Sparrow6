@@ -4,9 +4,14 @@ regexp: ( "is" \s+ \S+ )
 
 code: <<RAKU
 !raku
-#say captures().raku; 
-#say matched().raku;
 dump_streams();
+RAKU
+
+generator: <<RAKU
+!raku
+say "assert: ", streams_array()<>.elems == 1 ?? 1 !! 0 , " streams array: found 1 streams (real value {streams_array()<>.elems})";
+say "assert: ", streams().keys.elems == 1 ?? 1 !! 0 , " streams keys: found 1 streams (real value {streams().keys.elems})";
+say "assert: ", streams_array()<>[0].elems == 1 ?? 1 !! 0 , " streams array: layer1 found 1 elems (real value {streams_array()<>[0].elems})";
 RAKU
 
 regexp: ( "Sparr" )
@@ -14,4 +19,11 @@ regexp: ( "Sparr" )
 code: <<RAKU
 !raku
 dump_streams();
+RAKU
+
+generator: <<RAKU
+!raku
+say "assert: ", streams_array()<>.elems == 1 ?? 1 !! 0 , " streams array: found 1 streams (real value {streams_array()<>.elems})";
+say "assert: ", streams().keys.elems == 1 ?? 1 !! 0 , " streams keys: found 1 streams (real value {streams().keys.elems})";
+say "assert: ", streams_array()<>[0].elems == 2 ?? 1 !! 0 , " streams array: layer1 found 2 elems (real value {streams_array()<>[0].elems})";
 RAKU
