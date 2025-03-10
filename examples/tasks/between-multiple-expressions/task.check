@@ -6,42 +6,45 @@ between: {foo} {bar}
   regexp: (\d)
   
   code: <<CODE
-  
-    print "foo .. bar start\n";
-    print "apply regexp: (A)(A)(A)\n";
-    print "apply regexp: \\d\n";
-    print "apply regexp: (\\d)(\\d)(\\d)\n";
-    print "apply regexp: (\\d)\n";
+    !raku
+    say "foo .. bar start";
+    say "apply regexp: (A)(A)(A)";
+    say "apply regexp: \\d";
+    say "apply regexp: (\\d)(\\d)(\\d)";
+    say "apply regexp: (\\d)";
   
     dump_streams();
-  
+    use Data::Dump;
+    say Dump(streams_array());  
+
   CODE
   
   generator: <<CODE
+  !raku
+  
+    say "note: start stream check ...";
 
-    print "note: start stream check ...\n";
+    my @streams = streams().keys;
+  
+    say "assert: ", ( @streams.elems == 2 ?? 1 !! 0 ), " 2 streams found (as hash)";
+  
+    @streams =  streams_array()<>;
+  
+    say "assert: ", ( @streams.elems == 2 ?? 1 !! 0 ), " 2 streams found (as array, real value {@streams.elems})";
+  
+    my $i = @streams[0][0][0];
+  
+    say "assert: ", $i eq 'A' ?? 1 !! 0 , " stream[1,0,0](real value $i) == A \n";
+  
+    $i = @streams[0][1][0];
+  
+    say "assert: ", $i ~~ /^^ \s+ 00 \s* $$/ ?? 1 !! 0 , " stream[1,1,0](real value $i) ~~ 00";
+  
+    $i = @streams[0][2][0];
+  
+    say "assert: ", $i ~~ /^^ \s+ 111 \s* $$/ ?? 1 !! 0 , " stream[1,2,0](real value $i) ~~ $i";
 
-    my @streams = keys %{streams()};
-  
-    print "assert: ", ( scalar @streams == 2 ? 1 : 0 ), " 2 streams found (as hash)\n";
-  
-    @streams =  @{streams_array()};
-  
-    print "assert: ", ( scalar @streams == 2 ? 1 : 0 ), " 2 streams found (as array)\n";
-  
-    my $i = $streams[0][0][0];
-  
-    print "assert: ", $i eq 'A' ? 1 : 0 , " stream[1,0,0] == $i \n";
-  
-    $i = $streams[0][1][0];
-  
-    print "assert: ", $i ~~ /^^ \s+ 00 \s* $$/ ? 1 : 0 , " stream[1,1,0] == $i \n";
-  
-    $i = $streams[0][2][0];
-  
-    print "assert: ", $i ~~ /^^ \s+ 111 \s* $$/ ? 1 : 0 , " stream[1,2,0] == $i \n";
-
-    print "note: start stream end ...\n";
+    say "note: start stream end ...";
   
   CODE
   
