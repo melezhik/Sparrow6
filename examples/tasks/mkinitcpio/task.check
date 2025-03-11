@@ -14,7 +14,7 @@ if !matched() {
    replace(
      "$path,
      captures-full()[0][0]<index>,
-     "MODULES=(" ~ (@mods.join(" ")) ~ ")"
+     "MODULES=({@mods.join(" ")})",
    );
 }
 CODE
