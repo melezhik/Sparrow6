@@ -5,7 +5,8 @@ if !matched() {
    # fail check if no MODULES= section found 
    say "assert 0 MODULES= section found";
 } else {
-   my $path = config()<path>; 
+   my $path = config()<path>;
+   say "note: ", capture().raku;
    my @mods = capture()[0].split(/s+/);
    @mods.push("zfs") unless "zfs" (elem) @mods;
    # probably other mods manipulations
