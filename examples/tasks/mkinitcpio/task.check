@@ -12,7 +12,7 @@ if !matched() {
    # and then update configuration
    say "note: patch $path";
    replace(
-     "$path,
+     $path,
      captures-full()[0][0]<index>,
      "MODULES=({@mods.join(" ")})",
    );
