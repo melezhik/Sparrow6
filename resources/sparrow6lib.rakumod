@@ -12,6 +12,7 @@ use glue;
 my $config;
 my $variables;
 my $captures;
+my $captures-full;
 my $streams;
 my $streams_array;
 my $matched;
@@ -102,11 +103,11 @@ sub captures () is export {
 
 sub captures-full () is export {
 
-  return $captures if $captures.defined;
+  return $captures-full if $captures-full.defined;
 
-  my $json = from-json slurp "{cache_root_dir()}/captures.json";
+  my $captures-full = from-json slurp "{cache_root_dir()}/captures.json";
 
-  return $json;
+  return $captures-full;
 
 }
 
