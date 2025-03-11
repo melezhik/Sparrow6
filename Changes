@@ -2,16 +2,20 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.61 2025-11-03T10:15:00Z
+
+    Fix typo in changelog
+
 0.0.60 2025-10-03T22:15:00Z
 
-    Fix various issues in 
+    Fix various issues in
     range/within search
 
     Implement soft checks
 
     Implement replace
 
-    Implmenet zoom-mode 
+    Implement zoom-mode 
     for within search
 
 0.0.59 2025-27-02T16:45:00Z
