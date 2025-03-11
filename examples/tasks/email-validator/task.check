@@ -6,7 +6,7 @@ within: ^^ (.*) \@ <[ a .. z 0 .. 9 \- ]>+ \s* $$
 
 note: find quote symbol symbols 
 
-~regexp: <!before \\> \"
+~regexp: <!before \\> (\")
 
 code: <<RAKU
 !raku
