@@ -10,7 +10,7 @@ note: find quote symbol symbols
 
 code: <<RAKU
 !raku
-for captures()-> $c {
+for captures() -> $c {
     say "note: quote symbol found: ", $c.raku;
 }
 RAKU 
