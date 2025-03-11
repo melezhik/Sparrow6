@@ -2,7 +2,7 @@ note: verify thing as email
 
 note: verify local-part
 
-within: ^^ (.*) "@" <[ a .. z 0 .. 9 \- ]>+ \s* $$
+within: ^^ (.*) \@ <[ a .. z 0 .. 9 \- ]>+ \s* $$
 
 note: find quote symbol symbols 
 
