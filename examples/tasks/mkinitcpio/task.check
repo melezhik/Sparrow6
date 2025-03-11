@@ -7,15 +7,15 @@ if !matched() {
 } else {
    my $path = config()<path>;
    say "note: ", capture().raku;
-   my @mods = capture()[0].split(/s+/);
-   @mods.push("zfs") unless "zfs" (elem) @mods;
+   #my @mods = capture()[0].split(/s+/);
+   #@mods.push("zfs") unless "zfs" (elem) @mods;
    # probably other mods manipulations
    # and then update configuration
    say "note: patch $path";
-   replace(
-     $path,
-     captures-full()[0][0]<index>,
-     "MODULES=({@mods.join(" ")})",
-   );
+   #replace(
+   #  $path,
+   #  captures-full()[0][0]<index>,
+   #  "MODULES=({@mods.join(" ")})",
+   #);
 }
 CODE
