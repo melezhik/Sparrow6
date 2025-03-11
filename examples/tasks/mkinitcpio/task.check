@@ -6,7 +6,7 @@ if !matched() {
    say "assert 0 MODULES= section found";
 } else {
    my $path = config()<path>; 
-   my @mods = matched()[0].split(/s+/);
+   my @mods = capture()[0].split(/s+/);
    @mods.push("zfs") unless "zfs" (elem) @mods;
    # probably other mods manipulations
    # and then update configuration
