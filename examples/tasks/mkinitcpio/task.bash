@@ -1,0 +1,1 @@
+cat $(config path)

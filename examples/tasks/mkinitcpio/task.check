@@ -1,0 +1,20 @@
+~regexp: ^^ \s* "MODULES=(" (.*) ")" \s* $$
+generator: <<CODE
+!raku
+if !matched() {
+   # fail check if no MODULES= section found 
+   say "assert 0 MODULES= section found";
+} else {
+   my $path = config()<path>; 
+   my @mods = matched()[0].split(/s+/);
+   @mods.push("zfs") unless "zfs" (elem) @mods;
+   # probably other mods manipulations
+   # and then update configuration
+   say "note: patch $path";
+   replace(
+     "$path,
+     captures-full()[0][0]<index>,
+     "MODULES=(" ~ (@mods.join(" ")) ~ ")"
+   );
+}
+CODE
