@@ -2,7 +2,7 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-0.0.61 2025-11-03T10:55:00Z
+0.0.61 2025-11-03T21:30:00Z
 
     Fix typo in changelog
 
@@ -103,7 +103,7 @@ Revision history for Sparrow6
 
     tags() - Support of ,= symbols
     serialization to allow
-    pass values containing thouse ones
+    pass values containing those ones
 
 0.0.45 2024-03-08T11:50:00Z
 
