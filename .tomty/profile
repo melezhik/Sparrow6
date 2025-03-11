@@ -2,13 +2,13 @@
 
 %(
   ci => %(
-    skip => "sudo,broken,should-fail"
+    skip => "sudo,broken,should-fail,untested"
   ),
   default => %(
-    skip => "sudo,windows,broken,should-fail"
+    skip => "sudo,windows,broken,should-fail,untested"
   ),
   windows => %(
-    skip => "sudo,broken,should-fail",
+    skip => "sudo,broken,should-fail,untested",
     only => "windows"
   ),
 )

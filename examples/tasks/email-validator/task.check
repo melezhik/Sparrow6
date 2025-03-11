@@ -1,0 +1,16 @@
+note: verify thing as email
+
+note: verify local-part
+
+within: ^^ (.*) "@" <[ a .. z 0 .. 9 \- ]>+ \s* $$
+
+note: find quote symbol symbols 
+
+~regexp: <!before "\"> \"
+
+code: <<RAKU
+!raku
+for captures()-> $c {
+    say "note: quote symbol found: ", $c.raku;
+}
+RAKU 
