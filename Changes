@@ -6,6 +6,8 @@ Revision history for Sparrow6
 
     Fix typo in changelog
 
+    Fix captures-full() bug
+
 0.0.60 2025-10-03T22:15:00Z
 
     Fix various issues in
