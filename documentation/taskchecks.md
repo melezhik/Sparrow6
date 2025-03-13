@@ -847,7 +847,7 @@ Output:
 
 Zoom is another interesting analogy how one could see within expressions and captures.
 
-Consider this example trivial
+Consider this simple example:
 
 Input:
 
