@@ -845,9 +845,9 @@ Output:
 
 ## Within as zoom expression
 
-Zoom is an intersting features that is introduced by within exptressions
+Zoom is another interesting analogy how one could see within expressions and captures.
 
-Consider this example
+Consider this example trivial
 
 Input:
 
