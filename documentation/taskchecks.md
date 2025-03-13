@@ -868,7 +868,7 @@ end:
 This code successfully searches D letter in the center of "ABCDCBA" string by applying a series
 of "zoom in" checks. We start with "birds eye" view - everything in between "A" and "A" and if we successfully find anything in between, we then zoom in and repeate the proccess again but now the search context is zoomed in - e.g. we effectvely continue to search in "BCDCD" substring and so on till we finally find the "smallest" element in a landscape - D letter.
 
-This approach is especially effective with [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) and [generators](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#generators)) where we want control
+This approach is especially effective with [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) and [generators](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#generators) where we want control
 the flow:
 
 ```
