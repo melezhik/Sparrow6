@@ -843,6 +843,64 @@ Output:
     [task check] stdout match (w) <'-04'> True
     [task check] stdout match (w) <01> True
 
+## Within as zoom expression
+
+Zoom is an intersting features that is introduced by within exptressions
+
+Consider this example
+
+Input:
+
+```
+ABCDCBA
+```
+
+DSL:
+
+```
+within: A (\S+) A
+regexp: B (\S+) B
+regexp: C (\S+) C
+regexp: D
+end:
+```
+
+This code successfully searches D letter in the center of "ABCDCBA" string by applying a series
+of "zoom in" checks. We start with "birds eye" view - everything in between "A" and "A" and if we successfully find anything in between, we then zoom in and repeate the proccess again but now the search context is zoomed in - e.g. we effectvely continue to search in "BCDCD" substring and so on till we finally find the "smallest" element in a landscape - D letter.
+
+This approach is especially effective with [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) and [generators](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#generators)) where we want control
+the flow:
+
+```
+within: A (\S+) A
+~regexp: B (\S+) B
+generator: << RAKU
+!raku
+if matched() {
+   # continue to search by zooming in into smaller chunk
+   say '~regexp: C (\S+) C'
+} else {
+    say "assert 0 none empty results found"
+}
+RAKU
+generator: << RAKU
+!raku
+if matched() {
+   # continue to search by zooming in into smaller chunk
+   say '~regexp: D'
+} else {
+    say "assert 0 none empty results found"
+}
+RAKU
+generator: << RAKU
+!raku
+if matched() {
+   say 'note: D found!'
+} else {
+    say "assert 0 none empty results found"
+}
+RAKU
+end:
 
 ## Within expressions caveats
 
