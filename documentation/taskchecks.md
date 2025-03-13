@@ -901,6 +901,7 @@ if matched() {
 }
 RAKU
 end:
+```
 
 ## Within expressions caveats
 
