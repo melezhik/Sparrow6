@@ -16,7 +16,7 @@ Local files system based repositories
 
 ## Public http repository
 
-[http://repo.southcentralus.cloudapp.azure.com](http://repo.southcentralus.cloudapp.azure.com) is a public repository with many Sparrow6 plugins.
+[https://sparrowhub.io](https://sparrowhub.io) is a public repository with many Sparrow6 plugins.
 
 ## Create repository
 
