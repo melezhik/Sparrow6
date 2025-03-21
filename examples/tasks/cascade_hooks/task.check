@@ -1,0 +1,9 @@
+CASCADE
+
+code: <<RAKU
+!raku
+use Data::Dump;
+
+say Dump(captures-full());
+
+RAKU

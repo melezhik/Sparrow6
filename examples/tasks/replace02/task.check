@@ -1,0 +1,26 @@
+check_mode_soft:
+
+between: {OK} {DONE}
+    regexp: HOWAREYOU \s+ (\d+)
+end:
+
+code: <<RAKU
+!raku
+if matched().elems {
+    my $ln = captures-full()[0]<index>;
+    my $num = capture()[0].Int;
+    $num++;
+    replace("{cache_root_dir()}/file.txt",$ln,"BYE $num");
+}
+RAKU
+
+code: <<BASH
+!bash
+cat $cache_root_dir/file.txt
+BASH
+
+check_mode_hard:
+
+between: {OK} {DONE}
+    regexp: HELLO \s+ (\d+)
+end:

@@ -1,0 +1,17 @@
+:any:
+
+code: <<RAKU
+!raku
+
+use Data::Dump;
+
+say Dump(captures-full());
+
+RAKU
+
+generator: <<RAKU
+!raku
+
+say "assert: ", captures().elems == 1 ?? 1 !! 0, " captures list has 1 element";
+
+RAKU
