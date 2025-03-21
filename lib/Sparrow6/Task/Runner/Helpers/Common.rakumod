@@ -79,6 +79,8 @@ role Role {
 
   method !process-stdout-from-hook ($path) {
 
+    self!erase-stdout-data();
+
     # read hook's stdout if any
     # see set-stdout function
 
