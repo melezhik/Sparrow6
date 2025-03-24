@@ -1,4 +1,4 @@
-within: A (\S+) A
+within: ^^ A (\S+) A $$
 regexp: ^^ B (\S+) B $$
 regexp: ^^ C (\S+) C $$
 regexp: ^^ D $$

@@ -858,10 +858,10 @@ ABCDCBA
 DSL:
 
 ```
-within: A (\S+) A
-regexp: B (\S+) B
-regexp: C (\S+) C
-regexp: D
+within: ^^ A (\S+) A $$
+regexp: ^^ B (\S+) B $$
+regexp: ^^ C (\S+) C $$
+regexp: ^^ D $$
 end:
 ```
 

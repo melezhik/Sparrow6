@@ -2,11 +2,13 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.63 2025-24-03T23:10:00Z
+
     Fix zoom bug (takes 
     within capture into
     account)
 
-0.0.62 2025-11-03T21:30:00Z
+0.0.62 2025-21-03T21:30:00Z
 
     Tricky bug fix:
  
