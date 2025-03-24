@@ -376,6 +376,9 @@ class Api
               start => $start,
               :zoom-mode, # enable zoom mode by default \
             );
+            if $start !~~ /^^ \s* ":" \d ":" \s* $$/ {
+              self!handle-regexp($start);
+            }
           } else {
             die "nested contexts are forbidden";
           }      

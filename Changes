@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Fix zoom bug (takes 
+    within capture into
+    account)
+
 0.0.62 2025-11-03T21:30:00Z
 
     Tricky bug fix:
