@@ -1,0 +1,7 @@
+within:  "<p" \s+ .* ">"  ( .* )  "</p>"
+  code: <<RAKU
+  !raku
+  say captures()[0].raku; 
+  RAKU
+  regexp: ^^ "Click Me" $$
+end:
