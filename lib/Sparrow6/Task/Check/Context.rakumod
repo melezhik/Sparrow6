@@ -220,7 +220,9 @@ class Range
               push @group, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
               
               if $d ~~ /<$pattern2>/ {
-                 push self.context, @group;
+                 for @group -> $j {
+                   push self.context, $j;
+                 }
                  @group = Array.new;
               }
               
