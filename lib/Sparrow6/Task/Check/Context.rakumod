@@ -153,6 +153,8 @@ class Range
       my %seen;
 
       my $flip-closed = False;
+      
+      my @group;
 
       if ! self.end.defined {
         
@@ -160,7 +162,6 @@ class Range
   
         self!log("Range pattern (within form)", "<$pattern>") if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
-        my @group;
         
         for self.data -> $d {
           
