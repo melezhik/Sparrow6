@@ -155,11 +155,13 @@ class Range
       my $flip-closed = False;
 
       if ! self.end.defined {
-
+        
         my $pattern = self.start;
   
-        self!log("Range pattern", "<$pattern>") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        self!log("Range pattern (within form)", "<$pattern>") if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
+        my @group;
+        
         for self.data -> $d {
           
           $i++;
@@ -206,13 +208,21 @@ class Range
           if $start_ind != -1 {
             $stream-id++ if $i == $start_ind;
           }  else {
-            $stream-id++ if $d ~~ /<$pattern1>/;
+            if $d ~~ /<$pattern1>/ {
+               $stream-id++;
+            } 
           }
 
           if $start_ind == -1 and $stop_ind == -1 and $d ~~ /<$pattern1>/ fff $d ~~ /<$pattern2>/ {
               self!log("Range", "cas1") if %*ENV<SP6_DEBUG_TASK_CHECK>;
               %seen{$stream-id} = "cas1_OK";
-              push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+              push @group, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
+              
+              if $d ~~ /<$pattern2>/ {
+                 push self.context, @group;
+                 @group = Array.new;
+              }
+              
               next;
           }
 
