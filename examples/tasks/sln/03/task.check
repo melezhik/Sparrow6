@@ -1,0 +1,13 @@
+between: { "hello2" } { :5: }
+    }
+    hello2
+    done
+end:
+
+code: <<RAKU
+!raku
+say matched();
+dump_streams();
+RAKU
+
+

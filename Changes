@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.64 2025-25-03T16:50:00Z
+
+    Minor fixes in range
+    search context
+
 0.0.63 2025-24-03T23:10:00Z
 
     Fix zoom bug (takes 
