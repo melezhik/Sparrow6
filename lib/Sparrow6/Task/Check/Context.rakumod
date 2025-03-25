@@ -219,12 +219,17 @@ class Range
               %seen{$stream-id} = "cas1_OK";
               push @group, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
               
+              if $d ~~ /<$pattern1>/ {
+                  @group = Array.new;
+              }
+              
               if $d ~~ /<$pattern2>/ {
                  for @group -> $j {
                    push self.context, $j;
                  }
                  @group = Array.new;
               }
+              
               
               next;
           }
