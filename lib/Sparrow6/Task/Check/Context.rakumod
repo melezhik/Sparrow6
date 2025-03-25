@@ -250,8 +250,8 @@ class Range
           if $start_ind == -1 and $stop_ind != -1  {
             self!log("Range", "cas3") if %*ENV<SP6_DEBUG_TASK_CHECK>;
             if $i <= $stop_ind  {
-                if ~~ /<$pattern2>/ {
-                  $flip-open = True
+                if $d ~~ /<$pattern1>/ {
+                  $flip-open = True;
                 } 
                 next unless $flip-open;
                 self!log("Range", "cas3_OK") if %*ENV<SP6_DEBUG_TASK_CHECK>;
