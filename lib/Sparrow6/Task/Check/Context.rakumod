@@ -216,11 +216,12 @@ class Range
 
           if $start_ind == -1 and $stop_ind == -1 and $d ~~ /<$pattern1>/ fff $d ~~ /<$pattern2>/ {
               self!log("Range", "cas1") if %*ENV<SP6_DEBUG_TASK_CHECK>;
-              %seen{$stream-id} = "cas1_OK";
+              %seen{$stream-id} = "cas1_OK"; 
               push @group, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
               
               if $d ~~ /<$pattern1>/ {
                   @group = Array.new;
+                  push @group, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
               }
               
               if $d ~~ /<$pattern2>/ {
