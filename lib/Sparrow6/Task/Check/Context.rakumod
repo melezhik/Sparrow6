@@ -153,6 +153,7 @@ class Range
       my %seen;
 
       my $flip-closed = False;
+      my $flip-open = False;
       
       my @group;
 
@@ -237,7 +238,7 @@ class Range
 
           if $start_ind != -1 and $stop_ind == -1 {
             self!log("Range", "cas2") if %*ENV<SP6_DEBUG_TASK_CHECK>;
-            if $i >= $start_ind fff $d ~~ /<$pattern2>/ {
+            if $i >= $start_ind {
                 next if $flip-closed;
                 self!log("Range", "cas2_OK") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                 %seen{$stream-id} = "ok";
@@ -248,12 +249,14 @@ class Range
           } 
           if $start_ind == -1 and $stop_ind != -1  {
             self!log("Range", "cas3") if %*ENV<SP6_DEBUG_TASK_CHECK>;
-            if $d ~~ /<$pattern1>/ fff $i <= $stop_ind  {
-                next if $flip-closed;
+            if $i <= $stop_ind  {
+                if ~~ /<$pattern2>/ {
+                  $flip-open = True
+                } 
+                next unless $flip-open;
                 self!log("Range", "cas3_OK") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                 %seen{$stream-id} = "ok";
                 push self.context, %( data => $d, 'next' => $i, stream-id => $stream-id, index => $i );
-                $flip-closed = True if $i == $stop_ind
             }
             next;
           } 
