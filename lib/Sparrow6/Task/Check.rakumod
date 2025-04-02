@@ -396,6 +396,7 @@ class Api
         } elsif $l ~~ / ^^ \s* 'end:' \s* $$ / {
                     
           self.current-context = Sparrow6::Task::Check::Context::Default.new( data => self.data );
+          @!captures = [];
 
         } elsif $l ~~ / ^^ \s* 'assert:' \s+ (True|true|False|false|0|1) \s+ (.*)/ {
 
