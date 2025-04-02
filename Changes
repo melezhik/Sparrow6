@@ -2,18 +2,23 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-0.0.64 2025-25-03T16:50:00Z
+0.0.65 2025-04-02T16:50:00Z
+
+    Fix: reset captures
+    when context is closed
+
+0.0.64 2025-02-25T16:50:00Z
 
     Minor fixes in range
     search context
 
-0.0.63 2025-24-03T23:10:00Z
+0.0.63 2025-03-24T23:10:00Z
 
     Fix zoom bug (takes 
     within capture into
     account)
 
-0.0.62 2025-21-03T21:30:00Z
+0.0.62 2025-03-21T21:30:00Z
 
     Tricky bug fix:
  
