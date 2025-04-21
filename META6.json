@@ -8,7 +8,7 @@
   ],
   "depends": [
     "File::Directory::Tree",
-    "Hash::Merge:ver<1.0.0>",
+    "Hash::Merge:ver<2.0.0+>",
     "YAMLish",
     "JSON::Fast",
     "Data::Dump",

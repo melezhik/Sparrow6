@@ -5,7 +5,7 @@ use v6;
 unit module Sparrow6::Task::Runner;
 
 use File::Directory::Tree;
-use Hash::Merge:ver<1.0.0>;
+use Hash::Merge;
 
 use YAMLish;
 use JSON::Fast;
@@ -108,7 +108,7 @@ class Api
       my $plugin-config = $.config ~~ / '.raku' $$/ ?? EVALFILE($.config) !! load-yaml(slurp $.config);
       self!log("parse plugin configuration file",$plugin-config.perl);
       self!log("input parameters",$.parameters.perl);
-      self.task-config = merge-hash $plugin-config, $.parameters, :no-append-array;
+      self.task-config = merge-hash $plugin-config, $.parameters, :!positional-append;
       self!log("merged task config",$.task-config.perl);
 
     } else { # handle case when task config does not exist
