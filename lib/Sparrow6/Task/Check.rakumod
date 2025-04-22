@@ -207,9 +207,11 @@ class Api
            my $data = $ln<data>;
            if $zoom-mode { # in zoom mode use first capture found
                            # found during previous match
+               self!log("CHECK LINE: zoom mode is on, index={$ln<index>}, captures", self.captures().raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
                for self.captures().grep({ $_<index> == $ln<index>}) -> $c {
                    $data = $c<data>[0]
                }
+               self!log("CHECK LINE: zoom mode is on, effective lookup data", $data) if %*ENV<SP6_DEBUG_TASK_CHECK>;
            }
 
            #say "zoom-mode: $zoom-mode";
