@@ -3,7 +3,7 @@
 if [ -s /etc/os-release ]; then
   # freedesktop.org and systemd
   . /etc/os-release
-  OS=$NAME
+  OS=$ID
   VER=$VERSION_ID
 elif lsb_release -h >/dev/null 2>&1; then
   # linuxbase.org
@@ -23,7 +23,7 @@ elif [ -s /etc/SuSe-release ]; then
   printf "TODO\n"
 elif [ -s /etc/redhat-release ]; then
   # Older Red Hat, CentOS, etc.
-  OS=$(cat /etc/redhat-release| head -n 1)
+  OS=$(cat /etc/redhat-release| head -n 1 | cut -d ' ' -f 1)
 else
   RELEASE_INFO=$(cat /etc/*-release 2>/dev/null | head -n 1)
 
