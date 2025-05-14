@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.67 2025-05-14T15:50:00Z
+
+    Bootstrap: 
+    Support awk free Linux
+    distributions
+
 0.0.66 2025-04-22T22:50:00Z
 
     Use the latest version
