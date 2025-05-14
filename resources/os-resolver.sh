@@ -1,5 +1,4 @@
 #! /usr/bin/env sh
-
 # Find out the target OS
 if [ -s /etc/os-release ]; then
   # freedesktop.org and systemd
@@ -29,8 +28,12 @@ else
   RELEASE_INFO=$(cat /etc/*-release 2>/dev/null | head -n 1)
 
   if [ ! -z "$RELEASE_INFO" ]; then
-    OS=$(printf "$RELEASE_INFO" | awk '{ print $1 }')
-    VER=$(printf "$RELEASE_INFO" | awk '{ print $NF }')
+    if awk -W version 1>/dev/null 2>&1; then
+      OS=$(printf "$RELEASE_INFO" | awk '{ print $1 }')
+      VER=$(printf "$RELEASE_INFO" | awk '{ print $NF }')
+    else
+      OS=$(printf "$RELEASE_INFO" | cut -d ' ' -f 1)
+    fi
   else
     # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
     OS=$(uname -s)
@@ -39,7 +42,14 @@ else
 fi
 
 # Convert OS name to lowercase to remove inconsistencies
-OS=$(printf "$OS" | awk '{ print tolower($1) }')
+
+if awk -W version 1>/dev/null 2>&1; then
+  OS=$(printf "$OS" | awk '{ print tolower($1) }')
+else
+  OS=${OS,,}
+fi
+
+#printf "raw OS: %s" "$OS"
 
 printf "%s" "$OS"
 
