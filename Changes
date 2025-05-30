@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.68 2025-05-30T12:00:00Z
+
+    Fix awk check for systems 
+    where awk -W does not work,
+    for example for macOS
+
 0.0.67 2025-05-14T15:50:00Z
 
     Bootstrap: 
