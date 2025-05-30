@@ -28,7 +28,7 @@ else
   RELEASE_INFO=$(cat /etc/*-release 2>/dev/null | head -n 1)
 
   if [ ! -z "$RELEASE_INFO" ]; then
-    if awk -W version 1>/dev/null 2>&1; then
+    if type awk 1>/dev/null 2>&1; then
       OS=$(printf "$RELEASE_INFO" | awk '{ print $1 }')
       VER=$(printf "$RELEASE_INFO" | awk '{ print $NF }')
     else
@@ -43,7 +43,7 @@ fi
 
 # Convert OS name to lowercase to remove inconsistencies
 
-if awk -W version 1>/dev/null 2>&1; then
+if type awk 1>/dev/null 2>&1; then
   OS=$(printf "$OS" | awk '{ print tolower($1) }')
 else
   OS=${OS,,}
