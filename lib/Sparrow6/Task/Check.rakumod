@@ -200,7 +200,7 @@ class Api
 
         my %success-streams = %();
 
-        my $zoom-mode  = self.current-context.WHAT === Sparrow6::Task::Check::Context::Range && self.current-context.zoom-mode;
+        my $zoom-mode  = self.current-context.WHAT === Sparrow6::Task::Check::Context::Range && self.current-context.zoom-mode && self.current-context.just-started == False;
 
         for self.current-context.context -> $ln {
            my $ln-clone = $ln.clone; 
