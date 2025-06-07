@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.69 2025-06-08T12:20:00Z
+
+    Fix within first run issue
+
 0.0.68 2025-05-30T12:00:00Z
 
     Fix awk check for systems 
