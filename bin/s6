@@ -7,7 +7,7 @@ use Sparrow6::SparrowTask;
 
 sub MAIN (
   $thing?,
-  Bool :$debug            = False,
+  Bool :$debug            = %*ENV<SP6_DEBUG> ?? True !! False,
   Bool :$verbose          = False,
   Bool :$clean            = False,
   Bool :$help             = False,

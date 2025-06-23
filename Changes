@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Allow pass a="f=1 b=2"
+    parameters to s6 cli
+
+    Fix pass SP6_DEBUG to
+    s6 cli env
+    
 0.0.69 2025-06-08T12:20:00Z
 
     Fix within first run issue

@@ -153,13 +153,19 @@ role Role {
 
       $what = "$0";
 
-      self.console-with-prefix("run thing $what");
+      self.console-with-prefix("run [$what], thing: $thing");
 
       if $thing ~~ /'@' ( .* )  $$/ {
+        
+        for "$0".split(",") -> $p {
+          if $p ~~ /(.*?) "=" (.*)/ {
+            %params{"$0"} = "$1";
+          } else {
+            %params{$p} = True;
+          }
+        }
 
-        %params = "$0".split(",").map({ $_.split("=").flat }).flat;
-
-        self!log("$what params",%params.perl);
+        self!log("[$what] params",%params.raku);
 
       }
 

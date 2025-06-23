@@ -14,7 +14,7 @@ class Cli
 
 {
 
-  has Bool  $.debug;
+  has Bool  $.debug = %*ENV<SP6_DEBUG> ?? True !! False;
   has Str   $.name = "task";
   has Str   $.sparrow-root is rw;
   has Str   $.prefix;
