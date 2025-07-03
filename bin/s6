@@ -1,5 +1,6 @@
 #!raku
 
+use Sparrow6;
 use Sparrow6::Task::Repository;
 use Sparrow6::Task;
 use Sparrow6::RakuTask;
@@ -9,6 +10,7 @@ sub MAIN (
   $thing?,
   Bool :$debug            = %*ENV<SP6_DEBUG> ?? True !! False,
   Bool :$verbose          = False,
+  Bool :$version          = False,
   Bool :$clean            = False,
   Bool :$help             = False,
   Bool :$index-update     = False,
@@ -37,6 +39,11 @@ sub MAIN (
 )
 
 {
+
+  if $version {
+    say $Sparrow6::VERSION;
+    return;
+  }
 
   my $repo-api = Sparrow6::Task::Repository::Api.new(
     debug   => $debug,
