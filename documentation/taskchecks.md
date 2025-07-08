@@ -1536,6 +1536,24 @@ stdout match (r) <HELLO \s+ (\d+)> True
 Pay attention that [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) is used here to let main flow continues even though if
 range search fails 
 
+## Remove line
+
+`remove-line` works similarly to `replace`, but just removing line at number `n`, following example
+removes all lines between `AAA` and `BBB`, including `AAA` and `BBB` lines:
+
+```
+between: {AAA} {BBB}
+:any:
+end:
+
+code: <<RAKU
+!raku
+for captures-full()<> -> $c {
+    remove-line("file.txt",$c<index>)
+}
+RAKU
+```
+
 # Examples
 
 * Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder

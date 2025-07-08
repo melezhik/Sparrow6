@@ -177,3 +177,24 @@ sub replace ($path,$ln,$data) is export {
   return;
 
 }
+
+sub remove-line ($path,$ln) is export {
+
+  my @data;
+
+  my $i = 0;
+
+  for $path.IO.lines -> $l {
+    if $i == $ln {
+      next
+    } else {
+      @data.push($l)
+    }
+    $i++;
+  }
+
+  spurt $path, @data.join("\n");
+
+  return;
+
+}
