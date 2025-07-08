@@ -169,12 +169,12 @@ class Api
     if $check-type eq 'default' {
         for self.current-context.context -> $ln {
             #say "check $ln<data>";
-            my $ln-clone = $ln.clone;
+            #my $ln-clone = $ln.clone;
             if $pattern eq ":any:" {
                 $status = True;
                 $!last-match-line = $ln<data>;
                 @!succeeded.push: $ln<data>;
-                $ln-clone<captures> = [ $ln<data> ]; 
+                $ln<captures> = [ $ln<data> ]; 
                 push @new-context, $ln;
                 @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index>  ) ;
             } elsif $pattern ~~ /^^ ":" (\d+) ":" $$/ {
@@ -183,7 +183,7 @@ class Api
                 $status = True;
                 $!last-match-line = $ln<data>;
                 @!succeeded.push: $ln<data>;
-                $ln-clone<captures> = [ $ln<data> ]; 
+                $ln<captures> = [ $ln<data> ]; 
                 push @new-context, $ln;
                 @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index> ) ;
               } 
@@ -191,8 +191,8 @@ class Api
                 $status = True;
                 $!last-match-line = $ln<data>;
                 @!succeeded.push: $ln<data>;
-                $ln-clone<captures> = [ $ln<data> ]; 
-                push @new-context, $ln-clone;
+                $ln<captures> = [ $ln<data> ]; 
+                push @new-context, $ln;
                 @captures.push:  %( stream-id => $ln<stream-id>, data => [ $ln<data> ], index => $ln<index>  ) ;
             }
         }

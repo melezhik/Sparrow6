@@ -1,0 +1,47 @@
+between: { "foo" } { "bar" }
+:any:
+end:
+
+
+generator: <<OK
+!raku
+
+my @a = streams_array()<>;
+
+say "note: \@a[0][0]: ", @a[0][0];
+
+say "assert: ", @a[0][0] eq "foo", " \@a[0][0] eq \"foo\"";
+
+say "note: \@a[0][1]: ", @a[0][1];
+
+say "assert: ", @a[0][1] eq "1", " \@a[0][0] eq \"1\"";
+
+say "note: \@a[0][2]: ", @a[0][2];
+
+say "assert: ", @a[0][2] eq "2", " \@a[0][2] eq \"2\"";
+
+say "note: \@a[0][3]: ", @a[0][3];
+
+say "assert: ", @a[0][3] eq "3", " \@a[0][3] eq \"3\"";
+
+say "note: \@a[1][0]: ", @a[1][0];
+
+say "assert: ", @a[1][0] eq "foo", " \@a[1][0] eq \"foo\"";
+
+say "note: \@a[1][1]: ", @a[1][1];
+
+say "assert: ", @a[1][1] eq "A", " \@a[1][1] eq \"A\"";
+
+say "note: \@a[1][2]: ", @a[1][2];
+
+say "assert: ", @a[1][2] eq "B", " \@a[1][2] eq \"B\"";
+
+say "note: \@a[1][3]: ", @a[1][3];
+
+say "assert: ", @a[1][3] eq "C", " \@a[1][3] eq \"C\"";
+
+say "note: \@a[1][4]: ", @a[1][4];
+
+say "assert: ", @a[1][4] eq "bar", " \@a[1][4] eq \"bar\"";
+
+OK
