@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.72 2025-07-08T21:30:00Z
+
     Fix bug for :any: search
     producing empty data
     in streams_array()
