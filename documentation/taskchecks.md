@@ -1641,6 +1641,73 @@ OK
 
 This scenario effectively implements linux style pipeline, where the first step extracts all the numbers and the second sum them up.
 
+
+Sources could be effectively combined with `replace` and `remove-line` function effectively 
+causing reload context from changed files, consider this example with fails in the end,
+cause second line has already been deleted:
+
+
+*task.check*
+
+```
+note: === change source ===
+
+source: /tmp/file1.txt
+regexp: ^^ A1 $$
+B1
+C1
+
+note: === change source ===
+
+source: /tmp/file2.txt
+regexp: ^^ A2 $$
+B2
+C2
+
+
+note: === remove second line from /tmp/file1.txt  ===
+
+code: <<OK
+!raku
+remove-line("/tmp/file1.txt",1)
+OK
+
+note: === change source ===
+
+source: /tmp/file1.txt
+
+B1
+```
+
+report:
+
+```
+[task stdout]
+|> source changed to [/tmp/file1.txt]
+21:46:52 :: A1
+21:46:52 :: B1
+21:46:52 :: C1
+|> source changed to [/tmp/file2.txt]
+21:46:52 :: A2
+21:46:52 :: B2
+21:46:52 :: C2
+|> source changed to [/tmp/file1.txt]
+21:46:54 :: A1
+21:46:54 :: C1
+[task check]
+# === change source ===
+stdout match <^^ A1 $$> True
+stdout match <B1> True
+stdout match <C1> True
+# === change source ===
+stdout match <^^ A2 $$> True
+stdout match <B2> True
+stdout match <C2> True
+# === remove second line from /tmp/file1.txt  ===
+# === change source ===
+stdout match <B1> False
+```
+
 # Examples
 
 * Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder

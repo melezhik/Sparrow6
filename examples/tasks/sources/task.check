@@ -1,0 +1,33 @@
+OK
+
+note: === change source ===
+
+source: /tmp/file1.txt
+regexp: ^^ A1 $$
+B1
+C1
+
+note: === change source ===
+
+source: /tmp/file2.txt
+regexp: ^^ A2 $$
+B2
+C2
+
+
+note: === remove second line from /tmp/file1.txt  ===
+
+code: <<OK
+!raku
+remove-line("/tmp/file1.txt",1)
+OK
+
+note: === change source ===
+
+source: /tmp/file1.txt
+
+begin:
+A1
+C1
+end:
+

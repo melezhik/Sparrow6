@@ -182,15 +182,15 @@ sub remove-line ($path,$ln) is export {
 
   my @data;
 
-  my $i = 0;
+  my $i = -1;
 
   for $path.IO.lines -> $l {
+    $i++;
     if $i == $ln {
       next
     } else {
       @data.push($l)
     }
-    $i++;
   }
 
   spurt $path, @data.join("\n");

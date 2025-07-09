@@ -400,6 +400,17 @@ class Api
           self.current-context = Sparrow6::Task::Check::Context::Default.new( data => self.data );
           @!captures = [];
 
+        } elsif $l ~~ / ^^ \s* 'source:' \s+ (\S+) $$/ {
+          my $path = "$0";
+          my Str @d; for $path.IO.lines -> $l { push @d, $l};
+          self.data = @d;
+          say "|> source changed to [$path]";
+          for @d -> $line {
+            self.console-wo-prefix($line);
+          };            
+          self.current-context = Sparrow6::Task::Check::Context::Default.new( data => self.data );
+          @!captures = [];
+
         } elsif $l ~~ / ^^ \s* 'assert:' \s+ (True|true|False|false|0|1) \s+ (.*)/ {
 
             my $status-string = "$0"; my $message = $1;
