@@ -1571,7 +1571,7 @@ A1
 B1
 C1
 
-source: file1.txt
+source: file2.txt
 # all checks are going to be against file2.txt
 # data
 A2
