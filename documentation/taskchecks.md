@@ -412,9 +412,9 @@ if matched() {
 RAKU
 ```
 
-So, use tilda before `regexp:` to make a _soft_ check. 
+So, use tilde before `regexp:` to make a _soft_ check. 
 
-Another common senario is to use soft checks together with replace feature.
+Another common scenario is to use soft checks together with replace feature.
 
 # Comments, blank lines and here documents
 
@@ -866,7 +866,7 @@ end:
 ```
 
 This code successfully searches D letter in the center of "ABCDCBA" string by applying a series
-of "zoom in" checks. We start with "birds eye" view - everything in between "A" and "A" and if we successfully find anything in between, we then zoom in and repeate the proccess again but now the search context is zoomed in - e.g. we effectvely continue to search in "BCDCD" substring and so on till we finally find the "smallest" element in a landscape - D letter.
+of "zoom in" checks. We start with "birds eye" view - everything in between "A" and "A" and if we successfully find anything in between, we then zoom in and repeat the process again but now the search context is zoomed in - e.g. we effectively continue to search in "BCDCD" substring and so on till we finally find the "smallest" element in a landscape - D letter.
 
 This approach is especially effective with [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) and [generators](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#generators) where we want control
 the flow:
@@ -1160,7 +1160,7 @@ stdout match (s) <OK> True
 stdout match (s) <!ok> True
 stdout match (s) <Hello> True
 stdout match (s) <done> True
-# negations for sinle strings
+# negations for single strings
 stdout match <!Ok> True
 # negations inside ranges
 # between: {OK} {done}
@@ -1172,9 +1172,9 @@ stdout match (w) <C> True
 
 # Search by line numbers AKA SLN search
 
-Sometime it makes a sence to search by line number of text output. 
+Sometime it makes a sense to search by line number of text output. 
 
-Conside this example:
+Consider this example:
 
 task.bash
 
@@ -1245,7 +1245,7 @@ You can use SLN in ranges, sequential blocks and  within expressions:
 
 
 ```
-note: search everyhting between 1st and 3d lines
+note: search everything between 1st and 3d lines
 between: { :1: } { :3: }
     regexp: .*
 end:
@@ -1472,7 +1472,7 @@ Returns array of streams
 
 * streams()
 
-Hash representation of streams data. Hash keys - unique stream identeficators.
+Hash representation of streams data. Hash keys - unique stream identifiers.
 
 * dump_streams()
 
@@ -1482,7 +1482,7 @@ Dump streams in human readable format, useful for debugging.
 
 ## Replace
 
-Repalce allows to update file in runtime during check is performed
+Replace allows to update file in runtime during check is performed
 
 Following example search HELLO and digits within OK .. DONE range and then 
 increment found digit and update original file: 
@@ -1553,6 +1553,93 @@ for captures-full()<> -> $c {
 }
 RAKU
 ```
+
+## Sources
+
+By default STDOUT is a source where input data is read from. One can charge this by using `source:` directive.
+
+Consider two files - `file1.txt` and `file2.txt` with various content. Instead of checking
+content of _both_ files ( using  for example `cat file1.txt; cat file2.txt`), we can check files
+independently:
+
+
+```
+source: file1.txt
+# all checks are going to be against file1.txt
+# data
+A1
+B1
+C1
+
+source: file1.txt
+# all checks are going to be against file2.txt
+# data
+A2
+B2
+C2
+```
+
+This makes a sense when `file1.txt` has a following lines:
+
+```
+A1
+B1
+C1
+```
+
+And file `file2.txt` respectively:
+
+```
+A2
+B2
+C2
+```
+
+This is just a very _simple_ example showing the concept, one can do more sophisticated scenarios,
+combining sources with code blocks:
+
+```
+
+# collect all lines with numbers
+# capturing numeric data
+
+~regexp: (\d+)
+
+# save numbers to a file
+code: <<OK
+!raku
+
+my @data;
+
+for captures()<> -> $c {
+    push @data, $c[0];
+}
+
+"numbers.out".IO.spurt(@data.join("\n"));
+
+OK
+
+source: numbers.out
+
+# capture all lines
+:any:
+
+# sum all numbers
+code: <<OK
+!raku
+
+my $sum = 0;
+
+for matched() -> $c {
+    $a += Int($c)
+}
+
+say "sum: $sum";
+
+OK
+```
+
+This scenario effectively implements linux style pipeline, where the first step extracts all the numbers and the second sum them up.
 
 # Examples
 
