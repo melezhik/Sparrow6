@@ -1595,7 +1595,7 @@ B2
 C2
 ```
 
-This is just a very _simple_ example showing the concept, one can do more sophisticated scenarios,
+This is just a very _simple_ example showing the concept, one can do more sophisticated scenarios, for example
 combining sources with code blocks:
 
 ```
@@ -1605,7 +1605,10 @@ combining sources with code blocks:
 
 ~regexp: (\d+)
 
-# save numbers to a file
+# save numbers to the file
+# numbers.out for
+# further processing
+
 code: <<OK
 !raku
 
@@ -1639,12 +1642,12 @@ say "sum: $sum";
 OK
 ```
 
-This scenario effectively implements linux style pipeline, where the first step extracts all the numbers and the second sum them up.
+This scenario effectively implements linux style pipeline, where the first step extracts all the numbers and the second sums them up.
 
 
-Sources could be effectively combined with `replace` and `remove-line` function effectively 
-causing reload context from changed files, consider this example with fails in the end,
-cause second line has already been deleted:
+Sources could be effectively combined with `replace` and `remove-line` functions effectively 
+causing reload of data from changed files, consider this example with a failure in the end,
+proving that the second line has already been deleted:
 
 
 *task.check*
