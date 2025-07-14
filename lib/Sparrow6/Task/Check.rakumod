@@ -207,7 +207,7 @@ class Api
            my $data = $ln<data>;
            if $zoom-mode { # in zoom mode use first capture found
                            # found during previous match
-               self!log("CHECK LINE: zoom mode is on, index={$ln<index>}, captures", self.captures().raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+               self!log("CHECK LINE(regexp), zoom mode is on, index={$ln<index>}, captures", self.captures().raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
                for self.captures().grep({ $_<index> == $ln<index>}) -> $c {
                    $data = $c<data>[0]
                }
@@ -220,6 +220,7 @@ class Api
            my $matched = $data.comb(/<mymatch=$pattern>/,:match)>>.<mymatch>;
  
            if $matched && $negate != True {
+                self!log("CHECK LINE(regexp, matched, negate=off)", "post proccess result") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                 # only accumulate data for new context
                 # if working in postive ( none negate mode )
                 $status = True;
@@ -237,21 +238,26 @@ class Api
               push @new-context, $ln-clone;
 
           } elsif $matched && $negate == True {
-              self!log("CHECK LINE(negate=on)", "calculate decision") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+              self!log("CHECK LINE(regexp, matched, negate=on)", "post proccess result") if %*ENV<SP6_DEBUG_TASK_CHECK>;
               if self.current-context.isa(Sparrow6::Task::Check::Context::Default) {
                   $status = False 
               } else {
                 %success-streams{$ln<stream-id>||"default"} = "OK";
                 if self.current-context.just-started == True &&
                   %success-streams.keys.elems == self.current-context.initial-streams-cnt {
+                  self!log("CHECK LINE(regexp, matched, negate=on)", "post proccess result: initial stream, status set to False due to negate search has succeed") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                   $status = False 
                 } elsif self.current-context.just-started == False &&
                   %success-streams.keys.elems == self.current-context.streams.keys.elems {
+                    self!log("CHECK LINE(regexp, matched, negate=on)", "post proccess result: streams have started, status set to False due to negate search has succeed") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                     $status = False
                 }
               }
+          } elsif !$matched && $negate == True {
+              self!log("CHECK LINE(regexp, not matched, negate=on)", "post proccess result - modify context") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+              push @new-context, $ln;
           }
-        }
+        } # proccess next line from self.current-context.context
     } else {
         die "unknown check type: $check-type";
     }
@@ -269,22 +275,27 @@ class Api
       self!log("SEARCH FAILS )=;", $pattern) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Range {
+         self!log("SEARCH(FAIL, context: Sparrow6::Task::Check::Context::Range )", "flush/disable streams due to failure") if %*ENV<SP6_DEBUG_TASK_CHECK>;
          self.current-context.disable-streams();
          self.current-context.streams = %();
       } 
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {
+        self!log("SEARCH(FAIL, context: Sparrow6::Task::Check::Context::Sequence )", "flush/disable streams due to failure") if %*ENV<SP6_DEBUG_TASK_CHECK>;
         self.current-context.context = ();
         self.current-context.streams = %();
       } 
 
     }
 
-    self.current-context.change-context(@new-context) if @new-context;
+    if @new-context {
+       self!log("SEARCH, new context is not empty, call change-context")  if %*ENV<SP6_DEBUG_TASK_CHECK>;
+       self.current-context.change-context(@new-context) 
+    }
     #say  @new-context.raku;
     if $.debug {
-        say "STATUS:",  $status.perl;
-        say "CAPTURES:", @captures.perl;
-        say "MATCHED:",  @!succeeded.perl;
+        say "STATUS:",  $status.raku;
+        say "CAPTURES:", @captures.raku;
+        say "MATCHED:",  @!succeeded.raku;
     }
 
     @!captures = @captures;
@@ -308,10 +319,8 @@ class Api
 
     if $soft-check {
       if $status == False {
-        #say "KKKK1";
         self!add-result({ status => True , message => $message, :soft-fail });
       } else {
-        #say "KKKK2";
         self!add-result({ status => $status , message => $message });
       }
     } else {
