@@ -3,8 +3,8 @@ note: negations in blocks
 begin:
 A
 !regexp: D
-B
 C
+D
 end:
 
 
