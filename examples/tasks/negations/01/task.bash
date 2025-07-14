@@ -1,3 +1,7 @@
 echo "OK"
+echo "step1"
+echo "step2"
+echo "step3"
+echo "step4"
 echo "Hello"
 echo "done"
