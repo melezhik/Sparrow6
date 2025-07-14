@@ -207,11 +207,13 @@ class Api
            my $data = $ln<data>;
            if $zoom-mode { # in zoom mode use first capture found
                            # found during previous match
-               self!log("CHECK LINE(regexp), zoom mode is on, index={$ln<index>}, captures", self.captures().raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+               self!log("CHECK LINE(regexp,zoom_mode=on,index={$ln<index>}), captures", self.captures().raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
                for self.captures().grep({ $_<index> == $ln<index>}) -> $c {
                    $data = $c<data>[0]
                }
-               self!log("CHECK LINE: zoom mode is on, effective lookup data", $data) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+               self!log("CHECK LINE(regexp,zoom_mode=on,index={$ln<index>}), effective lookup data", $data) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+           } else {
+               self!log("CHECK LINE(regexp,zoom_mode=off,index={$ln<index>}), captures", self.captures().raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
            }
 
            #say "zoom-mode: $zoom-mode";
@@ -288,7 +290,7 @@ class Api
     }
 
     if @new-context {
-       self!log("SEARCH, new context is not empty, call change-context")  if %*ENV<SP6_DEBUG_TASK_CHECK>;
+       self!log("SEARCH, new context is not empty", "call change-context")  if %*ENV<SP6_DEBUG_TASK_CHECK>;
        self.current-context.change-context(@new-context) 
     }
     #say  @new-context.raku;
