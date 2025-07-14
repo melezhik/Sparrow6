@@ -12,8 +12,8 @@ RAKU
 begin:
 HELLO
 !regexp: OK2
-:2:
-!regexp: OK3
 :3:
+!regexp: OK3
+:5:
 BYE!
 end:
