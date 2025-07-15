@@ -4,7 +4,6 @@ echo "B"
 echo "C"
 echo "]"
 
-
 echo "["
 echo "A"
 echo "B"

@@ -4,7 +4,9 @@ begin:
 A
 !regexp: D
 C
-D
+]
+!regexp: D
+A
 end:
 
 
