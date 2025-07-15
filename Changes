@@ -2,6 +2,15 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.74 2025-07-15T14:40:00Z
+
+    Fix negation checks
+    lead to incorrect results
+    in ranges
+
+    Improve debugging
+    messages
+
 0.0.73 2025-07-09T22:10:00Z
 
     Implement sources

@@ -880,7 +880,7 @@ if matched() {
    # continue to search by zooming in into smaller chunk
    say '~regexp: C (\S+) C'
 } else {
-    say "assert 0 none empty results found"
+    say "assert: 0 none empty results found"
 }
 RAKU
 generator: << RAKU
@@ -889,7 +889,7 @@ if matched() {
    # continue to search by zooming in into smaller chunk
    say '~regexp: D'
 } else {
-    say "assert 0 none empty results found"
+    say "assert: 0 none empty results found"
 }
 RAKU
 generator: << RAKU
@@ -897,7 +897,7 @@ generator: << RAKU
 if matched() {
    say 'note: D found!'
 } else {
-    say "assert 0 none empty results found"
+    say "assert: 0 none empty results found"
 }
 RAKU
 end:

@@ -257,6 +257,7 @@ class Api
               }
           } elsif !$matched && $negate == True {
               self!log("CHECK LINE(regexp, not matched, negate=on)", "post proccess result - modify context") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+              $ln<captures> = [ $ln<data> ];
               push @new-context, $ln;
           }
         } # proccess next line from self.current-context.context
