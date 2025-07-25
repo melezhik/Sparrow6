@@ -4,6 +4,10 @@
 
 [Discord chat](https://discord.gg/ZMXSMFTK)
 
+[Official web site](https://sparrowhub.io)
+
+---
+
 Sparrow is a Raku based automation framework. It's written on Raku and has Raku API.
 
 Who might want to use Sparrow? People dealing with daily tasks varying from servers software installations/configurations to
