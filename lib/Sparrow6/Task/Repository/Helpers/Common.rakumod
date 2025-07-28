@@ -1,4 +1,5 @@
 unit module Sparrow6::Task::Repository::Helpers::Common;
+use Sparrow6::Common::Config;
 
 role Role {
 
@@ -14,7 +15,12 @@ role Role {
       copy("$url/$resource".IO,$target.IO);
     } else {
       self!log("GET", "{$.url}/{$resource}");
-      my @cmd = "curl", "-s", "-f", "-L", "-k", "-o", $target, "{$.url}/{$resource}";
+      my @cmd;
+      if os() eq "alpine" {
+        @cmd = "wget", "-q", "--no-check-certificate", "-O", $target, "{$.url}/{$resource}";
+      } else {
+        @cmd = "curl", "-s", "-f", "-L", "-k", "-o", $target, "{$.url}/{$resource}";
+      }
       self!log("run cmd:", @cmd);
       run @cmd;
     }  

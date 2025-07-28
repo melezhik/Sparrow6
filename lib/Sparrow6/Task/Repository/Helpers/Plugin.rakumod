@@ -251,16 +251,6 @@ role Role {
 
   }
 
-  method distro-download ($distro) {
-
-    run "curl", "-s", "-f", "-L", "-k", "-o", "{$.sparrow-root}/plugins/$distro", "{$.url}/plugins/{$distro}";
-
-    self!log("plugin uploaded", $distro);
-
-    return "{$.sparrow-root}/plugins/$distro";
-
-  }
-
   method !load-unpack-and-install ($pid,$distro) {
 
     self.plugin-remove($pid);

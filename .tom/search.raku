@@ -1,6 +1,6 @@
-my $ext = prompt("ext (rakumod): ");
+#my $ext = prompt("ext (rakumod): ");
 
-$ext = "rakumod" unless $ext;
+my $ext = "rakumod"; # unless $ext;
 
 my $search1 = prompt("search1: ");
 
