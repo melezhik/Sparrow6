@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.75 2025-07-28T11:50:00Z
+
+    Always use wget for
+    Alpine Linux
+
 0.0.74 2025-07-15T14:40:00Z
 
     Fix negation checks
