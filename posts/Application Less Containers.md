@@ -72,6 +72,9 @@ The benefits of the schema:
 - config reloads are no longer require new kubernetes deployments, just agent pulling new config from remote source and restarting application
 
 - maintenance pages when application needs a considerable time of update are simple aw well
+
+- complex and more sofisticated application health checks not covered by standard K8s probes
+
 - kubernetes manifests are kept small and simple, no more YAML/JSON hell of pile of argocd,flux,jsonet,helm/you name it abstractions. Just plain vanilla k8s manifests , everything complex goes to agent layer 
 
 See the next session.
@@ -107,6 +110,7 @@ intentionally omitted, but one can see how  main workflow is handled:
 
 - container initialization
 - application restart when a new version is deploy or configuration file changed
+- application helth check ( with possible retries or more complex logic )
 - container crash or stop cleaning up logic 
 - etc 
 
@@ -179,6 +183,14 @@ while True {
         :bin<bin/app>
      );
   }
+
+  my $s = task-run "check app is alive", "http-status";
+
+  # raise an exception if application is not healthy
+  # so singnal kubernetes could start a new container
+
+  die "application is not healthy" unless $s<OK>;
+
   sleep(60); # sleep for 1 minute, could be configurable
 
 }
