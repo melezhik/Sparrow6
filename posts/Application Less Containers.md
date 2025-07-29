@@ -204,7 +204,7 @@ LEAVE {
 
 # Conclusion
 
-Inverted deployment schema, when containers initiate update through agent layers and decoupling application from container could be an interesting alternative to classic container deployment schema, where application always packed into container image and comes together. Such an approach may give a lot of flexibility in container life cycle management and simplify kubernetes configurations bringing all configuration complexity into agent layers instead of tinkering it inside Dockerfiles/Kubernetes manifests. It also reduces necessity to update kubernetes manifests too often (whether it's gitops style or imperative kubectl apply approach) and as a result reduces operations overhead.
+Inverted deployment schema, when containers initiate update through agent layers and decoupling application from container could be an interesting alternative to classic container deployment schema, where application always packed into container image and come together. Such an approach may give a lot of flexibility in container life cycle management and simplify kubernetes configurations bringing all configuration complexity into agent layers instead of tinkering it inside Dockerfiles/Kubernetes manifests. It also reduces necessity to update kubernetes manifests too often (whether it's gitops style or imperative kubectl apply approach) and as a result reduces operations overhead.
 
 [Raku](https://sparrowhub.io) and [Sparrow](https://sparrowhub.io) may be a good choice when writing configuration management agents layers.  
 
