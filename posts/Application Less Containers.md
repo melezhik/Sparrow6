@@ -73,7 +73,7 @@ The benefits of the schema:
 
 - maintenance pages when application needs a considerable time of update are simple aw well
 
-- complex and more sofisticated application health checks not covered by standard K8s probes
+- complex and more sophisticated application health checks not covered by standard K8s probes
 
 - kubernetes manifests are kept small and simple, no more YAML/JSON hell of pile of argocd,flux,jsonet,helm/you name it abstractions. Just plain vanilla k8s manifests , everything complex goes to agent layer 
 
