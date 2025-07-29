@@ -32,7 +32,7 @@ This should work smoothly at least for compiled languages like golang or c where
 
 This diagram provides a simplified description of the idea. At certain point of time CICD process would cut new application releases (v_i) and new versions of an application would appear on containers.
 
-Such an approach requires though (in contrast to classic k8s way ) an additional abstraction layer (called agents) that pulls new releases and deploy them into containers: 
+Such an approach requires though (in contrast to classic k8s way) an additional abstraction layer (called agents) that pulls new releases and deploy them into containers: 
 
 ```
 
@@ -56,7 +56,7 @@ Such an approach requires though (in contrast to classic k8s way ) an additional
                            
 ```
 
-So the whole deployment schema **gets inverted** and instead of pushing release via kubectl/helm deploy or friends we pull them directly from containers, however from the final result perspective we get the same gitops pattern where all the state is kept as a source code in some Git repository. In other words agents acts as standard configuration management tools, converging containers to desired state, as any confirmation management tools would do. I call it inverted deployment schema.
+So the whole deployment schema **gets inverted** and instead of pushing release via kubectl/helm deploy or friends we pull them directly from containers, however from the final result point of view we get the same gitops pattern where all the state is kept as a source code in some Git repository. In other words agents acts as standard configuration management tools, converging containers to desired state, as any confirmation management tools would do. I call it inverted deployment schema.
 
 
 The benefits of the schema:
