@@ -13,7 +13,7 @@ k8s, Raku, Sparrow, system-design
 
 ---
 
-Standard containers paradigm, implemented, for example by k8s is that application is a part of container image, so to deploy a new version of application one needs to build a new image and then (re)deployed it, an it seems it works well for the whole industry.
+Standard containers paradigm, implemented, for example by k8s is that application is a part of container image, so to deploy a new version of application one needs to build a new image and then (re)deployed it, this seems works well for the whole industry.
 
 However things could be a bit different and hopefully more interesting if we subtract  application layer from docker image, so container itself initially becomes just an empty box with some environment that gets instrumented by application binary later at some point of time.
 
