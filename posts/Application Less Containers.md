@@ -99,9 +99,13 @@ ENTRYPOINT  ["raku", "/app/entry.raku" ]
 ## Entry script (entry.raku)
 
 
-Following agent code is simplified version of real code, some details are
-intentionally omited 
+Following is agent code simplified version, some details are
+intentionally omited, but one can see how  main workflow is handled:
 
+- container initilization
+- application restart when a new version is deploy or configuraton file changed
+- container crash or stop cleaning up logic 
+- etc 
 
 ```
 use Sparrow6::DSL
@@ -181,5 +185,13 @@ LEAVE {
   say "some clean up logic here";
 }
 ```
+
+
+# Conclusion
+
+Inverted deployment schema, when containers initiate update through agent layers and decoupling application from container could be an interesting alternative to classic container deployment schema, where application always packed into container images. Such an approach may give a lot flexibility in container life cule management and simplify kubernetes configurations. Please let me know whay you think
+
+
+
 
 
