@@ -50,7 +50,7 @@ Such an approach requires though (in contrast to classic k8s way) an additional 
                                                     /
          /-- container --\                         /
          |               |                        /
-         |   [ .empty.] [ agent ] <--------- GET STATE  /  
+         |   [ .empty.] [ agent ] <--------- GET STATE
          |               | 
          \---------------/ 
                            
