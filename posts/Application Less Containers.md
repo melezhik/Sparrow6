@@ -1,10 +1,16 @@
-title: Application less containers 
-published: false
-description: How to invert k8s deployments using application less containers design 
-tags: k8s, Raku, Sparrow, system-design 
-# cover_image: https://direct_url_to_image.jpg
-# Use a ratio of 100:42 for best results.
-# published_at: 2025-07-29 13:46 +0000
+# Title
+
+Application less containers 
+
+# description
+
+How to invert k8s deployments using application less containers design 
+
+
+# tags
+
+k8s, Raku, Sparrow, system-design 
+
 ---
 
 Standard containers paradigm, implemented, for example by k8s is that application is a part of container image, so to deploy a new version of application one needs to build a new image and then (re)deployed it, an it seems it works well for the whole industry.
@@ -24,10 +30,9 @@ This should work smoothly at least for compiled languages like golang or c where
                            ----  t1 (v1) --- t2 (v2) --- t3(v3)---->
 ```
 
-Here ^^ on diagram a simplified flow describing  the idea. At certain point of time CICD process would cut new application releases (vi) and new versions of an application would appear on containers.
+This diagram provides a simplifed description of the idea. At certain point of time CICD process would cut new application releases (v_i) and new versions of an application would appear on containers.
 
-Such an approach requires though (in contrast to classic k8s way ) an abstraction layer that pulls new releases and deploy them into containers: 
-
+Such an approach requires though (in contrast to classic k8s way ) an additional abstraction layer (called agents) that pulls new releases and deploy them into containers: 
 
 ```
 
@@ -51,7 +56,8 @@ Such an approach requires though (in contrast to classic k8s way ) an abstractio
                            
 ```
 
-So the whole deployment schema **gets inverted** and instead of pushing release via kubectl/helm deploy or friends we pull them from containers, however from the final result perspective we get the same gitops pattern where all the state is kept as a source code in some Git repository. 
+So the whole deployment schema **gets inverted** and instead of pushing release via kubectl/helm deploy or friends we pull them directlyfrom containers, however from the final result perspective we get the same gitops pattern where all the state is kept as a source code in some Git repository. In other words agents acts as standard configuration management tools, convering containers to desired state, as any confirmation managament tools would do. I call it inverted deployment schema.
+
 
 The benefits of the schema:
 
