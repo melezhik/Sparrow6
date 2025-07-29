@@ -1,8 +1,7 @@
----
 title: Application less containers 
 published: false
 description: How to invert k8s deployments using application less containers design 
-tags: k8s, Raku, Sparrow, systemdesign 
+tags: k8s, Raku, Sparrow, system-design 
 # cover_image: https://direct_url_to_image.jpg
 # Use a ratio of 100:42 for best results.
 # published_at: 2025-07-29 13:46 +0000
@@ -66,7 +65,7 @@ The benefits of the schema:
 
 - config reloads are no longer require new kubernetes deployments, just agent pulling new config from remote source and restarting application
 
-- maintatnce pages when application needs a considrable time of update are simple aw well
+- maintenance pages when application needs a considerable time of update are simple aw well
 - kubernetes manifests are kept small and simple, no more YAML/JSON hell of pile of argocd,flux,jsonet,helm/you name it abstractions. Just plain vanilla k8s manifests , everything complex goes to agent layer 
 
 See the next session.
@@ -77,7 +76,7 @@ See the next session.
 
 So, apparently empty containers should come with some agents that do all pull/converge magic.
 
-Following are simplied version of Dockerfile required to run "emtpy box" container. As we are going to use [Raku](https://raku.org) and [Sparrow](https://sparrowhub.io)
+Following are simplified version of Dockerfile required to run "empty box" container. As we are going to use [Raku](https://raku.org) and [Sparrow](https://sparrowhub.io)
 configuration management tool, we only need to add those dependencies to base Alpine Linux image:  
 
 ## Dockerfile
@@ -100,10 +99,10 @@ ENTRYPOINT  ["raku", "/app/entry.raku" ]
 
 
 Following is agent code simplified version, some details are
-intentionally omited, but one can see how  main workflow is handled:
+intentionally omitted, but one can see how  main workflow is handled:
 
-- container initilization
-- application restart when a new version is deploy or configuraton file changed
+- container initialization
+- application restart when a new version is deploy or configuration file changed
 - container crash or stop cleaning up logic 
 - etc 
 
@@ -189,9 +188,6 @@ LEAVE {
 
 # Conclusion
 
-Inverted deployment schema, when containers initiate update through agent layers and decoupling application from container could be an interesting alternative to classic container deployment schema, where application always packed into container images. Such an approach may give a lot flexibility in container life cule management and simplify kubernetes configurations. Please let me know whay you think
+Inverted deployment schema, when containers initiate update through agent layers and decoupling application from container could be an interesting alternative to classic container deployment schema, where application always packed into container images. Such an approach may give a lot flexibility in container life circle management and simplify kubernetes configurations. More over Raku together with Sparrow may be a good choise when writing configuration managment agents.  
 
-
-
-
-
+Please let me know what you think. Comments and feedback are welcome.
