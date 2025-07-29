@@ -77,7 +77,6 @@ The benefits of the schema:
 See the next session.
 
 
-
 # Agents 
 
 So, apparently empty containers should come with some agents that do all pull/converge magic.
@@ -87,7 +86,7 @@ configuration management tool, we only need to add those dependencies to base Al
 
 ## Dockerfile
 
-```
+```Dockerfile
 FROM alpine:latest
 
 RUN apk add raku-sparrow6
@@ -103,7 +102,6 @@ ENTRYPOINT  ["raku", "/app/entry.raku" ]
 
 ## Entry script (entry.raku)
 
-
 Following is agent code simplified version, some details are
 intentionally omitted, but one can see how  main workflow is handled:
 
@@ -112,7 +110,7 @@ intentionally omitted, but one can see how  main workflow is handled:
 - container crash or stop cleaning up logic 
 - etc 
 
-```
+```raku
 use Sparrow6::DSL
 use JSON::Fast;
 
@@ -135,10 +133,10 @@ while True {
   # load current state or initialize with empty HashMap
   my $current-state = "state.json".IO ~~ :e ?? from-json("state.json".IO.slurp) !! %();
 
-  # get configuration variables 
+  # get configuration variables from git state
   my $vars = $state<vars>;
 
-  # deploy configuration file and check if it changed
+  # deploy configuration file and check if it has changed
   my $res = task-run "deploy app config", "template6", %(
    :$vars, 
    :target<app.config>,
@@ -194,6 +192,8 @@ LEAVE {
 
 # Conclusion
 
-Inverted deployment schema, when containers initiate update through agent layers and decoupling application from container could be an interesting alternative to classic container deployment schema, where application always packed into container images. Such an approach may give a lot flexibility in container life circle management and simplify kubernetes configurations. More over Raku together with Sparrow may be a good choice when writing configuration management agents.  
+Inverted deployment schema, when containers initiate update through agent layers and decoupling application from container could be an interesting alternative to classic container deployment schema, where application always packed into container image and comes together. Such an approach may give a lot flexibility in container life circle management and simplify kubernetes configurations bringing all configuration complexity into agent layers instead of tinkering it inside Dockerfiles/Kubernetes manifests. It also reduces necessity update kubernetes manifests too often ( whether it's gitops style or imperative kubectl apply approach ) and as result simplify operations circle.
+
+Raku and Sparrow may be a good choice when writing configuration management agents layers.  
 
 Please let me know what you think. Comments and feedback are welcome.
