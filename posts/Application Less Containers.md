@@ -71,7 +71,7 @@ The benefits of the schema:
 
 - config reloads are no longer require new kubernetes deployments, just agent pulling new config from remote source and restarting application
 
-- maintenance pages when application needs a considerable time of update are simple aw well
+- maintenance pages when application needs a considerable time of update are simple as well
 
 - complex and more sophisticated application health checks not covered by standard K8s probes
 
