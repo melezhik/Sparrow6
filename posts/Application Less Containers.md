@@ -137,6 +137,9 @@ while True {
   # load current state or initialize with empty HashMap
   my $current-state = "state.json".IO ~~ :e ?? from-json("state.json".IO.slurp) !! %();
 
+  # override current state by new one
+  copy "state/state.json", "state.json";
+        
   # get configuration variables from git state
   my $vars = $state<vars>;
 
