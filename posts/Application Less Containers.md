@@ -162,9 +162,9 @@ while True {
 
   if $state<version> ne $current-state<version> {
 
-     task-run "app stop", "app-stop", %(
-        :pid<app.pid>
-     );
+    task-run "app stop", "app-stop", %(
+      :pid<app.pid>
+    );
 
     task-run "utils/curl", "curl", %(
       args => [
@@ -187,7 +187,7 @@ while True {
   my $s = task-run "check app is alive", "http-status";
 
   # raise an exception if application is not healthy
-  # so singnal kubernetes could start a new container
+  # so singnaling kubernetes it should start a new container
 
   die "application is not healthy" unless $s<OK>;
 
