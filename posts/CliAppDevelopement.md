@@ -165,7 +165,7 @@ s6 --upload
 s6 --index-update
 ```
 
-4. To use the plugin, on any machine with Sparrow installed:
+4. To use [hello](https://sparrowhub.io/plugin/hello/0.000001) plugin, on any machine with Sparrow installed:
 
 ```bash
 s6 --index-update
@@ -204,6 +204,4 @@ Sparrow could be an efficient glue allowing people use their preferable scriptin
 
 
 ---
-
-PS I have uploaded hello plugin to SparrowHub - https://sparrowhub.io/plugin/hello/0.000001
 
