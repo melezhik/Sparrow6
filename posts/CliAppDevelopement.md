@@ -201,3 +201,9 @@ stdout match <hello> True
 
 Sparrow is a lightweight automation framework that could be used as drop-in replacement to Ansible or other frameworks suffering from complexity and extra abstraction layers.
 Sparrow could be an efficient glue allowing people use their preferable scripting languages (Bash/Perl/Python) while adding useful features via Sparrow SDK - scripts configuration, testing, distribution
+
+
+---
+
+PS I have uploaded hello plugin to SparrowHub - https://sparrowhub.io/plugin/hello/0.000001
+
