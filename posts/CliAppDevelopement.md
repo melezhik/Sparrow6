@@ -143,6 +143,29 @@ s6 --index-update
 s6 --search hello
 ```
 
+Output
+
+```
+10:53:48 :: [repository] - search plugins
+hello ... Nil ... 0.0.1
+```
+
+The run the plugin
+
 ```bash
 s6 --plg-run hello@who=CLI,ok
+```
+
+Output
+
+```
+10:54:32 :: [task] - run plg hello@who=CLI,ok
+10:54:32 :: [task] - run [hello], thing: hello@who=CLI,ok
+10:54:32 :: [repository] - installing hello, version 0.000001
+[task run: task.bash - hello]
+[task stdout]
+10:54:33 :: hello CLI
+10:54:33 :: I am ok
+[task check]
+stdout match <hello> True
 ```
