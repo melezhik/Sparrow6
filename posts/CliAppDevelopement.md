@@ -61,4 +61,14 @@ fi
 s6 --task-run .@who=Sparrow,ok
 ```
 
+## Task checks
 
+**nano task.check**
+```
+# the script should print "hello"
+hello
+```
+
+```bash
+s6 --task-run .@who=Sparrow,ok
+```
