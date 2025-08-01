@@ -201,5 +201,5 @@ stdout match <hello> True
 
 # Conclusion
 
-Sparrow is a lightweight automation framework could be use as drop-in replacement to Ansible or other frameworks suffering from complexity and extra abstraction layers.
-Sparrow could be an efficient glue allowing people use their preferable scripting languages (Bash/Perl/Python) while adding useful features via SDK - configuration, testing, distributing
+Sparrow is a lightweight automation framework that could be used as drop-in replacement to Ansible or other frameworks suffering from complexity and extra abstraction layers.
+Sparrow could be an efficient glue allowing people use their preferable scripting languages (Bash/Perl/Python) while adding useful features via Sparrow SDK - scripts configuration, testing, distribution
