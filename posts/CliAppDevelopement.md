@@ -156,7 +156,7 @@ git checkout git@github.com:melezhik/sparrow-plugins.git
 ```
 
 
-Once task code is located in machine with Sparrow repository, upload it
+3. Once task code is located in machine with Sparrow repository, upload it
 to a repository:
 
 ```
@@ -165,7 +165,7 @@ s6 --upload
 s6 --index-update
 ```
 
-Then to use the plugin, on any machine with Sparrow installed:
+4. To use the plugin, on any machine with Sparrow installed:
 
 ```bash
 s6 --index-update
@@ -173,20 +173,18 @@ s6 --search hello
 ```
 
 Output
-
 ```
 10:53:48 :: [repository] - search plugins
 hello ... Nil ... 0.0.1
 ```
 
-The run the plugin
+To run the plugin:
 
 ```bash
 s6 --plg-run hello@who=CLI,ok
 ```
 
 Output
-
 ```
 10:54:32 :: [task] - run plg hello@who=CLI,ok
 10:54:32 :: [task] - run [hello], thing: hello@who=CLI,ok
