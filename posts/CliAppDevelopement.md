@@ -22,6 +22,15 @@ echo "hello world"
 s6 --task-run .
 ```
 
+Output
+```
+0:44:01 :: [sparrowtask] - run sparrow task .
+10:44:01 :: [sparrowtask] - run [.], thing: .
+[task run: task.bash - .]
+[task stdout]
+10:44:01 :: hello world
+```
+
 ## Pass parameters
 
 **nano `task.bash`**
