@@ -126,6 +126,17 @@ stdout match <hello> True
   "category": "demo, Bash"
 }
 ```
+Given the code gets copied into Sparrow repository machine, just:
+
+```bash
+ssh sparrow-repository-host
+git checkout git@github.com:melezhik/sparrow-plugins.git
+cd sparrow-plugins/hello
+s6 --upload
+s6 --index-update
+```
+
+Then to use the plugin, on any machine with sparrow installed:
 
 ```bash
 s6 --index-update
