@@ -101,8 +101,19 @@ hello
 s6 --task-run .@who=Sparrow,ok
 ```
 
-## Make it a plugin
+Output
+```
+10:47:16 :: [sparrowtask] - run sparrow task .@who=Sparrow,ok
+10:47:16 :: [sparrowtask] - run [.], thing: .@who=Sparrow,ok
+[task run: task.bash - .]
+[task stdout]
+10:47:18 :: hello Sparrow
+10:47:18 :: I am ok
+[task check]
+stdout match <hello> True
+```
 
+## Make it a plugin
 
 **nano sparrow.json**
 
