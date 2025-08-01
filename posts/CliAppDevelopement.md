@@ -31,7 +31,7 @@ echo "hello $who"
 ```
 
 ```bash
-s6 --task-run @who=Sparrow
+s6 --task-run .@who=Sparrow
 ```
 
 ## Default parameters
@@ -55,6 +55,10 @@ if [[ $ok = "True" ]]; then
 else
   echo "What's the matter?"
 fi
+```
+
+```bash
+s6 --task-run .@who=Sparrow,ok
 ```
 
 
