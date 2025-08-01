@@ -1,8 +1,10 @@
 # Description
 
-CLI utils development using Bash and Sparrow
+Quick start tutorial on Sparrow automation framework. How to quicky develop CLI utils using Bash and Sparrow.
 
 # Install Sparrow
+
+On Alpine Linux Sparrow gets installed as apk package, on other Linuxes use `zef install Sparrow6` method, using [zef](https://github.com/ugexe/zef) package manager.
 
 ```bash
 sudo apk add raku-sparrow6
@@ -11,10 +13,14 @@ s6 --version
 
 # Create the very first script
 
+In Sparrow scripts are called tasks. To write task on Bash, just create task.bash file with some Bash code in it:
+
 **nano `task.bash`**
 ```bash
 echo "hello world"
 ```
+
+You don't run scripts directly, you use s6 - Sparrow cli to run tasks:
 
 # Run script
 
@@ -32,6 +38,8 @@ Output
 ```
 
 ## Pass parameters
+
+To pass some parameters to task just use `config()` function with task.bash: 
 
 **nano `task.bash`**
 ```bash
@@ -54,12 +62,16 @@ Output
 
 ## Default parameters
 
+Parameters could have default values in case no values provided via cli, just creat config.yaml with some default parameters in it:
+
 **nano config.yaml**
 ```yaml
 who: Bash
 ```
 
 ## Pass flags
+
+Parameters could be integers, strings or booleans - aka flags, to pass boolean True parameter, just don't provide any value via cli call (see bellow):
 
 **nano `task.bash`**
 ```bash
@@ -91,6 +103,9 @@ Output
 
 ## Task checks
 
+[Task checks](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md) is powerfull self testing mechanism allowing validate tasks outout, just create task.check file with some check rules inside, rules could be plain strings
+or Raku regular expressions or other powerfull expressions not covered in this simple example 
+ 
 **nano task.check**
 ```
 # the script should print "hello"
@@ -115,6 +130,12 @@ stdout match <hello> True
 
 ## Make it a plugin
 
+To install task on other server, one need to wrap task into sparrow plugin. Sparrow [plugins](https://github.com/melezhik/Sparrow6/blob/master/documentation/plugins.md) mechanism allow distrubute tasks over http/rsync/ftp API
+through so called [repositories](https://github.com/melezhik/Sparrow6/blob/master/documentation/repository.md). Follwing an example of converting task.bash into Sparrow plugin
+
+
+1. Create sparrow.json file with plugin meta data
+
 **nano sparrow.json**
 
 ```json
@@ -126,17 +147,25 @@ stdout match <hello> True
   "category": "demo, Bash"
 }
 ```
-Given the code gets copied into Sparrow repository machine, just:
 
+2. Copy task code to some git repostiry and check it out on machine where Sparrow repositiry located
+ 
 ```bash
 ssh sparrow-repository-host
 git checkout git@github.com:melezhik/sparrow-plugins.git
+```
+
+
+Once task code is located in machine with Sparrow repository, upload it
+to a repository:
+
+```
 cd sparrow-plugins/hello
 s6 --upload
 s6 --index-update
 ```
 
-Then to use the plugin, on any machine with sparrow installed:
+Then to use the plugin, on any machine with Sparrow installed:
 
 ```bash
 s6 --index-update
