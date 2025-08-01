@@ -79,6 +79,16 @@ fi
 s6 --task-run .@who=Sparrow,ok
 ```
 
+Output
+```
+10:45:50 :: [sparrowtask] - run sparrow task .@who=Sparrow,ok
+10:45:50 :: [sparrowtask] - run [.], thing: .@who=Sparrow,ok
+[task run: task.bash - .]
+[task stdout]
+10:45:51 :: hello Sparrow
+10:45:51 :: I am ok
+```
+
 ## Task checks
 
 **nano task.check**
