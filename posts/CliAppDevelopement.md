@@ -43,6 +43,15 @@ echo "hello $who"
 s6 --task-run .@who=Sparrow
 ```
 
+Output
+```
+10:44:53 :: [sparrowtask] - run sparrow task .@who=Sparrow
+10:44:53 :: [sparrowtask] - run [.], thing: .@who=Sparrow
+[task run: task.bash - .]
+[task stdout]
+10:44:54 :: hello Sparrow
+```
+
 ## Default parameters
 
 **nano config.yaml**
