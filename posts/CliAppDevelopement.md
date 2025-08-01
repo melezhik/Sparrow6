@@ -1,6 +1,6 @@
 # Description
 
-Quick start tutorial on Sparrow automation framework. How to quickly develop CLI utils using Bash and Sparrow.
+Quick start tutorial on [Sparrow](https://sparrowhub.io) automation framework. How to quickly develop CLI utils using Bash and Sparrow.
 
 # Install Sparrow
 
