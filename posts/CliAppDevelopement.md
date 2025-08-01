@@ -72,3 +72,27 @@ hello
 ```bash
 s6 --task-run .@who=Sparrow,ok
 ```
+
+## Make it a plugin
+
+
+**nano sparrow.json**
+
+```json
+{
+  "name" : "hello",
+  "description" : "Hello Plugin",
+  "version" : "0.0.1",
+  "url" : "https://github.com/melezhik/sparrow-plugins/tree/master/hello",
+  "category": "demo, Bash"
+}
+```
+
+```bash
+s6 --index-update
+s6 --search hello
+```
+
+```bash
+s6 --plg-run hello@who=CLI,ok
+```
