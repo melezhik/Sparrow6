@@ -5,6 +5,7 @@ unit module Sparrow6::Common::Config;
 my %config;
 my $os;
 
+use Hash::Merge;
 
 sub config() is export {
 
@@ -21,8 +22,8 @@ sub config() is export {
 
 }
 
-sub set-config(%c) is export {
-  %config = %c;
+sub set-config(%c,%common = %()) is export {
+  %config = merge-hash %c, %common, :!positional-append;
 }
 
 sub os() is export {

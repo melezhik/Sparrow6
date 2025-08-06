@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    config() now accepts
+    second optional parameter
+    allowing common environments
+    for clients like
+    Tomtit/Tomty
+
 0.0.75 2025-07-28T11:50:00Z
 
     Always use wget for
