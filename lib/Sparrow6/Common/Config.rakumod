@@ -22,8 +22,8 @@ sub config() is export {
 
 }
 
-sub set-config(%c,%common = %()) is export {
-  %config = merge-hash %c, %common, :!positional-append;
+sub set-config(%c, %common = %()) is export {
+  %config = merge-hash %common, %c, :!positional-append;
 }
 
 sub os() is export {
