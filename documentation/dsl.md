@@ -55,8 +55,8 @@ Examples:
     group-create 'sparrows'; # create group `sparrows'
     group-delete 'sparrows'; # delete group `sparrows'
     group 'sparrows'; # short form of group create
-    group 'sparrows', %(action => 'create'); # hash parameters form of group create
-    group 'sparrows', %(action => 'delete'); # hash parameters form of group delete
+    group 'sparrows', %(:action<create>); # add additional paramaters
+    my $s = group-exists 'sparrows'; say $s<exists> # check if group exists
 
 ## Packages
 

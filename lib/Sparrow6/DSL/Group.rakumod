@@ -4,46 +4,44 @@ unit module Sparrow6::DSL::Group;
 
 use Sparrow6::DSL::Common;
 
-sub group-create ( $group_id ) is export {
+sub group-create ( $name ) is export {
 
-    task-run  %(
-      task => "create group $group_id",
-      plugin => 'group',
-      parameters => %(
-        name        => $group_id,
-        action      => 'create',
-      )
-    );
+  task-run "create group $name", "group", %(
+      :$name,
+      :action<create>,
+  );
 
 }
 
-multi sub group ( $group_id, %args? ) is export {
+multi sub group ( $name, %args ) is export {
 
-    my $action = %args<action>;
+    my %params = %args; 
 
-    task-run  %(
-      task => "$action group $group_id",
-      plugin => 'group',
-      parameters => %(
-        name        => $group_id,
-        action      => $action,
-      )
-    );
+    %params<action> = "create" unless %params<action>:exists;
+    %params<name> = $name;
+
+    task-run "create group $name", "group", %params;
 
 }
 
-multi sub group ( $group_id )  is export { group-create $group_id }
+multi sub group ( $name )  is export { group-create $name }
 
-sub group-delete ( $group_id ) is export {
+sub group-delete ( $name ) is export {
 
-    task-run  %(
-      task => "delete group $group_id",
-      plugin => 'group',
-      parameters => %(
-        name        => $group_id,
-        action      => 'delete',
-      )
-    );
+  task-run "delete group $name", "group", %(
+      :$name,
+      :action<delete>,
+  );
 
 }
 
+sub group-exists ( $name ) is export {
+
+  my $s = task-run "check if group $name exists", "group", %(
+      :$name,
+      :action<exists>,
+  );
+
+  return $s;
+  
+}
