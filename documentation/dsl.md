@@ -36,12 +36,10 @@ Following a list of DSL functions and specifications.
 
 Examples:
 
-
-    user-create 'alexey'; # create user `alexey'
-    user-delete 'alexey'; # delete user `alexey'
+    user-create 'alexey'; # create user 'alexey'
+    user-delete 'alexey'; # delete user 'alexey'
     user 'alexey'; # short form of user create
-    user 'alexey', %(action => 'create'); # hash parameters form of user create
-    user 'alexey', %(action => 'delete'); # hash parameters form of user delete
+    user 'alexey', %(:managehome<no>,:password<secRet>,:groups<stuff>); # pass additional parameters
 
 ## User groups
 

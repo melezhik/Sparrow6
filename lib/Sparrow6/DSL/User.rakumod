@@ -4,46 +4,34 @@ unit module Sparrow6::DSL::User;
 
 use Sparrow6::DSL::Common;
 
-sub user-create ( $user_id ) is export {
+sub user-create ( $name ) is export {
 
-    task-run  %(
-      task => "create user $user_id",
-      plugin => 'user',
-      parameters => %(
-        name        => $user_id,
-        action      => 'create',
-      )
-    );
+  task-run "create user $name", "user", %(
+      :$name,
+      :action<create>,
+  );
 
 }
 
-multi sub user ( $user_id, %args ) is export {
+multi sub user ( $name, %args ) is export {
 
-    my $action = %args<action>;
+    my %params = %args; 
 
-    task-run  %(
-      task => "$action user $user_id",
-      plugin => 'user',
-      parameters => %(
-        name        => $user_id,
-        action      => $action,
-      )
-    );
+    %params<action> = "create" unless %params<action>:exists;
+    %params<name> = $name;
+
+    task-run "create user $name", "user", %params;
 
 }
 
-multi sub user ( $user_id )  is export { user-create $user_id }
+multi sub user ( $name )  is export { user-create $name }
 
-sub user-delete ( $user_id ) is export {
+sub user-delete ( $name ) is export {
 
-    task-run  %(
-      task => "delete user $user_id",
-      plugin => 'user',
-      parameters => %(
-        name        => $user_id,
-        action      => 'delete',
-      )
-    );
+  task-run "delete user $name", "user", %(
+      :$name,
+      :action<delete>,
+  );
 
 }
 
