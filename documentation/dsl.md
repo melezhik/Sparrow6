@@ -48,6 +48,7 @@ Examples:
 | group-create | create group | `group-create($name)`| [group](https://github.com/melezhik/sparrow-plugins/tree/master/group) | 
 | group-delete | delete group | `group-delete($name)`| [group](https://github.com/melezhik/sparrow-plugins/tree/master/group) |
 | group        | create/delete group | `group($name,[%args])`| [group](https://github.com/melezhik/sparrow-plugins/tree/master/group) |
+| group-exists        | check if group exists | `group-exists($name)`| [group](https://github.com/melezhik/sparrow-plugins/tree/master/group) |
 
 Examples:
 
