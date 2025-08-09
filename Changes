@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.77 2025-08-09T19:50:00Z
+
+    DSL - user/group functions
+    minor bugfixing and 
+    refactoring
+
 0.0.76 2025-08-06T14:20:00Z
 
     set-config() now accepts
