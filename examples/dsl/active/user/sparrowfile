@@ -1,7 +1,16 @@
-#!perl6
+#!raku
 
 user-delete 'nuthatch';
 user-create 'nuthatch';
 user-delete 'nuthatch';
 user 'nuthatch';
 user 'nuthatch' , %( action => 'delete' );
+
+say "===";
+say "new api";
+
+user-create 'alexey'; # create user 'alexey'
+user-delete 'alexey'; # delete user 'alexey'
+group "stuff";
+#user 'alexey'; # short form of user create
+user 'alexey', %(:managehome<no>,:password<secRet>,:groups<stuff>); # pass additional parameters
