@@ -159,7 +159,13 @@ Examples:
     
 ### Systemd
 
-Sparrowdo provides limited and poorly tested API for Systemd scripts. Here is example how you can  use it:
+Create systemd units for services
+
+| function | description | usage | Sparrow6 plugin |
+| -------- | ----------- | ----- | --------------- |
+| systemd-service | create systemd unit for service | `systemd-service($name,%params)`| [systemd-service-unit](https://github.com/melezhik/sparrow-plugins/tree/master/systemd-service-unit) | 
+
+Example:
 
     user "foo";
 
@@ -173,7 +179,7 @@ Sparrowdo provides limited and poorly tested API for Systemd scripts. Here is ex
     # start service
     service-start "long-dream";
 
-Basically it's `systemd-service` function with parameters:
+`systemd-service` parameters:
 
 * `name` - service name
 * `user` - sets the user to own service process
@@ -181,7 +187,6 @@ Basically it's `systemd-service` function with parameters:
 * `workdir` - sets working directory
 
 All the parameters are required.
-
 
 ## Directories
 

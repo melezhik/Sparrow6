@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Switch systemd-service to
+    systemd-service-unit
+    plugin
+
 0.0.77 2025-08-09T19:50:00Z
 
     DSL - user/group functions

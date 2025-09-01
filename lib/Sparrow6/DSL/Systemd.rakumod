@@ -11,32 +11,21 @@ sub systemd-service( $name, %opts? ) is export {
 
     my %params = %opts;
 
-    my $templ = "[Unit]
-Description=[% name %]
-After=network.target
+    my $s = task-run "systemd unit for $name", "systemd-service-unit", %(
+      :name($name),
+      :description(%opts<description> || "$name service"),
+      :type(%opts<type>||"simple"),
+      :exec_start(%opts<command>||""),
+      :restart(%opts<restart>||"failure"),
+      :workdir(%opts<workdir>||""),
+      :user(%opts<user>||""),
+      :environment(%opts<environment>:exists ?? %opts<environment> !! ""),
+      :dry_run(%opts<dry-run>:exists ?? %opts<dry-run> !! False),
+    ); 
 
-[Service]
-Type=simple
-User=[% user %]
-WorkingDirectory=[% workdir %]
-ExecStart=[% command %]
-Restart=on-failure
+  say "unit for $name changed" if $s<changed>;
 
-[Install]
-WantedBy=multi-user.target
-";
-
-  %opts<name> = $name;
-
-  my $path = %opts<dry-run> ?? "/tmp/out.service" !! "/etc/systemd/system/$name.service";
-  my %st = template6 $path, %(
-    content => $templ,
-    vars => %opts,
-  );
-
-  say "$path changed" if %st<status> != 0;
-
-  if %st<status> != 0 && ! %opts<dry-run> {
+  if $s<changed> && ! %opts<dry-run> {
       bash "systemctl daemon-reload"
   }  
 }
