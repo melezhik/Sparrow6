@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 if  os() ~~ / ubuntu | debian  / {
 

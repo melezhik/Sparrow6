@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 package-install %(
   centos => [ "mc" ],

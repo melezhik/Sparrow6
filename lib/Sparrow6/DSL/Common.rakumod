@@ -127,6 +127,16 @@ sub parse-tags ($tags,:$array = False) is export(:DEFAULT) {
       my $val = "$1".
         subst(/"___comma___"/,",",:g).
         subst(/"___eq___"/,"=",:g);
+      # subsitute anything like
+      # .env[a]
+      # by %*ENV<a>  
+      my @env;
+      for $val ~~ m:g/".env[" (\w+) "]"/ -> $e {
+        push @env, "{$e[0]}";
+      }
+      for @env -> $e {
+        $val.=subst(".env[$e]",%*ENV{$e},:g);
+      }
       if %tags{$var} && $array { # array support 
         if %tags{$var}.isa(List) {
            say "tag>> append to list $var.append[$val]" if %*ENV<SP6_TAG_DEBUG>;

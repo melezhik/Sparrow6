@@ -2,7 +2,7 @@
 
 Sparrow6 environmental variables list.
 
-- SP6_REPO
+## - SP6_REPO
 
 Sets Sparrow6 Repository url.
 
@@ -12,7 +12,7 @@ For example:
 
     SP6_REPO=http://192.168.0.1
 
-- SP6_TASK_ROOT
+## - SP6_TASK_ROOT
 
 Set root directory for local tasks
 
@@ -24,27 +24,27 @@ Once is set Sparrow6 will look tasks locations in `SP6_TASK_ROOT`, not just in `
 
     task-run "birds" # Will look in ./birds,  then in ~/tasks/birds
 
-- SP6_DEBUG
+## - SP6_DEBUG
 
 Enable Sparrow6 debugging ( basic info )
 
-- SP6_DEBUG_TASK_CHECK
+## - SP6_DEBUG_TASK_CHECK
 
 Enable Sparrow6 task checks debugging
 
-- SP6_DEBUG_STREAM
+## - SP6_DEBUG_STREAM
 
 Enable Sparrow6 streams debugging
 
-- SP6_PROFILE
+## - SP6_PROFILE
 
 Enable Sparrow6 profiler
 
-- SP6_KEEP_CACHE
+## - SP6_KEEP_CACHE
 
 Don't remove Sparrow6 cache upon task finish. Useful when  debugging
 
-- SP6_CONFIG
+## - SP6_CONFIG
 
 Set path to configuration file.
 
@@ -52,25 +52,24 @@ For example:
 
     SP6_CONFIG=config.raku
 
-- SP6_CARTON_OFF
+## - SP6_CARTON_OFF
 
 Don't use Carton to install CPAN dependencies, useful when one
 installs CPAN modules though others means
 
-- SP6_GO_NO_COMPILE
+## - SP6_GO_NO_COMPILE
 
 Don't compile golang tasks. Useful when has prebuilt go tasks binaries (task.go.bin/hook.go.bin)
 
-- SP6_TAR_PATH
+## - SP6_TAR_PATH
 
 Path to tar program. For example, for macos users:
 
     SP6_TAR_PATH=~/homebrew/bin/gtar
 
-- SP6_TAGS
+## - SP6_TAGS
 
-Tags for hosts. Mostly used in Sparrowdo scenarios, to separate one hosts from another
-or supply scenarios with variables.
+Tags for hosts or Sparrow/Sparrowdo scenarios. Mostly used in Sparrowdo scenarios, to separate one hosts from another or pass variables via cli.
 
 For example:
 
@@ -83,29 +82,30 @@ So in sparrow scenario:
       task-run "harden postgresql config", "postgresql-strict-configuration";
     }
 
-Tags might also contain values, representing 'key/value' pairs:
+Tags might also contain values, representing 'key/value' pairs, while no values parameters represent boolean values:
 
-    SP6_TAGS=nginx_port=443,mode=production
+    SP6_TAGS=nginx_port=443,mode=production,ssl
 
 Sparrow scenario:
 
-    say tags()<nginx_port>;
-    say tags()<mode>;
+    say tags()<nginx_port>; # 443
+    say tags()<mode>; # production
+    say tags()<ssl>; # True
 
 
-- SP6_LOG_NO_TIMESTAMPS
+## - SP6_LOG_NO_TIMESTAMPS
 
 Don't add timestamps to Sparrow reports
 
-- SP6_FORMAT_TERSE
+## - SP6_FORMAT_TERSE
 
 Enable terse format ( only scripts output ) in Sparrow reports
 
-- SP6_FORMAT_COLOR
+## - SP6_FORMAT_COLOR
 
 Enable colors in Sparrow reports
 
-- SP6_DUMP_TASK_CODE
+## - SP6_DUMP_TASK_CODE
 
 Dump code of Sparrow tasks automatically  ( useful for r3 and other test tools )
 

@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 {
   name  => 'Alexey'

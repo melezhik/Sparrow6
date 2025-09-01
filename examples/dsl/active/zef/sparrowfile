@@ -1,4 +1,4 @@
-#!perl6
+#!raku
 
 # install Foo::Bar module
 my $user = %*ENV<USER>;
