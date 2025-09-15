@@ -20,8 +20,8 @@ The example is taken from Nextflow web site as is -
 > In the above example we define a simple pipeline with two processes.
 > The first process executes a Perl script ... the second process will execute a Python script
 
-Apparently two scripts exchanges data between each other via so called Nextflow channel. The first Perl script produces
-array of rational number, the second one Python makes some average calculation upon them.
+Apparently two scripts exchange data with each other via so called Nextflow channel. The first Perl script produces
+array of rational numbers, the second one Python makes some average calculation upon them.
 
 In Sparky, Sparrow world it all boils down to this simple pipeline code:
 
