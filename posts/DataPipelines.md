@@ -150,5 +150,5 @@ This is very simple POC, further ideas not shown, but definitely possible with S
 
 - Runs different steps of a data flow on different Sparky nodes (cluster mode) for scaling and parallelization
 - Orchestrate flows from single scenario in various fashion ( wait child jobs, recursive jobs, choreography patterns, etc )
-- Distribute compuation tasks and scripts via Sparrow plugin mechanism
+- Distribute compuation tasks and scripts via Sparrow plugins mechanism
  
