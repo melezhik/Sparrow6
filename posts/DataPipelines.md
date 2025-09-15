@@ -141,7 +141,7 @@ inlined into main pipeline code and thus are easier to maintain and debug, becau
 
 ## UI
 
-As bonus all pipeline steps execution are visible via UI reports, thanks to nice and clean Sparky UI:
+As a bonus all pipeline steps execution are visible via UI reports, thanks to nice and clean Sparky UI:
 
 ![child-job.jpeg](https://github.com/melezhik/mixing-script-langauges/blob/main/screenshots/main-job.jpeg)
 
