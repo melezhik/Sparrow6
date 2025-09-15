@@ -137,6 +137,9 @@ print("avg: %s - %s" % ( x/lines, y/lines ))
 passing input data and returning output data is already implemented for example), unlike in Nextflow scripts are not
 inlined into main pipeline code and thus are easier to maintain and debug, because data flow logic and scripts logic is separated.
 
+Tasks could be run without pipelines and debugged locally.
+
+
 * Also unlike in Nextflow, in Sparky there is no channel mechanism, data gets passed to or from scripts via normal Raku function calls (task-run), make code more readable and easier to debug. When data needs to be passed across jobs (and possible across different Sparky instances Sparky Job Api protocol ensures that via normal http transport).
 
 ## UI
