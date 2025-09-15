@@ -151,7 +151,7 @@ As bonus all pipeline steps execution are visible via UI reports, thanks to nice
 
 This is very simple POC, further ideas not shown, but definitely possible with Sparky for data pipelines:
 
-- Runs different steps of a data flow on different Sparky nodes (cluster mode) for scaling and parallelization
+- Run different steps of data flow on different Sparky nodes (cluster mode) for scaling and parallelization
 - Orchestrate flows from single scenario in various fashion ( wait child jobs, recursive jobs, choreography patterns, etc )
 - Distribute compuation tasks and scripts via Sparrow plugins mechanism
  
