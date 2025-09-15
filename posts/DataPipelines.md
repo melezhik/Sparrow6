@@ -22,7 +22,7 @@ The example is taken from Nextflow web site as is -
 The first process executes a Perl script ... the second process will execute a Python script"
 
 Apparently two scripts exchanges data between each other via so called Nextflow channel. The first Perl script produces
-array of real number, the second one Python makes some average calculation upon them.
+array of rational number, the second one Python makes some average calculation upon them.
 
 In Sparky, Sparrow world it all boils down to this simple pipeline code:
 
