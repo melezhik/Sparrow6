@@ -18,8 +18,7 @@ The example is taken from Nextflow web site as is -
 > With Nextflow, you are not limited to Bash scripts -- you can use any scripting language! 
 > In other words, for each process you can use the language that best fits the specific task or that you simply prefer.
 > In the above example we define a simple pipeline with two processes.
-
-The first process executes a Perl script ... the second process will execute a Python script"
+> The first process executes a Perl script ... the second process will execute a Python script
 
 Apparently two scripts exchanges data between each other via so called Nextflow channel. The first Perl script produces
 array of rational number, the second one Python makes some average calculation upon them.
