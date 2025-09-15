@@ -132,6 +132,8 @@ for line in config()['lines']:
 print("avg: %s - %s" % ( x/lines, y/lines ))
 ```
 
+## Nextflow vs Sparky
+
 Because Sparrow provides all useful primitives to work with tasks, tasks development is extremely convenient (
 passing input data and returning output data is already implemented for example), unlike in Nextflow scripts are not
 inlined into main pipeline code and in thus are easier to maintain, because data flow logic and scripts logic is separated.
