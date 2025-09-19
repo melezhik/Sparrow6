@@ -124,8 +124,8 @@ task-run "make", "gitlab-run-pipeline", %(
 
 # Conclusion
 
-Tomtit has more cool features not covered here, but this was a very short and quick start introduction with
-intention to give you a rough idea what Tomtit is.
+Tomtit has more cool features not covered here, this is just a short quick start introduction with
+intention to give you some rough ideas what Tomtit is.
 
 ---
 
