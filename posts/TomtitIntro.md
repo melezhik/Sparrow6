@@ -1,0 +1,143 @@
+# Tomtit - simple cli task runner with a lot of plugins
+
+Tomtit is cli task runner when you need to run repetitive tasks / tools around your project. It's similar to make, but with
+but with more generic approach, not exactly tied to build tasks only
+
+Here is a quick start
+
+
+# Installation
+
+```bash
+zef install Tomtit --/test
+```
+
+# Create hello world task
+
+Once Tomtit is installed, there is `tom` cli to create, run tasks:
+
+```bash
+tom --edit build 
+```
+
+```raku
+#!raku
+task-run "tasks/make";
+```
+
+This step only create a Raku wrapper for some `tasks/make` task. As we going to write it on Bash all we need to do is
+to create some Bash script that is going to be invoked from Raku as normal Raku function "task-run". We don't neccesserialy need to
+do that way, but sometime it's just more convenient to separate Bash and Raku logic, and Tomtit allows to that
+effectively:
+
+```bash
+mkdir -p tasks/make
+nano tasks/make/task.bash
+```
+
+```bash
+!bash
+make
+make test
+sudo make install
+```
+
+Now we can drop some Makefile to cwd, and run make task as following:
+
+
+```bash
+tom make
+```
+
+# Tasks parameters
+
+Tomtit provides a nice way to pass parameters to tasks, by using environments. Under the hood environmens are plain Raku HashMap objects 
+that get loaded into task context allowing tasks configurations depending on `--env $env_name` cli parameter:
+
+
+```bash
+tom --env-edit prod
+```
+
+```raku
+#!raku
+%(
+  :prod
+);
+```
+
+And then with sligh modifircation of Raku scenario and Bash task code:
+
+```raku
+#!raku
+my $prod = config()<prod>;
+task-run "tasks/make", %(
+  :$prod
+);
+```
+
+```bash
+#!bash
+
+prod=$(config prod)
+
+if test "$prod" = True; then
+  make --mode=prod
+else
+  make
+fi
+sudo make install 
+```
+
+We can run task with production mode enabled:
+
+```bash
+tom --env=prod make
+```
+
+To set default env just use `--set-env` flag:
+
+```bash
+tom --env-set prod
+```
+
+# Plugins
+
+The power of Tomtit is a lot of included plugins, to use plugins, just export plugin repository variable:
+
+```bash
+export SP6_REPO=http://sparrowhub.io/repo
+```
+
+And then add plugin as a function into Tomtit scenario. For example instead of running local make we want
+to build project remotely on gitlab CI using plugin:
+
+```raku
+#!raku
+my $prod = config()<prod>,
+task-run "make", "gitlab-run-pipeline", %(
+  :1001_project,
+  :gitlab_api<https://git.company.com/api/v4/>,
+  variables => %(
+    :$prod,
+  )
+);
+```
+
+# Conclusion
+
+Tomtit has more cool features not covered here, but this was a very short and quick start introduction with
+intention to give you a rough idea what Tomtit is.
+
+Please post your comments and feedback
+
+
+
+
+
+
+
+
+
+
+
