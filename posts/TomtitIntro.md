@@ -16,7 +16,7 @@ zef install Tomtit --/test
 Once Tomtit is installed, there is `tom` cli to create, run tasks:
 
 ```bash
-tom --edit build 
+tom --edit make
 ```
 
 ```raku
