@@ -1,6 +1,6 @@
 # Tomtit - simple cli task runner with a lot of plugins
 
-Tomtit is cli task runner when you need to run repetitive tasks / tools around your project. It's similar to make, but with
+[Tomtit](https://github.com/melezhik/Tomtit) is a cli task runner when you need to run repetitive tasks / tools around your project. It's similar to make, but with
 but with more generic approach, not exactly tied to build tasks only
 
 Here is a quick start
@@ -102,7 +102,7 @@ tom --env-set prod
 
 # Plugins
 
-The power of Tomtit is a lot of included [plugins](https://sparrowhub.io/plugins), to use plugins, just export plugin repository variable:
+The power of Tomtit is a lot of included [plugins](https://sparrowhub.io/search?q=all), to use plugins, just export plugin repository variable:
 
 ```bash
 export SP6_REPO=http://sparrowhub.io/repo
