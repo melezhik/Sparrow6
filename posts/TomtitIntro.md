@@ -1,7 +1,6 @@
 # Tomtit - simple cli task runner with a lot of plugins
 
-[Tomtit](https://github.com/melezhik/Tomtit) is a cli task runner when you need to run repetitive tasks / tools around your project. It's similar to make, but with
-but with more generic approach, not exactly tied to build tasks only
+[Tomtit](https://github.com/melezhik/Tomtit) is a cli task runner when you need to run repetitive tasks / tools around your project. It's similar to make, but with more generic approach, not exactly tied to build tasks only
 
 Here is a quick start
 
