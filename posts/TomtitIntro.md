@@ -128,4 +128,6 @@ task-run "make", "gitlab-run-pipeline", %(
 Tomtit has more cool features not covered here, but this was a very short and quick start introduction with
 intention to give you a rough idea what Tomtit is.
 
+---
+
 Please post your comments and feedback
