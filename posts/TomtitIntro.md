@@ -34,7 +34,7 @@ nano tasks/make/task.bash
 ```
 
 ```bash
-!bash
+#!bash
 make
 make test
 sudo make install
