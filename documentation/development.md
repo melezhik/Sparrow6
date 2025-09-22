@@ -245,7 +245,7 @@ For example:
     | Powershell | run_task(STRING,HASH)                        |
     +------------+----------------------------------------------+
 
-(*) You need to use `from sparrow6lib import *` to import `run_task` function.
+(*) You need to use `from sparrow6lib import *` to import `run_task` function in Python task.
 
 `task_var` function signatures for Sparrow6 supported languages:
 
@@ -261,7 +261,7 @@ For example:
     | Powershell       | task_var(STRING)                               |
     +------------------+------------------------------------------------+
 
-(*) You need to use  `from sparrow6lib import *` to import `task_var` function.
+(*) You need to use  `from sparrow6lib import *` to import `task_var` function in Python task.
 
 In Bash you can use alternative notation to access subtask parameters:
 
@@ -343,7 +343,7 @@ If hook send an output through a `set_stdout` function, and _the same folder_ ta
     | Powershell  | set_stdout(STRING)    |
     +-------------+-----------------------+
 
-(*) You need to `from sparrow6lib import *` to import set_stdout function.
+(*) You need to `from sparrow6lib import *` to import set_stdout function in Python task.
 
 Hook might not have the same folder tasks, in this case it's just a hook that is executed.
 
@@ -366,7 +366,6 @@ Following is the list of helper functions:
 * `config()` - task configuration object
 
 * `os()` - mnemonic name of underlying operation system
-
 
 Function usage specific for Bash and Python:
 
@@ -431,6 +430,8 @@ To prevent the task runner from stop use  `ignore_error` function inside a task 
     | Ruby        | ignore_error()    |
     | Powershell  | ignore_error()    |
     +-------------+-------------------+
+
+(*) You need to use `from sparrow6lib import *` to import `ignore_error` function in Python task.
 
 # Task states
 
@@ -501,6 +502,8 @@ And this is how task state is returned and used in a Raku API:
     | Powershell  | get_state()       |
     +-------------+-------------------+
 
+(*) You need to use `from sparrow6lib import *` to import `get_state` function in Python task.
+
 `update_state` function signatures for Sparrow6 supported languages:
 
     +-------------+-----------------------------+
@@ -508,11 +511,21 @@ And this is how task state is returned and used in a Raku API:
     +-------------+-----------------------------+
     | Raku        | update_state(array|hash)    |
     | Perl        | update_state(array|hash)    |
-    | Bash        | not supported               |
-    | Python(*)   | update_state(array|hash)    |
+    | Bash(*)     | update_state(key,value)     |
+    | Python(**)  | update_state(array|hash)    |
     | Ruby        | update_state(array|hash)    |
     | Powershell  | update_state(array|hash)    |
     +-------------+-----------------------------+
+
+
+(*) Bash has a limited key/value support only:
+
+```bash
+#!bash
+update_state "cnt" 100
+```
+
+(**) You need to use `from sparrow6lib import *` to import `update_state` function in Python task.
 
 # Language libraries
 

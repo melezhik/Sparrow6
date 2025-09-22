@@ -56,3 +56,8 @@ if test -f "${root_dir}/common.bash"; then
   source "${root_dir}/common.bash"
 fi
 
+function update_state {
+
+   echo "{\"$1\": \"$2\"}" > $cache_root_dir/state.json
+
+}
