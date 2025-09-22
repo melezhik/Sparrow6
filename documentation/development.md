@@ -82,11 +82,11 @@ This table describes `file name -> language` mapping:
 
 # Task folders structure
 
-By default task root folder is a current working directory. 
+`task-run` function or s6 cli accepts the first mandatory argument with a path to some directory.
 
-This is where Sparrow looks for a code when execute a task.
+This is where Sparrow looks for a code ( task.* file ) when executes a task.
 
-However you can organize a folders structure as you wish:
+Ypi can organize a folders structure as you wish:
 
     animals/cow/task.raku
 
@@ -100,7 +100,7 @@ However you can organize a folders structure as you wish:
 
       say "I buy milk";
 
-To run task from none default location override task path when call `task-run` function:
+For those two examples tasks are executed like:
 
      task-run "animals/cow";
      task-run "people/me";
