@@ -84,9 +84,9 @@ This table describes `file name -> language` mapping:
 
 `task-run` function or s6 cli accepts the first argument with a path to some directory.
 
-This is where Sparrow looks for a task code ( task.* file ) when executes a task.
+This is where Sparrow looks for a task code ( task.* file ) when it executes a task.
 
-Ypi can organize a folders structure as you wish:
+You can organize a folder structure as you wish:
 
     animals/cow/task.raku
 
