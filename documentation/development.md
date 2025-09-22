@@ -82,9 +82,9 @@ This table describes `file name -> language` mapping:
 
 # Task folders structure
 
-`task-run` function or s6 cli accepts the first mandatory argument with a path to some directory.
+`task-run` function or s6 cli accepts the first argument with a path to some directory.
 
-This is where Sparrow looks for a code ( task.* file ) when executes a task.
+This is where Sparrow looks for a task code ( task.* file ) when executes a task.
 
 Ypi can organize a folders structure as you wish:
 
@@ -109,6 +109,15 @@ Or through command line:
 
     $ s6 --task-run people/me
 
+If task path is not set it's defaulted to `cwd`:
+
+    task.bash
+
+        echo "I am default task";
+
+    # run task.bash from CWD
+    task-run(); 
+    
 # Task configuration
 
 To define configuration available across tasks create `config.yaml` in the root directory:
