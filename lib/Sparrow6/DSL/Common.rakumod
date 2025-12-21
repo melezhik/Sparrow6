@@ -126,6 +126,8 @@ sub parse-tags ($tags,:$array = False) is export(:DEFAULT) {
       my $var = "$0";
       my $val = "$1".
         subst(/"___comma___"/,",",:g).
+        subst(/"___nl___"/,"\n",:g).
+        subst(/"___space___"/," ",:g).
         subst(/"___eq___"/,"=",:g);
       # subsitute anything like
       # .env[a]

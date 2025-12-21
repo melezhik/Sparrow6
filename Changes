@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    parse-tags:
+    support nl/space macros
+    to handle cli args
+    parsing for Sparky jobs
+
 0.0.79 2025-09-22T16:30:00Z
 
     Add update_state
