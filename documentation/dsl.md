@@ -439,6 +439,9 @@ Examples:
     # checkout from tag
     git-scm 'https://github.com/melezhik/sparrow.git',%( branch => "tags/experimental")
 
+    # checkout from commit
+    git-scm 'https://github.com/melezhik/sparrow.git', %( branch => '715e0af172e804dad767f6b5139cb255964e27a5', :skip-pull );
+
     # enable debug
     git-scm 'https://github.com/melezhik/sparrow.git', %( to => '/tmp/foo', debug => True );
 
