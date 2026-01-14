@@ -2,6 +2,9 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    add skip-pull option
+    to git-scm
+
 0.0.80 2025-12-21T18:30:00Z
 
     parse-tags:

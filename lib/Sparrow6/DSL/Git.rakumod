@@ -39,7 +39,7 @@ multi sub git-scm ( $source, %args? ) is export {
     git checkout %args<branch>
   HERE
 
-  if %args<branch> and %args<branch>.split("/")[0] ne "tags" {
+  if %args<branch> and %args<branch>.split("/")[0] ne "tags" and ! %args<skip-pull> {
     %bash-args<description> = "git pull";
     bash qq:to/HERE/, %bash-args;
       set -e;
