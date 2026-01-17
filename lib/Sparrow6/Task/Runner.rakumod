@@ -106,7 +106,7 @@ class Api
 
       self!log("SP6_TASK_CONFIG_FROM is set, load config from it",%*ENV<SP6_TASK_CONFIG_FROM>);
 
-      self.task-config = from-json(%*ENV<SP6_TASK_CONFIG_FROM>.IO);
+      self.task-config = from-json(%*ENV<SP6_TASK_CONFIG_FROM>.IO.slurp);
 
     } elsif $.config.IO ~~ :e {
 
