@@ -36,6 +36,11 @@ Enable Sparrow6 task checks debugging
 
 Enable Sparrow6 streams debugging
 
+## - SP6_DUMP_TASK_CONFIG
+
+If enabled dump task effective
+configuration, useful when debugging
+
 ## - SP6_PROFILE
 
 Enable Sparrow6 profiler
