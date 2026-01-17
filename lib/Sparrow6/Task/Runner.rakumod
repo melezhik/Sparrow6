@@ -162,6 +162,11 @@ class Api
     $fh.close;
     self!log("task configuration json saved", "{$.cache-root-dir}/config.json");
 
+    if %*ENV<SP6_DUMP_TASK_CONFIG> {
+      say "task configuration:";
+      say "===";
+      say to-json(self.task-config);
+    }
   }
 
   method task-run() {

@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Dump task configuration
+    if SP6_DUMP_TASK_CONFIG
+    is set
+
     add skip-pull option
     to git-scm
 
