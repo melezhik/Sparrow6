@@ -41,6 +41,12 @@ Enable Sparrow6 streams debugging
 If enabled dump task effective
 configuration, useful when debugging
 
+## - SP6_TASK_CONFIG_FROM
+
+Load task configuration from JSON file
+path taken from this variable, 
+useful when debugging
+
 ## - SP6_PROFILE
 
 Enable Sparrow6 profiler

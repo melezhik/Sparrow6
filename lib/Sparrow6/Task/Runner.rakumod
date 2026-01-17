@@ -102,7 +102,13 @@ class Api
 
     self!log("cache root dir created", "$.cache-root-dir");
 
-    if $.config.IO ~~ :e {
+    if %*ENV<SP6_TASK_CONFIG_FROM> {
+
+      self!log("SP6_TASK_CONFIG_FROM is set, load config from it",%*ENV<SP6_TASK_CONFIG_FROM>);
+
+      self.task-config = from-json(%*ENV<SP6_TASK_CONFIG_FROM>.IO);
+
+    } elsif $.config.IO ~~ :e {
 
       self!log("load plugin configuration file",$.config);
       my $plugin-config = $.config ~~ / '.raku' $$/ ?? EVALFILE($.config) !! load-yaml(slurp $.config);
