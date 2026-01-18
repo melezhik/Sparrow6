@@ -264,6 +264,16 @@ class Api
 
       self!reset-cache-dir();
 
+    } elsif "$root/job.raku".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-raku-hook("$root/job.raku");
+
+      self!reset-cache-dir();
+
     } elsif "$root/hook.pl6".IO ~~ :e {
 
       self!set-cache-dir();
@@ -284,6 +294,16 @@ class Api
 
       self!reset-cache-dir();
 
+    } elsif "$root/job.pl".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-perl-hook("$root/job.pl");
+
+      self!reset-cache-dir();
+
     } elsif "$root/hook.bash".IO ~~ :e {
 
       self!set-cache-dir();
@@ -291,6 +311,16 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-bash-hook("$root/hook.bash");
+
+      self!reset-cache-dir();
+
+    } elsif "$root/job.bash".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-bash-hook("$root/job.bash");
 
       self!reset-cache-dir();
 
@@ -304,6 +334,16 @@ class Api
 
       self!reset-cache-dir();
 
+    } elsif "$root/job.go".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-bash-hook("$root/job.go");
+
+      self!reset-cache-dir();
+
     } elsif "$root/hook.rb".IO ~~ :e {
 
       self!set-cache-dir();
@@ -311,6 +351,16 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-ruby-hook("$root/hook.rb");
+
+      self!reset-cache-dir();
+
+    } elsif "$root/job.rb".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-ruby-hook("$root/job.rb");
 
       self!reset-cache-dir();
 
@@ -324,6 +374,16 @@ class Api
 
       self!reset-cache-dir();
 
+    } elsif "$root/job.py".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-python-hook("$root/job.py");
+
+      self!reset-cache-dir();
+
     } elsif "$root/hook.ps1".IO ~~ :e {
 
       self!set-cache-dir();
@@ -331,6 +391,16 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-powershell-hook("$root/hook.ps1");
+
+      self!reset-cache-dir();
+
+    } elsif "$root/job.ps1".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-powershell-hook("$root/job.ps1");
 
       self!reset-cache-dir();
 
