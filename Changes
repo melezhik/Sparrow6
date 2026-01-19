@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.81 2026-01-19T09:50:00Z
+
+    Support job.* as alias
+    for hook.*
+
     Dump task configuration
     if SP6_DUMP_TASK_CONFIG
     is set
