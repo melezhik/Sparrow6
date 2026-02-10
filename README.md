@@ -54,6 +54,7 @@ You can write underlying Sparrow tasks using following languages:
 * Python
 * Bash
 * Powershell
+* Php
 * [Golang](https://github.com/melezhik/sparrowgo)
 
 All the languages have a _unified_ Sparrow API easing script development, see Sparrow development guide.
