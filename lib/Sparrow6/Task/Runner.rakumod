@@ -17,6 +17,7 @@ use Sparrow6::Task::Runner::Helpers::Raku;
 use Sparrow6::Task::Runner::Helpers::Perl;
 use Sparrow6::Task::Runner::Helpers::Bash;
 use Sparrow6::Task::Runner::Helpers::Ruby;
+use Sparrow6::Task::Runner::Helpers::Php;
 use Sparrow6::Task::Runner::Helpers::Python;
 use Sparrow6::Task::Runner::Helpers::Powershell;
 use Sparrow6::Task::Runner::Helpers::Test;
@@ -404,6 +405,26 @@ class Api
 
       self!reset-cache-dir();
 
+    } elsif "$root/hook.php".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-php-hook("$root/hook.ps1");
+
+      self!reset-cache-dir();
+
+    } elsif "$root/job.php".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-php-hook("$root/job.ps1");
+
+      self!reset-cache-dir();
+
     }
 
     if "$root/task.raku".IO ~~ :e {
@@ -554,6 +575,26 @@ class Api
       self!save-task-vars($.cache-dir);
 
       self!run-powershell-task("$root/task.ps1");
+
+      self!run-task-check($root);
+
+      if  "$root/test.raku".IO ~~ :e  and $.do-test {
+
+        self!log("execute embeded test","$root/test.raku");
+
+        EVALFILE "$root/test.raku";
+
+      }
+
+      self!reset-cache-dir();
+
+    } elsif "$root/task.php".IO ~~ :e {
+
+      self!set-cache-dir();
+
+      self!save-task-vars($.cache-dir);
+
+      self!run-php-task("$root/task.php");
 
       self!run-task-check($root);
 

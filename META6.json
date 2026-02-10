@@ -59,6 +59,7 @@
     "Sparrow6::Task::Runner::Helpers::Powershell": "lib/Sparrow6/Task/Runner/Helpers/Powershell.rakumod",
     "Sparrow6::Task::Runner::Helpers::Python": "lib/Sparrow6/Task/Runner/Helpers/Python.rakumod",
     "Sparrow6::Task::Runner::Helpers::Ruby": "lib/Sparrow6/Task/Runner/Helpers/Ruby.rakumod",
+    "Sparrow6::Task::Runner::Helpers::Php": "lib/Sparrow6/Task/Runner/Helpers/Php.rakumod",
     "Sparrow6::Task::Runner::Helpers::Test": "lib/Sparrow6/Task/Runner/Helpers/Test.rakumod"
   },
   "resources": [
@@ -66,6 +67,7 @@
     "sparrow6lib.rakumod",
     "sparrow6lib.pm",
     "sparrow6lib.rb",
+    "sparrow6lib.php",
     "sparrow6lib.py",
     "sparrow6lib.ps1",
     "sparrow6common.rakumod",
