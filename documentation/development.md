@@ -58,7 +58,7 @@ Or as a command line:
 
     $ s6 --task-run .
 
-Sparrow supports six languages to write tasks:
+Sparrow supports eight languages to write tasks:
 
 * Raku
 * Perl
@@ -66,18 +66,22 @@ Sparrow supports six languages to write tasks:
 * Python
 * Ruby
 * Powershell
+* Golang
+* Php
 
 This table describes `file name -> language` mapping:
 
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Raku       | task.raku     |
+    | Raku       | task.raku    |
     | Perl       | task.pl      |
     | Bash       | task.bash    |
     | Python     | task.py      |
     | Ruby       | task.rb      |
     | Powershell | task.ps1     |
+    | Golang     | task.go      |
+    | Php        | task.php     |
     +------------+--------------+
 
 # Task folders structure
