@@ -2,9 +2,14 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-0.0.81 2026-01-19T09:50:00Z
+0.0.82 2026-02-10T16:50:00Z
 
     Php tasks support
+
+    Documentation
+    fixes
+
+0.0.81 2026-01-19T09:50:00Z
 
     Support job.* as alias
     for hook.*

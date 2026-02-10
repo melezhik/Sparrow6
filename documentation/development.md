@@ -6,7 +6,7 @@ This document describes how to develop Sparrow6 tasks.
 
 A task in Sparrow represents a script being executed. A user could write a task code on many languages.
 
-To create task simply create `task.*` file in the current directory:
+To create task simply create `task.$ext` file in the current directory:
 
 Raku:
 
@@ -66,8 +66,8 @@ Sparrow supports eight languages to write tasks:
 * Python
 * Ruby
 * Powershell
-* Golang
 * Php
+* Golang
 
 This table describes `file name -> language` mapping:
 
@@ -80,13 +80,13 @@ This table describes `file name -> language` mapping:
     | Python     | task.py      |
     | Ruby       | task.rb      |
     | Powershell | task.ps1     |
-    | Golang     | task.go      |
     | Php        | task.php     |
+    | Golang     | task.go      |
     +------------+--------------+
 
 # Task folders structure
 
-`task-run` function or s6 cli accepts the first argument with a path to some directory.
+Raku `task-run` function or s6 cli accepts the first argument with a path to some directory.
 
 This is where Sparrow looks for a task code ( task.* file ) when it executes a task.
 
@@ -171,6 +171,11 @@ Powershell:
       $foo = $config.foo
       $bar = $config.bar
 
+Php:
+
+      $c = config();
+      $foo = $c["foo"];
+      $bar = $c["bar"];
 
 Overriding configuration
 
@@ -247,6 +252,7 @@ For example:
     | Python(*)  | run_task(STRING,DICT)                        |
     | Ruby       | run_task(STRING,HASH)                        |
     | Powershell | run_task(STRING,HASH)                        |
+    | Php        | run_task(STRING,DICT)                        |
     +------------+----------------------------------------------+
 
 (*) You need to use `from sparrow6lib import *` to import `run_task` function in Python task.
@@ -263,6 +269,7 @@ For example:
     | Bash (1-st way)  | $foo                                           |
     | Bash (2-nd way)  | $(task_var foo)                                |
     | Powershell       | task_var(STRING)                               |
+    | Php              | task_var(STRING)                               |
     +------------------+------------------------------------------------+
 
 (*) You need to use  `from sparrow6lib import *` to import `task_var` function in Python task.
@@ -298,12 +305,13 @@ This table describes file name -> language mapping for hooks:
     +------------+--------------+
     | Language   | File         |
     +------------+--------------+
-    | Raku       | hook.raku     |
+    | Raku       | hook.raku    |
     | Perl       | hook.pl      |
     | Bash       | hook.bash    |
     | Python     | hook.py      |
     | Ruby       | hook.rb      |
     | Powershell | hook.ps1     |
+    | Php        | hook.php     |
     +------------+--------------+
 
 # Set hook output
@@ -345,6 +353,7 @@ If hook send an output through a `set_stdout` function, and _the same folder_ ta
     | Python(*)   | set_stdout(STRING)    |
     | Ruby        | set_stdout(STRING)    |
     | Powershell  | set_stdout(STRING)    |
+    | Php         | set_stdout(STRING)    |
     +-------------+-----------------------+
 
 (*) You need to `from sparrow6lib import *` to import set_stdout function in Python task.
@@ -407,7 +416,7 @@ Task description is printed out when task is executed.
 
       This task do this or that
 
-(\*) - currently is not supported, a future request 
+(\*) - currently is not supported, reserved for future
 
 
 # Ignore task failures
@@ -433,6 +442,7 @@ To prevent the task runner from stop use  `ignore_error` function inside a task 
     | Python(*)   | ignore_error()    |
     | Ruby        | ignore_error()    |
     | Powershell  | ignore_error()    |
+    | Php         | ignore_error()    |
     +-------------+-------------------+
 
 (*) You need to use `from sparrow6lib import *` to import `ignore_error` function in Python task.
@@ -504,6 +514,7 @@ And this is how task state is returned and used in a Raku API:
     | Python(*)   | get_state()       |
     | Ruby        | get_state()       |
     | Powershell  | get_state()       |
+    | Php         | get_state()       |
     +-------------+-------------------+
 
 (*) You need to use `from sparrow6lib import *` to import `get_state` function in Python task.
@@ -513,12 +524,13 @@ And this is how task state is returned and used in a Raku API:
     +-------------+-----------------------------+
     | Language    | signature                   |
     +-------------+-----------------------------+
-    | Raku        | update_state(array|hash)    |
-    | Perl        | update_state(array|hash)    |
+    | Raku        | update_state(hash)          |
+    | Perl        | update_state(hash)          |
     | Bash(*)     | update_state(key,value)     |
-    | Python(**)  | update_state(array|hash)    |
-    | Ruby        | update_state(array|hash)    |
-    | Powershell  | update_state(array|hash)    |
+    | Python(**)  | update_state(dict)          |
+    | Ruby        | update_state(hash)          |
+    | Powershell  | update_state(hash)          |
+    | Php         | update_state(dict)          |
     +-------------+-----------------------------+
 
 
@@ -576,7 +588,10 @@ This table describes `file name -> language` mapping for libraries:
     |           |                 | $task_dir/common.bash  |
     +-----------+-----------------+------------------------+
     | Ruby      | common.rb       | $root_dir/common.rb    |
-    |           |                 | $task_dir/common.bash  |
+    |           |                 | $task_dir/common.rb    |
+    +-----------+-----------------+------------------------+
+    | Php       | common.php      | $root_dir/common.php   |
+    |           |                 | $task_dir/common.php   |
     +-----------+-----------------+------------------------+
 
 # RAKULIB
@@ -775,4 +790,3 @@ Adding trailing comma to the end of `args` array usually does the trick:
 # Thanks to
 
 God as the One Who inspires me in my life!
-
