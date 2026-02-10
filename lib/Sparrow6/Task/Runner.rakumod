@@ -412,7 +412,7 @@ class Api
 
       self!save-task-vars($.cache-dir);
 
-      self!run-php-hook("$root/hook.ps1");
+      self!run-php-hook("$root/hook.php");
 
       self!reset-cache-dir();
 
@@ -422,7 +422,7 @@ class Api
 
       self!save-task-vars($.cache-dir);
 
-      self!run-php-hook("$root/job.ps1");
+      self!run-php-hook("$root/job.php");
 
       self!reset-cache-dir();
 

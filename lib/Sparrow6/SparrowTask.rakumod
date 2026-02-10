@@ -74,6 +74,12 @@ class Cli
 
       say slurp "{$path}/task.ps1".IO;
 
+    } elsif "{$path}/task.php".IO ~~ :f {
+
+      self!log("task show", "$path/task.php");
+
+      say slurp "{$path}/task.php".IO;
+
     } else {
 
       die "task $path not found";
@@ -114,7 +120,7 @@ class Cli
 
     for self.find-tasks(
       $path,
-      basename => /^^ task '.' (raku||ps1||pl||bash||python||ruby) $$/,
+      basename => /^^ task '.' (raku||ps1||pl||bash||python||ruby||php) $$/,
       pattern => $pattern
     ) -> $t {
         $i++;

@@ -20,11 +20,16 @@ function set_stdout(string $line)
   file_put_contents($file, $line, FILE_APPEND);
 }
 
-function run_task(string $path, array $params)
+function run_task(string $path, ?array $params = null )
 {
     print("task_var_json_begin\n");
-    $json = json_encode($params);
-    print("{$json}");
+    if ($params === null) {
+      print('{}');
+      print("\n");
+    } else {
+      $json = json_encode($params);
+      print("{$json}");
+    }
     print("task_var_json_end\n");
     print("task: {$path}\n");
 

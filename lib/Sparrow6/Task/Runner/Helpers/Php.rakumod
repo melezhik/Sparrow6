@@ -9,7 +9,7 @@ role Role {
   method !make-sparrow6-php-lib ($path) {
 
       my $fh = open $.cache-dir ~ '/sparrow6lib.php', :w;
-      $fh.say(slurp %?RESOURCES<sparrow6lib.php>);
+      $fh.print(slurp %?RESOURCES<sparrow6lib.php>);
       $fh.close;
 
       self!log("php lib deployed","{$.cache-dir}/sparrow6lib.php");
