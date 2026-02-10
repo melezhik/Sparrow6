@@ -32,9 +32,16 @@ role Role {
 
       my $cmd;
 
-      $cmd ~= "php -d {$.cache-dir}/sparrow6lib.php $path -d {$.cache-dir}/glue.php $path";
+      $cmd ~= "php -d auto_prepend_file={$.cache-dir}/init.php  $path";
 
-      my $fh = open $.cache-dir ~ '/cmd.bash', :w;
+      my $fh = open $.cache-dir ~ '/init.php', :w;
+      $fh.say("<?php");
+      $fh.say("include \"{$.cache-dir}/glue.php\";");
+      $fh.say("include \"{$.cache-dir}/sparrow6lib.php\";");
+      $fh.say("?>");
+      $fh.close;
+
+      $fh = open $.cache-dir ~ '/cmd.bash', :w;
       $fh.say("set -e");
       $fh.say($cmd);
       $fh.close;
@@ -55,16 +62,18 @@ role Role {
       }
 
       my $fh = open $.cache-dir ~ '/glue.php', :w;
-      $fh.say("function root_dir()\n\{\n\treturn\"" ~ $.root.IO.absolute ~ "\"\n\}\n" );
-      $fh.say("function os()\n\{\n\treturn\"" ~ $.os  ~ "\"\n\}\n" );
+      $fh.say("<?php");
+      $fh.say("function root_dir()\n\{\n\treturn \"" ~ $.root.IO.absolute ~ "\";\n\}\n" );
+      $fh.say("function os()\n\{\n\treturn \"" ~ $.os  ~ "\";\n\}\n" );
       $fh.say("// project_root_directory is deprecated");
-      $fh.say("function project_root_dir()\n\{\n\treturn\"" ~ $.root.IO.absolute  ~ "\"\n\}\n" );
-      $fh.say("function task_dir()\n\{\n\treturn\"" ~ $path.IO.dirname.IO.absolute  ~ "\"\n\}\n" );
-      $fh.say("function cache_root_dir()\n\{\n\treturn\"" ~ $.cache-root-dir  ~ "\"\n\}\n" );
+      $fh.say("function project_root_dir()\n\{\n\treturn \"" ~ $.root.IO.absolute  ~ "\";\n\}\n" );
+      $fh.say("function task_dir()\n\{\n\t return \"" ~ $path.IO.dirname.IO.absolute  ~ "\";\n\}\n" );
+      $fh.say("function cache_root_dir()\n\{\n\t return \"" ~ $.cache-root-dir  ~ "\";\n\}\n" );
       $fh.say("// test_root_dir is deprecated");
-      $fh.say("function test_root_dir()\n\{\n\treturn\"" ~ $.cache-root-dir   ~ "\"\n\}\n" );
-      $fh.say("function cache_dir()\n\{\n\treturn\"" ~ $.cache-dir  ~ "\"\n\}\n" );
-      $fh.say("function stdout_file()\n\{\n\treturn\"" ~ $stdout-file ~ "\"\n\}\n" );
+      $fh.say("function test_root_dir()\n\{\n\t return \"" ~ $.cache-root-dir   ~ "\";\n\}\n" );
+      $fh.say("function cache_dir()\n\{\n\t return \"" ~ $.cache-dir  ~ "\";\n\}\n" );
+      $fh.say("function stdout_file()\n\{\n\t return \"" ~ $stdout-file ~ "\";\n\}\n" );
+      $fh.say("?>");
       $fh.close;
 
       self!log("php glue deployed", "{$.cache-dir}/glue.php");

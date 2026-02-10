@@ -1,7 +1,5 @@
 <?php
 
-require('glue.php');
-
 $file_path = task_dir() . '/common.php';
 
 if (file_exists($file_path)) {

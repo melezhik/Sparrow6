@@ -32,6 +32,7 @@ class Api
   does Sparrow6::Task::Runner::Helpers::Perl::Role
   does Sparrow6::Task::Runner::Helpers::Bash::Role
   does Sparrow6::Task::Runner::Helpers::Ruby::Role
+  does Sparrow6::Task::Runner::Helpers::Php::Role
   does Sparrow6::Task::Runner::Helpers::Python::Role
   does Sparrow6::Task::Runner::Helpers::Powershell::Role
   does Sparrow6::Task::Runner::Helpers::Test::Role
