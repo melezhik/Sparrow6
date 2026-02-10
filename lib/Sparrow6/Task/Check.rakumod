@@ -59,6 +59,7 @@ class Api
       bash => "bash",
       ruby => "rb",
       python => "py",
+      php => "php",
     );
 
     my $language = "perl"; # default language
