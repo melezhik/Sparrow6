@@ -28,13 +28,14 @@ sub MAIN (
   Bool :$task-cat         = False,
   Bool :$task-list        = False,
   Bool :$task-del         = False,
-  Bool :$rt-run         = False,
-  Bool :$rt-set         = False,
-  Bool :$rt-cat         = False,
-  Bool :$rt-list        = False,
-  Bool :$rt-del         = False,
+  Bool :$rt-run           = False,
+  Bool :$rt-set           = False,
+  Bool :$rt-cat           = False,
+  Bool :$rt-list          = False,
+  Bool :$rt-del           = False,
   Bool :$module-run       = False,
   Bool :$force            = False,
+  Bool :$inline           = False,
   Str  :$prefix,
 )
 
@@ -43,6 +44,10 @@ sub MAIN (
   if $version {
     say $Sparrow6::VERSION;
     return;
+  }
+
+  if $inline {
+    %*ENV<SP6_FORMAT_INLINE> = 1;
   }
 
   my $repo-api = Sparrow6::Task::Repository::Api.new(

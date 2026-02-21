@@ -17,8 +17,14 @@ role Role {
   method !check-log (%data) {
 
     my $message = %data<message>;
+    if %*ENV<SP6_FORMAT_INLINE> {
+      if $message ~~ /^^ "inline:"/ {
+        $message.=subst(/^^ "inline:"/,"");
+        say $message;
+      }
+      return
+    }
     my $status = %data<soft-fail> ?? False !! %data<status>;
-
     if %data<type> eq "check" and %data<status>:exists {
       #say %data.raku;
       my $status-str = %data<soft-fail> ?? "~FAIL" !! %data<status>.Str;
