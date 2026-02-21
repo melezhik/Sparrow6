@@ -21,6 +21,8 @@ role Role {
 
     return if %*ENV<SP6_FORMAT_TERSE>;
 
+    return if %*ENV<SP6_FORMAT_INLINE>;
+
     my $header = $.name;
 
     my $ts = DateTime.now(formatter => $timeformat).Str;
@@ -29,23 +31,30 @@ role Role {
       say "[$header] - $message";
     } else {
       say %*ENV<SP6_FORMAT_COLOR>
-        ?? "$ts.&colored('magenta') :: [$header] - $message"
-        !! "$ts :: [$header] - $message";
+        ?? "{$ts.&colored('magenta')} :: [$header] - $message"
+        !! "{$ts} :: [$header] - $message";
     }
 
   };
 
 
-  method console-wo-prefix ($message) {
+  method console-wo-prefix ($message is rw) {
 
     my $ts = DateTime.now(formatter => $timeformat).Str;
 
+    if %*ENV<SP6_FORMAT_INLINE> {
+      if $message ~~ /^^ "inline:"/ {
+        $message.=subst(/^^ "inline:"/,"");
+        say $message;
+      }
+      return
+    }
     if %*ENV<SP6_LOG_NO_TIMESTAMPS> {
       say $message;
     } else {
       say %*ENV<SP6_FORMAT_COLOR>
-        ?? "$ts.&colored('magenta') :: $message"
-        !! "$ts :: $message";
+        ?? "{$ts.&colored('magenta')} :: $message"
+        !! "{$ts} :: $message";
     }
 
   };
@@ -56,6 +65,8 @@ role Role {
     return if self.silent-stdout;
 
     return if %*ENV<SP6_FORMAT_TERSE>;
+
+    return if %*ENV<SP6_FORMAT_INLINE>;
 
     say %*ENV<SP6_FORMAT_COLOR> ?? "[$header]".&colored('bold cyan') !!"[$header]";
 
