@@ -428,7 +428,7 @@ To prevent the task runner from stop use  `ignore_error` function inside a task 
     hook.raku
 
       #!raku
-      
+
       ignore_error();
 
 `ignore_error` function signatures for Sparrow6 supported languages:
@@ -447,12 +447,33 @@ To prevent the task runner from stop use  `ignore_error` function inside a task 
 
 (*) You need to use `from sparrow6lib import *` to import `ignore_error` function in Python task.
 
+# Inline mode
+
+Inline mode allows to use Bash tasks inside other bash scripts. Consider this simple Bash task:
+
+`task.bash`
+
+```bash
+echo "inline: a=1; b=2"
+```
+
+Now we can use this task inside Bash script like this:
+
+```bash
+$(eval s6 --task-run --inline /path/to/task)
+echo $a;
+echo $b;
+```
+
+In inline mode s6 output is filtered out by only lines containing `inline:` prefixes, that allows
+one to generate Bash code eval-ed inside some Bash scenario.
+
 # Task states
 
 Task state is a piece of data that is shared across tasks and returned when task's finished:
 
     #!raku 
-    
+
     my %state = task-run "my-task", "task";
 
     say %state<foo>;
@@ -478,7 +499,7 @@ Here is en example for task written in Perl:
     task.pl
 
       #!perl
-    
+
       update_state({ foo => config<foo>})
 
       task "foo"
@@ -494,7 +515,7 @@ Here is en example for task written in Perl:
 And this is how task state is returned and used in a Raku API:
 
     #!raku 
-    
+
     my %state = task-run "set foo", "set-foo", %( foo => 100 );
 
     task-run "set foo", "set-foo";
