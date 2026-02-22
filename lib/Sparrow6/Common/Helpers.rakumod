@@ -38,14 +38,14 @@ role Role {
   };
 
 
-  method console-wo-prefix ($message is rw) {
+  method console-wo-prefix ($message) {
 
     my $ts = DateTime.now(formatter => $timeformat).Str;
 
     if %*ENV<SP6_FORMAT_INLINE> {
       if $message ~~ /^^ "inline:"/ {
-        $message.=subst(/^^ "inline:"/,"");
-        say $message;
+        my $m = $message.subst(/^^ "inline:"/,"");
+        say $m;
       }
       return
     }
