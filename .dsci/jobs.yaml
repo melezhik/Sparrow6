@@ -1,0 +1,4 @@
+jobs:
+  -
+    id: install-and-test
+    path: .
