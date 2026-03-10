@@ -67,7 +67,7 @@ role Role {
       $fh.say(to-json($vars));
       $fh.close;
 
-      self!log("deploy task vars",$vars.perl);
+      self!log("deploy task vars",$vars.raku);
 
       self!log("task vars deployed as json","$path/variables.json");
 

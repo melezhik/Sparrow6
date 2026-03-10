@@ -114,17 +114,17 @@ class Api
 
       self!log("load plugin configuration file",$.config);
       my $plugin-config = $.config ~~ / '.raku' $$/ ?? EVALFILE($.config) !! load-yaml(slurp $.config);
-      self!log("parse plugin configuration file",$plugin-config.perl);
-      self!log("input parameters",$.parameters.perl);
+      self!log("parse plugin configuration file",$plugin-config.raku);
+      self!log("input parameters",$.parameters.raku);
       self.task-config = merge-hash $plugin-config, $.parameters, :!positional-append;
-      self!log("merged task config",$.task-config.perl);
+      self!log("merged task config",$.task-config.raku);
 
     } else { # handle case when task config does not exist
 
       self!log("plugin has no configuration file","hope it's ok");
-      self!log("input parameters",$.parameters.perl);
+      self!log("input parameters",$.parameters.raku);
       self.task-config = merge-hash %(), $.parameters;
-      self!log("merged task config",$.task-config.perl);
+      self!log("merged task config",$.task-config.raku);
 
     }
 

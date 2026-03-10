@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    .perl -> .raku
+    to remove warnings
+    on the latest Rakudo
+
 0.0.83 2026-02-22T13:50:00Z
 
     Support inline mode
