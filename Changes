@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.84 2026-03-18T11:30:00Z
+
     .perl -> .raku
     to remove warnings
     on the latest Rakudo
