@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.86 2026-03-20T22:50:00Z
+
+    Revert changes made
+    in 0.0.85
+
 0.0.85 2026-03-20T16:30:00Z
 
     Force bin mode for
