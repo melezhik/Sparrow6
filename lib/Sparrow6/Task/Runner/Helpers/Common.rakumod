@@ -134,7 +134,7 @@ role Role {
 
     ($*OUT,$*ERR).map: {.out-buffer = 0};
 
-    $proc = Proc::Async.new(@arr,:out,:bin);
+    $proc = Proc::Async.new(@arr,:enc<utf8-c8>);
 
     my @stderr;
 
