@@ -2,6 +2,12 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.87 2026-03-22T15:55:00Z
+
+    Another, hopefully
+    final fix to address 
+    malformed UTF-8 issue
+
 0.0.86 2026-03-20T22:50:00Z
 
     Revert changes made
