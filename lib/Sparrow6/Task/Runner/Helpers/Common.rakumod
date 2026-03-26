@@ -134,13 +134,21 @@ role Role {
 
     ($*OUT,$*ERR).map: {.out-buffer = 0};
 
-    $proc = Proc::Async.new(:enc<utf8-c8>,@arr);
+    $proc = Proc::Async.new(@arr);
 
     my @stderr;
 
+    CATCH {
+        when X::AdHoc {
+            $*ERR.say: "some kind of X::AdHoc exception was caught!";
+            # Handle error, e.g., resume or use alternative decoding
+            .resume;
+        }
+    }
+
     react {
 
-        whenever $proc.stdout.lines { # split input on \r\n, \n, and \r 
+        whenever $proc.stdout().lines { # split input on \r\n, \n, and \r 
 
           my $line = chomp($_);
 
