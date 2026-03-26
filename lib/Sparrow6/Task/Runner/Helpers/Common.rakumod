@@ -142,7 +142,7 @@ role Role {
         when X::AdHoc {
             $*ERR.say: "some kind of X::AdHoc exception was caught!";
             # Handle error, e.g., resume or use alternative decoding
-            .resume;
+            #.resume;
         }
     }
 
