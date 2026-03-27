@@ -138,14 +138,6 @@ role Role {
 
     my @stderr;
 
-    CATCH {
-        when X::AdHoc {
-            $*ERR.say: "some kind of X::AdHoc exception was caught!";
-            # Handle error, e.g., resume or use alternative decoding
-            #.resume;
-        }
-    }
-
     react {
 
         whenever $proc.stdout().lines { # split input on \r\n, \n, and \r 
