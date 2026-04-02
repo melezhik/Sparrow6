@@ -80,10 +80,10 @@ class Sequence
           my $next_next = $next+1;
           if self.data[$next_next].defined {
             push @new-context, %( data => $data, next => $next_next, stream-id => $stream-id, index => $next );
-            self!log("push to a new context:", "{$data.perl} at index: {$i<next>}. next is: {$next_next}");
+            self!log("push to a new context:", "{$data.raku} at index: {$i<next>}. next is: {$next_next}");
           } else {
             push @new-context, %( data => $data, next => Nil, stream-id => $stream-id, index => $next );
-            self!log("push to a new context:", "{$data.perl} at index: {$i<next>}. next is: <bottom>");
+            self!log("push to a new context:", "{$data.raku} at index: {$i<next>}. next is: <bottom>");
           }
         } 
 
@@ -100,7 +100,7 @@ class Sequence
 
       self.streams = %new-streams;
 
-      self!log("current stream",self.streams.keys.perl);
+      self!log("current stream",self.streams.keys.raku);
 
       self.context = @new-context;
 

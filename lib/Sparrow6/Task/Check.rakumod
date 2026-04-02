@@ -103,7 +103,7 @@ class Api
 
     self.tr.task-run();
 
-    self!log("code return", self.tr.stdout-data.perl) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+    self!log("code return", self.tr.stdout-data.raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     my @r;
 

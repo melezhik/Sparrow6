@@ -328,7 +328,7 @@ role Role {
       my $plg-name = %plg-meta<name> or die "plugin name not found";
 
       $plg-name ~~ /^ <[ a..zA..Z \d \- \. \_ ]> + $/ or die "plugin name parameter does not meet naming requirements - " ~
-      '^ <[ a..zA..Z \d \- \. \_ ]> + $'.perl;
+      '^ <[ a..zA..Z \d \- \. \_ ]> + $'.raku;
 
       self.console-with-prefix("upload {$plg-name}\@{$plg-v}");
 
