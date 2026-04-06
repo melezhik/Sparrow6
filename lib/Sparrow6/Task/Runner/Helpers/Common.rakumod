@@ -148,6 +148,8 @@ role Role {
 
           self.console-wo-prefix($line) unless self.silent-stdout;
 
+          $*OUT.flush;
+
           push self.stdout-data, $line;
 
           #say ‘line: ’, $_
