@@ -132,7 +132,7 @@ role Role {
 
     self.console-header("task stdout");
 
-    ($*OUT,$*ERR).map: {.out-buffer = 0};
+    # ($*OUT,$*ERR).map: {.out-buffer = 0};
 
     $proc = Proc::Async.new(:enc<utf8-c8>,@arr);
 
