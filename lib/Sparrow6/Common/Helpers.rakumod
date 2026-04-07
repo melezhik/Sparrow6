@@ -52,9 +52,15 @@ role Role {
     if %*ENV<SP6_LOG_NO_TIMESTAMPS> {
       say $message;
     } else {
-      say %*ENV<SP6_FORMAT_COLOR>
-        ?? "{$ts.&colored('magenta')} :: $message"
-        !! "{$ts} :: $message";
+      if %*ENV<SP6_FORMAT_COLOR> {
+        my $str = "{$ts.&colored('magenta')} :: $message\n";
+        my $buf = $str.encode("latin1");
+        $*OUT.write($buf);
+      } else {
+        my $str = "{$ts} :: $message\n";
+        my $buf = $str.encode("latin1");
+        $*OUT.write($buf);
+      }
     }
 
   };

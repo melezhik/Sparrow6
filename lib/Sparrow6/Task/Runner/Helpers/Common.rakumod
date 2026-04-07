@@ -134,8 +134,8 @@ role Role {
 
     # ($*OUT,$*ERR).map: {.out-buffer = 0};
 
-    $proc = Proc::Async.new(:enc<utf8-c8>,@arr);
-
+    $proc = Proc::Async.new(:enc<latin1>,@arr);
+    
     my @stderr;
 
     react {
