@@ -2,6 +2,14 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.89 2026-08-02T19:15:00Z
+
+    Switch to latin1 
+    as internal encoding
+    to make processing of
+    output from external 
+    programs more reliable
+
 0.0.88 2026-04-02T21:15:00Z
 
     .perl -> .raku
