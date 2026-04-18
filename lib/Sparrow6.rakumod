@@ -2,6 +2,6 @@
 
 use v6;
 
-unit module Sparrow6:ver<0.0.89>;
+unit module Sparrow6:ver<0.0.90>;
 
-our $VERSION = "0.0.89";
+our $VERSION = "0.0.90";

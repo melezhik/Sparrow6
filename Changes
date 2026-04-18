@@ -2,6 +2,11 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    Back to utf8-c8
+    As latin1 internal
+    encoding breaks
+    in some cases
+  
 0.0.89 2026-08-02T19:15:00Z
 
     Switch to latin1 

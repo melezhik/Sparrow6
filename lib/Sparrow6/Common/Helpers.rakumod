@@ -53,17 +53,15 @@ role Role {
       say $message;
     } else {
       if %*ENV<SP6_FORMAT_COLOR> {
-        my $str = "{$ts.&colored('magenta')} :: $message\n";
-        my $buf = $str.encode("latin1");
+        my $str = "{$ts.&colored('magenta')} :: $message";
         try {
-          $*OUT.write($buf);
+          say $str;
         }
         say $! if $!;
       } else {
-        my $str = "{$ts} :: $message\n";
-        my $buf = $str.encode("latin1");
+        my $str = "{$ts} :: $message";
         try {
-          $*OUT.write($buf);
+          say $str;
         }
         say $! if $!;
       }
