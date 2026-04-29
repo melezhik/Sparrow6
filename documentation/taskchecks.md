@@ -184,13 +184,13 @@ Similarly to plain text matching, one may check against regular expressions.
 
 The TC language uses [Raku Regular Expressions](https://docs.raku.org/language/regexes).
 
-story.bash
+Input
 
     2019-04-01
     Name: Sparrow6
     App Version Number: 0.0.1
 
-task.check
+DSL
 
     regexp: \d\d\d\d "-" \d\d "-" \d\d # date in format of YYYY-MM-DD
     regexp: "Name:" \s+ \w+ # name
@@ -247,6 +247,7 @@ DSL:
     regexp: (\d+) \s+ '-' \s+ for \s+ (\w+)
     
     code: <<CODE
+    !perl
     
     use Data::Dumper; 
     
@@ -312,7 +313,7 @@ with certain values, using _asserts_. Add this code to the previous example:
 DSL:
 
     generator: <<CODE
-    
+    !perl
       print "assert: ", captures()->[0]->[0] == 1 ? 1 : 0, " captures0,0 == 1\n";
       print "assert: ", captures()->[0]->[1] eq 'one' ? 1 : 0, " captures0,1 == one\n";
       
@@ -328,7 +329,6 @@ DSL:
     
     CODE
     
-
 And run check:
 
     [task check] <captures0,0 == 1> True
