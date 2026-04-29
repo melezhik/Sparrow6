@@ -1663,6 +1663,7 @@ if matched() {
     replace("file.txt",$ln,"BYE $num");
 }
 RAKU
+```
 
 Modified file:
 
