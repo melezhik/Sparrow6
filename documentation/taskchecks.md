@@ -226,7 +226,7 @@ DSL:
 
 But you can match consecutive series of lines using sequence expressions.
 
-## Regular expressions caveats
+## Regular expressions pitfalls
 
 - Multiline regular expressions ( unlike in Raku ) are prohibited. Following example of DSL is incorrect:
 
@@ -435,7 +435,7 @@ DSL code:
 
 ## Here documents
 
-Here documents strings are used to embed code for generator and code expressions:
+Here document format is used to add multiline code for generator and code expressions:
 
 An example of validating that input contains date for yesterday:
 
@@ -455,8 +455,13 @@ An example of validating that input contains date for yesterday:
         "assert: ",
         (DateTime->compare($dt, $yesterday) == 0) ? 1 : 0 , 
         " first day found is - $dt and this is a yesterday\n";
-        
-        
+     CODE
+
+
+Here document format string should start with
+`<<`MARKER and has to have MARKER in the end.
+Where MARKER is arbitrary unique string
+
 Read generator and code doc sections to know more about code and generators.
 
 # Search Context Modifiers
@@ -530,7 +535,7 @@ The same check will result in:
     [task check] stdout match (s) <at the very end> False
 
 
-## Sequences expressions caveats
+## Sequence search expressions pitfalls
 
 * `begin:`, `end:` markers denote start and end of a sequence. 
 
@@ -645,7 +650,7 @@ Output:
     [task check] stdout match (r) <'<td>' (\S+) '</td>'> True
     [task check] stdout match (r) <'<td>' (\S+) '</td>'> True
 
-## Range expressions caveats
+## Range expressions pitfalls
 
 * Resetting search context
         
@@ -916,7 +921,7 @@ RAKU
 end:
 ```
 
-## Within expressions caveats
+## Within expressions pitfalls
 
 * Resetting search context
         
@@ -1003,6 +1008,14 @@ on task API.
 
 See also [generators](#generators) section on how dynamically create check expressions using various programming languages.
 
+## Code expressions pitfalls
+
+- Don't use code expressions to print another
+DSL expressions ( for instance - regexp:, generator:, code:, within:, begin:, between: , etc ) , this does not make a sence as DSL parser does not treat output from code: expressions as check rules, it just dumps the output as is. Instead use generator: to generate new check rules or DSL expressions
+
+- Always set language identificator on the very first line of code block, or else default
+language (Perl) will be applied which is not probably what you want 
+
 # Asserts
 
 Asserts expressions are statements that are true or false.
@@ -1049,7 +1062,7 @@ Output:
     
 Asserts are almost always created dynamically with generators. See the next section.
 
-## Asserts expressions caveats
+## Asserts expressions pitfalls
 
 - Strictly follow expression value format, should be on of the following - 1,true,True,0,false,False If the value is incorrect or empty task check parser will treat it as plan text check expression, following are some incorrect assert expressions examples:
 
@@ -1180,6 +1193,10 @@ This is short example for Ruby language:
     !ruby
         puts "assert: #{capture()[0] == 10}, you've got 10!"  
     CODE
+
+## Generators putfalls
+
+- Always set language identificator on the very first line of generator block, or else default language (Perl) will be applied which is not probably what you want 
 
 # Negations
 
@@ -1361,7 +1378,7 @@ within: :33:
 end:
 ```
 
-## SLN expressions caveats
+## SLN expressions pitfalls
 
 - When using SLN expressions, there should not be any other symbols before or after exprrssion ( with the exception of using SLN together with between: and within: , see the next paragaphs ).
 
