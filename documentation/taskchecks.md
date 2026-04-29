@@ -905,7 +905,7 @@ As with sequences and ranges, within expression need ending `end:` marker to res
 
 Code expressions are just pieces of generic language code gets inlined and executed during verification process.
 
-Default language is Perl5:
+Example:
 
 Input:
 
@@ -928,11 +928,18 @@ Output:
     
 Code expressions have no impact on verification process and could be used for debugging. 
 
-See also [generators](#generators) section on how dynamically create check expressions using programming languages.
+Code expressions should start with `code:` marker, followed by <<HERE doc 
+marker that defines the start of code
+block.
 
-The code language is defined in shebang on the first line of here document.
+The very first line of code block should contain language identificator in form of `!language` to define programming language
+to be used to execute code block, for instance:
 
-Examples:
+```
+!python
+```
+
+More code expression examples:
 
 ## raku
 
@@ -965,6 +972,8 @@ Sparrow6 task API is available inside code expressions:
 
 Read [Sparrow6 Development Guide](https://github.com/melezhik/Sparrow6/blob/doc/documentation/development.md)
 on task API.
+
+See also [generators](#generators) section on how dynamically create check expressions using various programming languages.
 
 # Asserts
 
@@ -1006,7 +1015,21 @@ Asserts are almost always created dynamically with generators. See the next sect
 
 * So new DSL terms are passed back to DSL parser and executed immediately
 
-Generators expressions start with `generator:` marker:
+Generator expressions should start with `generator:` marker, followed by <<HERE doc 
+marker that defines the start of generator
+block.
+
+The very first line of generator block should contain language identificator in form of `!language` to define programming language
+to be used to execute generator block, for instance:
+
+```
+!python
+```
+
+The end of generator block should be closed
+by HERE doc marker. 
+
+More generator examples:
 
 Input text:
 
@@ -1016,7 +1039,7 @@ DSL:
 
     generator: <<CODE
     !perl
-      print join "\n", ('H', 'E', 'L', 'O');
+    print join "\n", ('H', 'E', 'L', 'O');
     CODE
 
 Output:
@@ -1059,7 +1082,6 @@ Output:
     [task check] stdout match <Say> True
     [task check] stdout match <Hello> True
     [task check] stdout match <Hello || Again> True
-    
 
 Here is more complicated example of using Perl language.
 
@@ -1077,9 +1099,9 @@ DSL:
 
     generator: <<CODE
     !perl
-      my %d = ( 'foo' => 'foo value', 'bar' => 'bar value' );
+     my %d = ( 'foo' => 'foo value', 'bar' => 'bar value' );
     
-      print join "\n", map { ( "# $_ ", $d{$_} ) } keys %d;
+     print join "\n", map { ( "# $_ ", $d{$_} ) } keys %d;
       
     CODE
     
