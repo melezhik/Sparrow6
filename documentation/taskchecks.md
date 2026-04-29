@@ -1222,11 +1222,31 @@ Sometime it makes a sense to search by line number of text output.
 
 Task check provides SLN ( Search by Line ) exprrssions for that. SLN expression is in form:
 
-`:{line number}:`
+colon line number colon
 
-Where {line number} is a number of line of input text.
 
-Consider this example:
+Where line number is a number of line of input text.
+
+There should not be any spaces between line 
+number and colons. 
+
+Examples:
+
+```
+# the very first line
+# line number 0
+# internally input starts with 0
+# index
+
+:0:
+
+
+# line number 99
+
+:99:
+```
+
+Full example:
 
 Input:
 
@@ -1312,6 +1332,74 @@ note: search within line number 33
 within: :33:
 end:
 ```
+
+## SLN expressions caveats
+
+- When using SLN expressions, there should not be any other symbols before or after exprrssion ( with the exception of using SLN together with between: and within: , see the next paragaphs ).
+
+Following example of correct SLN expressions
+used with other expressions:
+
+```
+# verify that input text
+# has the very first
+# hello line
+# then any line
+# the world line
+# then any line 
+hello
+:1:
+world
+:3:
+```
+
+This is example of incorrect SLN expressions
+syntax when SLN expressions are used with other expressions:
+
+```
+# this is wrong
+# you cannot use SLN and other
+# expressions on the same line
+helld
+:1: world :3:
+```
+
+- You can use SLN expressions together with
+between expressions like that ( previous rule of no other expressions on the same line where SLN is written does not apply ) 
+
+```
+# verify that input text
+# between the first
+# and tenth line
+# has digits
+between: { :0: } { :9 }
+regexp: \d
+end:
+```
+
+```
+# verify that input text
+# between the first
+# and line with word DONE
+# has digits
+between: { :0: } { DONE }
+regexp: \d
+end:
+```
+
+- You can use SLN expressions together with within; expressions like that ( previous rule of no other expressions on the same line where SLN is written does not apply ) 
+
+```
+# verify that input text
+# tenth line
+# has digits
+within: :9:
+regexp: \d
+end:
+```
+
+- In task check parser line numbers starts with index 0, so the first line will be :0:,
+the second will be :1:, etc
 
 # Streams
 
