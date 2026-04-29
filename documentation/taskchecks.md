@@ -282,6 +282,7 @@ DSL:
     regexp: \d
     
     code: <<CODE
+    !perl
     
     use Data::Dumper; 
     
@@ -442,7 +443,7 @@ There are three types of search context modifiers:
 * Ranges expressions
 * Within expressions 
 
-# Sequences
+# Sequences expressions
 
 Sequences narrows down searched input data to the _consecutive_ sequence of lines, "insisting", that matched lines should go one by one:
 
@@ -501,7 +502,7 @@ The same check will result in:
     [task check] stdout match (s) <at the very end> False
 
 
-Sequences caveats:
+## Sequences expressions caveats
 
 * `begin:`, `end:` markers denote start and end of a sequence. 
 
@@ -553,7 +554,14 @@ You need to match blank lines thought regexps:
       regexp: ^^  $$
       ccc
     end:
-     
+
+## Sequence expressions limitations 
+
+- between: end: blocks cannot be nested. You cannot have between: end: inside another between: end: block
+
+- You cannot have between: end: blocks inside
+  within: end:, between: end: blocks
+
 # Range expressions
 
 Range expressions also act like search context modifiers - they change search area to the one included
@@ -608,7 +616,6 @@ Output:
 
     [task check] stdout match (r) <'<td>' (\S+) '</td>'> True
     [task check] stdout match (r) <'<td>' (\S+) '</td>'> True
-
 
 ## Range expressions caveats
 
@@ -737,6 +744,13 @@ Output:
     [task check]         ];
     
 
+## Range expressions limitations 
+
+- between: end: blocks cannot be nested. You cannot have between: end: inside another between: end: block
+
+- You cannot have between: end: blocks inside
+  within: end:, begin: end: blocks
+  
 # Within expressions
 
 Within expression narrows down search context to lines matched given regular expression
@@ -880,6 +894,13 @@ end:
         
 As with sequences and ranges, within expression need ending `end:` marker to restore search context.
 
+## Within expressions limitations 
+
+- within: end: blocks cannot be nested. You cannot have within: end: inside another within: end: block
+
+- You cannot have within: end: blocks inside
+  begin: end:, between: end: blocks
+  
 # Code expressions
 
 Code expressions are just pieces of generic language code gets inlined and executed during verification process.
