@@ -111,11 +111,11 @@ The TC language consists of the following building blocks:
 
 * Check expressions
 
-  * Plain strings
+  * Plain strings aka plain text checks
 
   * Regular expressions
 
-  * Assert expressions
+  * Assert expressions aka asserts
 
 * Search context modifiers
 
