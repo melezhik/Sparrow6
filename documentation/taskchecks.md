@@ -177,7 +177,6 @@ Output:
     [task check] stdout match <I am ok> False
 
     
-
 # Regular expressions
 
 Similarly to plain text matching, one may check against regular expressions.
@@ -417,7 +416,8 @@ An example of validating that input contains date for yesterday:
     
     regexp: date: (\d\d\d\d)-(\d\d)-(\d\d)
     
-    generator:  <<CODE
+    generator: <<CODE
+      !perl
       use DateTime;                       
       my $c  = captures()->[0];            
       my $dt = DateTime->new( year => $c->[0], month => $c->[1], day => $c->[2]  ); 
@@ -643,7 +643,10 @@ DSL:
 
     hello # should match three times
 
-    generator: print "assert: ", ( scalar @{matched()} == 3 ? 1 : 0 ), " 3 hello within all document\n"; 
+    generator: <<CODE
+    !perl
+    print "assert: ", ( scalar @{matched()} == 3 ? 1 : 0 ), " 3 hello within all document\n"; 
+    CODE
 
 Output:
 
@@ -671,7 +674,7 @@ Input:
     bar
 
 
-DSL code:
+DSL:
 
     between: {foo} {bar}
        regexp: (1)
@@ -713,7 +716,10 @@ DSL:
 
     between: {foo} {bar}
     regexp: (foo \d+)
-    code: use Data::Dumper; print Dumper(captures());
+    code: <<CODE
+    !perl
+    use Data::Dumper; print Dumper(captures());
+    CODE
 
 Output:
 
@@ -887,7 +893,10 @@ Input:
 DSL:
 
     Hello
-    code: print "hi there!\n";
+    code: <<CODE
+    !perl
+    print "hi there!\n";
+    CODE
     Hello
 
 Output:
@@ -907,30 +916,30 @@ Examples:
 ## raku
 
     code:  <<HERE
-      !raku
-      say 'hi there!'
+    !raku
+    say 'hi there!'
     HERE
 
 ## bash 
 
     code:  <<HERE
-      !bash
-      echo 'hi there!'
+    !bash
+    echo 'hi there!'
     HERE
 
 
 ## ruby
 
     code: <<CODE
-      !ruby
-      puts 'hi there!'
+    !ruby
+    puts 'hi there!'
     CODE
 
 Sparrow6 task API is available inside code expressions:
 
     code: <<CODE
-      !perl
-      my $foo = config()->{foo};
+    !perl
+    my $foo = config()->{foo};
     CODE
 
 Read [Sparrow6 Development Guide](https://github.com/melezhik/Sparrow6/blob/doc/documentation/development.md)
@@ -947,8 +956,7 @@ First value should be _something_ to be treated as false or true:
 
 The second parameter of assert function is description - a short string to describe assert statement.
 
-DSL:
-    
+DSL: 
     assert: 1 this is true
     assert: 0 this is false
     assert: True this is also true, Raku style 
@@ -967,7 +975,6 @@ Output:
     
 Asserts are almost always created dynamically with generators. See the next section.
  
-
 # Generators
 
 * Generators is the way to _generate check expressions on the _fly_
@@ -986,7 +993,10 @@ Input text:
 
 DSL:
 
-    generator: print join "\n", ('H', 'E', 'L', 'O');
+    generator: <<CODE
+    !perl
+      print join "\n", ('H', 'E', 'L', 'O');
+    CODE
 
 Output:
 
@@ -1045,7 +1055,7 @@ DSL:
     # check expressions
 
     generator: <<CODE
-    
+    !perl
       my %d = ( 'foo' => 'foo value', 'bar' => 'bar value' );
     
       print join "\n", map { ( "# $_ ", $d{$_} ) } keys %d;
@@ -1077,17 +1087,16 @@ but with reverse logic - if text matches - check fails.
 
 Here are some examples:
 
-task.bash
+Input:
 
 ```
-echo "OK"
-echo "Hello"
-echo "done"
-
-echo "A B C D"
+OK
+Hello
+done
+A B C D
 ```
 
-task.check
+DSL:
 
 ```
 note: negations in blocks
@@ -1115,7 +1124,6 @@ C
 end:
 ```
 
-
 output:
 
 ```
@@ -1141,17 +1149,17 @@ Sometime it makes a sense to search by line number of text output.
 
 Consider this example:
 
-task.bash
+Input:
 
 ```
-echo OK
-echo HELLO
-echo OK
-echo DONE
-echo BYE!
+OK
+HELLO
+OK
+DONE
+BYE!
 ```
 
-task.check
+DSL:
 
 ```
 OK
@@ -1175,7 +1183,7 @@ BYE!
 end:
 ```
 
-output
+Output:
 
 ```
 [task stdout]
@@ -1207,7 +1215,6 @@ Additional negation checks make it sure that there is no "OK2" line after the fi
 
 
 You can use SLN in ranges, sequential blocks and  within expressions:
-
 
 ```
 note: search everything between 1st and 3d lines
@@ -1262,24 +1269,36 @@ DSL code:
 
       regexp: (f) (oo)
   
-      code: print "layer: 1 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-  
+      code: <<CODE
+      !perl
+      print "layer: 1 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
       regexp: (\S+)
   
       code: print "layer: 2 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
   
       regexp: (\S+)
   
-      code: print "layer: 3 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-  
+      code: <<CODE
+      !perl
+      print "layer: 3 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
       regexp: (\S+)
   
-      code: print "layer: 4 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-  
+      code: <<CODE
+      !perl
+      print "layer: 4 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
       regexp: (bar)
   
-      code: print "layer: 5 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-    
+      code: <<CODE
+      !perl
+      print "layer: 5 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
     end:
     
 Output:
@@ -1325,7 +1344,7 @@ DSL:
       regexp: (bar)
 
       code:  <<CODE
-  
+      !perl
         for my $s (@{streams_array()}) {
             my $i=1;
             for my $l (@{$s}){
@@ -1399,7 +1418,7 @@ DSL code:
       regexp: (\d+)
     
       code:  <<CODE
-    
+      !perl
         for my $s (@{streams_array()}) {
             my $i=1;
             for my $l (@{$s}){
@@ -1452,19 +1471,18 @@ Replace allows to update file in runtime during check is performed
 Following example search HELLO and digits within OK .. DONE range and then 
 increment found digit and update original file: 
 
-Input:
+Input file:
 
 ```
-cat << HERE > $cache_root_dir/file.txt
+cat << HERE > file.txt
 OK
 HELLO 1
 DONE
 HERE
-
-cat $cache_root_dir/file.txt
 ```
 
-DSL code:
+DSL:
+
 ```
 between: {OK} {DONE}
     ~regexp: HELLO \s+ (\d+)
@@ -1476,26 +1494,16 @@ if matched() {
     my $ln = captures-full()[0]<index>;
     my $num = capture()[0].Int;
     $num++;
-    replace("{cache_root_dir()}/file.txt",$ln,"BYE $num");
+    replace("file.txt",$ln,"BYE $num");
 }
 RAKU
 
-code: <<BASH
-!bash
-cat $cache_root_dir/file.txt
-BASH
+Modified file:
+
 ```
-Output:
-```
-[task stdout]
-10:42:58 :: OK
-10:42:58 :: HELLO 1
-10:42:58 :: DONE
-[task check]
-stdout match (r) <HELLO \s+ (\d+)> True
-# OK
-# BYE 2
-# DONE
+OK
+BYE 2
+DONE
 ```
 
 Pay attention that [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) is used here to let main flow continues even though if
@@ -1505,6 +1513,8 @@ range search fails
 
 `remove-line` works similarly to `replace`, but just removing line at number `n`, following example
 removes all lines between `AAA` and `BBB`, including `AAA` and `BBB` lines:
+
+DSL:
 
 ```
 between: {AAA} {BBB}
@@ -1523,10 +1533,9 @@ RAKU
 
 By default STDOUT is a source where input data is read from. One can charge this by using `source:` directive.
 
-Consider two files - `file1.txt` and `file2.txt` with various content. Instead of checking
-content of _both_ files ( using  for example `cat file1.txt; cat file2.txt`), we can check files
-independently:
+Consider two files - `file1.txt` and `file2.txt` with various content. Instead of checking content of _both_ files ( using  for example `cat file1.txt; cat file2.txt`), we can check files independently:
 
+DSL:
 
 ```
 source: file1.txt
@@ -1564,7 +1573,6 @@ This is just a very _simple_ example showing the concept, one can do more sophis
 combining sources with code blocks:
 
 ```
-
 # collect all lines with numbers
 # capturing numeric data
 
@@ -1610,12 +1618,9 @@ OK
 This scenario effectively implements linux style pipeline, where the first step extracts all the numbers and the second sums them up.
 
 
-Sources could be effectively combined with `replace` and `remove-line` functions effectively 
-causing reload of data from changed files, consider this example with a failure in the end,
-proving that the second line has already been deleted:
+Sources could be effectively combined with `replace` and `remove-line` functions effectively causing reload of data from changed files, consider this example with a failure in the end, proving that the second line has already been deleted:
 
-
-*task.check*
+DSL:
 
 ```
 note: === change source ===
@@ -1647,7 +1652,7 @@ source: /tmp/file1.txt
 B1
 ```
 
-report:
+Output:
 
 ```
 [task stdout]
