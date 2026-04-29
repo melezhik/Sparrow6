@@ -96,41 +96,6 @@ When search context gets applied _effective_ search context narrows down dependi
 
 Search context is restored to default one every time when DSL parser meets `end:` marker,  see also sequence, range and within expressions.
 
-## DSL Parser Implementation
-
-* `Sparrow6::Task::Check` is Raku implementation of the TC language
-
-* The document describes the TC language itself, rather then methods of `Sparrow6::Task::Check` class
-
-* Read Sparrow6 tasks structure in the [Sparrow6 Development Guide](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) on how to create task checks using TC language.
-
-Here is an example of verification of 2 lines of text against 2 check expressions:
-
-Input:
-
-    Hello
-    My name is Sparrow6!
-
-DSL:
-    
-    Hello
-    regexp: My \s+ name \s+ is \s+ \S+
-    
-Output:
-
-    [task check] stdout match <Hello> True
-    [task check] stdout match <My \s+ name \s+ is \s+ \S+> True
-    
-Another example:
-
-DSL:
-
-    # there should be digits
-    regexp: \d
-    # and greetings
-    regexp: hello \s+ \w+
-  
-
 # DSL syntax
 
 The TC language consists of the following building blocks:
@@ -212,20 +177,19 @@ Output:
     [task check] stdout match <I am ok> False
 
     
-
 # Regular expressions
 
 Similarly to plain text matching, one may check against regular expressions.
 
 The TC language uses [Raku Regular Expressions](https://docs.raku.org/language/regexes).
 
-story.bash
+Input
 
     2019-04-01
     Name: Sparrow6
     App Version Number: 0.0.1
 
-task.check
+DSL
 
     regexp: \d\d\d\d "-" \d\d "-" \d\d # date in format of YYYY-MM-DD
     regexp: "Name:" \s+ \w+ # name
@@ -282,6 +246,7 @@ DSL:
     regexp: (\d+) \s+ '-' \s+ for \s+ (\w+)
     
     code: <<CODE
+    !perl
     
     use Data::Dumper; 
     
@@ -317,6 +282,7 @@ DSL:
     regexp: \d
     
     code: <<CODE
+    !perl
     
     use Data::Dumper; 
     
@@ -347,7 +313,7 @@ with certain values, using _asserts_. Add this code to the previous example:
 DSL:
 
     generator: <<CODE
-    
+    !perl
       print "assert: ", captures()->[0]->[0] == 1 ? 1 : 0, " captures0,0 == 1\n";
       print "assert: ", captures()->[0]->[1] eq 'one' ? 1 : 0, " captures0,1 == one\n";
       
@@ -363,7 +329,6 @@ DSL:
     
     CODE
     
-
 And run check:
 
     [task check] <captures0,0 == 1> True
@@ -452,7 +417,8 @@ An example of validating that input contains date for yesterday:
     
     regexp: date: (\d\d\d\d)-(\d\d)-(\d\d)
     
-    generator:  <<CODE
+    generator: <<CODE
+      !perl
       use DateTime;                       
       my $c  = captures()->[0];            
       my $dt = DateTime->new( year => $c->[0], month => $c->[1], day => $c->[2]  ); 
@@ -477,7 +443,7 @@ There are three types of search context modifiers:
 * Ranges expressions
 * Within expressions 
 
-# Sequences
+# Sequences expressions
 
 Sequences narrows down searched input data to the _consecutive_ sequence of lines, "insisting", that matched lines should go one by one:
 
@@ -536,7 +502,7 @@ The same check will result in:
     [task check] stdout match (s) <at the very end> False
 
 
-Sequences caveats:
+## Sequences expressions caveats
 
 * `begin:`, `end:` markers denote start and end of a sequence. 
 
@@ -588,7 +554,14 @@ You need to match blank lines thought regexps:
       regexp: ^^  $$
       ccc
     end:
-     
+
+## Sequence expressions limitations 
+
+- between: end: blocks cannot be nested. You cannot have between: end: inside another between: end: block
+
+- You cannot have between: end: blocks inside
+  within: end:, between: end: blocks
+
 # Range expressions
 
 Range expressions also act like search context modifiers - they change search area to the one included
@@ -644,7 +617,6 @@ Output:
     [task check] stdout match (r) <'<td>' (\S+) '</td>'> True
     [task check] stdout match (r) <'<td>' (\S+) '</td>'> True
 
-
 ## Range expressions caveats
 
 * Resetting search context
@@ -678,7 +650,10 @@ DSL:
 
     hello # should match three times
 
-    generator: print "assert: ", ( scalar @{matched()} == 3 ? 1 : 0 ), " 3 hello within all document\n"; 
+    generator: <<CODE
+    !perl
+    print "assert: ", ( scalar @{matched()} == 3 ? 1 : 0 ), " 3 hello within all document\n"; 
+    CODE
 
 Output:
 
@@ -706,7 +681,7 @@ Input:
     bar
 
 
-DSL code:
+DSL:
 
     between: {foo} {bar}
        regexp: (1)
@@ -748,7 +723,10 @@ DSL:
 
     between: {foo} {bar}
     regexp: (foo \d+)
-    code: use Data::Dumper; print Dumper(captures());
+    code: <<CODE
+    !perl
+    use Data::Dumper; print Dumper(captures());
+    CODE
 
 Output:
 
@@ -766,6 +744,13 @@ Output:
     [task check]         ];
     
 
+## Range expressions limitations 
+
+- between: end: blocks cannot be nested. You cannot have between: end: inside another between: end: block
+
+- You cannot have between: end: blocks inside
+  within: end:, begin: end: blocks
+  
 # Within expressions
 
 Within expression narrows down search context to lines matched given regular expression
@@ -909,11 +894,18 @@ end:
         
 As with sequences and ranges, within expression need ending `end:` marker to restore search context.
 
+## Within expressions limitations 
+
+- within: end: blocks cannot be nested. You cannot have within: end: inside another within: end: block
+
+- You cannot have within: end: blocks inside
+  begin: end:, between: end: blocks
+  
 # Code expressions
 
 Code expressions are just pieces of generic language code gets inlined and executed during verification process.
 
-Default language is Perl5:
+Example:
 
 Input:
 
@@ -922,7 +914,10 @@ Input:
 DSL:
 
     Hello
-    code: print "hi there!\n";
+    code: <<CODE
+    !perl
+    print "hi there!\n";
+    CODE
     Hello
 
 Output:
@@ -933,43 +928,52 @@ Output:
     
 Code expressions have no impact on verification process and could be used for debugging. 
 
-See also [generators](#generators) section on how dynamically create check expressions using programming languages.
+Code expressions should start with `code:` marker, followed by <<HERE doc 
+marker that defines the start of code
+block.
 
-The code language is defined in shebang on the first line of here document.
+The very first line of code block should contain language identificator in form of `!language` to define programming language
+to be used to execute code block, for instance:
 
-Examples:
+```
+!python
+```
+
+More code expression examples:
 
 ## raku
 
     code:  <<HERE
-      !raku
-      say 'hi there!'
+    !raku
+    say 'hi there!'
     HERE
 
 ## bash 
 
     code:  <<HERE
-      !bash
-      echo 'hi there!'
+    !bash
+    echo 'hi there!'
     HERE
 
 
 ## ruby
 
     code: <<CODE
-      !ruby
-      puts 'hi there!'
+    !ruby
+    puts 'hi there!'
     CODE
 
 Sparrow6 task API is available inside code expressions:
 
     code: <<CODE
-      !perl
-      my $foo = config()->{foo};
+    !perl
+    my $foo = config()->{foo};
     CODE
 
 Read [Sparrow6 Development Guide](https://github.com/melezhik/Sparrow6/blob/doc/documentation/development.md)
 on task API.
+
+See also [generators](#generators) section on how dynamically create check expressions using various programming languages.
 
 # Asserts
 
@@ -982,8 +986,7 @@ First value should be _something_ to be treated as false or true:
 
 The second parameter of assert function is description - a short string to describe assert statement.
 
-DSL:
-    
+DSL: 
     assert: 1 this is true
     assert: 0 this is false
     assert: True this is also true, Raku style 
@@ -1002,7 +1005,6 @@ Output:
     
 Asserts are almost always created dynamically with generators. See the next section.
  
-
 # Generators
 
 * Generators is the way to _generate check expressions on the _fly_
@@ -1013,7 +1015,21 @@ Asserts are almost always created dynamically with generators. See the next sect
 
 * So new DSL terms are passed back to DSL parser and executed immediately
 
-Generators expressions start with `generator:` marker:
+Generator expressions should start with `generator:` marker, followed by <<HERE doc 
+marker that defines the start of generator
+block.
+
+The very first line of generator block should contain language identificator in form of `!language` to define programming language
+to be used to execute generator block, for instance:
+
+```
+!python
+```
+
+The end of generator block should be closed
+by HERE doc marker. 
+
+More generator examples:
 
 Input text:
 
@@ -1021,7 +1037,10 @@ Input text:
 
 DSL:
 
-    generator: print join "\n", ('H', 'E', 'L', 'O');
+    generator: <<CODE
+    !perl
+    print join "\n", ('H', 'E', 'L', 'O');
+    CODE
 
 Output:
 
@@ -1063,7 +1082,6 @@ Output:
     [task check] stdout match <Say> True
     [task check] stdout match <Hello> True
     [task check] stdout match <Hello || Again> True
-    
 
 Here is more complicated example of using Perl language.
 
@@ -1080,10 +1098,10 @@ DSL:
     # check expressions
 
     generator: <<CODE
+    !perl
+     my %d = ( 'foo' => 'foo value', 'bar' => 'bar value' );
     
-      my %d = ( 'foo' => 'foo value', 'bar' => 'bar value' );
-    
-      print join "\n", map { ( "# $_ ", $d{$_} ) } keys %d;
+     print join "\n", map { ( "# $_ ", $d{$_} ) } keys %d;
       
     CODE
     
@@ -1112,17 +1130,16 @@ but with reverse logic - if text matches - check fails.
 
 Here are some examples:
 
-task.bash
+Input:
 
 ```
-echo "OK"
-echo "Hello"
-echo "done"
-
-echo "A B C D"
+OK
+Hello
+done
+A B C D
 ```
 
-task.check
+DSL:
 
 ```
 note: negations in blocks
@@ -1150,7 +1167,6 @@ C
 end:
 ```
 
-
 output:
 
 ```
@@ -1176,17 +1192,17 @@ Sometime it makes a sense to search by line number of text output.
 
 Consider this example:
 
-task.bash
+Input:
 
 ```
-echo OK
-echo HELLO
-echo OK
-echo DONE
-echo BYE!
+OK
+HELLO
+OK
+DONE
+BYE!
 ```
 
-task.check
+DSL:
 
 ```
 OK
@@ -1210,7 +1226,7 @@ BYE!
 end:
 ```
 
-output
+Output:
 
 ```
 [task stdout]
@@ -1242,7 +1258,6 @@ Additional negation checks make it sure that there is no "OK2" line after the fi
 
 
 You can use SLN in ranges, sequential blocks and  within expressions:
-
 
 ```
 note: search everything between 1st and 3d lines
@@ -1297,24 +1312,36 @@ DSL code:
 
       regexp: (f) (oo)
   
-      code: print "layer: 1 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-  
+      code: <<CODE
+      !perl
+      print "layer: 1 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
       regexp: (\S+)
   
       code: print "layer: 2 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
   
       regexp: (\S+)
   
-      code: print "layer: 3 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-  
+      code: <<CODE
+      !perl
+      print "layer: 3 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
       regexp: (\S+)
   
-      code: print "layer: 4 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-  
+      code: <<CODE
+      !perl
+      print "layer: 4 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
       regexp: (bar)
   
-      code: print "layer: 5 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
-    
+      code: <<CODE
+      !perl
+      print "layer: 5 ", ( join "", map { map {"{$_}"} @{$_}} @{captures()} ), "\n";
+      CODE
+      
     end:
     
 Output:
@@ -1360,7 +1387,7 @@ DSL:
       regexp: (bar)
 
       code:  <<CODE
-  
+      !perl
         for my $s (@{streams_array()}) {
             my $i=1;
             for my $l (@{$s}){
@@ -1434,7 +1461,7 @@ DSL code:
       regexp: (\d+)
     
       code:  <<CODE
-    
+      !perl
         for my $s (@{streams_array()}) {
             my $i=1;
             for my $l (@{$s}){
@@ -1487,19 +1514,18 @@ Replace allows to update file in runtime during check is performed
 Following example search HELLO and digits within OK .. DONE range and then 
 increment found digit and update original file: 
 
-Input:
+Input file:
 
 ```
-cat << HERE > $cache_root_dir/file.txt
+cat << HERE > file.txt
 OK
 HELLO 1
 DONE
 HERE
-
-cat $cache_root_dir/file.txt
 ```
 
-DSL code:
+DSL:
+
 ```
 between: {OK} {DONE}
     ~regexp: HELLO \s+ (\d+)
@@ -1511,26 +1537,16 @@ if matched() {
     my $ln = captures-full()[0]<index>;
     my $num = capture()[0].Int;
     $num++;
-    replace("{cache_root_dir()}/file.txt",$ln,"BYE $num");
+    replace("file.txt",$ln,"BYE $num");
 }
 RAKU
 
-code: <<BASH
-!bash
-cat $cache_root_dir/file.txt
-BASH
+Modified file:
+
 ```
-Output:
-```
-[task stdout]
-10:42:58 :: OK
-10:42:58 :: HELLO 1
-10:42:58 :: DONE
-[task check]
-stdout match (r) <HELLO \s+ (\d+)> True
-# OK
-# BYE 2
-# DONE
+OK
+BYE 2
+DONE
 ```
 
 Pay attention that [soft check](https://github.com/melezhik/Sparrow6/blob/master/documentation/taskchecks.md#soft-checks) is used here to let main flow continues even though if
@@ -1540,6 +1556,8 @@ range search fails
 
 `remove-line` works similarly to `replace`, but just removing line at number `n`, following example
 removes all lines between `AAA` and `BBB`, including `AAA` and `BBB` lines:
+
+DSL:
 
 ```
 between: {AAA} {BBB}
@@ -1558,10 +1576,9 @@ RAKU
 
 By default STDOUT is a source where input data is read from. One can charge this by using `source:` directive.
 
-Consider two files - `file1.txt` and `file2.txt` with various content. Instead of checking
-content of _both_ files ( using  for example `cat file1.txt; cat file2.txt`), we can check files
-independently:
+Consider two files - `file1.txt` and `file2.txt` with various content. Instead of checking content of _both_ files ( using  for example `cat file1.txt; cat file2.txt`), we can check files independently:
 
+DSL:
 
 ```
 source: file1.txt
@@ -1599,7 +1616,6 @@ This is just a very _simple_ example showing the concept, one can do more sophis
 combining sources with code blocks:
 
 ```
-
 # collect all lines with numbers
 # capturing numeric data
 
@@ -1645,12 +1661,9 @@ OK
 This scenario effectively implements linux style pipeline, where the first step extracts all the numbers and the second sums them up.
 
 
-Sources could be effectively combined with `replace` and `remove-line` functions effectively 
-causing reload of data from changed files, consider this example with a failure in the end,
-proving that the second line has already been deleted:
+Sources could be effectively combined with `replace` and `remove-line` functions effectively causing reload of data from changed files, consider this example with a failure in the end, proving that the second line has already been deleted:
 
-
-*task.check*
+DSL:
 
 ```
 note: === change source ===
@@ -1682,7 +1695,7 @@ source: /tmp/file1.txt
 B1
 ```
 
-report:
+Output:
 
 ```
 [task stdout]
