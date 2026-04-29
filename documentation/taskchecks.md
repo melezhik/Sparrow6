@@ -32,6 +32,13 @@ Examples:
 
 * The TC language _could be thought_ of both imperative and declarative language
 
+## Task check files
+
+Task check DSL code should be written and saved into task.check file
+
+In this tutorial whenever DSL term is uses 
+it means the content of task.check file
+
 ### Declarative way
 
 Static rules - check expressions - that define verification.
