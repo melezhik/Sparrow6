@@ -108,7 +108,7 @@ The TC language consists of the following building blocks:
 
   * Regular expressions
 
-  * Asserts
+  * Assert expressions
 
 * Search context modifiers
 
@@ -977,14 +977,30 @@ See also [generators](#generators) section on how dynamically create check expre
 
 # Asserts
 
-Asserts expressions are statements that whether false or true depending on the value of first arguments
-of assert "function":
+Asserts expressions are statements that are true or false.
 
-    assert: $value $description
+False assert statement always results in
+task check failure.
 
-First value should be _something_ to be treated as false or true:
+Assert expression should be written in form:
 
-The second parameter of assert function is description - a short string to describe assert statement.
+`assert: {value} {short description}`
+
+value should be one of the following
+
+- 1
+- true
+- True
+- 0
+- false
+- False
+
+1, true, True are used for true assert statements,
+0, false, False for false assert statements.
+
+The second short description paramter of assert expression used for informative purposes, so it's just printed in report
+
+Assert expression examples:
 
 DSL: 
     assert: 1 this is true
@@ -1004,7 +1020,21 @@ Output:
     [task check] <this is false, python/ruby style> False
     
 Asserts are almost always created dynamically with generators. See the next section.
- 
+
+## Asserts expressions caveats
+
+- Strictly follow expression value format, should be on of the following - 1,true,True,0,false,False If the value is incorrect or empty task check parser will treat it as plan text check expression, following are some incorrect assert expressions examples:
+
+```
+# wrong format of assert value
+assert: OK this never works
+
+# empty assert value:
+assert: ok
+```
+
+- When generating assert expressions via generators follow programming languages documenatation on how to convert language native types into assert expression value format
+
 # Generators
 
 * Generators is the way to _generate check expressions on the _fly_
@@ -1190,6 +1220,12 @@ stdout match (w) <C> True
 
 Sometime it makes a sense to search by line number of text output. 
 
+Task check provides SLN ( Search by Line ) exprrssions for that. SLN expression is in form:
+
+`:{line number}:`
+
+Where {line number} is a number of line of input text.
+
 Consider this example:
 
 Input:
@@ -1255,7 +1291,6 @@ the second "OK" line (at the index number 2), and then to the line with index nu
 Additional negation checks make it sure that there is no "OK2" line after the first "HELLO" line, and there is no "OK3" line after the second "OK" line.
 
 ---
-
 
 You can use SLN in ranges, sequential blocks and  within expressions:
 
