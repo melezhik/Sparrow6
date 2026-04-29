@@ -60,7 +60,7 @@ Sparrow6 provides an API implemented for compatible languages ( see `matched()`,
 
 Most of examples below will be for Perl5, but the same applies for other compatible languages. 
 
-## DSL parser
+## DSL parser aka task checks parser
 
 DSL parser is the program which:
 
@@ -208,7 +208,6 @@ output:
     [task check] stdout match <'Name:' \s+ \w+> True
     [task check] stdout match <'App Version Number:' \s+ \d+ \. \d+ \. \d+> True
 
-
 ## Matching multiline strings
 
 Check expressions match text in _line by line_ ( aka single line ) mode, there is no way 
@@ -226,6 +225,28 @@ DSL:
     regexp: A \n B
 
 But you can match consecutive series of lines using sequence expressions.
+
+## Regular expressions caveats
+
+- Multiline regular expressions ( unlike in Raku ) are prohibited. Following example of DSL is incorrect:
+
+```
+regexp: \d
+\s
+\d
+```
+
+This is correct form:
+
+```
+regexp: \d \s \d
+```
+
+If you need to write lengthy regular expression that does not fit your editor 
+screen width, you can use generator: to split
+the expression by smaller chunks and generate
+final expression dynamically using one of
+the supported programming languages
 
 # Matched data and capturing
 
