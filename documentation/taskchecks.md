@@ -96,41 +96,6 @@ When search context gets applied _effective_ search context narrows down dependi
 
 Search context is restored to default one every time when DSL parser meets `end:` marker,  see also sequence, range and within expressions.
 
-## DSL Parser Implementation
-
-* `Sparrow6::Task::Check` is Raku implementation of the TC language
-
-* The document describes the TC language itself, rather then methods of `Sparrow6::Task::Check` class
-
-* Read Sparrow6 tasks structure in the [Sparrow6 Development Guide](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md) on how to create task checks using TC language.
-
-Here is an example of verification of 2 lines of text against 2 check expressions:
-
-Input:
-
-    Hello
-    My name is Sparrow6!
-
-DSL:
-    
-    Hello
-    regexp: My \s+ name \s+ is \s+ \S+
-    
-Output:
-
-    [task check] stdout match <Hello> True
-    [task check] stdout match <My \s+ name \s+ is \s+ \S+> True
-    
-Another example:
-
-DSL:
-
-    # there should be digits
-    regexp: \d
-    # and greetings
-    regexp: hello \s+ \w+
-  
-
 # DSL syntax
 
 The TC language consists of the following building blocks:
