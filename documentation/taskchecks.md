@@ -1100,6 +1100,50 @@ As with sequences and ranges, within expression need ending `end:` marker to res
 
 - You cannot have within: end: blocks inside
   begin: end:, between: end: blocks
+
+- within statement does not accept plain text
+  expression as a first argument, use regular
+  expression instead when you want to verify
+  matching string with spaces:
+
+```
+within: "this line"
+```
+
+or ( alternative form ):
+
+```
+within: this \s+ line
+```
+  
+- Within: expressions are not like Python
+  within operator. If within: condition is      not met `note:` messages inside within:       block will still be printed giving false
+  impression that context successfully   switched, for instance this DSL logically     incorrect:
+
+```
+within: "this line"
+# the next debug message
+# will always be printed
+# regardless "this line"
+# exists in input or not
+note: i am within this line
+end:
+```
+
+This example should be rewriten like that;
+
+```
+within: "this line"
+:any:
+end:
+
+code: <<CODE
+!raku
+if matched() {
+   say "we found \"this line\";
+}
+CODE
+```
   
 # Code expressions
 
@@ -2120,7 +2164,26 @@ This happens because for `block:` `end:` mode, search effectively stops when the
 
 # Examples
 
-* Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder
+Following are some selected use cases,
+for more go to examples/ directory
+
+## Apache version
+
+DSL:
+
+```
+regexp: ^^ \s* "Server:" \s+ "Apache/" \d+ "."
+```
+
+Output:
+
+```
+[task stdout]
+22:14:15 :: Server: Apache/2.4.62
+[task check]
+stdout match <^^ \s* "Server:" \s+ "Apache/" \d+ "."> True
+```
+- Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder
 
 # Environment variables
 
