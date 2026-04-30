@@ -248,7 +248,174 @@ the expression by smaller chunks and generate
 final expression dynamically using one of
 the supported programming languages
 
-# Matched data and capturing
+- Spaces
+
+In Raku spaces act differently then in Perl regexps. 
+
+1) If you want to check against spaces you either use `\s+` or `" "`. 
+
+Examples:
+
+```
+regexp: \s
+# next regexp is equivalent to the previous one
+regexp: " "
+
+# also following two expressions
+# are equivalent
+regexp: "Hello World"
+regexp: "Hello" \s "World"
+```
+
+2) we use spaces to separate chunks in complex regexp for *readability*, they never treated as spaces unless they are quoted  (see point number 1), for example:
+
+```
+regexp: "Bla" "Bla" \d
+```
+
+will match "BlaBla100" string
+
+- Quotes for alpha numeric strings
+
+You don't need quotes for letters and numbers unless there is a space needed to match (see the spaces section):
+
+```
+# this all works without quotes
+regexp: Hello 
+regexp: ABC
+regexp: 1977
+```
+
+Adding quotes for those elements, changes nothing, but readability.
+
+Thus following expressions will do the same as the previous ones:
+
+```
+regexp: "Hello"
+regexp: "ABC"
+regexp: "1977"
+```
+
+- Special symbols
+
+Symbols `~ : , @ * . ! | / \ - " ' $ [ ] ( ) + = ^ ?`  have special meaning unless they are quoted or escaped, so to match "Hello:"
+
+```
+regexp: "Hello:"
+```
+
+- Digits
+
+```
+note: 4 digits should be in stdout
+regexp: \d\d\d\d
+```
+
+- Digits and symbols
+
+```
+# match "Hello world"
+# followed by date 
+# in format MON.DD.YYYY
+# where MON - month identified as 3 symbols
+# for example JAN.01.2025
+
+regexp: "Hello world" \s <[A..Z>]> ** 3 "." \d\d "." \d\d\d\d 
+```
+
+- Zero or more symbols
+
+```
+# 0 or more A
+regexp: A*
+```
+
+- One or more symbols
+
+```
+# One or more A
+regexp: A+
+```
+
+- Strictly N symbols
+
+```
+# only four A
+regexp: A ** 4
+```
+
+```
+# From two to four A
+regexp: A ** 2..4
+```
+
+- Any symbol, no symbols at all
+
+```
+# you can use regexp form:
+regexp: .*
+# or this form:
+:any:
+```
+
+- Beginning of string 
+
+Use `^^` for beginning:
+
+```
+regexp: ^^ "Here we begin"
+
+# or with zero or many
+# leading spaces
+
+regexp: ^^ \s* "Look ma at my tabs"
+
+```
+
+- End of string
+
+Use `$$` for end of string:
+
+```
+regexp: "wait until the end" \s* $$
+```
+
+See also https://docs.raku.org/language/regexes#Quantifiers
+
+- Symbol ranges
+
+```
+# anything from a to z
+regexp: <[a..z]>
+```
+
+```
+# anything from a to z, repeated 3 times
+regexp: <[a..z]> ** 3
+```
+
+See also https://docs.raku.org/language/regexes#Enumerated_character_classes_and_ranges
+
+- Alternations
+
+Alternations allows to match from many possible options:
+
+```
+# should be at least something
+# out of three colors:
+regexp: red || green || blue
+```
+
+To separate alternations from other regexp terms use square brackets:
+
+```
+regexp: "hello, mister" \s [ Red || Green || Brown ] "," \s "would you like a" \s [ tea || coffee ] "?"
+```
+
+See also [Alternations](https://docs.raku.org/language/regexes#Alternation:_||)
+
+
+## Matched data and capturing
 
 * Parser matches all the lines of input text against check expression
 
