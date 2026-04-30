@@ -323,6 +323,27 @@ regexp: \d\d\d\d
 regexp: "Hello world" \s <[A..Z>]> ** 3 "." \d\d "." \d\d\d\d 
 ```
 
+- Mixing quotes and back slashes
+
+When escaping symbols ,.+-:,= choose either
+quote or back slash, but not both for readability:
+
+```
+# legid, but not neccessary
+# to use both \ and " for
+# escaping of .
+regexp: "\.hello"
+
+# following two expressions
+# do the same:
+
+# escaping by back slash
+regexp: \.hello
+
+# escaping by quotes
+regexp: ".hello"
+
+```
 - Zero or more symbols
 
 ```
