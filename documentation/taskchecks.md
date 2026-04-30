@@ -2085,6 +2085,39 @@ stdout match <C2> True
 stdout match <B1> False
 ```
 
+# FAQ
+
+## Q1
+
+> Is it common for one line to fail and subsequent lines then fail even though they match?
+
+This only happens if sequential search is used, for example:
+
+task.check
+```
+begin:
+AAA
+B
+C
+end:
+```
+Report:
+```
+[task stdout]
+23:17:57 :: A
+23:17:57 :: B
+23:17:57 :: C
+[task check]
+stdout match (s) <AAA> False
+stdout match (s) <B> False
+stdout match (s) <C> False
+=================
+TASK CHECK FAIL
+```
+
+This happens because for `block:` `end:` mode, search effectively stops when the first none matching happens, because all the *further* matches do not matter as we require subsequent match - like AAA, B, C in strict order.
+
+
 # Examples
 
 * Look at [examples](https://github.com/melezhik/Sparrow6/tree/master/examples) folder
