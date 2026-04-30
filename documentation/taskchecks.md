@@ -421,10 +421,10 @@ See also [Alternations](https://docs.raku.org/language/regexes#Alternation:_||)
 
 * If at least _one line_ matches a check expression - check step is considered as successful
 
-* Matched lines are captured and accumulated inside @matched array and available through `matched()` function 
+* Matched lines are captured and accumulated inside @matched array and available through `matched()` function, see https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md
 
 * If regular expressions with [capturing](https://docs.raku.org/language/regexes#Capturing) are used, 
-the respected captures get _accumulated_ inside `@captures` array and available through `captures()` function
+the respected captures get _accumulated_ inside `@captures` array and available through `captures()` function, see https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md
 
 * Layer is captures for a single check step, see also streams
 
@@ -1219,6 +1219,9 @@ on task API.
 
 See also [generators](#generators) section on how dynamically create check expressions using various programming languages.
 
+Code expressions could use all the functions
+provided by Sparrow Task SDK - https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md
+
 ## Code expressions pitfalls
 
 - Don't use code expressions to print another
@@ -1416,6 +1419,8 @@ This is short example for Ruby language:
     !ruby
         puts "assert: #{capture()[0] == 10}, you've got 10!"  
     CODE
+
+Generator expressions could use all the functions provided by Sparrow Task SDK - https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md
 
 ## Generators pitfalls
 
