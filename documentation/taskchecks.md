@@ -476,7 +476,7 @@ There are three types of search context modifiers:
 * Ranges expressions
 * Within expressions 
 
-# Sequences expressions
+# Sequence expressions
 
 Sequences narrows down searched input data to the _consecutive_ sequence of lines, "insisting", that matched lines should go one by one:
 
@@ -1014,7 +1014,19 @@ See also [generators](#generators) section on how dynamically create check expre
 DSL expressions ( for instance - regexp:, generator:, code:, within:, begin:, between: , etc ) , this does not make a sence as DSL parser does not treat output from code: expressions as check rules, it just dumps the output as is. Instead use generator: to generate new check rules or DSL expressions
 
 - Always set language identificator on the very first line of code block, or else default
-language (Perl) will be applied which is not probably what you want 
+language (Perl) will be applied which is not probably what you want
+
+- For code expressions written on Python
+  if Sparrow SDK functions are used ( matched(), captures(), capture(), streams-array(), config(), os(), get_state(), update_state(), etc ) you have to import those functions from sparrow6lib to make them available inside code expression block:
+
+```
+code: <<CODE
+!python
+from sparrow6lib import *
+c = capture()
+conf = config()
+CODE
+```
 
 # Asserts
 
@@ -1194,9 +1206,22 @@ This is short example for Ruby language:
         puts "assert: #{capture()[0] == 10}, you've got 10!"  
     CODE
 
-## Generators putfalls
+## Generators pitfalls
 
 - Always set language identificator on the very first line of generator block, or else default language (Perl) will be applied which is not probably what you want 
+
+- For generator expressions written on Python
+if Sparrow SDK functions are used (
+matched(), captures(), capture(), streams-array(), config(), os(), get_state(), update_state(), etc you have to import those functions from sparrow6lib to make them available inside generator expression block:
+
+```
+generator: <<CODE
+!python
+from sparrow6lib import *
+c = capture()
+conf = config()
+CODE
+```
 
 # Negations
 
