@@ -1433,6 +1433,35 @@ c = capture()
 conf = config()
 CODE
 ```
+# Sharing data between code or generator blocks
+
+To share captured data accross code: or generator: blocks use functions update_state(), get_state() privided
+by Sparrow Task SDK:
+
+```
+regexp: ID \: \s+ (\d+)
+
+code: <<CODE
+!raku
+if matched() {
+   update_state(%(
+     id => capture()[0]
+   ));
+}
+CODE
+
+regexp: Name \: \s+ (\S+)
+
+code: <<CODE
+!raku
+if matched() {
+   my $id = get_state()<id>;
+   my $name = capture()[0];
+   say "{$name}'s ID is {$id}";
+}
+CODE
+
+```
 
 # Negations
 
