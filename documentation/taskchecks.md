@@ -1435,8 +1435,7 @@ CODE
 ```
 # Sharing data between code or generator blocks
 
-To share captured data accross code: or generator: blocks use functions update_state(), get_state() privided
-by Sparrow Task SDK:
+To share captured data accross code: or generator: blocks use functions [update_state(), get_state()](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md#task-states) privided by Sparrow Task SDK:
 
 ```
 regexp: ID \: \s+ (\d+)
