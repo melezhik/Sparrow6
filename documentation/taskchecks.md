@@ -564,11 +564,46 @@ That allows you to write tests in Perl5 Test::More `cmp_ok` way.
 Matched data and captures are reset for every check step, meaning that the related functions return data for the _last_ check step.
 But also see streams, that accumulated captures within search context.
 
+# Capture(), captures(), matches() pitfalls
+
+All those functions only store data matched or captured for the last check expression.
+
+They don't accumulate data for the previous checks.
+
+Consider this example:
+
+Input:
+
+```
+1 hello
+2 world
+```
+DSL:
+
+```
+regexp: \d \s hello
+regexp: \d \s world
+
+code<< CODE
+!raku
+for matches()<> -> $l {
+   say $l
+}
+```
+
+This will only print `2 world` as this
+is a line where the last check expression matched
+
+If you want to accumulate matched or captured data consider using within:, between: or begin: together with streams(), streams_array() functions. Streams always
+accumulate matches data when used together with mentioned search scope modifiers
+
+
 # Soft checks
 
-Soft checks is a special form of regexp expressions, so when a check fails it does not result in overall test failure. 
+Soft checks is a special form of regexp expression check, so when a check fails it does not in check failure, the fact of mismatch just printed in report.  If soft check matched it acts identically to regular ( none soft ) successfull check 
 
-Mostly soft checks are used together with generator/code expressions so main flow continues even though some checks fail along  the road, here is an example:
+Mostly soft checks are used together with generator/code expressions to implimen
+conditional or optional checks, here is an example:
 
 Input:
 
