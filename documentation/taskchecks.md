@@ -564,7 +564,7 @@ That allows you to write tests in Perl5 Test::More `cmp_ok` way.
 Matched data and captures are reset for every check step, meaning that the related functions return data for the _last_ check step.
 But also see streams, that accumulated captures within search context.
 
-# Capture(), captures(), matches() pitfalls
+# Capture(), captures(), matched() pitfalls
 
 All those functions only store data matched or captured for the last check expression.
 
@@ -597,6 +597,23 @@ is a line where the last check expression matched
 If you want to accumulate matched or captured data consider using within:, between: or begin: together with streams(), streams_array() functions. Streams always
 accumulate matches data when used together with mentioned search scope modifiers
 
+So as a rule use code: or generator: 
+expression after every check expression
+to handle captured, matched data:
+
+```
+regexp: \d
+code: <<CODE
+!raku
+# handle matched data
+CODE
+
+regexp: \w
+code: <<CODE
+!raku
+# handle matched data
+CODE
+```
 
 # Soft checks
 
