@@ -1165,7 +1165,27 @@ end:
 
 * Resetting search context
         
-As with sequences and ranges, within expression need ending `end:` marker to restore search context.
+As with sequences and ranges, within expression need ending `end:` marker to restore search context
+
+* Use none capturing brackets (`[`,`]`) instead of capturing ones (`(`, `)`) if you
+don't want zoom within expressions:
+
+```
+within: hello \s+ [world||space||water]
+```
+
+Be carefull, if you use capturing brackets (`(`, `)`) together with within: you end up
+in zoon mode, so the next check expression
+after within: will be limited to captured data
+if any:
+
+```
+within: hello \s+ (\d+)
+# the next check is going
+# to fail as we now
+# limit search to numbers
+hello
+```
 
 ## Within expressions limitations 
 
