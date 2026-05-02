@@ -55,6 +55,7 @@ Static rules - check expressions - that define verification.
   * Ruby
   * Python
   * Powershell
+  * Php
 
 Sparrow6 provides an API implemented for compatible languages ( see `matched()`, `captures()`, `streams_array()` functions )
 
@@ -157,6 +158,17 @@ There are two types of check expressions:
 * [plain text expressions](#plain-text-expressions) 
 
 * [regular expressions](#regular-expressions).
+
+
+## Check expressions pitfalls
+
+If a check expression check fails
+it does not terminate the whole scenario straight away, the failed checks is marked in internal state and will result in whole scenario failure when scenario is finished.
+
+So it's wrong to assume if we reach the
+end of task.check there is no check
+failures
+
 
 # Plain text expressions 
 
