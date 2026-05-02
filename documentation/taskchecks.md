@@ -190,6 +190,13 @@ Similarly to plain text matching, one may check against regular expressions.
 
 The TC language uses [Raku Regular Expressions](https://docs.raku.org/language/regexes).
 
+WARNING!!!
+
+Raku regular expressions are quite different
+from Perl regexps, please refer the documentation - https://docs.raku.org/language/regexes to correctly write them
+
+Example:
+
 Input
 
     2019-04-01
@@ -227,6 +234,9 @@ DSL:
 But you can match consecutive series of lines using sequence expressions.
 
 ## Regular expressions pitfalls
+
+- Raku regular expressions are quite different
+from Perl regexps, please refer the documentation - https://docs.raku.org/language/regexes to correctly write them
 
 - Multiline regular expressions ( unlike in Raku ) are prohibited. Following example of DSL is incorrect:
 
