@@ -82,7 +82,7 @@ This is rough explanation of the algorithm:
   * Set the _check step_ status as `unknown`
   * For every _line_ in input text:
     * Calculate if the line matches _check expression_
-    * If line matches then marks check step status as `succeeded`
+    * If line matches then marks check step status as `succeeded` 
     * Next line
   * End of lines loop
 * If the check step status is `unknown`, then set check step status to `failed`
@@ -169,6 +169,9 @@ So it's wrong to assume if we reach the
 end of task.check there is no check
 failures
 
+In other words even though a check is failed
+parser mark it state as failed and goes to the
+next check
 
 # Plain text expressions 
 
