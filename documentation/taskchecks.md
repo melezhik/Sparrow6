@@ -642,7 +642,7 @@ CODE
 
 # Soft checks
 
-Soft checks is a special form of regexp expression check, so when a check fails it does not in check failure, the fact of mismatch just printed in report.  If soft check matched it acts identically to regular ( none soft ) successfull check 
+Soft checks is a special form of regexp expression check, so when a soft check matching fails the parser does not consider this as a failure, the fact of mismatch just printed out in report. If soft check matched it acts identically to regular ( none soft ) successfull check 
 
 Mostly soft checks are used together with generator/code expressions to implimen
 conditional or optional checks, here is an example:
