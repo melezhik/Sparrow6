@@ -1,6 +1,7 @@
 from glue import *
 import json
 from pathlib import Path
+import os
 
 TASK_VARIABLES = None
 CONFIG = None
@@ -131,6 +132,10 @@ def streams_array():
 def get_state():
 
   json_file = cache_root_dir() + "/state.json"
+
+  if not os.path.isfile(json_file):
+    return {}
+
   with open(json_file) as data_file:
     return json.load(data_file)
 
