@@ -1,16 +1,18 @@
 from glue import *
 import json
+from pathlib import Path
 
 TASK_VARIABLES = None
 CONFIG = None
 CAPTURES = None
 STREAMS = None
 STREAMS_ARRAY = None
+MATCHED = None
 
 def set_stdout(line):
   with open(stdout_file(), "a") as myfile:
     myfile.write(line)
-  
+
 def config():
 
   global CONFIG
@@ -22,7 +24,7 @@ def config():
     with open(json_file) as data_file:
       CONFIG = json.load(data_file)
     return CONFIG
-  
+
 
 def run_task( path, params = [] ):
 
@@ -55,12 +57,26 @@ def task_variables():
     return TASK_VARIABLES
   else:
     json_file = cache_dir() + "/variables.json"
-  
+
     with open(json_file) as data_file:
       TASK_VARIABLES = json.load(data_file)
-  
+
     return TASK_VARIABLES
-  
+
+def matched ():
+
+  global MATCHED
+
+  if MATCHED:
+    return MATCHED
+  else:
+    _file = cache_root_dir() + "/matched.txt"
+
+  with open(_file) as _f:
+    MATCHED = [line.strip() for line in _f]
+
+  return MATCHED
+
 
 def task_var(name):
 
@@ -81,7 +97,7 @@ def captures():
     CAPTURES = list(map(lambda x: x.get('data'), data))
 
     return  CAPTURES
-    
+
 def capture():
     return captures()[0]
 

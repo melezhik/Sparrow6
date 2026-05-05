@@ -2,6 +2,9 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+    add matched() to
+    Python SDK
+
 0.0.90 2026-04-25T14:15:00Z
 
     Back to utf8-c8
