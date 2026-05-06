@@ -151,7 +151,7 @@ Output:
 
     [task check] stdout match <HELLO> True
     [task check] stdout match <\d\d\d\d "-" \d\d "-" \d\d> True
-    
+
 
 There are two types of check expressions:
 
@@ -250,8 +250,7 @@ But you can match consecutive series of lines using sequence expressions.
 
 ## Regular expressions pitfalls
 
-- Raku regular expressions are quite different
-from Perl regexps, please refer the documentation - https://docs.raku.org/language/regexes to correctly write them
+- Raku regular expressions are quite different from Perl regexps, please refer the documentation - https://docs.raku.org/language/regexes to correctly write them
 
 - Multiline regular expressions ( unlike in Raku ) are prohibited. Following example of DSL is incorrect:
 
@@ -272,6 +271,8 @@ screen width, you can use generator: to split
 the expression by smaller chunks and generate
 final expression dynamically using one of
 the supported programming languages
+
+## Following is quick migration guide from Perl to Raku regexps
 
 - Spaces
 
@@ -306,6 +307,7 @@ You don't need quotes for letters and numbers unless there is a space needed to 
 
 ```
 # this all works without quotes
+
 regexp: Hello 
 regexp: ABC
 regexp: 1977
@@ -429,6 +431,8 @@ regexp: "wait until the end" \s* $$
 See also https://docs.raku.org/language/regexes#Quantifiers
 
 - Symbol ranges
+
+Instead of writing `[a-z]` like in Perl, use this form:
 
 ```
 # anything from a to z
