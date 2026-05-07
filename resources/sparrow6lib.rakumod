@@ -97,7 +97,7 @@ sub captures () is export {
 
   $captures = $json.map({ $_<data> });
 
-  return $captures;
+  return $captures<>;
 
 }
 
@@ -142,6 +142,8 @@ sub dump_streams () is export {
 }
 
 sub get_state () is export {
+
+  return %() unless "{cache_root_dir()}/state.json".IO ~~ :f;
 
   my $state = from-json slurp "{cache_root_dir()}/state.json";
 

@@ -201,6 +201,8 @@ sub get_state {
 
   my $path =  cache_root_dir()."/state.json";
 
+  return {} unless -f $path;
+
   open(my $fh, $path) or confess "can't open file $path to read: $!";
   my $data = join "", <$fh>;
   close $fh;

@@ -8,7 +8,7 @@ Revision history for Sparrow6
     get_state() returns
     empty dict if state
     does not exist,
-    for Python SDK
+    for Python/Perl/Raku SDK
 
 0.0.90 2026-04-25T14:15:00Z
 
