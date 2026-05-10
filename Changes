@@ -10,6 +10,9 @@ Revision history for Sparrow6
     does not exist,
     for Python/Perl/Raku SDK
 
+    don't strip comments
+    for *: directives
+
 0.0.90 2026-04-25T14:15:00Z
 
     Back to utf8-c8

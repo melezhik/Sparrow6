@@ -354,7 +354,12 @@ class Api
   
           next LINE if $l ~~ / ^^ \s* '#' .* /;  # skip comments
   
-          $l ~~ s/'#'.*//; # remove comments parts for strings like "something # comment"
+
+          my $strip-comments = $l ~~ /^^ \s* [regexp|within|between|\!regexp|\~regexp] \:/ ?? False !! True;
+
+          if $strip-comments {
+            $l ~~ s/'#'.*//; # remove comments
+          }
   
           
           if $l ~~ / ^^ \s* 'note:' \s* (.*) $$ /  {
