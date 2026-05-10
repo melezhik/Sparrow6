@@ -1,0 +1,87 @@
+TC DSL Constraints
+
+- SDK function  get_state()  should not accept any arguments it return dictionary.  update_state(dictionary) SDK function should accept dictionary as argument 
+
+- task.check should be written on TC DSL language , this is not YAML!!!
+ 
+- In Raku regexp dots, equal sign, square baskets, single quotes and double quotes symbols should be escaped by back slash
+
+- code: and generator: should have correct form, examples:
+
+- don't enclose regexp: expressions into "/", don't do that:
+
+regexp: / \d+ /
+
+code: block syntax example:
+
+code: <<CODE
+!raku
+your code here 
+CODE
+
+generator: block syntax example:
+
+generator: <<CODE
+!raku
+your code here 
+CODE
+
+- you should write generator: and code: blocks only on Raku
+
+- you should only create task.check file and nothing else
+
+- assert expressions should be printed in generators in a form
+
+assert: condition short_description
+
+where condition is one of: 0,1,true,false
+
+example for Raku:
+
+say(“assert: {$condition} {$short_description}")
+
+- you should use Raku regular expressions in regexp:, not Perl ones! here is
+the list of main differences:
+
+Character Class in Perl: [a-z]
+
+Character Class in Raku: <[a-z]>
+
+Negated Class in Perl: [^a-z]
+Negated Class in Raku:  <-[a-z]>
+
+Literal Space in Perl: \ 
+Literal Space in Raku: ' '
+
+Non-capturing in Perl: (?:...)
+Non-capturing in Raku: [...]
+
+Word Boundary in Perl: \b
+Word Boundary in Raku: << (left) or >> (right)
+
+- you should not use named captures in regular expressions
+
+- use \s for literal spaces in regexp:
+
+- add literal spaces for readability in regexp:
+
+- escape equal signs in regexp: \=
+
+- escape `;` symbol : \;
+
+- in Raku regexp use ".." for Character class, examples:
+
+# all ABC letters case not sensitive 
+<[a..zA..Z]>
+
+# no ABC letters case not sensitive 
+<-[a..zA..Z]>
+
+In character class should be following sequence of control symbols:
+
+]>+
+
+Examples:
+
+<[a..zA..Z]>
+<[a..zA..Z]>+
