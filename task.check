@@ -7,195 +7,196 @@ note: Checking for suspicious SSH activities
 note: Detecting failed login attempts
 regexp: Failed \s+ password
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 1 failed password attempt detected")
-  print("note: Total failed attempts: {}".format(len(matched())))
-  print("note: Last 10 failed login attempts:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no failed attempts found")
+!raku
+if matched().elems > 0 {
+  say "assert: 1 failed password attempt detected";
+  say "note: Total failed attempts: {matched().elems}";
+  say "note: Last 10 failed login attempts:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no failed attempts found";
+}
 CODE
 
 # 2. Invalid user attempts
 note: Detecting invalid user login attempts
 regexp: Invalid \s+ user
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 1 invalid user attempts detected: {} attempts".format(len(matched())))
-  print("note: Last 10 invalid user attempts:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no invalid user attempts")
+!raku
+if matched().elems > 0 {
+  say "assert: 1 invalid user attempts detected: {matched().elems} attempts";
+  say "note: Last 10 invalid user attempts:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no invalid user attempts";
+}
 CODE
 
 # 3. Root login attempts (potential security concern)
 note: Detecting root login attempts
 regexp: [ root || ROOT ]
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 1 root login attempts detected")
-  print("note: Total root-related events: {}".format(len(matched())))
-  print("note: Last 10 root-related events:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no root login attempts")
+!raku
+if matched().elems > 0 {
+  say "assert: 1 root login attempts detected";
+  say "note: Total root-related events: {matched().elems}";
+  say "note: Last 10 root-related events:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no root login attempts";
+}
 CODE
 
 # 4. Connection closed/timeout events
 note: Detecting connection closures
 regexp: [ 'Connection closed' || 'Disconnected' || 'timeout' || 'Timeout' ]
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 1 connection closure events found: {}".format(len(matched())))
-  print("note: Last 10 connection closure events:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no connection closure events")
+!raku
+if matched().elems > 0 {
+  say "assert: 1 connection closure events found: {matched().elems}";
+  say "note: Last 10 connection closure events:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no connection closure events";
+}
 CODE
 
 # 5. Successful logins
 note: Checking for successful logins
 regexp: [ 'Accepted' || 'accepted' ]
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 1 successful logins found: {} total".format(len(matched())))
-  print("note: Last 10 successful login events:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no successful logins recorded")
+!raku
+if matched().elems > 0 {
+  say "assert: 1 successful logins found: {matched().elems} total";
+  say "note: Last 10 successful login events:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no successful logins recorded";
+}
 CODE
 
 # 6. Authentication errors
 note: Detecting authentication errors
 regexp: [ 'error' || 'Error' || 'ERROR' ]
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 0 authentication errors detected: {} total".format(len(matched())))
-  print("note: Last 10 error events:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no authentication errors found")
+!raku
+if matched().elems > 0 {
+  say "assert: 0 authentication errors detected: {matched().elems} total";
+  say "note: Last 10 error events:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no authentication errors found";
+}
 CODE
 
 # 7. SSH protocol issues
 note: Detecting SSH protocol anomalies
 ~regexp: [ 'protocol' || 'Protocol' || 'DH' || 'KEY' ]
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 0 SSH protocol issues detected: {} events".format(len(matched())))
-  print("note: Last 10 protocol-related events:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no SSH protocol anomalies")
+!raku
+if matched().elems > 0 {
+  say "assert: 0 SSH protocol issues detected: {matched().elems} events";
+  say "note: Last 10 protocol-related events:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no SSH protocol anomalies";
+}
 CODE
 
 # 8. User enumeration attempts
 note: Detecting user enumeration
 regexp: [ 'user' || 'User' || 'USER' ]
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 1 user-related activity detected: {} events".format(len(matched())))
-  print("note: Last 10 user-related events:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no user activity")
+!raku
+if matched().elems > 0 {
+  say "assert: 1 user-related activity detected: {matched().elems} events";
+  say "note: Last 10 user-related events:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no user activity";
+}
 CODE
 
 # 9. Authentication method analysis
 note: Detecting authentication methods used
 ~regexp: [ 'password' || 'Password' || 'publickey' || 'public' || 'key' ]
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(matched()) > 0:
-  print("assert: 1 authentication methods detected: {} events".format(len(matched())))
-  print("note: Last 10 authentication method events:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
-else:
-  print("assert: 1 no authentication method events")
+!raku
+if matched().elems > 0 {
+  say "assert: 1 authentication methods detected: {matched().elems} events";
+  say "note: Last 10 authentication method events:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
+} else {
+  say "assert: 1 no authentication method events";
+}
 CODE
 
 # 10. IP-based attack patterns (capture and analyze)
 note: Analyzing IP patterns for brute force
 regexp: (\d+\.\d+\.\d+\.\d+)
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-if len(captures()) > 0:
-  ip_count = {}
-  for cap in captures():
-    ip = cap[0]
-    ip_count[ip] = ip_count.get(ip, 0) + 1
+!raku
+if captures().elems > 0 {
+  my %ip_count;
+  for captures() -> $cap {
+    my $ip = $cap[0];
+    %ip_count{$ip}++;
+  }
   
-  print("assert: 1 IP analysis complete: {} unique IPs".format(len(ip_count)))
-  print("note: Last 10 IP entries:")
-  last_ten = matched()[-10:]
-  for entry in last_ten:
-    print("note:   {}".format(entry))
+  say "assert: 1 IP analysis complete: {%ip_count.elems} unique IPs";
+  say "note: Last 10 IP entries:";
+  my @last_ten = matched()[*-10..*];
+  for @last_ten -> $entry {
+    say "note:   {$entry}";
+  }
   
-  sorted_ips = sorted(ip_count.items(), key=lambda x: x[1], reverse=True)[:10]
-  print("note: Top IPs by event frequency:")
-  for ip, count in sorted_ips:
-    if count > 5:
-      print("assert: 0 suspicious IP {}: {} events (possible brute force)".format(ip, count))
-    else:
-      print("note:   IP {}: {} events".format(ip, count))
-else:
-  print("assert: 1 no IP addresses found")
+  my @high_freq = %ip_count.sort(*.value).reverse[0..9];
+  say "note: Top IPs by event frequency:";
+  for @high_freq -> $pair {
+    if $pair.value > 5 {
+      say "assert: 0 suspicious IP {$pair.key}: {$pair.value} events (possible brute force)";
+    } else {
+      say "note:   IP {$pair.key}: {$pair.value} events";
+    }
+  }
+} else {
+  say "assert: 1 no IP addresses found";
+}
 CODE
 
 # 11. Brute force detection summary
 note: Brute force pattern analysis
 generator: <<CODE
-!python
-from sparrow6lib import *
-
-print("assert: 1 SSHD log analysis complete")
-print("note: Summary: Review events above for security threats")
-print("note: Suspicious patterns indicated by 'assert: 0' lines")
+!raku
+say "assert: 1 SSHD log analysis complete";
+say "note: Summary: Review events above for security threats";
+say "note: Suspicious patterns indicated by 'assert: 0' lines";
 CODE
 
