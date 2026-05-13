@@ -7,266 +7,239 @@ note: Checking for suspicious SSH activities
 note: Detecting failed login attempts
 regexp: Failed \s+ password
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 1 failed password attempt detected\n";
-  echo "note: Total failed attempts: " . count($matched_list) . "\n";
-  echo "note: Last 10 failed login attempts:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no failed attempts found\n";
-}
+if matched_list.length > 0
+  puts "assert: 1 failed password attempt detected"
+  puts "note: Total failed attempts: #{matched_list.length}"
+  puts "note: Last 10 failed login attempts:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no failed attempts found"
+end
 
-?>
 CODE
 
 # 2. Invalid user attempts
 note: Detecting invalid user login attempts
 regexp: Invalid \s+ user
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 1 invalid user attempts detected: " . count($matched_list) . " attempts\n";
-  echo "note: Last 10 invalid user attempts:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no invalid user attempts\n";
-}
+if matched_list.length > 0
+  puts "assert: 1 invalid user attempts detected: #{matched_list.length} attempts"
+  puts "note: Last 10 invalid user attempts:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no invalid user attempts"
+end
 
-?>
 CODE
 
 # 3. Root login attempts (potential security concern)
 note: Detecting root login attempts
 regexp: [ root || ROOT ]
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 1 root login attempts detected\n";
-  echo "note: Total root-related events: " . count($matched_list) . "\n";
-  echo "note: Last 10 root-related events:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no root login attempts\n";
-}
+if matched_list.length > 0
+  puts "assert: 1 root login attempts detected"
+  puts "note: Total root-related events: #{matched_list.length}"
+  puts "note: Last 10 root-related events:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no root login attempts"
+end
 
-?>
 CODE
 
 # 4. Connection closed/timeout events
 note: Detecting connection closures
 regexp: [ 'Connection closed' || 'Disconnected' || 'timeout' || 'Timeout' ]
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 1 connection closure events found: " . count($matched_list) . "\n";
-  echo "note: Last 10 connection closure events:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no connection closure events\n";
-}
+if matched_list.length > 0
+  puts "assert: 1 connection closure events found: #{matched_list.length}"
+  puts "note: Last 10 connection closure events:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no connection closure events"
+end
 
-?>
 CODE
 
 # 5. Successful logins
 note: Checking for successful logins
 regexp: [ 'Accepted' || 'accepted' ]
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 1 successful logins found: " . count($matched_list) . " total\n";
-  echo "note: Last 10 successful login events:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no successful logins recorded\n";
-}
+if matched_list.length > 0
+  puts "assert: 1 successful logins found: #{matched_list.length} total"
+  puts "note: Last 10 successful login events:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no successful logins recorded"
+end
 
-?>
 CODE
 
 # 6. Authentication errors
 note: Detecting authentication errors
 regexp: [ 'error' || 'Error' || 'ERROR' ]
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 0 authentication errors detected: " . count($matched_list) . " total\n";
-  echo "note: Last 10 error events:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no authentication errors found\n";
-}
+if matched_list.length > 0
+  puts "assert: 0 authentication errors detected: #{matched_list.length} total"
+  puts "note: Last 10 error events:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no authentication errors found"
+end
 
-?>
 CODE
 
 # 7. SSH protocol issues
 note: Detecting SSH protocol anomalies
 ~regexp: [ 'protocol' || 'Protocol' || 'DH' || 'KEY' ]
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 0 SSH protocol issues detected: " . count($matched_list) . " events\n";
-  echo "note: Last 10 protocol-related events:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no SSH protocol anomalies\n";
-}
+if matched_list.length > 0
+  puts "assert: 0 SSH protocol issues detected: #{matched_list.length} events"
+  puts "note: Last 10 protocol-related events:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no SSH protocol anomalies"
+end
 
-?>
 CODE
 
 # 8. User enumeration attempts
 note: Detecting user enumeration
 regexp: [ 'user' || 'User' || 'USER' ]
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 1 user-related activity detected: " . count($matched_list) . " events\n";
-  echo "note: Last 10 user-related events:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no user activity\n";
-}
+if matched_list.length > 0
+  puts "assert: 1 user-related activity detected: #{matched_list.length} events"
+  puts "note: Last 10 user-related events:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no user activity"
+end
 
-?>
 CODE
 
 # 9. Authentication method analysis
 note: Detecting authentication methods used
 ~regexp: [ 'password' || 'Password' || 'publickey' || 'public' || 'key' ]
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$matched_list = matched();
+matched_list = matched()
 
-if (count($matched_list) > 0) {
-  echo "assert: 1 authentication methods detected: " . count($matched_list) . " events\n";
-  echo "note: Last 10 authentication method events:\n";
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
-} else {
-  echo "assert: 1 no authentication method events\n";
-}
+if matched_list.length > 0
+  puts "assert: 1 authentication methods detected: #{matched_list.length} events"
+  puts "note: Last 10 authentication method events:"
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
+else
+  puts "assert: 1 no authentication method events"
+end
 
-?>
 CODE
 
 # 10. IP-based attack patterns (capture and analyze)
 note: Analyzing IP patterns for brute force
 regexp: (\d+\.\d+\.\d+\.\d+)
 generator: <<CODE
-!php
-<?php
+!ruby
 
-$captures_list = captures();
+captures_list = captures()
 
-if (count($captures_list) > 0) {
-  $ip_count = array();
-  foreach ($captures_list as $cap) {
-    $ip = $cap[0];
-    if (isset($ip_count[$ip])) {
-      $ip_count[$ip]++;
-    } else {
-      $ip_count[$ip] = 1;
-    }
-  }
+if captures_list.length > 0
+  ip_count = Hash.new(0)
+  captures_list.each do |cap|
+    ip = cap[0]
+    ip_count[ip] += 1
+  end
   
-  echo "assert: 1 IP analysis complete: " . count($ip_count) . " unique IPs\n";
-  echo "note: Last 10 IP entries:\n";
-  $matched_list = matched();
-  $last_ten = array_slice($matched_list, -10);
-  foreach ($last_ten as $entry) {
-    echo "note:   " . $entry . "\n";
-  }
+  puts "assert: 1 IP analysis complete: #{ip_count.length} unique IPs"
+  puts "note: Last 10 IP entries:"
+  matched_list = matched()
+  last_ten = matched_list.last(10)
+  last_ten.each do |entry|
+    puts "note:   #{entry}"
+  end
   
-  arsort($ip_count);
-  $top_ips = array_slice($ip_count, 0, 10, true);
-  echo "note: Top IPs by event frequency:\n";
-  foreach ($top_ips as $ip => $count) {
-    if ($count > 5) {
-      echo "assert: 0 suspicious IP " . $ip . ": " . $count . " events (possible brute force)\n";
-    } else {
-      echo "note:   IP " . $ip . ": " . $count . " events\n";
-    }
-  }
-} else {
-  echo "assert: 1 no IP addresses found\n";
-}
+  sorted_ips = ip_count.sort_by { |ip, count| -count }.first(10)
+  puts "note: Top IPs by event frequency:"
+  sorted_ips.each do |ip, count|
+    if count > 5
+      puts "assert: 0 suspicious IP #{ip}: #{count} events (possible brute force)"
+    else
+      puts "note:   IP #{ip}: #{count} events"
+    end
+  end
+else
+  puts "assert: 1 no IP addresses found"
+end
 
-?>
 CODE
 
 # 11. Brute force detection summary
 note: Brute force pattern analysis
 generator: <<CODE
-!php
-<?php
+!ruby
 
-echo "assert: 1 SSHD log analysis complete\n";
-echo "note: Summary: Review events above for security threats\n";
-echo "note: Suspicious patterns indicated by 'assert: 0' lines\n";
+puts "assert: 1 SSHD log analysis complete"
+puts "note: Summary: Review events above for security threats"
+puts "note: Suspicious patterns indicated by 'assert: 0' lines"
 
-?>
 CODE
 
