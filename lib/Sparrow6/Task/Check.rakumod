@@ -354,7 +354,6 @@ class Api
   
           next LINE if $l ~~ / ^^ \s* '#' .* /;  # skip comments
   
-
           my $strip-comments = $l ~~ /^^ \s* [regexp|within|between|\!regexp|\~regexp] \:/ ?? False !! True;
 
           if $strip-comments {

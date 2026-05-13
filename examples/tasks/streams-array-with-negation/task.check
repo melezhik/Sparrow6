@@ -5,7 +5,7 @@ end:
 
 generator: <<OK
 !raku
-for streams_array()<> -> $i {
+for streams_array() -> $i {
    say "assert: ", $i.tail.head ~~ /\S+/ ?? True !! False, " i.tail.head is not empty" ;
 }
 OK

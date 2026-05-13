@@ -85,7 +85,7 @@ sub matched () is export {
 
   $matched = "{cache_root_dir()}/matched.txt".IO.lines;
 
-  return $matched;
+  return $matched<>;
 
 }
 
@@ -130,6 +130,18 @@ sub streams_array () is export {
   return $streams_array if $streams_array.defined;
 
   $streams_array = from-json slurp "{cache_root_dir()}/streams-array.json";
+
+  my @arr = [];
+
+  for $streams_array<> -> $g {
+    my @g;
+    for $g<> -> $l {
+      push @g, $l<>;
+    }
+    push @arr, @g;
+  }
+
+  $streams_array = @arr;
 
   return $streams_array;
 
