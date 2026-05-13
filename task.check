@@ -7,20 +7,20 @@ note: Checking for suspicious SSH activities
 note: Detecting failed login attempts
 regexp: Failed \s+ password
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 1 failed password attempt detected"
-  Write-Host "note: Total failed attempts: $($matched_list.Count)"
-  Write-Host "note: Last 10 failed login attempts:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 1 failed password attempt detected\n";
+  print "note: Total failed attempts: " . scalar(@matched_list) . "\n";
+  print "note: Last 10 failed login attempts:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no failed attempts found"
+  print "assert: 1 no failed attempts found\n";
 }
 
 CODE
@@ -29,19 +29,19 @@ CODE
 note: Detecting invalid user login attempts
 regexp: Invalid \s+ user
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 1 invalid user attempts detected: $($matched_list.Count) attempts"
-  Write-Host "note: Last 10 invalid user attempts:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 1 invalid user attempts detected: " . scalar(@matched_list) . " attempts\n";
+  print "note: Last 10 invalid user attempts:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no invalid user attempts"
+  print "assert: 1 no invalid user attempts\n";
 }
 
 CODE
@@ -50,20 +50,20 @@ CODE
 note: Detecting root login attempts
 regexp: [ root || ROOT ]
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 1 root login attempts detected"
-  Write-Host "note: Total root-related events: $($matched_list.Count)"
-  Write-Host "note: Last 10 root-related events:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 1 root login attempts detected\n";
+  print "note: Total root-related events: " . scalar(@matched_list) . "\n";
+  print "note: Last 10 root-related events:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no root login attempts"
+  print "assert: 1 no root login attempts\n";
 }
 
 CODE
@@ -72,19 +72,19 @@ CODE
 note: Detecting connection closures
 regexp: [ 'Connection closed' || 'Disconnected' || 'timeout' || 'Timeout' ]
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 1 connection closure events found: $($matched_list.Count)"
-  Write-Host "note: Last 10 connection closure events:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 1 connection closure events found: " . scalar(@matched_list) . "\n";
+  print "note: Last 10 connection closure events:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no connection closure events"
+  print "assert: 1 no connection closure events\n";
 }
 
 CODE
@@ -93,19 +93,19 @@ CODE
 note: Checking for successful logins
 regexp: [ 'Accepted' || 'accepted' ]
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 1 successful logins found: $($matched_list.Count) total"
-  Write-Host "note: Last 10 successful login events:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 1 successful logins found: " . scalar(@matched_list) . " total\n";
+  print "note: Last 10 successful login events:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no successful logins recorded"
+  print "assert: 1 no successful logins recorded\n";
 }
 
 CODE
@@ -114,19 +114,19 @@ CODE
 note: Detecting authentication errors
 regexp: [ 'error' || 'Error' || 'ERROR' ]
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 0 authentication errors detected: $($matched_list.Count) total"
-  Write-Host "note: Last 10 error events:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 0 authentication errors detected: " . scalar(@matched_list) . " total\n";
+  print "note: Last 10 error events:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no authentication errors found"
+  print "assert: 1 no authentication errors found\n";
 }
 
 CODE
@@ -135,19 +135,19 @@ CODE
 note: Detecting SSH protocol anomalies
 ~regexp: [ 'protocol' || 'Protocol' || 'DH' || 'KEY' ]
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 0 SSH protocol issues detected: $($matched_list.Count) events"
-  Write-Host "note: Last 10 protocol-related events:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 0 SSH protocol issues detected: " . scalar(@matched_list) . " events\n";
+  print "note: Last 10 protocol-related events:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no SSH protocol anomalies"
+  print "assert: 1 no SSH protocol anomalies\n";
 }
 
 CODE
@@ -156,19 +156,19 @@ CODE
 note: Detecting user enumeration
 regexp: [ 'user' || 'User' || 'USER' ]
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 1 user-related activity detected: $($matched_list.Count) events"
-  Write-Host "note: Last 10 user-related events:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 1 user-related activity detected: " . scalar(@matched_list) . " events\n";
+  print "note: Last 10 user-related events:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no user activity"
+  print "assert: 1 no user activity\n";
 }
 
 CODE
@@ -177,19 +177,19 @@ CODE
 note: Detecting authentication methods used
 ~regexp: [ 'password' || 'Password' || 'publickey' || 'public' || 'key' ]
 generator: <<CODE
-!powershell
+!perl
 
-$matched_list = matched
+my @matched_list = @{matched()};
 
-if ($matched_list.Count -gt 0) {
-  Write-Host "assert: 1 authentication methods detected: $($matched_list.Count) events"
-  Write-Host "note: Last 10 authentication method events:"
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+if (scalar @matched_list > 0) {
+  print "assert: 1 authentication methods detected: " . scalar(@matched_list) . " events\n";
+  print "note: Last 10 authentication method events:\n";
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
 } else {
-  Write-Host "assert: 1 no authentication method events"
+  print "assert: 1 no authentication method events\n";
 }
 
 CODE
@@ -198,40 +198,37 @@ CODE
 note: Analyzing IP patterns for brute force
 regexp: (\d+\.\d+\.\d+\.\d+)
 generator: <<CODE
-!powershell
+!perl
 
-$captures_list = captures
+my @captures_list = @{captures()};
 
-if ($captures_list.Count -gt 0) {
-  $ip_count = @{}
-  foreach ($cap in $captures_list) {
-    $ip = $cap[0]
-    if ($ip_count.ContainsKey($ip)) {
-      $ip_count[$ip]++
-    } else {
-      $ip_count[$ip] = 1
-    }
+if (scalar @captures_list > 0) {
+  my %ip_count;
+  foreach my $cap (@captures_list) {
+    my $ip = $cap->[0];
+    $ip_count{$ip}++;
   }
   
-  Write-Host "assert: 1 IP analysis complete: $($ip_count.Count) unique IPs"
-  Write-Host "note: Last 10 IP entries:"
-  $matched_list = matched
-  $last_ten = $matched_list[-10..-1]
-  foreach ($entry in $last_ten) {
-    Write-Host "note:   $entry"
+  print "assert: 1 IP analysis complete: " . scalar(keys %ip_count) . " unique IPs\n";
+  print "note: Last 10 IP entries:\n";
+  my @matched_list = @{matched()};
+  my @last_ten = @matched_list[-10..-1];
+  foreach my $entry (@last_ten) {
+    print "note:   $entry\n";
   }
   
-  $sorted_ips = $ip_count.GetEnumerator() | Sort-Object -Property Value -Descending | Select-Object -First 10
-  Write-Host "note: Top IPs by event frequency:"
-  foreach ($pair in $sorted_ips) {
-    if ($pair.Value -gt 5) {
-      Write-Host "assert: 0 suspicious IP $($pair.Key): $($pair.Value) events (possible brute force)"
+  my @sorted_ips = sort { $ip_count{$b} <=> $ip_count{$a} } keys %ip_count;
+  my @top_ips = @sorted_ips[0..9];
+  print "note: Top IPs by event frequency:\n";
+  foreach my $ip (@top_ips) {
+    if ($ip_count{$ip} > 5) {
+      print "assert: 0 suspicious IP $ip: " . $ip_count{$ip} . " events (possible brute force)\n";
     } else {
-      Write-Host "note:   IP $($pair.Key): $($pair.Value) events"
+      print "note:   IP $ip: " . $ip_count{$ip} . " events\n";
     }
   }
 } else {
-  Write-Host "assert: 1 no IP addresses found"
+  print "assert: 1 no IP addresses found\n";
 }
 
 CODE
@@ -239,11 +236,11 @@ CODE
 # 11. Brute force detection summary
 note: Brute force pattern analysis
 generator: <<CODE
-!powershell
+!perl
 
-Write-Host "assert: 1 SSHD log analysis complete"
-Write-Host "note: Summary: Review events above for security threats"
-Write-Host "note: Suspicious patterns indicated by 'assert: 0' lines"
+print "assert: 1 SSHD log analysis complete\n";
+print "note: Summary: Review events above for security threats\n";
+print "note: Suspicious patterns indicated by 'assert: 0' lines\n";
 
 CODE
 
