@@ -7,196 +7,266 @@ note: Checking for suspicious SSH activities
 note: Detecting failed login attempts
 regexp: Failed \s+ password
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 1 failed password attempt detected";
-  say "note: Total failed attempts: {matched().elems}";
-  say "note: Last 10 failed login attempts:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 1 failed password attempt detected\n";
+  echo "note: Total failed attempts: " . count($matched_list) . "\n";
+  echo "note: Last 10 failed login attempts:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no failed attempts found";
+  echo "assert: 1 no failed attempts found\n";
 }
+
+?>
 CODE
 
 # 2. Invalid user attempts
 note: Detecting invalid user login attempts
 regexp: Invalid \s+ user
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 1 invalid user attempts detected: {matched().elems} attempts";
-  say "note: Last 10 invalid user attempts:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 1 invalid user attempts detected: " . count($matched_list) . " attempts\n";
+  echo "note: Last 10 invalid user attempts:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no invalid user attempts";
+  echo "assert: 1 no invalid user attempts\n";
 }
+
+?>
 CODE
 
 # 3. Root login attempts (potential security concern)
 note: Detecting root login attempts
 regexp: [ root || ROOT ]
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 1 root login attempts detected";
-  say "note: Total root-related events: {matched().elems}";
-  say "note: Last 10 root-related events:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 1 root login attempts detected\n";
+  echo "note: Total root-related events: " . count($matched_list) . "\n";
+  echo "note: Last 10 root-related events:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no root login attempts";
+  echo "assert: 1 no root login attempts\n";
 }
+
+?>
 CODE
 
 # 4. Connection closed/timeout events
 note: Detecting connection closures
 regexp: [ 'Connection closed' || 'Disconnected' || 'timeout' || 'Timeout' ]
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 1 connection closure events found: {matched().elems}";
-  say "note: Last 10 connection closure events:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 1 connection closure events found: " . count($matched_list) . "\n";
+  echo "note: Last 10 connection closure events:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no connection closure events";
+  echo "assert: 1 no connection closure events\n";
 }
+
+?>
 CODE
 
 # 5. Successful logins
 note: Checking for successful logins
 regexp: [ 'Accepted' || 'accepted' ]
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 1 successful logins found: {matched().elems} total";
-  say "note: Last 10 successful login events:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 1 successful logins found: " . count($matched_list) . " total\n";
+  echo "note: Last 10 successful login events:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no successful logins recorded";
+  echo "assert: 1 no successful logins recorded\n";
 }
+
+?>
 CODE
 
 # 6. Authentication errors
 note: Detecting authentication errors
 regexp: [ 'error' || 'Error' || 'ERROR' ]
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 0 authentication errors detected: {matched().elems} total";
-  say "note: Last 10 error events:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 0 authentication errors detected: " . count($matched_list) . " total\n";
+  echo "note: Last 10 error events:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no authentication errors found";
+  echo "assert: 1 no authentication errors found\n";
 }
+
+?>
 CODE
 
 # 7. SSH protocol issues
 note: Detecting SSH protocol anomalies
 ~regexp: [ 'protocol' || 'Protocol' || 'DH' || 'KEY' ]
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 0 SSH protocol issues detected: {matched().elems} events";
-  say "note: Last 10 protocol-related events:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 0 SSH protocol issues detected: " . count($matched_list) . " events\n";
+  echo "note: Last 10 protocol-related events:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no SSH protocol anomalies";
+  echo "assert: 1 no SSH protocol anomalies\n";
 }
+
+?>
 CODE
 
 # 8. User enumeration attempts
 note: Detecting user enumeration
 regexp: [ 'user' || 'User' || 'USER' ]
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 1 user-related activity detected: {matched().elems} events";
-  say "note: Last 10 user-related events:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 1 user-related activity detected: " . count($matched_list) . " events\n";
+  echo "note: Last 10 user-related events:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no user activity";
+  echo "assert: 1 no user activity\n";
 }
+
+?>
 CODE
 
 # 9. Authentication method analysis
 note: Detecting authentication methods used
 ~regexp: [ 'password' || 'Password' || 'publickey' || 'public' || 'key' ]
 generator: <<CODE
-!raku
-if matched().elems > 0 {
-  say "assert: 1 authentication methods detected: {matched().elems} events";
-  say "note: Last 10 authentication method events:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
+!php
+<?php
+
+$matched_list = matched();
+
+if (count($matched_list) > 0) {
+  echo "assert: 1 authentication methods detected: " . count($matched_list) . " events\n";
+  echo "note: Last 10 authentication method events:\n";
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
   }
 } else {
-  say "assert: 1 no authentication method events";
+  echo "assert: 1 no authentication method events\n";
 }
+
+?>
 CODE
 
 # 10. IP-based attack patterns (capture and analyze)
 note: Analyzing IP patterns for brute force
 regexp: (\d+\.\d+\.\d+\.\d+)
 generator: <<CODE
-!raku
-if captures().elems > 0 {
-  my %ip_count;
-  for captures() -> $cap {
-    my $ip = $cap[0];
-    %ip_count{$ip}++;
-  }
-  
-  say "assert: 1 IP analysis complete: {%ip_count.elems} unique IPs";
-  say "note: Last 10 IP entries:";
-  my @last_ten = matched()[*-10..*];
-  for @last_ten -> $entry {
-    say "note:   {$entry}";
-  }
-  
-  my @high_freq = %ip_count.sort(*.value).reverse[0..9];
-  say "note: Top IPs by event frequency:";
-  for @high_freq -> $pair {
-    if $pair.value > 5 {
-      say "assert: 0 suspicious IP {$pair.key}: {$pair.value} events (possible brute force)";
+!php
+<?php
+
+$captures_list = captures();
+
+if (count($captures_list) > 0) {
+  $ip_count = array();
+  foreach ($captures_list as $cap) {
+    $ip = $cap[0];
+    if (isset($ip_count[$ip])) {
+      $ip_count[$ip]++;
     } else {
-      say "note:   IP {$pair.key}: {$pair.value} events";
+      $ip_count[$ip] = 1;
+    }
+  }
+  
+  echo "assert: 1 IP analysis complete: " . count($ip_count) . " unique IPs\n";
+  echo "note: Last 10 IP entries:\n";
+  $matched_list = matched();
+  $last_ten = array_slice($matched_list, -10);
+  foreach ($last_ten as $entry) {
+    echo "note:   " . $entry . "\n";
+  }
+  
+  arsort($ip_count);
+  $top_ips = array_slice($ip_count, 0, 10, true);
+  echo "note: Top IPs by event frequency:\n";
+  foreach ($top_ips as $ip => $count) {
+    if ($count > 5) {
+      echo "assert: 0 suspicious IP " . $ip . ": " . $count . " events (possible brute force)\n";
+    } else {
+      echo "note:   IP " . $ip . ": " . $count . " events\n";
     }
   }
 } else {
-  say "assert: 1 no IP addresses found";
+  echo "assert: 1 no IP addresses found\n";
 }
+
+?>
 CODE
 
 # 11. Brute force detection summary
 note: Brute force pattern analysis
 generator: <<CODE
-!raku
-say "assert: 1 SSHD log analysis complete";
-say "note: Summary: Review events above for security threats";
-say "note: Suspicious patterns indicated by 'assert: 0' lines";
+!php
+<?php
+
+echo "assert: 1 SSHD log analysis complete\n";
+echo "note: Summary: Review events above for security threats\n";
+echo "note: Suspicious patterns indicated by 'assert: 0' lines\n";
+
+?>
 CODE
 
