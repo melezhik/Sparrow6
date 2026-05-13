@@ -7,21 +7,21 @@ note: Checking for suspicious SSH activities
 note: Detecting failed login attempts
 regexp: Failed \s+ password
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 1 failed password attempt detected"
-  puts "note: Total failed attempts: #{matched_list.length}"
-  puts "note: Last 10 failed login attempts:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no failed attempts found"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 1 failed password attempt detected"
+  Write-Host "note: Total failed attempts: $($matched_list.Count)"
+  Write-Host "note: Last 10 failed login attempts:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no failed attempts found"
+}
 
 CODE
 
@@ -29,20 +29,20 @@ CODE
 note: Detecting invalid user login attempts
 regexp: Invalid \s+ user
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 1 invalid user attempts detected: #{matched_list.length} attempts"
-  puts "note: Last 10 invalid user attempts:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no invalid user attempts"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 1 invalid user attempts detected: $($matched_list.Count) attempts"
+  Write-Host "note: Last 10 invalid user attempts:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no invalid user attempts"
+}
 
 CODE
 
@@ -50,21 +50,21 @@ CODE
 note: Detecting root login attempts
 regexp: [ root || ROOT ]
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 1 root login attempts detected"
-  puts "note: Total root-related events: #{matched_list.length}"
-  puts "note: Last 10 root-related events:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no root login attempts"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 1 root login attempts detected"
+  Write-Host "note: Total root-related events: $($matched_list.Count)"
+  Write-Host "note: Last 10 root-related events:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no root login attempts"
+}
 
 CODE
 
@@ -72,20 +72,20 @@ CODE
 note: Detecting connection closures
 regexp: [ 'Connection closed' || 'Disconnected' || 'timeout' || 'Timeout' ]
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 1 connection closure events found: #{matched_list.length}"
-  puts "note: Last 10 connection closure events:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no connection closure events"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 1 connection closure events found: $($matched_list.Count)"
+  Write-Host "note: Last 10 connection closure events:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no connection closure events"
+}
 
 CODE
 
@@ -93,20 +93,20 @@ CODE
 note: Checking for successful logins
 regexp: [ 'Accepted' || 'accepted' ]
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 1 successful logins found: #{matched_list.length} total"
-  puts "note: Last 10 successful login events:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no successful logins recorded"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 1 successful logins found: $($matched_list.Count) total"
+  Write-Host "note: Last 10 successful login events:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no successful logins recorded"
+}
 
 CODE
 
@@ -114,20 +114,20 @@ CODE
 note: Detecting authentication errors
 regexp: [ 'error' || 'Error' || 'ERROR' ]
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 0 authentication errors detected: #{matched_list.length} total"
-  puts "note: Last 10 error events:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no authentication errors found"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 0 authentication errors detected: $($matched_list.Count) total"
+  Write-Host "note: Last 10 error events:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no authentication errors found"
+}
 
 CODE
 
@@ -135,20 +135,20 @@ CODE
 note: Detecting SSH protocol anomalies
 ~regexp: [ 'protocol' || 'Protocol' || 'DH' || 'KEY' ]
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 0 SSH protocol issues detected: #{matched_list.length} events"
-  puts "note: Last 10 protocol-related events:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no SSH protocol anomalies"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 0 SSH protocol issues detected: $($matched_list.Count) events"
+  Write-Host "note: Last 10 protocol-related events:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no SSH protocol anomalies"
+}
 
 CODE
 
@@ -156,20 +156,20 @@ CODE
 note: Detecting user enumeration
 regexp: [ 'user' || 'User' || 'USER' ]
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 1 user-related activity detected: #{matched_list.length} events"
-  puts "note: Last 10 user-related events:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no user activity"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 1 user-related activity detected: $($matched_list.Count) events"
+  Write-Host "note: Last 10 user-related events:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no user activity"
+}
 
 CODE
 
@@ -177,20 +177,20 @@ CODE
 note: Detecting authentication methods used
 ~regexp: [ 'password' || 'Password' || 'publickey' || 'public' || 'key' ]
 generator: <<CODE
-!ruby
+!powershell
 
-matched_list = matched()
+$matched_list = matched
 
-if matched_list.length > 0
-  puts "assert: 1 authentication methods detected: #{matched_list.length} events"
-  puts "note: Last 10 authentication method events:"
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
-else
-  puts "assert: 1 no authentication method events"
-end
+if ($matched_list.Count -gt 0) {
+  Write-Host "assert: 1 authentication methods detected: $($matched_list.Count) events"
+  Write-Host "note: Last 10 authentication method events:"
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
+} else {
+  Write-Host "assert: 1 no authentication method events"
+}
 
 CODE
 
@@ -198,48 +198,52 @@ CODE
 note: Analyzing IP patterns for brute force
 regexp: (\d+\.\d+\.\d+\.\d+)
 generator: <<CODE
-!ruby
+!powershell
 
-captures_list = captures()
+$captures_list = captures
 
-if captures_list.length > 0
-  ip_count = Hash.new(0)
-  captures_list.each do |cap|
-    ip = cap[0]
-    ip_count[ip] += 1
-  end
+if ($captures_list.Count -gt 0) {
+  $ip_count = @{}
+  foreach ($cap in $captures_list) {
+    $ip = $cap[0]
+    if ($ip_count.ContainsKey($ip)) {
+      $ip_count[$ip]++
+    } else {
+      $ip_count[$ip] = 1
+    }
+  }
   
-  puts "assert: 1 IP analysis complete: #{ip_count.length} unique IPs"
-  puts "note: Last 10 IP entries:"
-  matched_list = matched()
-  last_ten = matched_list.last(10)
-  last_ten.each do |entry|
-    puts "note:   #{entry}"
-  end
+  Write-Host "assert: 1 IP analysis complete: $($ip_count.Count) unique IPs"
+  Write-Host "note: Last 10 IP entries:"
+  $matched_list = matched
+  $last_ten = $matched_list[-10..-1]
+  foreach ($entry in $last_ten) {
+    Write-Host "note:   $entry"
+  }
   
-  sorted_ips = ip_count.sort_by { |ip, count| -count }.first(10)
-  puts "note: Top IPs by event frequency:"
-  sorted_ips.each do |ip, count|
-    if count > 5
-      puts "assert: 0 suspicious IP #{ip}: #{count} events (possible brute force)"
-    else
-      puts "note:   IP #{ip}: #{count} events"
-    end
-  end
-else
-  puts "assert: 1 no IP addresses found"
-end
+  $sorted_ips = $ip_count.GetEnumerator() | Sort-Object -Property Value -Descending | Select-Object -First 10
+  Write-Host "note: Top IPs by event frequency:"
+  foreach ($pair in $sorted_ips) {
+    if ($pair.Value -gt 5) {
+      Write-Host "assert: 0 suspicious IP $($pair.Key): $($pair.Value) events (possible brute force)"
+    } else {
+      Write-Host "note:   IP $($pair.Key): $($pair.Value) events"
+    }
+  }
+} else {
+  Write-Host "assert: 1 no IP addresses found"
+}
 
 CODE
 
 # 11. Brute force detection summary
 note: Brute force pattern analysis
 generator: <<CODE
-!ruby
+!powershell
 
-puts "assert: 1 SSHD log analysis complete"
-puts "note: Summary: Review events above for security threats"
-puts "note: Suspicious patterns indicated by 'assert: 0' lines"
+Write-Host "assert: 1 SSHD log analysis complete"
+Write-Host "note: Summary: Review events above for security threats"
+Write-Host "note: Suspicious patterns indicated by 'assert: 0' lines"
 
 CODE
 
