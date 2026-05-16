@@ -1,4 +1,8 @@
-regexp: \d\d\d\d '-' \d\d '-' \d\d # date in format of YYYY-MM-DD
-regexp: 'Name:' \s+ \w+ # name
-regexp: 'App Version Number:' \s+ \d+ \. \d+ \. \d+ # version number
+# date in format of YYYY-MM-DD
+regexp: \d\d\d\d '-' \d\d '-' \d\d 
 
+# name
+regexp: 'Name:' \s+ \w+
+
+# version number
+regexp: 'App Version Number:' \s+ \d+ \. \d+ \. \d+
