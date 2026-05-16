@@ -2,6 +2,13 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.91 2026-05-16T16:15:00Z
+
+    Flattern internal
+    lists in Raku
+    captures(), 
+    streams_array()
+    
     add matched() to
     Python SDK
 
