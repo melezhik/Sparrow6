@@ -689,7 +689,7 @@ Comment lines start with `#` symbol:
 
     # comments could take whole line, like here
     regexp: \d
-    Hello World # or start after some check expression
+    Hello World # or start after plain text check expression
     
 ## Blank lines
 
