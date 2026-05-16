@@ -1,4 +1,5 @@
-regexp: hello # this is the comment
+# this is the comment
+regexp: hello
 hello # this is the comment 
 # this is the comment
  h #
