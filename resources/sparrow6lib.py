@@ -100,8 +100,10 @@ def captures():
     return  CAPTURES
 
 def capture():
-    return captures()[0]
-
+    if captures():
+      return captures()[0]
+    else:
+      return None
 
 def streams():
 

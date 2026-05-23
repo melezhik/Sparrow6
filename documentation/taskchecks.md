@@ -356,7 +356,7 @@ When escaping symbols ,.+-:,= choose either
 quote or back slash, but not both for readability:
 
 ```
-# legid, but not neccessary
+# legit, but not necessary
 # to use both \ and " for
 # escaping of .
 regexp: "\.hello"
@@ -646,9 +646,9 @@ CODE
 
 # Soft checks
 
-Soft checks is a special form of regexp expression check, so when a soft check matching fails the parser does not consider this as a failure, the fact of mismatch just printed out in report. If soft check matched it acts identically to regular ( none soft ) successfull check 
+Soft checks is a special form of regexp expression check, so when a soft check matching fails the parser does not consider this as a failure, the fact of mismatch just printed out in report. If soft check matched it acts identically to regular ( none soft ) successful check 
 
-Mostly soft checks are used together with generator/code expressions to implimen
+Mostly soft checks are used together with generator/code expressions to implement
 conditional or optional checks, here is an example:
 
 Input:
@@ -1206,7 +1206,7 @@ don't want zoom within expressions:
 within: hello \s+ [world||space||water]
 ```
 
-Be carefull, if you use capturing brackets (`(`, `)`) together with within: you end up
+Be careful, if you use capturing brackets (`(`, `)`) together with within: you end up
 in zoon mode, so the next check expression
 after within: will be limited to captured data
 if any:
@@ -1255,7 +1255,7 @@ note: i am within this line
 end:
 ```
 
-This example should be rewriten like that;
+This example should be rewritten like that;
 
 ```
 within: "this line"
@@ -1301,7 +1301,7 @@ Code expressions should start with `code:` marker, followed by <<HERE doc
 marker that defines the start of code
 block.
 
-The very first line of code block should contain language identificator in form of `!language` to define programming language
+The very first line of code block should contain language identification in form of `!language` to define programming language
 to be used to execute code block, for instance:
 
 ```
@@ -1350,9 +1350,9 @@ provided by Sparrow Task SDK - https://github.com/melezhik/Sparrow6/blob/master/
 ## Code expressions pitfalls
 
 - Don't use code expressions to print another
-DSL expressions ( for instance - regexp:, generator:, code:, within:, begin:, between: , etc ) , this does not make a sence as DSL parser does not treat output from code: expressions as check rules, it just dumps the output as is. Instead use generator: to generate new check rules or DSL expressions
+DSL expressions ( for instance - regexp:, generator:, code:, within:, begin:, between: , etc ) , this does not make a sense as DSL parser does not treat output from code: expressions as check rules, it just dumps the output as is. Instead use generator: to generate new check rules or DSL expressions
 
-- Always set language identificator on the very first line of code block, or else default
+- Always set language identification on the very first line of code block, or else default
 language (Perl) will be applied which is not probably what you want
 
 - For code expressions written on Python
@@ -1390,7 +1390,7 @@ value should be one of the following
 1, true, True are used for true assert statements,
 0, false, False for false assert statements.
 
-The second short description paramter of assert expression used for informative purposes, so it's just printed in report
+The second short description parameter of assert expression used for informative purposes, so it's just printed in report
 
 Assert expression examples:
 
@@ -1425,7 +1425,7 @@ assert: OK this never works
 assert: ok
 ```
 
-- When generating assert expressions via generators follow programming languages documenatation on how to convert language native types into assert expression value format
+- When generating assert expressions via generators follow programming languages documentation on how to convert language native types into assert expression value format
 
 # Generators
 
@@ -1441,7 +1441,7 @@ Generator expressions should start with `generator:` marker, followed by <<HERE 
 marker that defines the start of generator
 block.
 
-The very first line of generator block should contain language identificator in form of `!language` to define programming language
+The very first line of generator block should contain language identification in form of `!language` to define programming language
 to be used to execute generator block, for instance:
 
 ```
@@ -1549,7 +1549,7 @@ Generator expressions could use all the functions provided by Sparrow Task SDK -
 
 ## Generators pitfalls
 
-- Always set language identificator on the very first line of generator block, or else default language (Perl) will be applied which is not probably what you want 
+- Always set language identification on the very first line of generator block, or else default language (Perl) will be applied which is not probably what you want 
 
 - For generator expressions written on Python
 if Sparrow SDK functions are used (
@@ -1565,7 +1565,7 @@ CODE
 ```
 # Sharing data between code or generator blocks
 
-To share captured data accross code: or generator: blocks use functions [update_state(), get_state()](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md#task-states) privided by Sparrow Task SDK:
+To share captured data across code: or generator: blocks use functions [update_state(), get_state()](https://github.com/melezhik/Sparrow6/blob/master/documentation/development.md#task-states) provided by Sparrow Task SDK:
 
 ```
 regexp: ID \: \s+ (\d+)
@@ -1659,7 +1659,7 @@ stdout match (w) <C> True
 
 Sometime it makes a sense to search by line number of text output. 
 
-Task check provides SLN ( Search by Line ) exprrssions for that. SLN expression is in form:
+Task check provides SLN ( Search by Line ) expressions for that. SLN expression is in form:
 
 colon line number colon
 
@@ -1774,7 +1774,7 @@ end:
 
 ## SLN expressions pitfalls
 
-- When using SLN expressions, there should not be any other symbols before or after exprrssion ( with the exception of using SLN together with between: and within: , see the next paragaphs ).
+- When using SLN expressions, there should not be any other symbols before or after expression ( with the exception of using SLN together with between: and within: , see the next paragraph ).
 
 Following example of correct SLN expressions
 used with other expressions:
@@ -2221,7 +2221,7 @@ say "sum: $sum";
 OK
 ```
 
-This scenario effectively implements linux style pipeline, where the first step extracts all the numbers and the second sums them up.
+This scenario effectively implements Linux style pipeline, where the first step extracts all the numbers and the second sums them up.
 
 
 Sources could be effectively combined with `replace` and `remove-line` functions effectively causing reload of data from changed files, consider this example with a failure in the end, proving that the second line has already been deleted:

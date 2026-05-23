@@ -107,7 +107,7 @@ sub captures-full () is export {
 
   $captures-full = from-json slurp "{cache_root_dir()}/captures.json";
 
-  return $captures-full;
+  return $captures-full<>;
 
 }
 
