@@ -221,7 +221,8 @@ class Api
            #say "effective matched data: $data";
 
            my $matched = $data.comb(/<mymatch=$pattern>/,:match)>>.<mymatch>;
- 
+           #my $matched = $data.comb(/<$pattern>/,:match);
+
            if $matched && $negate != True {
                 self!log("CHECK LINE(regexp, matched, negate=off)", "post proccess result") if %*ENV<SP6_DEBUG_TASK_CHECK>;
                 # only accumulate data for new context

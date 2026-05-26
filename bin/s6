@@ -10,6 +10,7 @@ sub MAIN (
   $thing?,
   Bool :$debug            = %*ENV<SP6_DEBUG> ?? True !! False,
   Bool :$verbose          = False,
+  Bool :$soft             = False,
   Bool :$version          = False,
   Bool :$clean            = False,
   Bool :$help             = False,
@@ -48,6 +49,10 @@ sub MAIN (
 
   if $inline {
     %*ENV<SP6_FORMAT_INLINE> = 1;
+  }
+
+  if $soft {
+    %*ENV<SP6_FORMAT_SOFT> = 1;
   }
 
   my $repo-api = Sparrow6::Task::Repository::Api.new(

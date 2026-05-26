@@ -122,6 +122,12 @@ Enable inline format. Used
 internally with --inline option
 for s6 cli
 
+## - SP6_FORMAT_SOFT
+
+Enable soft format. Used
+internally with --soft option
+for s6 cli
+
 ## - SP6_DUMP_TASK_CODE
 
 Dump code of Sparrow tasks automatically  ( useful for r3 and other test tools )
