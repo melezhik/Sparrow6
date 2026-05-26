@@ -324,9 +324,9 @@ class Api
 
     if $soft-check {
       if $status == False {
-        self!add-result({ status => True , message => $message, :soft-fail });
+        self!add-result({ status => True , message => "{$message}", :soft-fail, :soft-check });
       } else {
-        self!add-result({ status => $status , message => $message });
+        self!add-result({ status => $status , message => $message, :soft-check });
       }
     } else {
       self!add-result({ status => $status , message => $message });

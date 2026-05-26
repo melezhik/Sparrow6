@@ -31,7 +31,8 @@ role Role {
             message => $r<message>, 
             status => $r<status>, 
             type => "check", 
-            :soft-fail($r<soft-fail> || False )
+            :soft-fail($r<soft-fail> || False ),
+            :soft-check($r<soft-check> || False ),
           ));
           if ! $r<status> {
             if ! $.ignore-task-check-error {

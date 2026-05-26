@@ -16,7 +16,14 @@ role Role {
 
   method !check-log (%data) {
 
+    if %data<soft-check> and ! %*ENV<SP6_FORMAT_SOFT> {
+      # don't print soft checks statuses
+      # unless env SP6_FORMAT_SOFT is set
+      return
+    }
+
     my $message = %data<message>;
+
     if %*ENV<SP6_FORMAT_INLINE> {
       if $message ~~ /^^ "inline:"/ {
         $message.=subst(/^^ "inline:"/,"");
@@ -28,11 +35,6 @@ role Role {
 
     if %data<type> eq "check" and %data<status>:exists {
       #say %data.raku;
-      if %data<soft-fail> and ! %*ENV<SP6_FORMAT_SOFT> {
-        # don't print soft checks statuses
-        # unless env SP6_FORMAT_SOFT is set
-        return
-      }
       my $status-str = %data<soft-fail> ?? "~FAIL" !! %data<status>.Str;
       if %*ENV<SP6_FORMAT_COLOR> {
         if $status eq True {
