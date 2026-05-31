@@ -310,7 +310,19 @@ role Role {
 
   method plugin-directory ($pid) {
 
-    return "{$.sparrow-root}/plugins/$pid"
+
+    # plugins installed by s6 cli
+    if "{$.sparrow-root}/plugins/$pid".IO ~~ :d {
+      return "{$.sparrow-root}/plugins/$pid"
+    }
+
+    # plugins installed as native packages
+    # deb/rpm/apk etc
+    if "/var/sparrow/plugins/$pid".IO ~~ :d {
+      return "/var/sparrow/plugins/$pid"
+    }
+
+    die "plugin $pid not found, search PATH: {$.sparrow-root}/plugins/$pid /var/sparrow/plugins/$pid "
 
   }
 

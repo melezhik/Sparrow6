@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+  s6 --plg-run support for
+  plugins installed as native packages
+  deb/rpm/apk etc
+
 0.0.93 2026-05-27T09:55:00Z
 
     s6 cli --soft option
