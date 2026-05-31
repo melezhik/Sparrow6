@@ -69,6 +69,16 @@ That's it! Plugin is ready to use:
 Note that plugin upload operation is only available for local repositories. One can't upload
 plugins to remotely.
 
+## Install plugins as native os packages
+
+Sparrow6 plugins could be installed as native os packages (deb/rpm/apk etc).
+
+Package maintainers should setup respected packages to install plugin files
+into `/var/sparrow6/plugins` directory. For example for respected hello-world plugin
+this should be `/var/sparrow6/plugins/hello-world` directory containing all 
+plugin files
+
+
 ## Troubleshooting plugin upload
 
 Adding `--debug` flag will print more low level information to console when uploading plugin

@@ -318,11 +318,11 @@ role Role {
 
     # plugins installed as native packages
     # deb/rpm/apk etc
-    if "/var/sparrow/plugins/$pid".IO ~~ :d {
-      return "/var/sparrow/plugins/$pid"
+    if "/var/sparrow6/plugins/$pid".IO ~~ :d {
+      return "/var/sparrow6/plugins/$pid"
     }
 
-    die "plugin $pid not found, search PATH: {$.sparrow-root}/plugins/$pid /var/sparrow/plugins/$pid "
+    die "plugin $pid not found, search PATH: {$.sparrow-root}/plugins/$pid /var/sparrow6/plugins/$pid "
 
   }
 
