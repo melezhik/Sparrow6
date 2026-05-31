@@ -322,7 +322,7 @@ role Role {
       return "/var/sparrow6/plugins/$pid"
     }
 
-    die "plugin $pid not found, search PATH: {$.sparrow-root}/plugins/$pid /var/sparrow6/plugins/$pid "
+    #die "plugin $pid not found, search PATH: {$.sparrow-root}/plugins/$pid /var/sparrow6/plugins/$pid "
 
   }
 

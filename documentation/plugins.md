@@ -76,8 +76,11 @@ Sparrow6 plugins could be installed as native os packages (deb/rpm/apk etc).
 Package maintainers should setup respected packages to install plugin files
 into `/var/sparrow6/plugins` directory. For example for respected hello-world plugin
 this should be `/var/sparrow6/plugins/hello-world` directory containing all 
-plugin files
+plugin files. 
 
+NOTE!
+
+`/var/sparrow6/plugins/hello-world` directory should be writtable by all.
 
 ## Troubleshooting plugin upload
 
