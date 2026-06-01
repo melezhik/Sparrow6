@@ -322,6 +322,11 @@ role Role {
       return "/var/sparrow6/plugins/$pid"
     }
 
+    # default value
+    # location for plugins installed by s6 cli
+
+    return "{$.sparrow-root}/plugins/$pid"
+
     #die "plugin $pid not found, search PATH: {$.sparrow-root}/plugins/$pid /var/sparrow6/plugins/$pid "
 
   }
