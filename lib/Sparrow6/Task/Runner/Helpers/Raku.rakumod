@@ -32,11 +32,13 @@ role Role {
 
       unlink "{$.root}/lib/.precomp" if "{$.root}/lib/.precomp".IO ~~ :d;
 
+      my $raku-comp = %*ENV<SP6_RAKU_COMP> || "raku";
+
       my $cmd = $*DISTRO.is-win
       ??
-      "cmd.exe /c raku -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path"
+      "cmd.exe /c $raku-comp -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path"
       !!
-      "raku -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path";
+      "$raku-comp -I {$.cache-dir} -I {$.root}/lib -I inst\#{$.root}/raku-lib -Mglue -Msparrow6lib $path";
 
       self!log("raku run cmd", $cmd);
 

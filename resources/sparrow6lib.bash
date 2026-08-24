@@ -41,11 +41,13 @@ function run_task {
 
 
 function config {
-   raku -I "${cache_dir}" -Msparrow6common -e json-var "${cache_root_dir}/config.json" $1
+   raku_comp="${SP6_RAKU_COMP:-raku}"
+   $raku_comp -I "${cache_dir}" -Msparrow6common -e json-var "${cache_root_dir}/config.json" $1
 }
 
 function task_var {
-   raku -I "${cache_dir}" -Msparrow6common -e json-var "${cache_dir}/variables.json" $1
+   raku_comp="${SP6_RAKU_COMP:-raku}"
+   $raku-comp -I "${cache_dir}" -Msparrow6common -e json-var "${cache_dir}/variables.json" $1
 }
 
 if test -f "${task_dir}/common.bash"; then

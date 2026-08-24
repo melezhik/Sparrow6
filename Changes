@@ -2,6 +2,10 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+  Read raku compiler path
+  from SP6_RAKU_COMP
+  is set (for rakupp support)
+
   s6 --plg-run support for
   plugins installed as native packages
   deb/rpm/apk etc
