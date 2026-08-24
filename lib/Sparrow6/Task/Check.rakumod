@@ -511,8 +511,21 @@ class Api
 
     self!log("block end",$block-type) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
-    self!"$name"(@multiline-block.join("\n"));
+    #self!"$name"(@multiline-block.join("\n"));
   
+    if $block-type eq "generator" {
+      self!handle-generator(@multiline-block.join("\n"))
+    }
+
+    if $block-type eq "regexp" {
+      self!handle-regexp(@multiline-block.join("\n"))
+    }
+
+    if $block-type eq "simple" {
+      self!handle-simple(@multiline-block.join("\n"))
+    }
+
+
     # flush mulitline block data:
 
     $block-type = Nil;

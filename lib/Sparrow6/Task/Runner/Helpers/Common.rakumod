@@ -178,9 +178,9 @@ role Role {
 
         }
 
-        whenever $proc.ready {
-            #say ‘PID: ’, $_ # Only in Rakudo 2018.04 and newer, otherwise Nil 
-        }
+        #whenever $proc.ready {
+        #    #say ‘PID: ’, $_ # Only in Rakudo 2018.04 and newer, otherwise Nil 
+        #}
 
         whenever $proc.start {
 
