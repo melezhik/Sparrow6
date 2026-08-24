@@ -101,7 +101,7 @@ role Role {
 
     if $.sparrow-root {
 
-      $root = %*ENV<SP6_PREFIX> ?? "{$.sparrow-root}/{%*ENV<SP6_PREFIX>}".IO.absolute  !! $.sparrow-root.IO.absolute;
+      $root = %*ENV<SP6_PREFIX> ?? "{$.sparrow-root}/{%*ENV<SP6_PREFIX>}"  !! $.sparrow-root;
 
       unless $root.IO ~~ :e {
 
@@ -128,7 +128,7 @@ role Role {
 
       } elsif %*ENV<HOME> {
 
-        $root = %*ENV<SP6_PREFIX> ?? "{%*ENV<HOME>}/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !! "{%*ENV<HOME>}/sparrow6".IO.absolute;
+        $root = %*ENV<SP6_PREFIX> ?? "{%*ENV<HOME>}/{%*ENV<SP6_PREFIX>}/sparrow6" !! "{%*ENV<HOME>}/sparrow6";
 
         unless $root.IO ~~ :e {
           mkdir $root;
@@ -139,7 +139,7 @@ role Role {
 
       } else {
 
-        $root = %*ENV<SP6_PREFIX> ?? "/var/data/{%*ENV<SP6_PREFIX>}/sparrow6".IO.absolute !!  "/var/data/sparrow6".IO.absolute;
+        $root = %*ENV<SP6_PREFIX> ?? "/var/data/{%*ENV<SP6_PREFIX>}/sparrow6" !!  "/var/data/sparrow6";
 
         unless $root.IO ~~ :e {
           mkdir $root;
