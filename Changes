@@ -2,6 +2,8 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.94 2026-08-24T09:55:00Z
+
   Read raku compiler path
   from SP6_RAKU_COMP
   is set (for rakupp support)
