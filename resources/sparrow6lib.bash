@@ -47,7 +47,7 @@ function config {
 
 function task_var {
    raku_comp="${SP6_RAKU_COMP:-raku}"
-   $raku-comp -I "${cache_dir}" -Msparrow6common -e json-var "${cache_dir}/variables.json" $1
+   $raku_comp -I "${cache_dir}" -Msparrow6common -e json-var "${cache_dir}/variables.json" $1
 }
 
 if test -f "${task_dir}/common.bash"; then
