@@ -2,8 +2,6 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
-0.0.94 2026-08-24T09:55:00Z
-
   Read raku compiler path
   from SP6_RAKU_COMP
   is set (for rakupp support)
@@ -12,6 +10,7 @@ Revision history for Sparrow6
   plugins installed as native packages
   deb/rpm/apk etc
 
+  
 0.0.93 2026-05-27T09:55:00Z
 
     s6 cli --soft option
