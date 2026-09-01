@@ -12,7 +12,7 @@ role Role {
       my $tc = Sparrow6::Task::Check::Api.new(
         cache-root-dir => self.cache-root-dir,
         parent-task-root-dir => $root,
-        tr => self.clone,
+        tr => self.clone(),
         data => self.stdout-data,
       );
 

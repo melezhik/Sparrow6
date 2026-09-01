@@ -53,7 +53,7 @@ class Api
   method !run-code (Str $code is copy) { 
 
     my %lang-to-extension = %(
-      raku => "pl6",
+      raku => "raku",
       perl6 => "raku",
       perl => "pl",
       bash => "bash",
@@ -93,6 +93,8 @@ class Api
     self.tr.name = "task-check";
     self.tr.task = "{$cache-root-dir}/.checks/";
 
+    my $orig_data = self.data.clone;
+
     if "{self.parent-task-root-dir}/common.rb".IO ~~ :e {
       copy("{self.parent-task-root-dir}/common.rb","{$cache-root-dir}/.checks/common.rb");
     }
@@ -113,7 +115,8 @@ class Api
 
     self.tr.stdout-data = @orig-stdout-data;
     self.tr.stderr-data = @orig-stderr-data;
-
+    
+    self.data = $orig_data;
     return @r;
   
   }
@@ -293,6 +296,7 @@ class Api
     }
 
     if @new-context {
+
        self!log("SEARCH, new context is not empty", "call change-context")  if %*ENV<SP6_DEBUG_TASK_CHECK>;
        self.current-context.change-context(@new-context) 
     }
@@ -405,6 +409,7 @@ class Api
         } elsif $l ~~ / ^^ \s* 'between:' \s+ '{' (.*?) '}' \s+ '{' (.*?) '}'  $$ / {
 
           die "nested contexts are forbidden" unless self.current-context.^name eq "Sparrow6::Task::Check::Context::Default";
+
           self.current-context = Sparrow6::Task::Check::Context::Range.new( data => self.data, start => "$0", end => "$1"  );
 
         } elsif $l ~~ / ^^ \s* 'begin:' \s* $$ / {
@@ -414,7 +419,6 @@ class Api
           self.current-context = Sparrow6::Task::Check::Context::Sequence.new( data => self.data );
 
         } elsif $l ~~ / ^^ \s* 'end:' \s* $$ / {
-                    
           self.current-context = Sparrow6::Task::Check::Context::Default.new( data => self.data );
           @!captures = [];
 
@@ -479,7 +483,6 @@ class Api
             my $re = $0;
 
             self!handle-regexp($re.Str);
-
         } elsif $l ~~ /^^ \s* '~regexp:' \s* (.*) / { # `regexp' line
 
             my $re = $0;
@@ -526,8 +529,8 @@ class Api
     #}
 
 
-    #if $block-type eq "simple" {
-    #  self!handle-simple(@multiline-block.join("\n"))
+    #if $block-type eq "code" {
+    #  self!handle-code(@multiline-block.join("\n"))
     #}
 
     # flush mulitline block data:
@@ -535,6 +538,7 @@ class Api
     $block-type = Nil;
 
     @multiline-block = Array.new;
+
 
   }
 }
