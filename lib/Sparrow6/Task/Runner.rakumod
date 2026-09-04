@@ -71,7 +71,7 @@ class Api
 
   method TWEAK() {
 
-    $.root = "$.root".IO.absolute;
+    $.root = "$.root";
 
     unless $.config {
       $.config = "{$.root}/config.raku".IO ~~ :e ?? "{$.root}/config.raku" !!  "{$.root}/config.yaml";

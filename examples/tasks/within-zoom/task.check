@@ -5,6 +5,9 @@ regexp: ^^ .* ( "is" \s+ \S+ ) $$
 code: <<RAKU
 !raku
 dump_streams();
+use Data::Dump;
+say "===";
+say Dump(streams_array())
 RAKU
 
 generator: <<RAKU

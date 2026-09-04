@@ -5,17 +5,20 @@ regexp: (\d+)
 
 code: <<RAKU
 !raku
-use Data::Dump;
-say captures();
-say Dump(streams());
+#use Data::Dump;
+#say captures();
+#say Dump(streams());
+#say streams().raku;
+say  matched().raku;
+
 RAKU
 
 
 generator: <<RAKU
 !raku
 say "assert: ", captures().elems == 12 ?? 1 !! 0, " 12 captures";
-say "assert: ", captures()[0][0] == 100 ?? 1 !! 0, " first cap is 100";
-say "assert: ", captures()[11][0] == 12 ?? 1 !! 0, " last cap is 12";
+#say "assert: ", captures()[0][0] == 100 ?? 1 !! 0, " first cap is 100";
+#say "assert: ", captures()[11][0] == 12 ?? 1 !! 0, " last cap is 12";
 
 RAKU
 
@@ -24,6 +27,11 @@ end:
 note: context reset
 
 regexp: (\d+)
+
+code: <<RAKU
+!raku
+say  matched().raku;
+RAKU
 
 generator: print 'assert: ',( scalar @{captures()} == 15 ), ' 15 numbers total';
 generator: print 'assert: ',( captures->[0]->[0] == 100 ), ' first number is 100';
