@@ -1,6 +1,5 @@
 unit module Sparrow6::Task::Runner::Helpers::Check;
 use Sparrow6::Task::Check;
-
 role Role {
 
   method !run-task-check ($root) {
@@ -13,7 +12,7 @@ role Role {
         cache-root-dir => self.cache-root-dir,
         parent-task-root-dir => $root,
         tr => self.clone,
-        data => self.stdout-data,
+        data => self.stdout-data.clone,
       );
 
       $tc.validate("$root/task.check".IO.lines);
