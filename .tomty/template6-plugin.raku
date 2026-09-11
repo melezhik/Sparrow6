@@ -2,7 +2,7 @@
 
 =begin tomty
 %(
-  tag => "plugin"
+  tag => [ "plugin", "should-fail" ]
 )
 =end tomty
 
