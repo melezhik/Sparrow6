@@ -53,7 +53,7 @@ class Api
   method !run-code (Str $code is copy) { 
 
     my %lang-to-extension = %(
-      raku => "pl6",
+      raku => "raku",
       perl6 => "raku",
       perl => "pl",
       bash => "bash",
@@ -83,15 +83,15 @@ class Api
 
     self!log("code run language", $language) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
-    my @orig-stdout-data = self.tr.stdout-data;
-    my @orig-stderr-data = self.tr.stderr-data;
-
-    self.tr.keep-cache = True;
-    self.tr.silent-stdout = True;
-    self.tr.silent-stderr = False;
-    self.tr.code-dumpable = False;
-    self.tr.name = "task-check";
-    self.tr.task = "{$cache-root-dir}/.checks/";
+    my $tr = self.tr;
+    
+    $tr.keep-cache = True;
+    $tr.silent-stdout = True;
+    $tr.silent-stderr = False;
+    $tr.code-dumpable = False;
+    $tr.do-test = False;
+    $tr.name = "task-check-code-block";
+    $tr.task = "$cache-root-dir/.checks";
 
     if "{self.parent-task-root-dir}/common.rb".IO ~~ :e {
       copy("{self.parent-task-root-dir}/common.rb","{$cache-root-dir}/.checks/common.rb");
@@ -101,18 +101,23 @@ class Api
       copy("{self.parent-task-root-dir}/common.bash","{$cache-root-dir}/.checks/common.bash");
     }
 
-    self.tr.task-run();
+    my @orig-stdout-data = $tr.stdout-data;
 
-    self!log("code return", self.tr.stdout-data.raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
+    my @orig-stderr-data = $tr.stderr-data;
+
+    $tr.task-run();
+
+    self!log("code return", $tr.stdout-data.raku) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
     my @r;
 
-    for self.tr.stdout-data -> $i {
+    for $tr.stdout-data -> $i {
       push @r, $i;
     }
 
-    self.tr.stdout-data = @orig-stdout-data;
-    self.tr.stderr-data = @orig-stderr-data;
+    $tr.stdout-data = @orig-stdout-data;
+
+    $tr.stderr-data = @orig-stderr-data;
 
     return @r;
   
