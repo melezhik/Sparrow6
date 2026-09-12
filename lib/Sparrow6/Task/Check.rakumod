@@ -89,7 +89,6 @@ class Api
     $tr.silent-stdout = True;
     $tr.silent-stderr = False;
     $tr.code-dumpable = False;
-    $tr.do-test = False;
     $tr.name = "task-check-code-block";
     $tr.task = "$cache-root-dir/.checks";
 
