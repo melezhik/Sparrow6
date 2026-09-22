@@ -172,8 +172,7 @@ class Api
     my @new-context;
 
     if $check-type eq 'default' {
-        for self.current-context.context -> $ln {
-            #say "check $ln<data>";
+        for self.current-context.context.flat -> $ln {
             #my $ln-clone = $ln.clone;
             if $pattern eq ":any:" {
                 $status = True;
@@ -207,7 +206,7 @@ class Api
 
         my $zoom-mode  = self.current-context.WHAT === Sparrow6::Task::Check::Context::Range && self.current-context.zoom-mode && self.current-context.just-started == False;
 
-        for self.current-context.context -> $ln {
+        for self.current-context.context.flat -> $ln {
            my $ln-clone = $ln.clone; 
            my $data = $ln<data>;
            if $zoom-mode { # in zoom mode use first capture found
@@ -284,12 +283,12 @@ class Api
       self!log("SEARCH FAILS )=;", $pattern) if %*ENV<SP6_DEBUG_TASK_CHECK>;
 
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Range {
-         self!log("SEARCH(FAIL, context: Sparrow6::Task::Check::Context::Range )", "flush/disable streams due to failure") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+         self!log("SEARCH(FAIL, context: Sparrow6::Task::Check::Context::Range )", "flush/disable streams due to failure (1)") if %*ENV<SP6_DEBUG_TASK_CHECK>;
          self.current-context.disable-streams();
          self.current-context.streams = %();
       } 
       if self.current-context.WHAT === Sparrow6::Task::Check::Context::Sequence {
-        self!log("SEARCH(FAIL, context: Sparrow6::Task::Check::Context::Sequence )", "flush/disable streams due to failure") if %*ENV<SP6_DEBUG_TASK_CHECK>;
+        self!log("SEARCH(FAIL, context: Sparrow6::Task::Check::Context::Sequence )", "flush/disable streams due to failure (2)") if %*ENV<SP6_DEBUG_TASK_CHECK>;
         self.current-context.context = ();
         self.current-context.streams = %();
       } 
