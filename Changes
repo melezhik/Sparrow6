@@ -2,11 +2,16 @@ Revision history for Sparrow6
 
 {{$NEXT}}
 
+0.0.96 2026-09-24T12:22:06Z
+
+  workaround for iteration
+  over empty container
+
 0.0.95 2026-09-12T08:02:25Z
 
   Fix clone issue
   (copy/paste patch
-   from DSCI repo)
+  from DSCI repo)
 
 0.0.94 2026-09-10T14:12:14Z
 
